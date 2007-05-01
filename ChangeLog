@@ -1,5 +1,11 @@
 2007-05-01  Wakaba  <wakaba@suika.fam.cx>
 
+	* parser-interface.en.html: New document.
+
+	* parser.cgi: Test-result-format mode is added.
+
+2007-05-01  Wakaba  <wakaba@suika.fam.cx>
+
 	* parser.cgi: New file.
 
 	* .htaccess: New file.
