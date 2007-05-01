@@ -1,3 +1,7 @@
 2007-05-01  Wakaba  <wakaba@suika.fam.cx>
 
+	* parser.cgi: New file.
+
+	* .htaccess: New file.
+
 	* ChangeLog: New file.

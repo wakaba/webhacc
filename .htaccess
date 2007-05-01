@@ -1,0 +1,2 @@
+Options +ExecCGI +MultiViews
+AddHandler cgi-script .cgi
