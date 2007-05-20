@@ -1,3 +1,11 @@
+2007-05-19  Wakaba  <wakaba@suika.fam.cx>
+
+	* parser-interface.en.html: A checkbox to
+	enable DOM5 HTML conformance checking is added.
+
+	* parser.cgi: Check DOM5 HTML conformance
+	if |dom5| parameter is specified.
+
 2007-05-01  Wakaba  <wakaba@suika.fam.cx>
 
 	* parser.cgi: Module names are updated.
