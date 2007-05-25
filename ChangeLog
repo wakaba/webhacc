@@ -1,3 +1,7 @@
+2007-05-25  Wakaba  <wakaba@suika.fam.cx>
+
+	* parser.cgi: Use CGI::Carp.
+
 2007-05-19  Wakaba  <wakaba@suika.fam.cx>
 
 	* parser-interface.en.html: A checkbox to
