@@ -1,5 +1,15 @@
 2007-05-27  Wakaba  <wakaba@suika.fam.cx>
 
+	* excanvas.js: New (from <http://sourceforge.net/project/showfiles.php?group_id=163391&package_id=184688&release_id=505959>).
+
+	* table.cgi: Remove |$table->{caption}->{element}|
+	for table with caption processed correctly.
+	Support for WinIE via ExplorerCanvas; note that
+	it does not draw path with fill and stroke correctly (stroke
+	is hidden?).
+
+2007-05-27  Wakaba  <wakaba@suika.fam.cx>
+
 	* table.cgi, table-interface.en.html. table-script.js: New files.
 
 2007-05-25  Wakaba  <wakaba@suika.fam.cx>
