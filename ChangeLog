@@ -1,5 +1,11 @@
 2007-05-27  Wakaba  <wakaba@suika.fam.cx>
 
+	* parser.cgi: Output how long each process takes.
+	Document element testing is moved to the |Whatpm::ContentChecker|
+	module.
+
+2007-05-27  Wakaba  <wakaba@suika.fam.cx>
+
 	* excanvas.js: New (from <http://sourceforge.net/project/showfiles.php?group_id=163391&package_id=184688&release_id=505959>).
 
 	* table.cgi: Remove |$table->{caption}->{element}|
