@@ -1,3 +1,9 @@
+2007-05-28  Wakaba  <wakaba@suika.fam.cx>
+
+	* parser.cgi: Log elapsed time to external files.
+
+	* time.plt: New file.
+
 2007-05-27  Wakaba  <wakaba@suika.fam.cx>
 
 	* parser.cgi: Output how long each process takes.
