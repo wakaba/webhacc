@@ -1,5 +1,10 @@
 2007-06-21  Wakaba  <wakaba@suika.fam.cx>
 
+	* parser-interface.en.html: |checked"| -> |checked| (it did
+	work for Firefox 1.5 but not for WinIE6).
+
+2007-06-21  Wakaba  <wakaba@suika.fam.cx>
+
 	* parser-manakai.cgi: New.
 	
 	* parser-manakai-interface.en.html: New.
