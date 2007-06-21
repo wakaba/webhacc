@@ -1,3 +1,11 @@
+2007-06-21  Wakaba  <wakaba@suika.fam.cx>
+
+	* parser-manakai.cgi: New.
+	
+	* parser-manakai-interface.en.html: New.
+
+	* time-manakai.plt: New.
+
 2007-05-28  Wakaba  <wakaba@suika.fam.cx>
 
 	* parser.cgi: Log elapsed time to external files.
