@@ -1,3 +1,8 @@
+2007-06-25  Wakaba  <wakaba@suika.fam.cx>
+
+	* parser-manakai.cgi, parser-manakai-interface.en.html: Fragment
+	parse mode is implemented.
+
 2007-06-21  Wakaba  <wakaba@suika.fam.cx>
 
 	* parser-interface.en.html: |checked"| -> |checked| (it did
