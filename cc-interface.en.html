@@ -13,7 +13,11 @@ textarea {
 <h1>Web Docunent Conformance Checker <em>(beta)</em></h1>
 
 <form action="cc/" method="post" accept-charset="utf-8">
-<p><label><code>Content-Type</code> <input type="text" name="i" value="text/html"></p>
+<p><label><code>Content-Type</code> 
+<select name="i">
+<option><code>text/html</code></option>
+<option value="application/xhtml+xml"><code>application/xml</code></option>
+</select></label></p>
 <p><label>Setting <input type="text" name="e" value=""><code>.innerHTML</code></label></p>
 <p><label>Source<br><textarea name="s"></textarea></label></p>
 <p><input type="submit"></p>

@@ -45,7 +45,7 @@ my $http = SuikaWiki::Input::HTTP->new;
 <body>
 <h1>Web Document Conformance Checker (<em>beta</em>)</h1>
 
-<div id="document-info" section="section">
+<div id="document-info" class="section">
 <dl>
 <dt>Document URI</dt>
     <dd><code class="URI" lang="">&lt;<a href="@{[htescape $input_uri]}">@{[htescape $input_uri]}</a>&gt;</code></dd>
@@ -82,19 +82,19 @@ my $http = SuikaWiki::Input::HTTP->new;
 <div id="parse-errors" class="section">
 <h2>Parse Errors</h2>
 
-<ul>
+<dl>
 ];
   push @nav, ['#parse-errors' => 'Parse Error'];
 
   my $onerror = sub {
     my (%opt) = @_;
     if ($opt{column} > 0) {
-      print STDOUT qq[<li><a href="#line-$opt{line}">Line $opt{line}</a> column $opt{column}: ];
+      print STDOUT qq[<dt><a href="#line-$opt{line}">Line $opt{line}</a> column $opt{column}</dt>\n];
     } else {
       $opt{line}--;
-      print STDOUT qq[<li><a href="#line-$opt{line}">Line $opt{line}</a>: ];
+      print STDOUT qq[<dt><a href="#line-$opt{line}">Line $opt{line}</a></dt>\n];
     }
-    print STDOUT qq[@{[htescape $opt{type}]}</li>\n];
+    print STDOUT qq[<dd>@{[htescape $opt{type}]}</dd>\n];
   };
 
   $doc = $dom->create_document;
@@ -107,7 +107,7 @@ my $http = SuikaWiki::Input::HTTP->new;
   }
 
   print STDOUT qq[
-</ul>
+</dl>
 </div>
 ];
   } elsif ($input_format eq 'application/xhtml+xml') {
@@ -133,16 +133,16 @@ my $http = SuikaWiki::Input::HTTP->new;
 <div id="parse-errors" class="section">
 <h2>Parse Errors</h2>
 
-<ul>
+<dl>
 ];
   push @nav, ['#parse-errors' => 'Parse Error'];
 
   my $onerror = sub {
     my $err = shift;
     my $line = $err->location->line_number;
-    print STDOUT qq[<li><a href="#line-$line">Line $line</a> column ];
-    print STDOUT $err->location->column_number, ": ";
-    print STDOUT htescape $err->text, "</li>\n";
+    print STDOUT qq[<dt><a href="#line-$line">Line $line</a> column ];
+    print STDOUT $err->location->column_number, "</dt><dd>";
+    print STDOUT htescape $err->text, "</dd>\n";
     return 1;
   };
 
@@ -151,12 +151,13 @@ my $http = SuikaWiki::Input::HTTP->new;
       ($fh => $dom, $onerror, charset => 'utf-8');
 
     print STDOUT qq[
-</ul>
+</dl>
 </div>
 ];
   } else {
     print STDOUT qq[
 </dl>
+</div>
 
 <div id="result-summary" class="section">
 <p><em>Media type <code class="MIME" lang="en">@{[htescape $input_format]}</code> is not supported!</em></p>
@@ -181,16 +182,16 @@ my $http = SuikaWiki::Input::HTTP->new;
 <div id="document-errors" class="section">
 <h2>Document Errors</h2>
 
-<ul>
+<dl>
 ];
     push @nav, ['#document-errors' => 'Document Error'];
 
     require Whatpm::ContentChecker;
     my $onerror = sub {
       my %opt = @_;
-      print STDOUT qq[<li><a href="#node-@{[refaddr $opt{node}]}">],
+      print STDOUT qq[<dt><a href="#node-@{[refaddr $opt{node}]}">],
           htescape get_node_path ($opt{node}),
-          "</a>: ", htescape $opt{type}, "</li>\n";
+          "</a></dt>\n<dd>", htescape $opt{type}, "</dd>\n";
     };
 
     if ($el) {
@@ -200,7 +201,7 @@ my $http = SuikaWiki::Input::HTTP->new;
     }
 
     print STDOUT qq[
-</ul>
+</dl>
 </div>
 ];
   }
@@ -250,14 +251,15 @@ sub print_document_tree ($) {
     my $node_id = 'node-'.refaddr $child;
     my $nt = $child->node_type;
     if ($nt == $child->ELEMENT_NODE) {
-      $r .= qq'<li id="$node_id"><code>' . htescape ($child->tag_name) .
+      my $child_nsuri = $child->namespace_uri;
+      $r .= qq[<li id="$node_id" class="tree-element"><code title="@{[defined $child_nsuri ? $child_nsuri : '']}">] . htescape ($child->tag_name) .
           '</code>'; ## ISSUE: case
 
       if ($child->has_attributes) {
         $r .= '<ul class="attributes">';
-        for my $attr (sort {$a->[0] cmp $b->[0]} map { [$_->name, $_->value, 'node-'.refaddr $_] }
+        for my $attr (sort {$a->[0] cmp $b->[0]} map { [$_->name, $_->value, $_->namespace_uri, 'node-'.refaddr $_] }
                       @{$child->attributes}) {
-          $r .= qq'<li id="$attr->[2]"><code>' . htescape ($attr->[0]) . '</code> = '; ## ISSUE: case?
+          $r .= qq[<li id="$attr->[3]" class="tree-attribute"><code title="@{[defined $_->[2] ? $_->[2] : '']}">] . htescape ($attr->[0]) . '</code> = '; ## ISSUE: case?
           $r .= '<q>' . htescape ($attr->[1]) . '</q></li>'; ## TODO: children
         }
         $r .= '</ul>';
@@ -268,28 +270,27 @@ sub print_document_tree ($) {
         unshift @node, @{$child->child_nodes}, '</ol>';
       }
     } elsif ($nt == $child->TEXT_NODE) {
-      $r .= qq'<li id="$node_id"><q>' . htescape ($child->data) . '</q></li>';
+      $r .= qq'<li id="$node_id" class="tree-text"><q lang="">' . htescape ($child->data) . '</q></li>';
     } elsif ($nt == $child->CDATA_SECTION_NODE) {
-      $r .= qq'<li id="$node_id"><code>&lt;[CDATA[</code><q>' . htescape ($child->data) . '</q><code>]]&gt;</code></li>';
+      $r .= qq'<li id="$node_id" class="tree-cdata"><code>&lt;[CDATA[</code><q lang="">' . htescape ($child->data) . '</q><code>]]&gt;</code></li>';
     } elsif ($nt == $child->COMMENT_NODE) {
-      $r .= qq'<li id="$node_id"><code>&lt;!--</code><q>' . htescape ($child->data) . '</q><code>--&gt;</code></li>';
+      $r .= qq'<li id="$node_id" class="tree-comment"><code>&lt;!--</code><q lang="">' . htescape ($child->data) . '</q><code>--&gt;</code></li>';
     } elsif ($nt == $child->DOCUMENT_NODE) {
-      $r .= qq'<li id="$node_id">Document</li>';
+      $r .= qq'<li id="$node_id" class="tree-document">Document</li>';
       if ($child->has_child_nodes) {
         $r .= '<ol>';
         unshift @node, @{$child->child_nodes}, '</ol>';
       }
     } elsif ($nt == $child->DOCUMENT_TYPE_NODE) {
-      $r .= qq'<li id="$node_id"><code>&lt;!DOCTYPE&gt;</code><ul>';
-      $r .= '<li>Name = <q>@{[htescape ($child->name)]}</q></li>';
-      $r .= '<li>Public identifier = <q>@{[htescape ($child->public_id)]}</q></li>';
-      $r .= '<li>System identifier = <q>@{[htescape ($child->system_id)]}</q></li>';
+      $r .= qq'<li id="$node_id" class="tree-doctype"><code>&lt;!DOCTYPE&gt;</code><ul>';
+      $r .= '<li class="tree-doctype-name">Name = <q>@{[htescape ($child->name)]}</q></li>';
+      $r .= '<li class="tree-doctype-publicid">Public identifier = <q>@{[htescape ($child->public_id)]}</q></li>';
+      $r .= '<li class="tree-doctype-systemid">System identifier = <q>@{[htescape ($child->system_id)]}</q></li>';
       $r .= '</ul></li>';
     } elsif ($nt == $child->PROCESSING_INSTRUCTION_NODE) {
-      $r .= qq'<li id="$node_id"><code>&lt;?@{[htescape ($child->target)]}?&gt;</code>';
-      $r .= '<ul><li>@{[htescape ($child->data)]}</li></ul></li>';
+      $r .= qq'<li id="$node_id" class="tree-id"><code>&lt;?@{[htescape ($child->target)]}</code> <q>@{[htescape ($child->data)]}</q><code>?&gt;</code></li>';
     } else {
-      $r .= qq'<li id="$node_id">@{[$child->node_type]} @{[htescape ($child->node_name)]}</li>'; # error
+      $r .= qq'<li id="$node_id" class="tree-unknown">@{[$child->node_type]} @{[htescape ($child->node_name)]}</li>'; # error
     }
   }
 
@@ -336,4 +337,4 @@ and/or modify it under the same terms as Perl itself.
 
 =cut
 
-## $Date: 2007/06/27 13:30:15 $
+## $Date: 2007/06/27 14:36:45 $
