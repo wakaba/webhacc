@@ -33,30 +33,26 @@ my $http = SuikaWiki::Input::HTTP->new;
     exit;
   }
 
+  my @nav;
   print STDOUT qq[Content-Type: text/html; charset=utf-8
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <title>Web Document Conformance Checker (BETA)</title>
-<link rel="stylesheet" href="/www/style/html/xhtml">
-<style>
-  q {
-    white-space: pre;
-    white-space: -moz-pre-wrap;
-    white-space: pre-wrap;
-  }
-</style>
+<link rel="stylesheet" href="../cc-style.css" type="text/css">
 </head>
 <body>
 <h1>Web Document Conformance Checker (<em>beta</em>)</h1>
 
+<div id="document-info" section="section">
 <dl>
 <dt>Document URI</dt>
     <dd><code class="URI" lang="">&lt;<a href="@{[htescape $input_uri]}">@{[htescape $input_uri]}</a>&gt;</code></dd>
 <dt>Internet Media Type</dt>
     <dd><code class="MIME" lang="en">@{[htescape $input_format]}</code></dd>
 ]; # no </dl> yet
+  push @nav, ['#document-info' => 'Information'];
 
   require Message::DOM::DOMImplementation;
   my $dom = Message::DOM::DOMImplementation->____new;
@@ -73,9 +69,12 @@ my $http = SuikaWiki::Input::HTTP->new;
 <dt>Character Encoding</dt>
     <dd>(none)</dd>
 </dl>
+</div>
 
 <div id="source-string" class="section">
+<h2>Document Source</h2>
 ];
+    push @nav, ['#source-string' => 'Source'];
     print_source_string (\$s);
     print STDOUT qq[
 </div>
@@ -85,6 +84,7 @@ my $http = SuikaWiki::Input::HTTP->new;
 
 <ul>
 ];
+  push @nav, ['#parse-errors' => 'Parse Error'];
 
   my $onerror = sub {
     my (%opt) = @_;
@@ -120,9 +120,12 @@ my $http = SuikaWiki::Input::HTTP->new;
 <dt>Character Encoding</dt>
     <dd>(none)</dd>
 </dl>
+</div>
 
 <div id="source-string" class="section">
+<h2>Document Source</h2>
 ];
+    push @nav, ['#source-string' => 'Source'];
     print_source_string (\$t);
     print STDOUT qq[
 </div>
@@ -132,6 +135,7 @@ my $http = SuikaWiki::Input::HTTP->new;
 
 <ul>
 ];
+  push @nav, ['#parse-errors' => 'Parse Error'];
 
   my $onerror = sub {
     my $err = shift;
@@ -154,8 +158,11 @@ my $http = SuikaWiki::Input::HTTP->new;
     print STDOUT qq[
 </dl>
 
+<div id="result-summary" class="section">
 <p><em>Media type <code class="MIME" lang="en">@{[htescape $input_format]}</code> is not supported!</em></p>
+</div>
 ];
+    push @nav, ['#result-summary' => 'Result'];
   }
 
 
@@ -164,6 +171,7 @@ my $http = SuikaWiki::Input::HTTP->new;
 <div id="document-tree" class="section">
 <h2>Document Tree</h2>
 ];
+    push @nav, ['#document-tree' => 'Tree'];
 
     print_document_tree ($el || $doc);
 
@@ -175,6 +183,7 @@ my $http = SuikaWiki::Input::HTTP->new;
 
 <ul>
 ];
+    push @nav, ['#document-errors' => 'Document Error'];
 
     require Whatpm::ContentChecker;
     my $onerror = sub {
@@ -197,7 +206,15 @@ my $http = SuikaWiki::Input::HTTP->new;
   }
 
   ## TODO: Show result
+
   print STDOUT qq[
+<ul class="navigation" id="nav-items">
+];
+  for (@nav) {
+    print STDOUT qq[<li><a href="$_->[0]">$_->[1]</a></li>];
+  }
+  print STDOUT qq[
+</ul>
 </body>
 </html>
 ];
@@ -319,4 +336,4 @@ and/or modify it under the same terms as Perl itself.
 
 =cut
 
-## $Date: 2007/06/27 12:35:24 $
+## $Date: 2007/06/27 13:30:15 $

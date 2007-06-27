@@ -1,0 +1,48 @@
+@import '/www/style/html/xoxo.css';
+
+q {
+  white-space: pre;
+  white-space: -moz-pre-wrap;
+  white-space: pre-wrap;
+}
+
+#nav-items {
+  display: block;
+  position: fixed;
+  top: 0.5em;
+  right: 0.5em;
+  width: auto;
+  height: auto;
+  font-size: 90%;
+  background-color: #f4fff4;
+  color: black;
+  padding: 0;
+  line-height: 1.1;
+}
+
+#nav-items li {
+  display: block;
+  list-style: none;
+  margin: 0;
+  border-style: none;
+  padding: 0;
+  text-align: center;
+}
+
+#nav-items li a[href] {
+  display: block;
+  border-style: none;
+  color: inherit;
+  text-decoration: none;
+}
+
+/*
+
+Copyright 2007 Wakaba <w@suika.fam.cx>
+
+This library is free software; you can redistribute it
+and/or modify it under the same terms as Perl itself.
+
+$Date: 2007/06/27 13:30:15 $
+
+*/
