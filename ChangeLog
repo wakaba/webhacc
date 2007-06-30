@@ -1,5 +1,11 @@
 2007-06-30  Wakaba  <wakaba@suika.fam.cx>
 
+	* cc.cgi: "Terms" section.  "Tree" was sometimes
+	non-conforming to HTML5.
+	(get_node_link): New function.
+
+2007-06-30  Wakaba  <wakaba@suika.fam.cx>
+
 	* cc-style.css (img): New rule not to make border 
 	for img[usemap].
 

@@ -189,9 +189,8 @@ my $http = SuikaWiki::Input::HTTP->new;
     require Whatpm::ContentChecker;
     my $onerror = sub {
       my %opt = @_;
-      print STDOUT qq[<dt><a href="#node-@{[refaddr $opt{node}]}">],
-          htescape get_node_path ($opt{node}),
-          "</a></dt>\n<dd>", htescape $opt{type}, "</dd>\n";
+      print STDOUT qq[<dt>] . get_node_link ($opt{node}) .
+          "</dt>\n<dd>", htescape $opt{type}, "</dd>\n";
     };
 
     my $elements;
@@ -223,10 +222,8 @@ my $http = SuikaWiki::Input::HTTP->new;
       my $i = 0;
       for my $table_el (@{$elements->{table}}) {
         $i++;
-        print STDOUT qq[<div class="section" id="table-$i"><h3>];
-        print STDOUT qq[<a href="#node-@{[refaddr $table_el]}">],
-          htescape get_node_path ($table_el);
-        print STDOUT qq[</a></h3>\n];
+        print STDOUT qq[<div class="section" id="table-$i"><h3>] .
+            get_node_link ($table_el) . q[</h3>];
         
         my $table = Whatpm::HTMLTable->form_table ($table_el);
         
@@ -259,6 +256,22 @@ my $http = SuikaWiki::Input::HTTP->new;
       }
     
       print STDOUT qq[</div>];
+    }
+
+    if (keys %{$elements->{term}}) {
+      print STDOUT qq[
+<div id="terms" class="section">
+<h2>Terms</h2>
+
+<dl>
+];
+      for my $term (sort {$a cmp $b} keys %{$elements->{term}}) {
+        print STDOUT qq[<dt>@{[htescape $term]}</dt>];
+        for (@{$elements->{term}->{$term}}) {
+          print STDOUT qq[<dd>].get_node_link ($_).qq[</dd>];
+        }
+      }
+      print STDOUT qq[</dl></div>];
     }
   }
 
@@ -323,7 +336,9 @@ sub print_document_tree ($) {
 
       if ($node->has_child_nodes) {
         $r .= '<ol class="children">';
-        unshift @node, @{$child->child_nodes}, '</ol>';
+        unshift @node, @{$child->child_nodes}, '</ol></li>';
+      } else {
+        $r .= '</li>';
       }
     } elsif ($nt == $child->TEXT_NODE) {
       $r .= qq'<li id="$node_id" class="tree-text"><q lang="">' . htescape ($child->data) . '</q></li>';
@@ -332,10 +347,10 @@ sub print_document_tree ($) {
     } elsif ($nt == $child->COMMENT_NODE) {
       $r .= qq'<li id="$node_id" class="tree-comment"><code>&lt;!--</code><q lang="">' . htescape ($child->data) . '</q><code>--&gt;</code></li>';
     } elsif ($nt == $child->DOCUMENT_NODE) {
-      $r .= qq'<li id="$node_id" class="tree-document">Document</li>';
+      $r .= qq'<li id="$node_id" class="tree-document">Document';
       if ($child->has_child_nodes) {
         $r .= '<ol>';
-        unshift @node, @{$child->child_nodes}, '</ol>';
+        unshift @node, @{$child->child_nodes}, '</ol></li>';
       }
     } elsif ($nt == $child->DOCUMENT_TYPE_NODE) {
       $r .= qq'<li id="$node_id" class="tree-doctype"><code>&lt;!DOCTYPE&gt;</code><ul class="attributes">';
@@ -380,6 +395,11 @@ sub get_node_path ($) {
   return join '/', @r;
 } # get_node_path
 
+sub get_node_link ($) {
+  return qq[<a href="#node-@{[refaddr $_[0]]}">] .
+      htescape (get_node_path ($_[0])) . qq[</a>];
+} # get_node_link
+
 =head1 AUTHOR
 
 Wakaba <w@suika.fam.cx>.
@@ -393,4 +413,4 @@ and/or modify it under the same terms as Perl itself.
 
 =cut
 
-## $Date: 2007/06/30 08:26:08 $
+## $Date: 2007/06/30 14:51:10 $
