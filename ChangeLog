@@ -1,3 +1,18 @@
+2007-06-30  Wakaba  <wakaba@suika.fam.cx>
+
+	* cc-style.css (img): New rule not to make border 
+	for img[usemap].
+
+	* cc.cgi: |table.cgi|-feature merged.  Doctype
+	token was serialized incorrectly.
+
+	* table-script.js (tableToCanvas): Has second
+	argument to specify the parent.  Use image map
+	to identify cells.
+
+	* table.cgi: Minor fix to sync with the aforementioned
+	change.
+
 2007-06-25  Wakaba  <wakaba@suika.fam.cx>
 
 	* parser-manakai.cgi, parser-manakai-interface.en.html: Fragment

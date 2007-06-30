@@ -109,6 +109,10 @@ q:before, q:after {
   text-decoration: none;
 }
 
+img {
+  border-style: none;
+}
+
 /*
 
 Copyright 2007 Wakaba <w@suika.fam.cx>
@@ -116,6 +120,6 @@ Copyright 2007 Wakaba <w@suika.fam.cx>
 This library is free software; you can redistribute it
 and/or modify it under the same terms as Perl itself.
 
-$Date: 2007/06/27 14:36:45 $
+$Date: 2007/06/30 08:26:08 $
 
 */

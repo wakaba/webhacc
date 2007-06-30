@@ -194,16 +194,72 @@ my $http = SuikaWiki::Input::HTTP->new;
           "</a></dt>\n<dd>", htescape $opt{type}, "</dd>\n";
     };
 
+    my $elements;
     if ($el) {
-      Whatpm::ContentChecker->check_element ($el, $onerror);
+      $elements = Whatpm::ContentChecker->check_element ($el, $onerror);
     } else {
-      Whatpm::ContentChecker->check_document ($doc, $onerror);
+      $elements = Whatpm::ContentChecker->check_document ($doc, $onerror);
     }
 
     print STDOUT qq[
 </dl>
 </div>
 ];
+
+    if (@{$elements->{table}}) {
+      require JSON;
+
+      print STDOUT qq[
+<div id="tables" class="section">
+<h2>Tables</h2>
+
+<!--[if IE]><script type="text/javascript" src="../excanvas.js"></script><![endif]-->
+<script src="../table-script.js" type="text/javascript"></script>
+<noscript>
+<p><em>Structure of tables are visualized here if scripting is enabled.</em></p>
+</noscript>
+];
+
+      my $i = 0;
+      for my $table_el (@{$elements->{table}}) {
+        $i++;
+        print STDOUT qq[<div class="section" id="table-$i"><h3>];
+        print STDOUT qq[<a href="#node-@{[refaddr $table_el]}">],
+          htescape get_node_path ($table_el);
+        print STDOUT qq[</a></h3>\n];
+        
+        my $table = Whatpm::HTMLTable->form_table ($table_el);
+        
+        for (@{$table->{column_group}}, @{$table->{column}}, $table->{caption}) {
+          next unless $_;
+          delete $_->{element};
+        }
+        
+        for (@{$table->{row_group}}) {
+          next unless $_;
+          next unless $_->{element};
+          $_->{type} = $_->{element}->manakai_local_name;
+          delete $_->{element};
+        }
+        
+        for (@{$table->{cell}}) {
+          next unless $_;
+          for (@{$_}) {
+            next unless $_;
+            for (@$_) {
+              $_->{id} = refaddr $_->{element} if defined $_->{element};
+              delete $_->{element};
+            }
+          }
+        }
+        
+        print STDOUT '</div><script type="text/javascript">tableToCanvas (';
+        print STDOUT JSON::objToJson ($table);
+        print STDOUT qq[, document.getElementById ('table-$i'));</script>];
+      }
+    
+      print STDOUT qq[</div>];
+    }
   }
 
   ## TODO: Show result
@@ -282,10 +338,10 @@ sub print_document_tree ($) {
         unshift @node, @{$child->child_nodes}, '</ol>';
       }
     } elsif ($nt == $child->DOCUMENT_TYPE_NODE) {
-      $r .= qq'<li id="$node_id" class="tree-doctype"><code>&lt;!DOCTYPE&gt;</code><ul>';
-      $r .= '<li class="tree-doctype-name">Name = <q>@{[htescape ($child->name)]}</q></li>';
-      $r .= '<li class="tree-doctype-publicid">Public identifier = <q>@{[htescape ($child->public_id)]}</q></li>';
-      $r .= '<li class="tree-doctype-systemid">System identifier = <q>@{[htescape ($child->system_id)]}</q></li>';
+      $r .= qq'<li id="$node_id" class="tree-doctype"><code>&lt;!DOCTYPE&gt;</code><ul class="attributes">';
+      $r .= qq[<li class="tree-doctype-name">Name = <q>@{[htescape ($child->name)]}</q></li>];
+      $r .= qq[<li class="tree-doctype-publicid">Public identifier = <q>@{[htescape ($child->public_id)]}</q></li>];
+      $r .= qq[<li class="tree-doctype-systemid">System identifier = <q>@{[htescape ($child->system_id)]}</q></li>];
       $r .= '</ul></li>';
     } elsif ($nt == $child->PROCESSING_INSTRUCTION_NODE) {
       $r .= qq'<li id="$node_id" class="tree-id"><code>&lt;?@{[htescape ($child->target)]}</code> <q>@{[htescape ($child->data)]}</q><code>?&gt;</code></li>';
@@ -337,4 +393,4 @@ and/or modify it under the same terms as Perl itself.
 
 =cut
 
-## $Date: 2007/06/27 14:36:45 $
+## $Date: 2007/06/30 08:26:08 $
