@@ -33,6 +33,8 @@ my $http = SuikaWiki::Input::HTTP->new;
     exit;
   }
 
+  load_text_catalog ('en'); ## TODO: conneg
+
   my @nav;
   print STDOUT qq[Content-Type: text/html; charset=utf-8
 
@@ -88,13 +90,14 @@ my $http = SuikaWiki::Input::HTTP->new;
 
   my $onerror = sub {
     my (%opt) = @_;
+    my ($cls, $msg) = get_text ($opt{type}, $opt{level});
     if ($opt{column} > 0) {
-      print STDOUT qq[<dt><a href="#line-$opt{line}">Line $opt{line}</a> column $opt{column}</dt>\n];
+      print STDOUT qq[<dt class="$cls"><a href="#line-$opt{line}">Line $opt{line}</a> column $opt{column}</dt>\n];
     } else {
-      $opt{line}--;
-      print STDOUT qq[<dt><a href="#line-$opt{line}">Line $opt{line}</a></dt>\n];
+      $opt{line} = $opt{line} - 1 || 1;
+      print STDOUT qq[<dt class="$cls"><a href="#line-$opt{line}">Line $opt{line}</a></dt>\n];
     }
-    print STDOUT qq[<dd>@{[htescape $opt{type}]}</dd>\n];
+    print STDOUT qq[<dd class="$cls">$msg</dd>\n];
   };
 
   $doc = $dom->create_document;
@@ -133,8 +136,7 @@ my $http = SuikaWiki::Input::HTTP->new;
 <div id="parse-errors" class="section">
 <h2>Parse Errors</h2>
 
-<dl>
-];
+<dl>];
   push @nav, ['#parse-errors' => 'Parse Error'];
 
   my $onerror = sub {
@@ -150,8 +152,7 @@ my $http = SuikaWiki::Input::HTTP->new;
   $doc = Message::DOM::XMLParserTemp->parse_byte_stream
       ($fh => $dom, $onerror, charset => 'utf-8');
 
-    print STDOUT qq[
-</dl>
+    print STDOUT qq[</dl>
 </div>
 ];
   } else {
@@ -182,15 +183,15 @@ my $http = SuikaWiki::Input::HTTP->new;
 <div id="document-errors" class="section">
 <h2>Document Errors</h2>
 
-<dl>
-];
+<dl>];
     push @nav, ['#document-errors' => 'Document Error'];
 
     require Whatpm::ContentChecker;
     my $onerror = sub {
       my %opt = @_;
-      print STDOUT qq[<dt>] . get_node_link ($opt{node}) .
-          "</dt>\n<dd>", htescape $opt{type}, "</dd>\n";
+      my ($cls, $msg) = get_text ($opt{type}, $opt{level});
+      print STDOUT qq[<dt class="$cls">] . get_node_link ($opt{node}) .
+          qq[</dt>\n<dd class="$cls">], $msg, "</dd>\n";
     };
 
     my $elements;
@@ -200,8 +201,7 @@ my $http = SuikaWiki::Input::HTTP->new;
       $elements = Whatpm::ContentChecker->check_document ($doc, $onerror);
     }
 
-    print STDOUT qq[
-</dl>
+    print STDOUT qq[</dl>
 </div>
 ];
 
@@ -295,12 +295,16 @@ sub print_source_string ($) {
   my $s = $_[0];
   my $i = 1;
   print STDOUT qq[<ol lang="">\n];
-  while ($$s =~ /\G([^\x0A]*?)\x0D?\x0A/gc) {
-    print STDOUT qq[<li id="line-$i">], htescape $1, "</li>\n";
-    $i++;
-  }
-  if ($$s =~ /\G([^\x0A]+)/gc) {
-    print STDOUT qq[<li id="line-$i">], htescape $1, "</li>\n";
+  if (length $$s) {
+    while ($$s =~ /\G([^\x0A]*?)\x0D?\x0A/gc) {
+      print STDOUT qq[<li id="line-$i">], htescape $1, "</li>\n";
+      $i++;
+    }
+    if ($$s =~ /\G([^\x0A]+)/gc) {
+      print STDOUT qq[<li id="line-$i">], htescape $1, "</li>\n";
+    }
+  } else {
+    print STDOUT q[<li id="line-1"></li>];
   }
   print STDOUT "</ol>";
 } # print_input_string
@@ -334,7 +338,7 @@ sub print_document_tree ($) {
         $r .= '</ul>';
       }
 
-      if ($node->has_child_nodes) {
+      if ($child->has_child_nodes) {
         $r .= '<ol class="children">';
         unshift @node, @{$child->child_nodes}, '</ol></li>';
       } else {
@@ -348,8 +352,12 @@ sub print_document_tree ($) {
       $r .= qq'<li id="$node_id" class="tree-comment"><code>&lt;!--</code><q lang="">' . htescape ($child->data) . '</q><code>--&gt;</code></li>';
     } elsif ($nt == $child->DOCUMENT_NODE) {
       $r .= qq'<li id="$node_id" class="tree-document">Document';
+      $r .= qq[<ul class="attributes">];
+      $r .= qq[<li>@{[scalar get_text ('manakaiIsHTML:'.($child->manakai_is_html?1:0))]}</li>];
+      $r .= qq[<li>@{[scalar get_text ('manakaiCompatMode:'.$child->manakai_compat_mode)]}</li>];
+      $r .= qq[</ul>];
       if ($child->has_child_nodes) {
-        $r .= '<ol>';
+        $r .= '<ol class="children">';
         unshift @node, @{$child->child_nodes}, '</ol></li>';
       }
     } elsif ($nt == $child->DOCUMENT_TYPE_NODE) {
@@ -400,6 +408,40 @@ sub get_node_link ($) {
       htescape (get_node_path ($_[0])) . qq[</a>];
 } # get_node_link
 
+{
+  my $Msg = {};
+
+sub load_text_catalog ($) {
+  my $lang = shift; # MUST be a canonical lang name
+  open my $file, '<', "cc-msg.$lang.txt" or die "$0: cc-msg.$lang.txt: $!";
+  while (<$file>) {
+    if (s/^([^;]+);([^;]*);//) {
+      my ($type, $cls, $msg) = ($1, $2, $_);
+      $msg =~ tr/\x0D\x0A//d;
+      $Msg->{$type} = [$cls, $msg];
+    }
+  }
+} # load_text_catalog
+
+sub get_text ($) {
+  my ($type, $level) = @_;
+  $type = $level . ':' . $type if defined $level;
+  my @arg;
+  {
+    if (defined $Msg->{$type}) {
+      my $msg = $Msg->{$type}->[1];
+      $msg =~ s/\$([0-9]+)/defined $arg[$1] ? htescape ($arg[$1]) : '(undef)'/ge;
+      return ($Msg->{$type}->[0], $msg);
+    } elsif ($type =~ s/:([^:]*)$//) {
+      unshift @arg, $1;
+      redo;
+    }
+  }
+  return ('', htescape ($_[0]));
+} # get_text
+
+}
+
 =head1 AUTHOR
 
 Wakaba <w@suika.fam.cx>.
@@ -413,4 +455,4 @@ and/or modify it under the same terms as Perl itself.
 
 =cut
 
-## $Date: 2007/06/30 14:51:10 $
+## $Date: 2007/07/01 06:21:46 $

@@ -44,6 +44,16 @@ q:before, q:after {
   content: "";
 }
 
+#parse-errors dl:empty:before {
+  content: "This document has no parse error.";
+  font-style: italic;
+}
+
+#document-errors dl:empty:before {
+  content: "This document has no document error.";
+  font-style: italic;
+}
+
 #document-tree > ol {
   margin-left: 0;
   padding-left: 0;
@@ -77,6 +87,26 @@ q:before, q:after {
   padding: 0;
   text-indent: 0;
   font-size: 90%;
+}
+
+#parse-errors dd, #document-errors dd {
+  margin-left: 20px;
+  padding-left: 40px;
+  min-height: 32px;
+  background-image: url(large-stop);
+  background-position: top left;
+  background-repeat: no-repeat;
+}
+
+#document-errors dd.should {
+  background-image: url(large-alert);
+}
+
+#document-errors dd.unsupported {
+  margin-left: 60px;
+  border: red 0.2em solid;
+  padding: 0.5em;
+  background-image: none;
 }
 
 #nav-items {
@@ -113,6 +143,13 @@ img {
   border-style: none;
 }
 
+code {
+  font-family: "Courier New", "Courier", monospace;
+  letter-spacing: 0.1em;
+  background-color: transparent;
+  color: orangered;
+}
+
 /*
 
 Copyright 2007 Wakaba <w@suika.fam.cx>
@@ -120,6 +157,6 @@ Copyright 2007 Wakaba <w@suika.fam.cx>
 This library is free software; you can redistribute it
 and/or modify it under the same terms as Perl itself.
 
-$Date: 2007/06/30 08:26:08 $
+$Date: 2007/07/01 06:21:46 $
 
 */

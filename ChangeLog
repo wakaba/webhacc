@@ -1,3 +1,19 @@
+2007-07-01  Wakaba  <wakaba@suika.fam.cx>
+
+	* cc-style.css: New rules for empty error lists, 
+	error levels, and |code|.
+
+	* cc.cgi: Support for error message catalog.
+	Support for empty (zero-length) document.
+	(print_source_string): Support for empty document.
+	(print_document_tree): Element |has_child_nodes| test
+	was incorrect.  Output compat mode and is html flag
+	for |Document| node.
+	(load_text_catalog, get_text): New functions.
+
+	* LICENSE, large-alert.png, large-info.png, large-stop.png:
+	New files.
+
 2007-06-30  Wakaba  <wakaba@suika.fam.cx>
 
 	* cc.cgi: "Terms" section.  "Tree" was sometimes
