@@ -1,5 +1,9 @@
 2007-07-01  Wakaba  <wakaba@suika.fam.cx>
 
+	* Makefile: New.
+
+2007-07-01  Wakaba  <wakaba@suika.fam.cx>
+
 	* cc.cgi: Return 404 if |PATH_INFO| is different from |/|.
 	Link to |error-description|.
 
