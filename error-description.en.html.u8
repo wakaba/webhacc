@@ -1,0 +1,189 @@
+<!DOCTYPE html><html id="error-description" lang="en" xmlns:d="http://suika.fam.cx/~wakaba/archive/2007/wdcc-desc/" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title xml:lang="en">Description of Errors — 
+Web Document Conformance Checker (BETA)</title>
+<link href="cc-style" rel="stylesheet">
+<link href="#license" rel="license">
+</head>
+<body>
+<h1>Description of Errors</h1>
+
+<section id="html5-parse-errors">
+<h2>HTML5 Parse Errors</h2>
+
+<div class="section parse-error" id="after-head"><h3>The <code><var>$0</var></code> element cannot be
+  inserted between <code>head</code> and <code>body</code> elements.</h3>
+    <p>A start tag occurs after the <code>head</code> element is closed
+    but before the <code>body</code> element is opened.
+    The document is non-conforming.</p>
+  </div>
+
+<div class="section tokenize-error" id="duplicate-attribute"><h3>There are two attributes with same name.</h3>
+    <p>Attributes must be unique in an element.  Specifying
+    attributes with same name more than once is non-conforming.</p>
+
+    <p>The <code>motion</code> attribute is not part of the HTML standard.
+    Use <code>img</code> element with animation GIF instead.</p>
+  </div>
+
+<div class="section tokenize-error" id="nestc"><h3>Void element syntax (<code>/&gt;</code>) cannot be
+  used for this element.</h3>
+    <p>The void element syntax <code>/&gt;</code> syntax can only be
+    used for <code>base</code>, <code>link</code>, <code>meta</code>,
+    <code>hr</code>, <code>br</code>, <code>img</code>, 
+    <code>embed</code>, <code>param</code>, <code>area</code>,
+    <code>col</code>, and <code>input</code> elements.
+    For any other elements, using that syntax is non-conforming.</p>
+
+    <p>Unlike XML, the void element syntax (<code>/&gt;</code>) has
+    no effect in HTML.</p>
+  </div>
+
+</section>
+
+<section id="element-content-model-errors">
+<h2>Element Content Model Errors</h2>
+
+<div class="section content-model-error" id="character-not-allowed"><h3>Data character is not allowed in this
+  context.</h3>
+    <p>A data character occurs where it is not allowed in this
+    context.  The document is non-conforming.</p>
+
+    <p>Possible causes:
+      <dl>
+      <dt>If the erred element is an inline-level element (such
+      as <code>a</code> or <code>span</code>)</dt>
+          <dd><p>A data character cannot be a child
+          of certain sectioning elements such as <code>body</code>,
+          <code>section</code>, and <code>blockquote</code>.</p>
+
+          <p>Any inline-level content must be put
+          in e.g. paragraph element such as <code>p</code>.</p></dd>
+      <dt>If the erred element is a block-level element (such as
+      <code>div</code> or <code>h<var>n</var></code>)</dt>
+          <dd><p>Though some elements such as <code>div</code>,
+          <code>li</code>, and <code>td</code> allow
+          <em>either one</em> of block-level or inline-level content
+          is allowed.  If there is a block-level content, 
+          any inline-level content must be put
+          in e.g. paragraph element such as <code>p</code>.</p></dd>
+      </dl>
+    </p>
+  </div>
+
+<div class="section content-model-error" id="child-element-missing"><h3>There must be a <code><var>$0</var></code>
+  element as a child of this element.</h3>
+    <p>The content model of the element is so defined that it
+    must contain a <code><var>$0</var></code> child element.
+    Without such an element, the document is non-conforming.</p>
+
+    <p>For example:
+      <ul>
+      <li>The <code>head</code> element must contain exactly one
+      <code>title</code> child element.</li>
+      <li><a href="#child-element-missing:td%7Cth">The <code>tr</code>
+      element must contain one or more <code>td</code> or <code>th</code>
+      child element.</a></li>
+      </ul>
+    </p>
+  </div>
+
+<div class="section content-model-error" id="child-element-missing:td|th"><h3>There must be a <code>td</code>
+  or <code>th</code> element as a child of this element.</h3>
+    <p>The <code>tr</code> element must contain at least one
+    <code>td</code> or <code>th</code> child element.  Without
+    such an element, the document is non-conforming.</p>
+  </div>
+
+<div class="section content-model-error" id="element-not-allowed"><h3>This element is not allowed in this 
+  context.</h3>
+    <p>An element occurs where it is not allowed.  The document
+    is non-conforming.</p>
+
+    <p>Possible causes:
+      <dl>
+      <dt>If the erred element is an inline-level element (such
+      as <code>a</code> or <code>span</code>)</dt>
+          <dd><p>An inline-level element cannot be a child
+          of certain sectioning elements such as <code>body</code>,
+          <code>section</code>, and <code>blockquote</code>.</p>
+
+          <p>Any inline-level content must be put
+          in e.g. paragraph element such as <code>p</code>.</p></dd>
+      <dt>If the erred element is a block-level element (such as
+      <code>div</code> or <code>h<var>n</var></code>)</dt>
+          <dd><p>Though some elements such as <code>div</code>,
+          <code>li</code>, and <code>td</code> allow
+          <em>either one</em> of block-level or inline-level content
+          is allowed.  If there is a block-level content, 
+          any inline-level content must be put
+          in e.g. paragraph element such as <code>p</code>.</p></dd>
+      <dt>If the erred element is the root <code>html</code> element</dt>
+          <dd><p>In an XHTML document, the root <code>html</code>
+          element must have an <code>xmlns</code> attribute
+          whose value is set to 
+          <code>http://www.w3.org/1999/xhtml</code>.</p></dd>
+      </dl>
+    </p>
+  </div>
+
+enumerated:invalid;attribute-error;This attribute only allow a limited set of values and the specified value is not one of them.
+no DOCTYPE;parse-error;This document does not start with the <code>DOCTYPE</code> declaration.
+not HTML5;parse-error;This document is written in an old version of HTML.
+not closed;parse-error;Element <code>$0</code> is not closed.
+unmatched end tag;parse-error;Element <code>$0</code> is not opened.
+
+table:no cell in last row;table-model-error;The table has no cell (<code>td</code> or <code>th</code>) in the last row.
+
+s:IMT:obsolete subtype;should;An <em>obsolete</em> subtype is used.
+s:IMT:private subtype;should;A private (<code>x-</code> or <code>x.</code>) subtype is used.
+s:IMT:unregistered subtype;should;The subtype is not registered to IANA.
+
+s:URI::empty path;should;This IRI should explicitly end with <code>/</code>.
+m:URI::syntax error;must;This IRI is not syntactically valid.
+
+</section>
+
+<section id="unsupported-messages">
+<h2><i>Unsupported</i> Messages</h2>
+
+<div class="section unsupported" id="unsupported:attribute"><h3>This attribute is not supported by the
+  conformance checker; <em>it might or might not be conforming</em>.</h3>
+    <p>The conformant checker does not support the attribute.
+    It cannot determine whether the document is conforming or not.</p>
+  </div>
+
+<div class="section unsupported" id="unsupported:element"><h3>This element is not supported by the
+  conformance checker; <em>it might or might not be conforming</em>.</h3>
+    <p>The conformant checker does not support the element.
+    It cannot determine whether the document is conforming or not.</p>
+  </div>
+
+<div class="section unsupported" id="unsupported:link-type"><h3>The link type <code>$0</code> is not standardized
+  or registered at the time of the release of the conformance checker; 
+  <em>it is non-conforming unless it has now been registered</em>.</h3>
+    <p>The <code>rel</code> attribute is defined as a list of link types.
+    Some common link types are defined in the HTML5 specification.
+    Additional link types can be registered to the WHATWG Wiki.
+    use of any other link type is non-conforming.</p>
+
+    <p>The specified link type is not part of the standard or registry
+    when the database used by the conformance cheker is created.
+    The link type might have been added to the registry since then.
+    In such case it might be conforming.  Otherwise, the
+    document is non-conforming.</p>
+  </div>
+
+</section>
+
+<section id="license">
+<h2>License of This Document</h2>
+
+<p>Copyright 2007 <a href="http://suika.fam.cx/~wakaba/who?">Wakaba</a></p>
+<p>This library is free software; you can redistribute it
+and/or modify it under the same terms as Perl itself.</p>
+</section>
+
+<!-- $Date: 2007/07/01 10:02:24 $ -->
+</body>
+</html>

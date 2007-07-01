@@ -23,6 +23,11 @@ my $http = SuikaWiki::Input::HTTP->new;
 
 ## TODO: _charset_
 
+  if ($http->meta_variable ('PATH_INFO') ne '/') {
+    print STDOUT "Status: 404 Not Found\nContent-Type: text/plain; charset=us-ascii\n\n400";
+    exit;
+  }
+
   my $input_format = $http->parameter ('i') || 'text/html';
   my $inner_html_element = $http->parameter ('e');
   my $input_uri = 'thismessage:/';
@@ -97,6 +102,9 @@ my $http = SuikaWiki::Input::HTTP->new;
       $opt{line} = $opt{line} - 1 || 1;
       print STDOUT qq[<dt class="$cls"><a href="#line-$opt{line}">Line $opt{line}</a></dt>\n];
     }
+    $opt{type} =~ tr/ /-/;
+    $opt{type} =~ s/\|/%7C/g;
+    $msg .= qq[ [<a href="../error-description#$opt{type}">Description</a>]];
     print STDOUT qq[<dd class="$cls">$msg</dd>\n];
   };
 
@@ -190,6 +198,10 @@ my $http = SuikaWiki::Input::HTTP->new;
     my $onerror = sub {
       my %opt = @_;
       my ($cls, $msg) = get_text ($opt{type}, $opt{level});
+      $opt{type} = $opt{level} . ':' . $opt{type} if defined $opt{level};
+      $opt{type} =~ tr/ /-/;
+      $opt{type} =~ s/\|/%7C/g;
+      $msg .= qq[ [<a href="../error-description#$opt{type}">Description</a>]];
       print STDOUT qq[<dt class="$cls">] . get_node_link ($opt{node}) .
           qq[</dt>\n<dd class="$cls">], $msg, "</dd>\n";
     };
@@ -455,4 +467,4 @@ and/or modify it under the same terms as Perl itself.
 
 =cut
 
-## $Date: 2007/07/01 06:21:46 $
+## $Date: 2007/07/01 10:02:24 $

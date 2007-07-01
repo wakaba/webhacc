@@ -1,5 +1,5 @@
 after head;parse-error;The <code>$0</code> element cannot be inserted between <code>head</code> and <code>body</code> elements.
-character not allowed;content-model-error;Character data are not allowed in this context.
+character not allowed;content-model-error;Data character is not allowed in this context.
 child element missing;content-model-error;There must be a <code>$0</code> element as a child of this element.
 child element missing:td|th;content-model-error;There must be a <code>td</code> or <code>th</code> element as a child of this element.
 nestc;tokenize-error;Void element syntax (<code>/></code>) cannot be used for this element.
@@ -22,7 +22,7 @@ m:URI::syntax error;must;This IRI is not syntactically valid.
 
 unsupported:attribute;unsupported;This attribute is not supported by the conformance checker; <em>it might or might not be conformant</em>.
 unsupported:element;unsupported;This element is not supported by the conformance checker; <em>it might or might not be conformant</em>.
-unsupported:link type;unsupported;The link type <code>$0</code> is not standardized or registered at the time of the release of the conformance checker; <em>it is not conformant unless it has now been registered</em>.
+unsupported:link type;unsupported;The link type <code>$0</code> is not standardized or registered at the time of the release of the conformance checker; <em>it is non-conforming unless it has now been registered</em>.
 
 manakaiCompatMode:quirks;;Quirks Mode
 manakaiCompatMode:limited quirks;;Limited Quirks Mode
@@ -36,4 +36,4 @@ manakaiIsHTML:0;;XML Document
 # This library is free software; you can redistribute it
 # and/or modify it under the same terms as Perl itself.
 # 
-# $Date: 2007/07/01 06:21:46 $
+# $Date: 2007/07/01 10:02:24 $

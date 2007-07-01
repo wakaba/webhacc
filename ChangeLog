@@ -1,5 +1,14 @@
 2007-07-01  Wakaba  <wakaba@suika.fam.cx>
 
+	* cc.cgi: Return 404 if |PATH_INFO| is different from |/|.
+	Link to |error-description|.
+
+	* error-description-source.xml: New.
+
+	* mkdescription.pl: New.
+
+2007-07-01  Wakaba  <wakaba@suika.fam.cx>
+
 	* cc-style.css: New rules for empty error lists, 
 	error levels, and |code|.
 
