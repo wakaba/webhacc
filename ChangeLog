@@ -1,5 +1,12 @@
 2007-07-15  Wakaba  <wakaba@suika.fam.cx>
 
+	* parser-manakai-interface.en.html: An option
+	to parse as H2H is added.
+
+	* parser-manakai.cgi: H2H parse mode is added.
+
+2007-07-15  Wakaba  <wakaba@suika.fam.cx>
+
 	* parser-manakai.cgi: Set |Document| as HTML if it is.
 	Use |inner_html| attribute for inner HTML value.
 	XML documents are now serializable via |inner_html|.
