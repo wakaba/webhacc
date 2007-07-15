@@ -1,3 +1,9 @@
+2007-07-15  Wakaba  <wakaba@suika.fam.cx>
+
+	* parser-manakai.cgi: Set |Document| as HTML if it is.
+	Use |inner_html| attribute for inner HTML value.
+	XML documents are now serializable via |inner_html|.
+
 2007-07-01  Wakaba  <wakaba@suika.fam.cx>
 
 	* Makefile: New.
