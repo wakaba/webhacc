@@ -1,3 +1,27 @@
+2007-07-16  Wakaba  <wakaba@suika.fam.cx>
+
+	* cc-interface.en.html: Content-Type options are extended.
+	Charset options are added.  URI input box is added.
+
+	* cc.cgi (get_input_document): New.  Support for URI input.
+	(#document-info): Present request URI, documen URI,
+	base URI (HTTP-level), internet media type, and
+	charset (if any).
+	(print_http_header_section): New.
+	(print_source_string_section): Renamed from |print_source_string|
+	and it now generate entire section.  Use charset
+	information obtained by parsing (for this reason the section
+	now follows the parse error section).
+	(HTML parse mode): Support for charsets (alpha).
+	(XML parse mode): Support for |application/xml|
+	and |text/xml|.  Support for charsets.
+	(#result-summary): Show error message section,
+	rather than simple HTTP error, for any input error.
+	(print_document_tree): Present |xml_version|, |xml_encoding|,
+	and |xml_standalone|.
+	(get_node_path): Return |/| if the input is the |Document| node.
+	(WDCC::LWPUA): New package.
+
 2007-07-15  Wakaba  <wakaba@suika.fam.cx>
 
 	* parser-manakai-interface.en.html: An option

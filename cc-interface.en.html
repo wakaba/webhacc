@@ -3,6 +3,9 @@
 <head>
 <title>Web Document Conformance Checker (BETA)</title>
 <style>
+input[type=text], input[type=url] {
+  width: 33em;
+}
 textarea {
   width: 35em;
   height: 20em;
@@ -15,10 +18,30 @@ textarea {
 <form action="cc/" method="post" accept-charset="utf-8">
 <p><label><code>Content-Type</code> 
 <select name="i">
+<option value="" selected>As specified</option>
+<option><code>application/xhtml+xml</code></option>
+<option><code>application/xml</code></option>
 <option><code>text/html</code></option>
-<option value="application/xhtml+xml"><code>application/xml</code></option>
+<option><code>text/xml</code></option>
 </select></label></p>
+
+<p><label><code>charset</code>
+<select name="charset">
+<option value="" selected">As specified</option>
+<option><code>ISO-2022-JP</code></option>
+<option><code>ISO-8859-1</code></option>
+<option><code>EUC-JP</code></option>
+<option><code>Shift_JIS</code></option>
+<option><code>US-ASCII</code></option>
+<option><code>UTF-8</code></option>
+</select></label></p>
+
 <p><label>Setting <input type="text" name="e" value=""><code>.innerHTML</code></label></p>
+
+<p><label>URI: <input type="url" name="uri"></label>
+(<label><input type="checkbox" name="error-page" value="1">
+Check error page</label>)</p>
+
 <p><label>Source<br><textarea name="s"></textarea></label></p>
 <p><input type="submit"></p>
 </form>

@@ -28,15 +28,11 @@ my $http = SuikaWiki::Input::HTTP->new;
     exit;
   }
 
-  my $input_format = $http->parameter ('i') || 'text/html';
-  my $inner_html_element = $http->parameter ('e');
-  my $input_uri = 'thismessage:/';
+  require Message::DOM::DOMImplementation;
+  my $dom = Message::DOM::DOMImplementation->new;
 
-  my $s = $http->parameter ('s');
-  if (length $s > 1000_000) {
-    print STDOUT "Status: 400 Document Too Long\nContent-Type: text/plain; charset=us-ascii\n\nToo long";
-    exit;
-  }
+  my $input = get_input_document ($http, $dom);
+  my $inner_html_element = $http->parameter ('e');
 
   load_text_catalog ('en'); ## TODO: conneg
 
@@ -54,38 +50,40 @@ my $http = SuikaWiki::Input::HTTP->new;
 
 <div id="document-info" class="section">
 <dl>
+<dt>Request URI</dt>
+    <dd><code class="URI" lang="">&lt;<a href="@{[htescape $input->{request_uri}]}">@{[htescape $input->{request_uri}]}</a>&gt;</code></dd>
 <dt>Document URI</dt>
-    <dd><code class="URI" lang="">&lt;<a href="@{[htescape $input_uri]}">@{[htescape $input_uri]}</a>&gt;</code></dd>
-<dt>Internet Media Type</dt>
-    <dd><code class="MIME" lang="en">@{[htescape $input_format]}</code></dd>
+    <dd><code class="URI" lang="">&lt;<a href="@{[htescape $input->{uri}]}">@{[htescape $input->{uri}]}</a>&gt;</code></dd>
 ]; # no </dl> yet
   push @nav, ['#document-info' => 'Information'];
 
-  require Message::DOM::DOMImplementation;
-  my $dom = Message::DOM::DOMImplementation->____new;
+if (defined $input->{s}) {
+
+  print STDOUT qq[
+<dt>Base URI</dt>
+    <dd><code class="URI" lang="">&lt;<a href="@{[htescape $input->{base_uri}]}">@{[htescape $input->{base_uri}]}</a>&gt;</code></dd>
+<dt>Internet Media Type</dt>
+    <dd><code class="MIME" lang="en">@{[htescape $input->{media_type}]}</code>
+    @{[$input->{media_type_overridden} ? '<em>(overridden)</em>' : '']}</dd>
+<dt>Character Encoding</dt>
+    <dd>@{[defined $input->{charset} ? '<code class="charset" lang="en">'.htescape ($input->{charset}).'</code>' : '(none)']}
+    @{[$input->{charset_overridden} ? '<em>(overridden)</em>' : '']}</dd>
+</dl>
+</div>
+];
+
+  print_http_header_section ($input);
+
   my $doc;
   my $el;
 
-  if ($input_format eq 'text/html') {
+  if ($input->{media_type} eq 'text/html') {
     require Encode;
     require Whatpm::HTML;
     
-    $s = Encode::decode ('utf-8', $s);
+    my $t = Encode::decode ($input->{charset}, $input->{s});
 
     print STDOUT qq[
-<dt>Character Encoding</dt>
-    <dd>(none)</dd>
-</dl>
-</div>
-
-<div id="source-string" class="section">
-<h2>Document Source</h2>
-];
-    push @nav, ['#source-string' => 'Source'];
-    print_source_string (\$s);
-    print STDOUT qq[
-</div>
-
 <div id="parse-errors" class="section">
 <h2>Parse Errors</h2>
 
@@ -112,35 +110,25 @@ my $http = SuikaWiki::Input::HTTP->new;
   if (defined $inner_html_element and length $inner_html_element) {
     $el = $doc->create_element_ns
         ('http://www.w3.org/1999/xhtml', [undef, $inner_html_element]);
-    Whatpm::HTML->set_inner_html ($el, $s, $onerror);
+    Whatpm::HTML->set_inner_html ($el, $t, $onerror);
   } else {
-    Whatpm::HTML->parse_string ($s => $doc, $onerror);
+    Whatpm::HTML->parse_string ($t => $doc, $onerror);
   }
 
   print STDOUT qq[
 </dl>
 </div>
 ];
-  } elsif ($input_format eq 'application/xhtml+xml') {
+
+    print_source_string_section (\($input->{s}), $input->{charset});
+  } elsif ({
+            'text/xml' => 1,
+            'application/xhtml+xml' => 1,
+            'application/xml' => 1,
+           }->{$input->{media_type}}) {
     require Message::DOM::XMLParserTemp;
-    require Encode;
-    
-    my $t = Encode::decode ('utf-8', $s);
 
     print STDOUT qq[
-<dt>Character Encoding</dt>
-    <dd>(none)</dd>
-</dl>
-</div>
-
-<div id="source-string" class="section">
-<h2>Document Source</h2>
-];
-    push @nav, ['#source-string' => 'Source'];
-    print_source_string (\$t);
-    print STDOUT qq[
-</div>
-
 <div id="parse-errors" class="section">
 <h2>Parse Errors</h2>
 
@@ -156,20 +144,20 @@ my $http = SuikaWiki::Input::HTTP->new;
     return 1;
   };
 
-  open my $fh, '<', \$s;
+  open my $fh, '<', \($input->{s});
   $doc = Message::DOM::XMLParserTemp->parse_byte_stream
-      ($fh => $dom, $onerror, charset => 'utf-8');
+      ($fh => $dom, $onerror, charset => $input->{charset});
 
     print STDOUT qq[</dl>
 </div>
-];
-  } else {
-    print STDOUT qq[
-</dl>
-</div>
 
+];
+    print_source_string_section (\($input->{s}), $doc->input_encoding);
+  } else {
+    ## TODO: Change HTTP status code??
+    print STDOUT qq[
 <div id="result-summary" class="section">
-<p><em>Media type <code class="MIME" lang="en">@{[htescape $input_format]}</code> is not supported!</em></p>
+<p><em>Media type <code class="MIME" lang="en">@{[htescape $input->{media_type}]}</code> is not supported!</em></p>
 </div>
 ];
     push @nav, ['#result-summary' => 'Result'];
@@ -288,6 +276,18 @@ my $http = SuikaWiki::Input::HTTP->new;
   }
 
   ## TODO: Show result
+} else {
+  print STDOUT qq[
+</dl>
+</div>
+
+<div class="section" id="result-summary">
+<p><em><strong>Input Error</strong>: @{[htescape ($input->{error_status_text})]}</em></p>
+</div>
+];
+  push @nav, ['#result-summary' => 'Result'];
+
+}
 
   print STDOUT qq[
 <ul class="navigation" id="nav-items">
@@ -303,10 +303,51 @@ my $http = SuikaWiki::Input::HTTP->new;
 
 exit;
 
-sub print_source_string ($) {
-  my $s = $_[0];
-  my $i = 1;
-  print STDOUT qq[<ol lang="">\n];
+sub print_http_header_section ($) {
+  my $input = shift;
+  return unless defined $input->{header_status_code} or
+      defined $input->{header_status_text} or
+      @{$input->{header_field}};
+  
+  push @nav, ['#source-header' => 'HTTP Header'];
+  print STDOUT qq[<div id="source-header" class="section">
+<h2>HTTP Header</h2>
+
+<p><strong>Note</strong>: Due to the limitation of the
+network library in use, the content of this section might
+not be the real header.</p>
+
+<table><tbody>
+];
+
+  if (defined $input->{header_status_code}) {
+    print STDOUT qq[<tr><th scope="row">Status code</th>];
+    print STDOUT qq[<td><code>@{[htescape ($input->{header_status_code})]}</code></td></tr>];
+  }
+  if (defined $input->{header_status_text}) {
+    print STDOUT qq[<tr><th scope="row">Status text</th>];
+    print STDOUT qq[<td><code>@{[htescape ($input->{header_status_text})]}</code></td></tr>];
+  }
+  
+  for (@{$input->{header_field}}) {
+    print STDOUT qq[<tr><th scope="row"><code>@{[htescape ($_->[0])]}</code></th>];
+    print STDOUT qq[<td><code>@{[htescape ($_->[1])]}</code></td></tr>];
+  }
+
+  print STDOUT qq[</tbody></table></div>];
+} # print_http_header_section
+
+sub print_source_string_section ($$) {
+  require Encode;
+  my $enc = Encode::find_encoding ($_[1]); ## TODO: charset name -> Perl name
+  return unless $enc;
+
+  my $s = \($enc->decode (${$_[0]}));
+  my $i = 1;                             
+  push @nav, ['#source-string' => 'Source'];
+  print STDOUT qq[<div id="source-string" class="section">
+<h2>Document Source</h2>
+<ol lang="">\n];
   if (length $$s) {
     while ($$s =~ /\G([^\x0A]*?)\x0D?\x0A/gc) {
       print STDOUT qq[<li id="line-$i">], htescape $1, "</li>\n";
@@ -318,8 +359,8 @@ sub print_source_string ($) {
   } else {
     print STDOUT q[<li id="line-1"></li>];
   }
-  print STDOUT "</ol>";
-} # print_input_string
+  print STDOUT "</ol></div>";
+} # print_input_string_section
 
 sub print_document_tree ($) {
   my $node = shift;
@@ -367,6 +408,15 @@ sub print_document_tree ($) {
       $r .= qq[<ul class="attributes">];
       $r .= qq[<li>@{[scalar get_text ('manakaiIsHTML:'.($child->manakai_is_html?1:0))]}</li>];
       $r .= qq[<li>@{[scalar get_text ('manakaiCompatMode:'.$child->manakai_compat_mode)]}</li>];
+      unless ($child->manakai_is_html) {
+        $r .= qq[<li>XML version = <code>@{[htescape ($child->xml_version)]}</code></li>];
+        if (defined $child->xml_encoding) {
+          $r .= qq[<li>XML encoding = <code>@{[htescape ($child->xml_encoding)]}</code></li>];
+        } else {
+          $r .= qq[<li>XML encoding = (null)</li>];
+        }
+        $r .= qq[<li>XML standalone = @{[$child->xml_standalone ? 'true' : 'false']}</li>];
+      }
       $r .= qq[</ul>];
       if ($child->has_child_nodes) {
         $r .= '<ol class="children">';
@@ -404,6 +454,7 @@ sub get_node_path ($) {
       $rs = '"' . $node->data . '"';
       $node = $node->parent_node;
     } elsif ($node->node_type == 9) {
+      @r = ('') unless @r;
       $rs = '';
       $node = $node->parent_node;
     } else {
@@ -454,6 +505,155 @@ sub get_text ($) {
 
 }
 
+sub get_input_document ($$) {
+  my ($http, $dom) = @_;
+
+  my $request_uri = $http->parameter ('uri');
+  my $r = {};
+  if (defined $request_uri and length $request_uri) {
+    my $uri = $dom->create_uri_reference ($request_uri);
+    unless ({
+             http => 1,
+            }->{lc $uri->uri_scheme}) {
+      return {uri => $request_uri, request_uri => $request_uri,
+              error_status_text => 'URI scheme not allowed'};
+    }
+
+    require Message::Util::HostPermit;
+    my $host_permit = new Message::Util::HostPermit;
+    $host_permit->add_rule (<<EOH);
+Allow host=suika port=80
+Deny host=suika
+Allow host=suika.fam.cx port=80
+Deny host=suika.fam.cx
+Deny host=localhost
+Deny host=*.localdomain
+Deny ipv4=0.0.0.0/8
+Deny ipv4=10.0.0.0/8
+Deny ipv4=127.0.0.0/8
+Deny ipv4=169.254.0.0/16
+Deny ipv4=172.0.0.0/11
+Deny ipv4=192.0.2.0/24
+Deny ipv4=192.88.99.0/24
+Deny ipv4=192.168.0.0/16
+Deny ipv4=198.18.0.0/15
+Deny ipv4=224.0.0.0/4
+Deny ipv4=255.255.255.255/32
+Deny ipv6=0::0/0
+Allow host=*
+EOH
+    unless ($host_permit->check ($uri->uri_host, $uri->uri_port || 80)) {
+      return {uri => $request_uri, request_uri => $request_uri,
+              error_status_text => 'Connection to the host is forbidden'};
+    }
+
+    require LWP::UserAgent;
+    my $ua = WDCC::LWPUA->new;
+    $ua->{wdcc_dom} = $dom;
+    $ua->{wdcc_host_permit} = $host_permit;
+    $ua->agent ('Mozilla'); ## TODO: for now.
+    $ua->parse_head (0);
+    $ua->protocols_allowed ([qw/http/]);
+    $ua->max_size (1000_000);
+    my $req = HTTP::Request->new (GET => $request_uri);
+    my $res = $ua->request ($req);
+    if ($res->is_success or $http->parameter ('error-page')) {
+      $r->{base_uri} = $res->base; ## NOTE: It does check |Content-Base|, |Content-Location|, and <base>. ## TODO: Use our own code!
+      $r->{uri} = $res->request->uri;
+      $r->{request_uri} = $request_uri;
+
+      ## TODO: More strict parsing...
+      my $ct = $res->header ('Content-Type');
+      if (defined $ct and $ct =~ m#^([0-9A-Za-z._+-]+/[0-9A-Za-z._+-]+)#) {
+        $r->{media_type} = lc $1;
+      }
+      if (defined $ct and $ct =~ /;\s*charset\s*=\s*"?(\S+)"?/i) {
+        $r->{charset} = lc $1;
+        $r->{charset} =~ tr/\\//d;
+      }
+
+      my $input_charset = $http->parameter ('charset');
+      if (defined $input_charset and length $input_charset) {
+        $r->{charset_overridden}
+            = (not defined $r->{charset} or $r->{charset} ne $input_charset);
+        $r->{charset} = $input_charset;
+      } 
+
+      $r->{s} = ''.$res->content;
+    } else {
+      $r->{uri} = $res->request->uri;
+      $r->{request_uri} = $request_uri;
+      $r->{error_status_text} = $res->status_line;
+    }
+
+    $r->{header_field} = [];
+    $res->scan (sub {
+      push @{$r->{header_field}}, [$_[0], $_[1]];
+    });
+    $r->{header_status_code} = $res->code;
+    $r->{header_status_text} = $res->message;
+  } else {
+    $r->{s} = ''.$http->parameter ('s');
+    $r->{uri} = q<thismessage:/>;
+    $r->{request_uri} = q<thismessage:/>;
+    $r->{base_uri} = q<thismessage:/>;
+    $r->{charset} = ''.$http->parameter ('_charset_');
+    $r->{charset} =~ s/\s+//g;
+    $r->{charset} = 'utf-8' if $r->{charset} eq '';
+    $r->{header_field} = [];
+  }
+
+  my $input_format = $http->parameter ('i');
+  if (defined $input_format and length $input_format) {
+    $r->{media_type_overridden}
+        = (not defined $r->{media_type} or $input_format ne $r->{media_type});
+    $r->{media_type} = $input_format;
+  }
+  if (defined $r->{s} and not defined $r->{media_type}) {
+    $r->{media_type} = 'text/html';
+    $r->{media_type_overridden} = 1;
+  }
+
+  if ($r->{media_type} eq 'text/xml') {
+    unless (defined $r->{charset}) {
+      $r->{charset} = 'us-ascii';
+    } elsif ($r->{charset_overridden} and $r->{charset} eq 'us-ascii') {
+      $r->{charset_overridden} = 0;
+    }
+  }
+
+  if (length $r->{s} > 1000_000) {
+    $r->{error_status_text} = 'Entity-body too large';
+    delete $r->{s};
+    return $r;
+  }
+
+  return $r;
+} # get_input_document
+
+package WDCC::LWPUA;
+BEGIN { push our @ISA, 'LWP::UserAgent'; }
+
+sub redirect_ok {
+  my $ua = shift;
+  unless ($ua->SUPER::redirect_ok (@_)) {
+    return 0;
+  }
+
+  my $uris = $_[1]->header ('Location');
+  return 0 unless $uris;
+  my $uri = $ua->{wdcc_dom}->create_uri_reference ($uris);
+  unless ({
+           http => 1,
+          }->{lc $uri->uri_scheme}) {
+    return 0;
+  }
+  unless ($ua->{wdcc_host_permit}->check ($uri->uri_host, $uri->uri_port || 80)) {
+    return 0;
+  }
+  return 1;
+} # redirect_ok
+
 =head1 AUTHOR
 
 Wakaba <w@suika.fam.cx>.
@@ -467,4 +667,4 @@ and/or modify it under the same terms as Perl itself.
 
 =cut
 
-## $Date: 2007/07/01 10:02:24 $
+## $Date: 2007/07/15 16:39:10 $
