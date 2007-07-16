@@ -11,19 +11,8 @@ Web Document Conformance Checker (BETA)</title>
 <body>
 <h1>Description of Errors</h1>
 
-<section id="html5-parse-errors">
-<h2>HTML5 Parse Errors</h2>
-
-<d:item name="after head"
-    class="parse-error">
-  <d:message xml:lang="en">The <code><var>$0</var></code> element cannot be
-  inserted between <code>head</code> and <code>body</code> elements.</d:message>
-  <d:desc xml:lang="en">
-    <p>A start tag occurs after the <code>head</code> element is closed
-    but before the <code>body</code> element is opened.
-    The document is non-conforming.</p>
-  </d:desc>
-</d:item>
+<section id="html5-tokenize-error">
+<h2>HTML5 Parse Errors in Tokenization Stage</h2>
 
 <d:item name="duplicate attribute"
     class="tokenize-error">
@@ -52,6 +41,46 @@ Web Document Conformance Checker (BETA)</title>
     <p>Unlike XML, the void element syntax (<code>/></code>) has
     no effect in HTML.</p>
   </d:desc>
+</d:item>
+
+</section>
+
+<section id="html5-parse-errors">
+<h2>HTML5 Parse Errors in Tree Construction Stage</h2>
+
+<d:item name="after head"
+    class="parse-error">
+  <d:message xml:lang="en">The <code><var>$0</var></code> element cannot be
+  inserted between <code>head</code> and <code>body</code> elements.</d:message>
+  <d:desc xml:lang="en">
+    <p>A start tag occurs after the <code>head</code> element is closed
+    but before the <code>body</code> element is opened.
+    The document is non-conforming.</p>
+  </d:desc>
+</d:item>
+
+<d:item name="no DOCTYPE"
+    class="parse-error">
+  <d:message xml:lang="en">This document does not start with the
+  <code>DOCTYPE</code> declaration.</d:message>
+</d:item>
+
+<d:item name="not closed"
+    class="parse-error">
+  <d:message xml:lang="en">Element <code><var>$0</var></code> is not
+  closed.</d:message>
+</d:item>
+
+<d:item name="not HTML5"
+    class="parse-error">
+  <d:message xml:lang="en">This document is written in an old version of 
+  HTML.</d:message>
+</d:item>
+
+<d:item name="unmatched end tag"
+    class="parse-error">
+  <d:message xml:lang="en">Element <code><var>$0</var></code> is not
+  opened.</d:message>
 </d:item>
 
 </section>
@@ -158,28 +187,78 @@ Web Document Conformance Checker (BETA)</title>
   </d:desc>
 </d:item>
 
-enumerated:invalid;attribute-error;This attribute only allow a limited set of values and the specified value is not one of them.
-no DOCTYPE;parse-error;This document does not start with the <code>DOCTYPE</code> declaration.
-not HTML5;parse-error;This document is written in an old version of HTML.
-not closed;parse-error;Element <code>$0</code> is not closed.
-unmatched end tag;parse-error;Element <code>$0</code> is not opened.
+</section>
 
-table:no cell in last row;table-model-error;The table has no cell (<code>td</code> or <code>th</code>) in the last row.
+<section id="attribute-value-errors">
+<h2>Attribute Value Errors</h2>
 
-s:IMT:obsolete subtype;should;An <em>obsolete</em> subtype is used.
-s:IMT:private subtype;should;A private (<code>x-</code> or <code>x.</code>) subtype is used.
-s:IMT:unregistered subtype;should;The subtype is not registered to IANA.
+<d:item name="enumerated:invalid"
+    class="attribute-error">
+  <d:message xml:lang="en">This attribute only allow a limited set of 
+  values and the specified value is not one of them.</d:message>
+</d:item>
 
-s:URI::empty path;should;This IRI should explicitly end with <code>/</code>.
-m:URI::syntax error;must;This IRI is not syntactically valid.
+</section>
+
+<section id="table-model-errors">
+<h2>Table Model Errors</h2>
+
+<d:item name="table:no cell in last row"
+    class="table-model-error">
+  <d:message xml:lang="en">The table has no cell (<code>td</code> or
+  <code>th</code>) in the last row.</d:message>
+</d:item>
+
+</section>
+
+<section id="imt-warnings">
+<h2>Internet Media Type Warnings</h2>
+
+<d:item name="IMT:obsolete subtype"
+    class="should" level="s">
+  <d:message xml:lang="en">An <em>obsolete</em> subtype is used.</d:message>
+</d:item>
+
+<d:item name="IMT:private subtype"
+    class="should" level="s">
+  <d:message xml:lang="en">A private (<code>x-</code> or <code>x.</code>)
+  subtype is used.</d:message>
+</d:item>
+
+<d:item name="IMT:unregistered subtype"
+    class="should" level="s">
+  <d:message xml:lang="en">The subtype is not registered to IANA.</d:message>
+<!-- TODO: Unknown message?? -->
+</d:item>
+
+</section>
+
+<section id="uri-errors">
+<h2>URI (or IRI) Errors</h2>
+
+<d:item name="URI::syntax error"
+    class="must" level="m">
+  <d:message xml:lang="en">This string is not an IRI syntactically.</d:message>
+</d:item>
+
+</section>
+
+<section id="uri-errors">
+<h2>URI (or IRI) Errors</h2>
+
+<d:item name="URI::empty path"
+    class="should" level="s">
+  <d:message xml:lang="en">This IRI should explicitly end with
+  <code>/</code>.</d:message>
+</d:item>
 
 </section>
 
 <section id="unsupported-messages">
 <h2><i>Unsupported</i> Messages</h2>
 
-<d:item name="unsupported:attribute"
-    class="unsupported">
+<d:item name="attribute"
+    class="unsupported" level="unsupported">
   <d:message xml:lang="en">This attribute is not supported by the
   conformance checker; <em>it might or might not be conforming</em>.</d:message>
   <d:desc xml:lang="en">
@@ -188,8 +267,8 @@ m:URI::syntax error;must;This IRI is not syntactically valid.
   </d:desc>
 </d:item>
 
-<d:item name="unsupported:element"
-    class="unsupported">
+<d:item name="element"
+    class="unsupported" level="unsupported">
   <d:message xml:lang="en">This element is not supported by the
   conformance checker; <em>it might or might not be conforming</em>.</d:message>
   <d:desc xml:lang="en">
@@ -198,8 +277,8 @@ m:URI::syntax error;must;This IRI is not syntactically valid.
   </d:desc>
 </d:item>
 
-<d:item name="unsupported:link type"
-    class="unsupported">
+<d:item name="link type"
+    class="unsupported" level="unsupported">
   <d:message xml:lang="en">The link type <code>$0</code> is not standardized
   or registered at the time of the release of the conformance checker; 
   <em>it is non-conforming unless it has now been registered</em>.</d:message>
@@ -219,6 +298,15 @@ m:URI::syntax error;must;This IRI is not syntactically valid.
 
 </section>
 
+<d:catalog>
+manakaiCompatMode:quirks;;Quirks Mode
+manakaiCompatMode:limited quirks;;Limited Quirks Mode
+manakaiCompatMode:no quirks;;No Quirks Mode
+
+manakaiIsHTML:1;;HTML Document
+manakaiIsHTML:0;;XML Document
+</d:catalog>
+
 <section id="license">
 <h2>License of This Document</h2>
 
@@ -227,6 +315,6 @@ m:URI::syntax error;must;This IRI is not syntactically valid.
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2007/07/01 10:02:24 $ -->
+<!-- $Date: 2007/07/16 08:38:48 $ -->
 </body>
 </html>

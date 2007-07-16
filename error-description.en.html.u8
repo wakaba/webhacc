@@ -8,15 +8,8 @@ Web Document Conformance Checker (BETA)</title>
 <body>
 <h1>Description of Errors</h1>
 
-<section id="html5-parse-errors">
-<h2>HTML5 Parse Errors</h2>
-
-<div class="section parse-error" id="after-head"><h3>The <code><var>$0</var></code> element cannot be
-  inserted between <code>head</code> and <code>body</code> elements.</h3>
-    <p>A start tag occurs after the <code>head</code> element is closed
-    but before the <code>body</code> element is opened.
-    The document is non-conforming.</p>
-  </div>
+<section id="html5-tokenize-error">
+<h2>HTML5 Parse Errors in Tokenization Stage</h2>
 
 <div class="section tokenize-error" id="duplicate-attribute"><h3>There are two attributes with same name.</h3>
     <p>Attributes must be unique in an element.  Specifying
@@ -38,6 +31,30 @@ Web Document Conformance Checker (BETA)</title>
     <p>Unlike XML, the void element syntax (<code>/&gt;</code>) has
     no effect in HTML.</p>
   </div>
+
+</section>
+
+<section id="html5-parse-errors">
+<h2>HTML5 Parse Errors in Tree Construction Stage</h2>
+
+<div class="section parse-error" id="after-head"><h3>The <code><var>$0</var></code> element cannot be
+  inserted between <code>head</code> and <code>body</code> elements.</h3>
+    <p>A start tag occurs after the <code>head</code> element is closed
+    but before the <code>body</code> element is opened.
+    The document is non-conforming.</p>
+  </div>
+
+<div class="section parse-error" id="no-DOCTYPE"><h3>This document does not start with the
+  <code>DOCTYPE</code> declaration.</h3></div>
+
+<div class="section parse-error" id="not-closed"><h3>Element <code><var>$0</var></code> is not
+  closed.</h3></div>
+
+<div class="section parse-error" id="not-HTML5"><h3>This document is written in an old version of 
+  HTML.</h3></div>
+
+<div class="section parse-error" id="unmatched-end-tag"><h3>Element <code><var>$0</var></code> is not
+  opened.</h3></div>
 
 </section>
 
@@ -127,20 +144,48 @@ Web Document Conformance Checker (BETA)</title>
     </p>
   </div>
 
-enumerated:invalid;attribute-error;This attribute only allow a limited set of values and the specified value is not one of them.
-no DOCTYPE;parse-error;This document does not start with the <code>DOCTYPE</code> declaration.
-not HTML5;parse-error;This document is written in an old version of HTML.
-not closed;parse-error;Element <code>$0</code> is not closed.
-unmatched end tag;parse-error;Element <code>$0</code> is not opened.
+</section>
 
-table:no cell in last row;table-model-error;The table has no cell (<code>td</code> or <code>th</code>) in the last row.
+<section id="attribute-value-errors">
+<h2>Attribute Value Errors</h2>
 
-s:IMT:obsolete subtype;should;An <em>obsolete</em> subtype is used.
-s:IMT:private subtype;should;A private (<code>x-</code> or <code>x.</code>) subtype is used.
-s:IMT:unregistered subtype;should;The subtype is not registered to IANA.
+<div class="section attribute-error" id="enumerated:invalid"><h3>This attribute only allow a limited set of 
+  values and the specified value is not one of them.</h3></div>
 
-s:URI::empty path;should;This IRI should explicitly end with <code>/</code>.
-m:URI::syntax error;must;This IRI is not syntactically valid.
+</section>
+
+<section id="table-model-errors">
+<h2>Table Model Errors</h2>
+
+<div class="section table-model-error" id="table:no-cell-in-last-row"><h3>The table has no cell (<code>td</code> or
+  <code>th</code>) in the last row.</h3></div>
+
+</section>
+
+<section id="imt-warnings">
+<h2>Internet Media Type Warnings</h2>
+
+<div class="section should" id="s:IMT:obsolete-subtype"><h3>An <em>obsolete</em> subtype is used.</h3></div>
+
+<div class="section should" id="s:IMT:private-subtype"><h3>A private (<code>x-</code> or <code>x.</code>)
+  subtype is used.</h3></div>
+
+<div class="section should" id="s:IMT:unregistered-subtype"><h3>The subtype is not registered to IANA.</h3></div>
+
+</section>
+
+<section id="uri-errors">
+<h2>URI (or IRI) Errors</h2>
+
+<div class="section must" id="m:URI::syntax-error"><h3>This string is not an IRI syntactically.</h3></div>
+
+</section>
+
+<section id="uri-errors">
+<h2>URI (or IRI) Errors</h2>
+
+<div class="section should" id="s:URI::empty-path"><h3>This IRI should explicitly end with
+  <code>/</code>.</h3></div>
 
 </section>
 
@@ -176,6 +221,15 @@ m:URI::syntax error;must;This IRI is not syntactically valid.
 
 </section>
 
+<d:catalog>
+manakaiCompatMode:quirks;;Quirks Mode
+manakaiCompatMode:limited quirks;;Limited Quirks Mode
+manakaiCompatMode:no quirks;;No Quirks Mode
+
+manakaiIsHTML:1;;HTML Document
+manakaiIsHTML:0;;XML Document
+</d:catalog>
+
 <section id="license">
 <h2>License of This Document</h2>
 
@@ -184,6 +238,6 @@ m:URI::syntax error;must;This IRI is not syntactically valid.
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2007/07/01 10:02:24 $ -->
+<!-- $Date: 2007/07/16 08:38:48 $ -->
 </body>
 </html>

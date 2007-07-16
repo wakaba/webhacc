@@ -1,27 +1,23 @@
-after head;parse-error;The <code>$0</code> element cannot be inserted between <code>head</code> and <code>body</code> elements.
-character not allowed;content-model-error;Data character is not allowed in this context.
-child element missing;content-model-error;There must be a <code>$0</code> element as a child of this element.
-child element missing:td|th;content-model-error;There must be a <code>td</code> or <code>th</code> element as a child of this element.
-nestc;tokenize-error;Void element syntax (<code>/></code>) cannot be used for this element.
 duplicate attribute;tokenize-error;There are two attributes with same name.
+nestc;tokenize-error;Void element syntax (<code>/&gt;</code>) cannot be used for this element.
+after head;parse-error;The <code><var>$0</var></code> element cannot be inserted between <code>head</code> and <code>body</code> elements.
+no DOCTYPE;parse-error;This document does not start with the <code>DOCTYPE</code> declaration.
+not closed;parse-error;Element <code><var>$0</var></code> is not closed.
+not HTML5;parse-error;This document is written in an old version of HTML.
+unmatched end tag;parse-error;Element <code><var>$0</var></code> is not opened.
+character not allowed;content-model-error;Data character is not allowed in this context.
+child element missing;content-model-error;There must be a <code><var>$0</var></code> element as a child of this element.
+child element missing:td|th;content-model-error;There must be a <code>td</code> or <code>th</code> element as a child of this element.
 element not allowed;content-model-error;This element is not allowed in this context.
 enumerated:invalid;attribute-error;This attribute only allow a limited set of values and the specified value is not one of them.
-no DOCTYPE;parse-error;This document does not start with the <code>DOCTYPE</code> declaration.
-not HTML5;parse-error;This document is written in an old version of HTML.
-not closed;parse-error;Element <code>$0</code> is not closed.
-unmatched end tag;parse-error;Element <code>$0</code> is not opened.
-
 table:no cell in last row;table-model-error;The table has no cell (<code>td</code> or <code>th</code>) in the last row.
-
 s:IMT:obsolete subtype;should;An <em>obsolete</em> subtype is used.
 s:IMT:private subtype;should;A private (<code>x-</code> or <code>x.</code>) subtype is used.
 s:IMT:unregistered subtype;should;The subtype is not registered to IANA.
-
+m:URI::syntax error;must;This string is not an IRI syntactically.
 s:URI::empty path;should;This IRI should explicitly end with <code>/</code>.
-m:URI::syntax error;must;This IRI is not syntactically valid.
-
-unsupported:attribute;unsupported;This attribute is not supported by the conformance checker; <em>it might or might not be conformant</em>.
-unsupported:element;unsupported;This element is not supported by the conformance checker; <em>it might or might not be conformant</em>.
+unsupported:attribute;unsupported;This attribute is not supported by the conformance checker; <em>it might or might not be conforming</em>.
+unsupported:element;unsupported;This element is not supported by the conformance checker; <em>it might or might not be conforming</em>.
 unsupported:link type;unsupported;The link type <code>$0</code> is not standardized or registered at the time of the release of the conformance checker; <em>it is non-conforming unless it has now been registered</em>.
 
 manakaiCompatMode:quirks;;Quirks Mode
@@ -31,9 +27,3 @@ manakaiCompatMode:no quirks;;No Quirks Mode
 manakaiIsHTML:1;;HTML Document
 manakaiIsHTML:0;;XML Document
 
-# Copyright 2007 Wakaba <w@suika.fam.cx>
-# 
-# This library is free software; you can redistribute it
-# and/or modify it under the same terms as Perl itself.
-# 
-# $Date: 2007/07/01 10:02:24 $

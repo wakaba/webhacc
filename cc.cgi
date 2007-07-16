@@ -80,6 +80,8 @@ if (defined $input->{s}) {
   if ($input->{media_type} eq 'text/html') {
     require Encode;
     require Whatpm::HTML;
+
+    $input->{charset} ||= 'ISO-8859-1'; ## TODO: for now.
     
     my $t = Encode::decode ($input->{charset}, $input->{s});
 
@@ -87,8 +89,7 @@ if (defined $input->{s}) {
 <div id="parse-errors" class="section">
 <h2>Parse Errors</h2>
 
-<dl>
-];
+<dl>];
   push @nav, ['#parse-errors' => 'Parse Error'];
 
   my $onerror = sub {
@@ -115,8 +116,7 @@ if (defined $input->{s}) {
     Whatpm::HTML->parse_string ($t => $doc, $onerror);
   }
 
-  print STDOUT qq[
-</dl>
+  print STDOUT qq[</dl>
 </div>
 ];
 
@@ -493,7 +493,9 @@ sub get_text ($) {
   {
     if (defined $Msg->{$type}) {
       my $msg = $Msg->{$type}->[1];
-      $msg =~ s/\$([0-9]+)/defined $arg[$1] ? htescape ($arg[$1]) : '(undef)'/ge;
+      $msg =~ s{<var>\$([0-9]+)</var>}{
+        defined $arg[$1] ? htescape ($arg[$1]) : '(undef)';
+      }ge;
       return ($Msg->{$type}->[0], $msg);
     } elsif ($type =~ s/:([^:]*)$//) {
       unshift @arg, $1;
@@ -667,4 +669,4 @@ and/or modify it under the same terms as Perl itself.
 
 =cut
 
-## $Date: 2007/07/15 16:39:10 $
+## $Date: 2007/07/16 08:38:48 $
