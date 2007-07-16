@@ -1,5 +1,23 @@
 2007-07-16  Wakaba  <wakaba@suika.fam.cx>
 
+	* cc.cgi (table stuff): Set |is_header| property
+	of table cells explicitly since otherwise newer JSON.pm
+	generates broken output.
+	(get_text): Return the reduced type name as well.  Use
+	it as fragment of detail document.
+
+	* error-description-source.xml: More error descriptions
+	are added.
+
+	* mkdescription.pl: Remove |catalog| element from
+	the result description document.
+
+	* table.cgi: Set |is_header| property
+        of table cells explicitly since otherwise newer JSON.pm
+        generates broken output.
+
+2007-07-16  Wakaba  <wakaba@suika.fam.cx>
+
 	* Makefile (all): |cc-msg.en.txt| is added to the list of
 	dependency.
 	(cc-msg.en.txt): New rule.

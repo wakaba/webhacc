@@ -1,7 +1,14 @@
+after html;parse-error;Tag <code>&lt;<var>$0</var>&gt;</code> is not allowed after the end tag <code>&lt;/html&gt;</code>.
+bare ero;tokenize-error;The <code>&amp;</code> character must introduce a reference.
+bare nero;tokenize-error;The decimal representation of the code position of a character must be specified after <code>&amp;#</code>.
+bare hcro;tokenize-error;The hexadecimal representation of the code position of a character must be specified after <code>&amp;#x</code>.
 duplicate attribute;tokenize-error;There are two attributes with same name.
 nestc;tokenize-error;Void element syntax (<code>/&gt;</code>) cannot be used for this element.
 after head;parse-error;The <code><var>$0</var></code> element cannot be inserted between <code>head</code> and <code>body</code> elements.
-no DOCTYPE;parse-error;This document does not start with the <code>DOCTYPE</code> declaration.
+in table;parse-error;Tag <code>&lt;<var>$0</var>&gt;</code> is not allowed in <code>table</code>.
+in table:#character;parse-error;Data character is not allowed in <code>table</code>.
+missing start tag:tr;parse-error;Start tag of <code>tr</code> element is missing.
+no DOCTYPE;parse-error;This document does not start with the <code>DOCTYPE</code>.
 not closed;parse-error;Element <code><var>$0</var></code> is not closed.
 not HTML5;parse-error;This document is written in an old version of HTML.
 unmatched end tag;parse-error;Element <code><var>$0</var></code> is not opened.
@@ -9,12 +16,21 @@ character not allowed;content-model-error;Data character is not allowed in this 
 child element missing;content-model-error;There must be a <code><var>$0</var></code> element as a child of this element.
 child element missing:td|th;content-model-error;There must be a <code>td</code> or <code>th</code> element as a child of this element.
 element not allowed;content-model-error;This element is not allowed in this context.
-enumerated:invalid;attribute-error;This attribute only allow a limited set of values and the specified value is not one of them.
+attribute missing;attribute-error;Required attribute <code><var>$0</var></code> is not specified.
+in HTML:xml:lang;attribute-error;The <code>xml:lang</code> attribute is not allowed in HTML document.
+in XML:charset;attribute-error;The <code>charset</code> attribute is not allowed in XML document.
+in XML:lang;attribute-error;The <code>lang</code> attribute is not allowed in XML document.
+in XML:xmlns;attribute-error;The <code>xmlns</code> attribute in the <code>null</code> namespace is not allowed in XHTML document. The document is non-conforming.
+enumerated:invalid;attribute-value-error;This attribute only allow a limited set of values and the specified value is not one of them.
+duplicate ID;attribute-value-error;This identifier has already been assigned to another element.
+reserved browsing context name;attribute-value-error;This browsing context name is reserved.
+table:colspan creates column with no anchored cell;table-model-error;This <code>colspan</code> attribute results in creating a table column that does not contain any cell anchored to it.
 table:no cell in last row;table-model-error;The table has no cell (<code>td</code> or <code>th</code>) in the last row.
 s:IMT:obsolete subtype;should;An <em>obsolete</em> subtype is used.
 s:IMT:private subtype;should;A private (<code>x-</code> or <code>x.</code>) subtype is used.
 s:IMT:unregistered subtype;should;The subtype is not registered to IANA.
 m:URI::syntax error;must;This string is not an IRI syntactically.
+s:URI::dot-segment;should;Dot-segment (<code>.</code> or <code>..</code>) should not occur in an absolute reference.
 s:URI::empty path;should;This IRI should explicitly end with <code>/</code>.
 unsupported:attribute;unsupported;This attribute is not supported by the conformance checker; <em>it might or might not be conforming</em>.
 unsupported:element;unsupported;This element is not supported by the conformance checker; <em>it might or might not be conforming</em>.

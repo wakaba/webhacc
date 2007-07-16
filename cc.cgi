@@ -94,16 +94,16 @@ if (defined $input->{s}) {
 
   my $onerror = sub {
     my (%opt) = @_;
-    my ($cls, $msg) = get_text ($opt{type}, $opt{level});
+    my ($type, $cls, $msg) = get_text ($opt{type}, $opt{level});
     if ($opt{column} > 0) {
       print STDOUT qq[<dt class="$cls"><a href="#line-$opt{line}">Line $opt{line}</a> column $opt{column}</dt>\n];
     } else {
       $opt{line} = $opt{line} - 1 || 1;
       print STDOUT qq[<dt class="$cls"><a href="#line-$opt{line}">Line $opt{line}</a></dt>\n];
     }
-    $opt{type} =~ tr/ /-/;
-    $opt{type} =~ s/\|/%7C/g;
-    $msg .= qq[ [<a href="../error-description#$opt{type}">Description</a>]];
+    $type =~ tr/ /-/;
+    $type =~ s/\|/%7C/g;
+    $msg .= qq[ [<a href="../error-description#@{[htescape ($type)]}">Description</a>]];
     print STDOUT qq[<dd class="$cls">$msg</dd>\n];
   };
 
@@ -185,11 +185,10 @@ if (defined $input->{s}) {
     require Whatpm::ContentChecker;
     my $onerror = sub {
       my %opt = @_;
-      my ($cls, $msg) = get_text ($opt{type}, $opt{level});
-      $opt{type} = $opt{level} . ':' . $opt{type} if defined $opt{level};
-      $opt{type} =~ tr/ /-/;
-      $opt{type} =~ s/\|/%7C/g;
-      $msg .= qq[ [<a href="../error-description#$opt{type}">Description</a>]];
+      my ($type, $cls, $msg) = get_text ($opt{type}, $opt{level});
+      $type =~ tr/ /-/;
+      $type =~ s/\|/%7C/g;
+      $msg .= qq[ [<a href="../error-description#@{[htescape ($type)]}">Description</a>]];
       print STDOUT qq[<dt class="$cls">] . get_node_link ($opt{node}) .
           qq[</dt>\n<dd class="$cls">], $msg, "</dd>\n";
     };
@@ -246,6 +245,7 @@ if (defined $input->{s}) {
             for (@$_) {
               $_->{id} = refaddr $_->{element} if defined $_->{element};
               delete $_->{element};
+              $_->{is_header} = $_->{is_header} ? 1 : 0;
             }
           }
         }
@@ -496,13 +496,13 @@ sub get_text ($) {
       $msg =~ s{<var>\$([0-9]+)</var>}{
         defined $arg[$1] ? htescape ($arg[$1]) : '(undef)';
       }ge;
-      return ($Msg->{$type}->[0], $msg);
+      return ($type, $Msg->{$type}->[0], $msg);
     } elsif ($type =~ s/:([^:]*)$//) {
       unshift @arg, $1;
       redo;
     }
   }
-  return ('', htescape ($_[0]));
+  return ($type, '', htescape ($_[0]));
 } # get_text
 
 }
@@ -669,4 +669,4 @@ and/or modify it under the same terms as Perl itself.
 
 =cut
 
-## $Date: 2007/07/16 08:38:48 $
+## $Date: 2007/07/16 10:55:11 $
