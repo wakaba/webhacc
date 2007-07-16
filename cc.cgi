@@ -15,7 +15,9 @@ sub htescape ($) {
   $s =~ s/</&lt;/g;
   $s =~ s/>/&gt;/g;
   $s =~ s/"/&quot;/g;
-  $s =~ s!([\x00-\x09\x0B-\x1F\x7F-\x80])!sprintf '<var>U+%04X</var>', ord $1!ge;
+  $s =~ s{([\x00-\x09\x0B-\x1F\x7F-\xA0\x{FEFF}\x{FFFC}-\x{FFFF}])}{
+    sprintf '<var>U+%04X</var>', ord $1;
+  }ge;
   return $s;
 } # htescape
 
@@ -27,6 +29,8 @@ my $http = SuikaWiki::Input::HTTP->new;
     print STDOUT "Status: 404 Not Found\nContent-Type: text/plain; charset=us-ascii\n\n400";
     exit;
   }
+
+  binmode STDOUT, ':utf8';
 
   require Message::DOM::DOMImplementation;
   my $dom = Message::DOM::DOMImplementation->new;
@@ -669,4 +673,4 @@ and/or modify it under the same terms as Perl itself.
 
 =cut
 
-## $Date: 2007/07/16 10:55:11 $
+## $Date: 2007/07/16 13:56:26 $

@@ -56,6 +56,19 @@ Web Document Conformance Checker (BETA)</title>
     </p>
   </div>
 
+<div class="section tokenize-error" id="bare-stago"><h3>A <code>&lt;</code> character is not followed
+  by tag name or by a <code>!</code> character.</h3>
+    <p>A <code>&lt;</code> (<code>U+003C</code> <code class="charname">LESS-THAN
+    SIGN</code>) character which is not part of any markup appears
+    in the input stream.</p>
+
+    <p>The <code>&lt;</code> character as a data character must
+    be escaped as:
+    <pre class="html example">
+<code>&lt;lt;</code></pre>
+    </p>
+  </div>
+
 <div class="section tokenize-error" id="bare-nero"><h3>The decimal representation of the code position
   of a character must be specified after <code>&amp;#</code>.</h3>
     <p>An <code>&amp;</code> (<code>U+0026</code>
@@ -109,6 +122,19 @@ Web Document Conformance Checker (BETA)</title>
     </p>
   </div>
 
+<div class="section tokenize-error" id="dash-in-comment"><h3>There is a <code>--</code> sequence
+  in a comment.</h3>
+    <p>There is a <code>-</code> (<code>U+002D</code>
+    <code class="charname">HYPHEN-MINUS</code>) character 
+    at the end of the comment or a <code>--</code> sequence
+    in the comment.  The document is non-conforming.</p>
+
+    <p>Comments cannot contain a string <code>--</code>, as in XML.
+    Unlike SGML, there cannot be more than one comments
+    (where <i>comment</i> is an SGML term) in the comment
+    declaration.</p>
+  </div>
+
 <div class="section tokenize-error" id="duplicate-attribute"><h3>There are two attributes with same name.</h3>
     <p>There are more than one attributes with the same
     name in a tag.  The document is non-conforming.</p>
@@ -144,10 +170,30 @@ Web Document Conformance Checker (BETA)</title>
     The document is non-conforming.</p>
   </div>
 
+<div class="section parse-error" id="DOCTYPE-in-the-middle"><h3>A <code>DOCTYPE</code> appears after any
+  element or data character has been seen.</h3>
+    <p>A <code>DOCTYPE</code> appears after any element or data character
+    has been seen.  The document is non-conforming.</p>
+    
+    <p>The <code>DOCTYPE</code> must be placed before any
+    tag, reference, or data character.  Only white space characters
+    and comments can be inserted before the <code>DOCTYPE</code>.</p>
+  </div>
+
+<div class="section parse-error" id="in-body"><h3>Tag <code>&lt;<var>$0</var>&gt;</code>
+  is not allowed in <code>body</code>.</h3>
+    <p>The start or end tag of an element, which 
+    cannot be a descendant of <code>body</code> element, appears
+    in the input stream while the <code>body</code> element has been opened.
+    The document is non-conforming.</p>
+  </div>
+
 <div class="section parse-error" id="in-table"><h3>Tag <code>&lt;<var>$0</var>&gt;</code>
   is not allowed in <code>table</code>.</h3>
-    <p>The start or end tag of an element appears in <code>table</code>.
-    The document is non-conforming.</p>
+    <p>The start or end tag of an element, which
+    cannot be a child of <code>table</code> element, appears
+    in the input stream while the <code>table</code> element has been opened
+    but no other element has been opened.  The document is non-conforming.</p>
 
     <p>In <code>table</code>, only table related elements
     are allowed; any other element must be contained in
@@ -215,7 +261,13 @@ Web Document Conformance Checker (BETA)</title>
   </div>
 
 <div class="section parse-error" id="unmatched-end-tag"><h3>Element <code><var>$0</var></code> is not
-  opened.</h3></div>
+  opened.</h3>
+    <p>An end tag appears though no element with the same name
+    has been opened.  The document is non-conforming.</p>
+
+    <p>For any end tag in HTML document, there must be a
+    corresponding start tag.</p>
+  </div>
 
 </section>
 
@@ -331,8 +383,8 @@ Web Document Conformance Checker (BETA)</title>
     <p>The <code>xml:lang</code> attribute is not allowed in
     HTML document.  The document is non-conforming.</p>
 
-    <p>The <code>xml:lang</code> attribute in <code>null</code>
-    namespace for HTML elements is defined as conforming only for
+    <p>The <code>lang</code> attribute in the <code>null</code>
+    namespace for HTML elements is defined as conforming <em>only</em> for
     XML document.</p>
 
     <p>To specify natural language information in HTML document,
@@ -360,7 +412,7 @@ Web Document Conformance Checker (BETA)</title>
     XML document.  The document is non-conforming.</p>
 
     <p>The <code>lang</code> attribute in <code>null</code>
-    namespace for HTML elements is defined as conforming only for
+    namespace for HTML elements is defined as conforming <em>only</em> for
     HTML document.</p>
 
     <p>To specify natural language information in XML document,
@@ -388,7 +440,48 @@ Web Document Conformance Checker (BETA)</title>
 <div class="section attribute-value-error" id="duplicate-ID"><h3>This identifier has already been
   assigned to another element.</h3></div>
 
+<div class="section attribute-value-error" id="link-type:bad-context"><h3>The link type <code><var>$0</var></code>
+  cannot be specified for this element.</h3>
+    <p>The specified link type cannot be used for the element.
+    The document is non-conforming.</p>
+
+    <p>Link types are associated with limited set of elements.
+    They cannot be used with other elements.</p>
+
+    <p>For example, link type <code>bookmark</code>
+    can be used with <code>a</code> or <code>area</code> element,
+    while it cannot be used with <code>link</code> element.</p>
+  </div>
+
+<div class="section attribute-value-error" id="link-type:non-conforming"><h3>The link type <code><var>$0</var></code>
+  is non-conforming.</h3>
+    <p>The specified link type is non-conforming.  The entire document
+    is non-conforming.</p>
+
+    <p>For example, in place of non-conforming link type <code>copyright</code>
+    you must use link type <code>license</code>.</p>
+  </div>
+
 <div class="section attribute-value-error" id="reserved-browsing-context-name"><h3>This browsing context name is reserved.</h3></div>
+
+</section>
+
+<section id="attribute-value-warnings">
+<h2>Attribute Value Warnings</h2>
+
+<div class="section attribute-value-warning should" id="s:link-type:proposed"><h3>Link type <code><var>$0</var></code>
+  is proposed but not accepted yet; it <em>should not</em> be
+  used until it has been accepted.</h3>
+    <p>The link type is in the <i>proposed</i> status; it
+    <em>should not</em> be used until it has been
+    accepted.</p>
+
+    <p><strong>Warning</strong>: The data served to the
+    conforming checker might be out of date; it might have already
+    been accepted or rejected, depending on which the document
+    might be conforming or non-conforming.  See WHATWG Wiki
+    for the latest information.</p>
+  </div>
 
 </section>
 
@@ -441,6 +534,20 @@ Web Document Conformance Checker (BETA)</title>
 <div class="section should" id="s:URI::empty-path"><h3>This IRI should explicitly end with
   <code>/</code>.</h3></div>
 
+<div class="section should" id="s:URI::lowercase-hexadecimal-digit"><h3>Hexadecimal digit in percent-encoding
+  should be in lowercase.</h3>
+    <p>Hexadecimal digit in percent-encoding string in the IRI
+    is in lowercase.  Though the IRI <em>is</em> conforming,
+    it should be in uppercase.</p>
+  </div>
+
+<div class="section should" id="s:URI::percent-encoded-unreserved"><h3>An unreserved character is 
+  percent-encoded.</h3>
+    <p>An unreserved character is percent-encoded in the IRI.
+    Though it <em>is</em> conforming, it should be in the 
+    decoded (or bare) form.</p>
+  </div>
+
 </section>
 
 <section id="unsupported-messages">
@@ -458,9 +565,10 @@ Web Document Conformance Checker (BETA)</title>
     It cannot determine whether the document is conforming or not.</p>
   </div>
 
-<div class="section unsupported" id="unsupported:link-type"><h3>The link type <code>$0</code> is not standardized
-  or registered at the time of the release of the conformance checker; 
-  <em>it is non-conforming unless it has now been registered</em>.</h3>
+<div class="section unsupported" id="unsupported:link-type"><h3>The link type <code><var>$0</var></code> is not
+  standardized or registered at the time of the release of the conformance
+  checker; <em>it is non-conforming unless it has now been
+  registered</em>.</h3>
     <p>The <code>rel</code> attribute is defined as a list of link types.
     Some common link types are defined in the HTML5 specification.
     Additional link types can be registered to the WHATWG Wiki.
@@ -472,6 +580,23 @@ Web Document Conformance Checker (BETA)</title>
     In such case it might be conforming.  Otherwise, the
     document is non-conforming.</p>
   </div>
+
+<div class="section unsupported" id="unsupported:event-handler"><h3>Conformance checking for event handler attribute
+  is not supported; <em>it might or might not be conforming.</em></h3></div>
+
+<div class="section unsupported" id="unsupported:language-tag"><h3>Conformance checking for language tag
+  is not supported; <em>it might or might not be conforming.</em></h3></div>
+
+<div class="section unsupported" id="unsupported:media-query"><h3>Conformance checking for media query
+  is not supported; <em>it might or might not be conforming.</em></h3></div>
+
+<div class="section unsupported" id="unsupported:script"><h3>Conformance checking for script
+  language <code><var>$0</var></code> is not supported;
+  <em>it might or might not be conforming.</em></h3></div>
+
+<div class="section unsupported" id="unsupported:style"><h3>Conformance checking for style
+  language <code><var>$0</var></code> is not supported;
+  <em>it might or might not be conforming.</em></h3></div>
 
 </section>
 
@@ -485,6 +610,6 @@ Web Document Conformance Checker (BETA)</title>
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2007/07/16 10:55:11 $ -->
+<!-- $Date: 2007/07/16 13:56:26 $ -->
 </body>
 </html>

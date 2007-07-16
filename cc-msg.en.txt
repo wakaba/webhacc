@@ -1,10 +1,14 @@
 after html;parse-error;Tag <code>&lt;<var>$0</var>&gt;</code> is not allowed after the end tag <code>&lt;/html&gt;</code>.
 bare ero;tokenize-error;The <code>&amp;</code> character must introduce a reference.
+bare stago;tokenize-error;A <code>&lt;</code> character is not followed by tag name or by a <code>!</code> character.
 bare nero;tokenize-error;The decimal representation of the code position of a character must be specified after <code>&amp;#</code>.
 bare hcro;tokenize-error;The hexadecimal representation of the code position of a character must be specified after <code>&amp;#x</code>.
+dash in comment;tokenize-error;There is a <code>--</code> sequence in a comment.
 duplicate attribute;tokenize-error;There are two attributes with same name.
 nestc;tokenize-error;Void element syntax (<code>/&gt;</code>) cannot be used for this element.
 after head;parse-error;The <code><var>$0</var></code> element cannot be inserted between <code>head</code> and <code>body</code> elements.
+DOCTYPE in the middle;parse-error;A <code>DOCTYPE</code> appears after any element or data character has been seen.
+in body;parse-error;Tag <code>&lt;<var>$0</var>&gt;</code> is not allowed in <code>body</code>.
 in table;parse-error;Tag <code>&lt;<var>$0</var>&gt;</code> is not allowed in <code>table</code>.
 in table:#character;parse-error;Data character is not allowed in <code>table</code>.
 missing start tag:tr;parse-error;Start tag of <code>tr</code> element is missing.
@@ -23,7 +27,10 @@ in XML:lang;attribute-error;The <code>lang</code> attribute is not allowed in XM
 in XML:xmlns;attribute-error;The <code>xmlns</code> attribute in the <code>null</code> namespace is not allowed in XHTML document. The document is non-conforming.
 enumerated:invalid;attribute-value-error;This attribute only allow a limited set of values and the specified value is not one of them.
 duplicate ID;attribute-value-error;This identifier has already been assigned to another element.
+link type:bad-context;attribute-value-error;The link type <code><var>$0</var></code> cannot be specified for this element.
+link type:non-conforming;attribute-value-error;The link type <code><var>$0</var></code> is non-conforming.
 reserved browsing context name;attribute-value-error;This browsing context name is reserved.
+s:link type:proposed;attribute-value-warning should;Link type <code><var>$0</var></code> is proposed but not accepted yet; it <em>should not</em> be used until it has been accepted.
 table:colspan creates column with no anchored cell;table-model-error;This <code>colspan</code> attribute results in creating a table column that does not contain any cell anchored to it.
 table:no cell in last row;table-model-error;The table has no cell (<code>td</code> or <code>th</code>) in the last row.
 s:IMT:obsolete subtype;should;An <em>obsolete</em> subtype is used.
@@ -32,9 +39,16 @@ s:IMT:unregistered subtype;should;The subtype is not registered to IANA.
 m:URI::syntax error;must;This string is not an IRI syntactically.
 s:URI::dot-segment;should;Dot-segment (<code>.</code> or <code>..</code>) should not occur in an absolute reference.
 s:URI::empty path;should;This IRI should explicitly end with <code>/</code>.
+s:URI::lowercase hexadecimal digit;should;Hexadecimal digit in percent-encoding should be in lowercase.
+s:URI::percent-encoded unreserved;should;An unreserved character is percent-encoded.
 unsupported:attribute;unsupported;This attribute is not supported by the conformance checker; <em>it might or might not be conforming</em>.
 unsupported:element;unsupported;This element is not supported by the conformance checker; <em>it might or might not be conforming</em>.
-unsupported:link type;unsupported;The link type <code>$0</code> is not standardized or registered at the time of the release of the conformance checker; <em>it is non-conforming unless it has now been registered</em>.
+unsupported:link type;unsupported;The link type <code><var>$0</var></code> is not standardized or registered at the time of the release of the conformance checker; <em>it is non-conforming unless it has now been registered</em>.
+unsupported:event handler;unsupported;Conformance checking for event handler attribute is not supported; <em>it might or might not be conforming.</em>
+unsupported:language tag;unsupported;Conformance checking for language tag is not supported; <em>it might or might not be conforming.</em>
+unsupported:media query;unsupported;Conformance checking for media query is not supported; <em>it might or might not be conforming.</em>
+unsupported:script;unsupported;Conformance checking for script language <code><var>$0</var></code> is not supported; <em>it might or might not be conforming.</em>
+unsupported:style;unsupported;Conformance checking for style language <code><var>$0</var></code> is not supported; <em>it might or might not be conforming.</em>
 
 manakaiCompatMode:quirks;;Quirks Mode
 manakaiCompatMode:limited quirks;;Limited Quirks Mode

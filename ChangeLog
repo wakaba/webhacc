@@ -1,12 +1,19 @@
 2007-07-16  Wakaba  <wakaba@suika.fam.cx>
 
+	* cc.cgi: Set |STDOUT| encoding as |utf8|.
+	(htescape): Escape some more invisible characters.
+
+	* error-description-source.en.xml: More error data.
+
+2007-07-16  Wakaba  <wakaba@suika.fam.cx>
+
 	* cc.cgi (table stuff): Set |is_header| property
 	of table cells explicitly since otherwise newer JSON.pm
 	generates broken output.
 	(get_text): Return the reduced type name as well.  Use
 	it as fragment of detail document.
 
-	* error-description-source.xml: More error descriptions
+	* error-description-source.en.xml: More error descriptions
 	are added.
 
 	* mkdescription.pl: Remove |catalog| element from
