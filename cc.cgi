@@ -50,7 +50,8 @@ my $http = SuikaWiki::Input::HTTP->new;
 <link rel="stylesheet" href="../cc-style.css" type="text/css">
 </head>
 <body>
-<h1>Web Document Conformance Checker (<em>beta</em>)</h1>
+<h1><a href="../cc-interface">Web Document Conformance Checker</a> 
+(<em>beta</em>)</h1>
 
 <div id="document-info" class="section">
 <dl>
@@ -227,7 +228,9 @@ if (defined $input->{s}) {
         $i++;
         print STDOUT qq[<div class="section" id="table-$i"><h3>] .
             get_node_link ($table_el) . q[</h3>];
-        
+
+        ## TODO: Make |ContentChecker| return |form_table| result
+        ## so that this script don't have to run the algorithm twice.
         my $table = Whatpm::HTMLTable->form_table ($table_el);
         
         for (@{$table->{column_group}}, @{$table->{column}}, $table->{caption}) {
@@ -260,6 +263,22 @@ if (defined $input->{s}) {
       }
     
       print STDOUT qq[</div>];
+    }
+
+    if (keys %{$elements->{id}}) {
+      print STDOUT qq[
+<div id="identifiers" class="section">
+<h2>Identifiers</h2>
+
+<dl>
+];
+      for my $id (sort {$a cmp $b} keys %{$elements->{id}}) {
+        print STDOUT qq[<dt>@{[htescape $id]}</dt>];
+        for (@{$elements->{id}->{$id}}) {
+          print STDOUT qq[<dd>].get_node_link ($_).qq[</dd>];
+        }
+      }
+      print STDOUT qq[</dl></div>];
     }
 
     if (keys %{$elements->{term}}) {
@@ -673,4 +692,4 @@ and/or modify it under the same terms as Perl itself.
 
 =cut
 
-## $Date: 2007/07/16 13:56:26 $
+## $Date: 2007/07/17 13:52:54 $

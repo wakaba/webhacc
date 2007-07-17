@@ -1,3 +1,20 @@
+2007-07-17  Wakaba  <wakaba@suika.fam.cx>
+
+	* alert.png, error.png, info.png: New images.
+
+	* LICENSE: New image file names are added.
+
+	* cc-interface.en.html: Link to the style sheet is added.
+
+	* cc-style.css: Duplicate identifiers and terms
+	are decorated by icon.
+
+	* cc.cgi: |h1| links to the interface page. 
+	(#identifiers): New section.
+
+	* error-description-source.en.xml: More error types are
+	added.
+
 2007-07-16  Wakaba  <wakaba@suika.fam.cx>
 
 	* cc.cgi: Set |STDOUT| encoding as |utf8|.

@@ -158,6 +158,32 @@ Web Document Conformance Checker (BETA)</title>
     no effect in HTML.</p>
   </div>
 
+
+<div class="section tokenize-error" id="pio"><h3>Processing instruction 
+  (<code>&lt;?<var>...</var>?&gt;</code>) cannot be used.</h3>
+    <p>Processing instructions (<code>&lt;?<var>...</var>?&gt;</code>),
+    including XML declaration (<code>&lt;?xml <var>...</var>?&gt;</code>)
+    and XML style sheet <abbr title="processing instruction">PI</abbr>
+    (<code>&lt;xml-stylesheet <var>...</var>?&gt;</code>), are not allowed 
+    in the HTML syntax.  The document is non-conforming.</p>
+
+    <p>If it is necessary to embed a processing instruction
+    in the HTML document, you must use the XML syntax instead.</p>
+
+    <p>In the HTML syntax, XML declaration is not necessary.</p>
+
+    <p>Instead of XML style sheet,
+    <abbr title="processing instruction">PI</abbr>s, you must
+    use the HTML <code>link</code> element whose <code>rel</code>
+    attribute is set to <code>stylesheet</code> (or <code>alternate 
+    stylesheet</code> for an aleternate style sheet).</p>
+
+    <p>Web browsers will parse processing instructions as bogus
+    comments.  Some legacy Web browsers, such as IE:mac and
+    some mobile browsers, will display processing instructions
+    as string.</p>
+  </div>
+
 </section>
 
 <section id="html5-parse-errors">
@@ -178,6 +204,14 @@ Web Document Conformance Checker (BETA)</title>
     <p>The <code>DOCTYPE</code> must be placed before any
     tag, reference, or data character.  Only white space characters
     and comments can be inserted before the <code>DOCTYPE</code>.</p>
+  </div>
+
+<div class="section parse-error" id="in-a:a"><h3>Anchor cannot be nested.</h3>
+    <p>HTML <code>a</code> elements cannot be nested.
+    The document is non-conforming.</p>
+
+    <p>In the HTML syntax, a start tag of the <code>a</code>
+    implies the end tag of any opening <code>a</code> element.</p>
   </div>
 
 <div class="section parse-error" id="in-body"><h3>Tag <code>&lt;<var>$0</var>&gt;</code>
@@ -512,7 +546,7 @@ Web Document Conformance Checker (BETA)</title>
 <section id="uri-errors">
 <h2>URI (or IRI) Errors</h2>
 
-<div class="section must" id="m:URI::syntax-error"><h3>This string is not an IRI syntactically.</h3></div>
+<div class="section must" id="m:URI::syntax-error"><h3>This string is syntactically not an IRI.</h3></div>
 
 </section>
 
@@ -536,7 +570,7 @@ Web Document Conformance Checker (BETA)</title>
 
 <div class="section should" id="s:URI::lowercase-hexadecimal-digit"><h3>Hexadecimal digit in percent-encoding
   should be in lowercase.</h3>
-    <p>Hexadecimal digit in percent-encoding string in the IRI
+    <p>The hexadecimal digit in percent-encoding string in the IRI
     is in lowercase.  Though the IRI <em>is</em> conforming,
     it should be in uppercase.</p>
   </div>
@@ -610,6 +644,6 @@ Web Document Conformance Checker (BETA)</title>
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2007/07/16 13:56:26 $ -->
+<!-- $Date: 2007/07/17 13:52:54 $ -->
 </body>
 </html>

@@ -183,6 +183,36 @@ Web Document Conformance Checker (BETA)</title>
   </d:desc>
 </d:item>
 
+
+<d:item name="pio"
+    class="tokenize-error">
+  <d:message xml:lang="en">Processing instruction 
+  (<code>&lt;?<var>...</var>?></code>) cannot be used.</d:message>
+  <d:desc xml:lang="en">
+    <p>Processing instructions (<code>&lt;?<var>...</var>?></code>),
+    including XML declaration (<code>&lt;?xml <var>...</var>?></code>)
+    and XML style sheet <abbr title="processing instruction">PI</abbr>
+    (<code>&lt;xml-stylesheet <var>...</var>?></code>), are not allowed 
+    in the HTML syntax.  The document is non-conforming.</p>
+
+    <p>If it is necessary to embed a processing instruction
+    in the HTML document, you must use the XML syntax instead.</p>
+
+    <p>In the HTML syntax, XML declaration is not necessary.</p>
+
+    <p>Instead of XML style sheet,
+    <abbr title="processing instruction">PI</abbr>s, you must
+    use the HTML <code>link</code> element whose <code>rel</code>
+    attribute is set to <code>stylesheet</code> (or <code>alternate 
+    stylesheet</code> for an aleternate style sheet).</p>
+
+    <p>Web browsers will parse processing instructions as bogus
+    comments.  Some legacy Web browsers, such as IE:mac and
+    some mobile browsers, will display processing instructions
+    as string.</p>
+  </d:desc>
+</d:item>
+
 </section>
 
 <section id="html5-parse-errors">
@@ -213,10 +243,22 @@ Web Document Conformance Checker (BETA)</title>
   </d:desc>
 </d:item>
 
+<d:item name="in a:a"
+    class="parse-error">
+  <d:message xml:lang="en">Anchor cannot be nested.</d:message>
+  <d:desc xml:lang="en">
+    <p>HTML <code>a</code> elements cannot be nested.
+    The document is non-conforming.</p>
+
+    <p>In the HTML syntax, a start tag of the <code>a</code>
+    implies the end tag of any opening <code>a</code> element.</p>
+  </d:desc>
+</d:item>
+
 <d:item name="in body"
     class="parse-error">
   <d:message xml:lang="en">Tag <code>&lt;<var>$0</var>&gt;</code>
-  is not allowed in <code>body</code>.</d:message>
+  is not allowed in a <code>body</code> element.</d:message>
   <d:desc xml:lang="en">
     <p>The start or end tag of an element, which 
     cannot be a descendant of <code>body</code> element, appears
@@ -225,10 +267,24 @@ Web Document Conformance Checker (BETA)</title>
   </d:desc>
 </d:item>
 
+<d:item name="in head:head"
+    class="parse-error">
+  <d:message xml:lang="en">Start tag <code>&lt;<var>head</var>&gt;</code>
+  is not allowed in the <code>head</code> element.</d:message>
+  <d:desc xml:lang="en">
+    <p>There is a start tag <code>&lt;head></code> in the
+    <code>&lt;head></code> element.  The document is non-conforming.</p>
+
+    <p>In an HTML document there must not be more than
+    one <code>head</code> element, therefore no more than one
+    start tag <code>&lt;head></code> can appear in the input stream.</p>
+  </d:desc>
+</d:item>
+
 <d:item name="in table"
     class="parse-error">
   <d:message xml:lang="en">Tag <code>&lt;<var>$0</var>&gt;</code>
-  is not allowed in <code>table</code>.</d:message>
+  is not allowed in a <code>table</code> element.</d:message>
   <d:desc xml:lang="en">
     <p>The start or end tag of an element, which
     cannot be a child of <code>table</code> element, appears
@@ -546,7 +602,7 @@ Web Document Conformance Checker (BETA)</title>
   <!-- @@ <id=a xml:id=a>? -->
 </d:item>
 
-<d:item name="link type:bad-context"
+<d:item name="link type:bad context"
     class="attribute-value-error">
   <d:message xml:lang="en">The link type <code><var>$0</var></code>
   cannot be specified for this element.</d:message>
@@ -665,7 +721,7 @@ Web Document Conformance Checker (BETA)</title>
 
 <d:item name="URI::syntax error"
     class="must" level="m">
-  <d:message xml:lang="en">This string is not an IRI syntactically.</d:message>
+  <d:message xml:lang="en">This string is syntactically not an IRI.</d:message>
 </d:item>
 
 </section>
@@ -813,6 +869,6 @@ manakaiIsHTML:0;;XML Document
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2007/07/16 13:56:26 $ -->
+<!-- $Date: 2007/07/17 13:52:54 $ -->
 </body>
 </html>

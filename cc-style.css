@@ -108,7 +108,19 @@ q:before, q:after {
   padding-left: 40px;
   min-height: 32px;
   background-image: url(large-stop);
-  background-position: top left;
+  background-position: center left;
+  background-repeat: no-repeat;
+}
+
+#identifiers dd, #terms dd {
+  margin-left: 20px;
+  padding-left: 20px;
+  min-height: 20px;
+}
+
+#identifiers dd + dd, #terms dd + dd {
+  background-image: url(error);
+  background-position: center left;
   background-repeat: no-repeat;
 }
 
@@ -179,6 +191,6 @@ Copyright 2007 Wakaba <w@suika.fam.cx>
 This library is free software; you can redistribute it
 and/or modify it under the same terms as Perl itself.
 
-$Date: 2007/07/01 10:02:24 $
+$Date: 2007/07/17 13:52:54 $
 
 */

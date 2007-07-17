@@ -1,6 +1,7 @@
 See each file for license.
 
-large-alert.png, large-info.png, large-stop.png:
+large-alert.png, large-info.png, large-stop.png,
+alert.png, info.png, error.png:
   GPL.  See
   <http://www.lullabot.com/articles/free_gpl_icons_lullacons_pack_1>
   for the full package.  See
