@@ -31,12 +31,10 @@ my $http = SuikaWiki::Input::HTTP->new;
   }
 
   binmode STDOUT, ':utf8';
+  $| = 1;
 
   require Message::DOM::DOMImplementation;
   my $dom = Message::DOM::DOMImplementation->new;
-
-  my $input = get_input_document ($http, $dom);
-  my $inner_html_element = $http->parameter ('e');
 
   load_text_catalog ('en'); ## TODO: conneg
 
@@ -52,7 +50,13 @@ my $http = SuikaWiki::Input::HTTP->new;
 <body>
 <h1><a href="../cc-interface">Web Document Conformance Checker</a> 
 (<em>beta</em>)</h1>
+];
 
+  $| = 0;
+  my $input = get_input_document ($http, $dom);
+  my $inner_html_element = $http->parameter ('e');
+
+  print qq[
 <div id="document-info" class="section">
 <dl>
 <dt>Request URI</dt>
@@ -212,6 +216,7 @@ if (defined $input->{s}) {
     if (@{$elements->{table}}) {
       require JSON;
 
+      push @nav, ['#tables' => 'Tables'];
       print STDOUT qq[
 <div id="tables" class="section">
 <h2>Tables</h2>
@@ -266,6 +271,7 @@ if (defined $input->{s}) {
     }
 
     if (keys %{$elements->{id}}) {
+      push @nav, ['#identifiers' => 'IDs'];
       print STDOUT qq[
 <div id="identifiers" class="section">
 <h2>Identifiers</h2>
@@ -282,6 +288,7 @@ if (defined $input->{s}) {
     }
 
     if (keys %{$elements->{term}}) {
+      push @nav, ['#terms' => 'Terms'];
       print STDOUT qq[
 <div id="terms" class="section">
 <h2>Terms</h2>
@@ -291,6 +298,23 @@ if (defined $input->{s}) {
       for my $term (sort {$a cmp $b} keys %{$elements->{term}}) {
         print STDOUT qq[<dt>@{[htescape $term]}</dt>];
         for (@{$elements->{term}->{$term}}) {
+          print STDOUT qq[<dd>].get_node_link ($_).qq[</dd>];
+        }
+      }
+      print STDOUT qq[</dl></div>];
+    }
+
+    if (keys %{$elements->{class}}) {
+      push @nav, ['#classes' => 'Classes'];
+      print STDOUT qq[
+<div id="classes" class="section">
+<h2>Classes</h2>
+
+<dl>
+];
+      for my $class (sort {$a cmp $b} keys %{$elements->{class}}) {
+        print STDOUT qq[<dt>@{[htescape $class]}</dt>];
+        for (@{$elements->{class}->{$class}}) {
           print STDOUT qq[<dd>].get_node_link ($_).qq[</dd>];
         }
       }
@@ -692,4 +716,4 @@ and/or modify it under the same terms as Perl itself.
 
 =cut
 
-## $Date: 2007/07/17 13:52:54 $
+## $Date: 2007/07/17 14:28:20 $

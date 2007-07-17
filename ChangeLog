@@ -1,5 +1,12 @@
 2007-07-17  Wakaba  <wakaba@suika.fam.cx>
 
+	* cc.cgi: Output HTTP and HTML header before try to
+	fetch the specified resource for usability.  Add
+	tables, identifiers, and terms section to the TOC.
+	Generate classes list.
+
+2007-07-17  Wakaba  <wakaba@suika.fam.cx>
+
 	* alert.png, error.png, info.png: New images.
 
 	* LICENSE: New image file names are added.
