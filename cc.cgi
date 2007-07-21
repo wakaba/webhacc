@@ -194,7 +194,7 @@ if (defined $input->{s}) {
     require Whatpm::ContentChecker;
     my $onerror = sub {
       my %opt = @_;
-      my ($type, $cls, $msg) = get_text ($opt{type}, $opt{level});
+      my ($type, $cls, $msg) = get_text ($opt{type}, $opt{level}, $opt{node});
       $type =~ tr/ /-/;
       $type =~ s/\|/%7C/g;
       $msg .= qq[ [<a href="../error-description#@{[htescape ($type)]}">Description</a>]];
@@ -279,7 +279,7 @@ if (defined $input->{s}) {
 <dl>
 ];
       for my $id (sort {$a cmp $b} keys %{$elements->{id}}) {
-        print STDOUT qq[<dt>@{[htescape $id]}</dt>];
+        print STDOUT qq[<dt><code>@{[htescape $id]}</code></dt>];
         for (@{$elements->{id}->{$id}}) {
           print STDOUT qq[<dd>].get_node_link ($_).qq[</dd>];
         }
@@ -313,7 +313,7 @@ if (defined $input->{s}) {
 <dl>
 ];
       for my $class (sort {$a cmp $b} keys %{$elements->{class}}) {
-        print STDOUT qq[<dt>@{[htescape $class]}</dt>];
+        print STDOUT qq[<dt><code>@{[htescape $class]}</code></dt>];
         for (@{$elements->{class}->{$class}}) {
           print STDOUT qq[<dd>].get_node_link ($_).qq[</dd>];
         }
@@ -534,7 +534,7 @@ sub load_text_catalog ($) {
 } # load_text_catalog
 
 sub get_text ($) {
-  my ($type, $level) = @_;
+  my ($type, $level, $node) = @_;
   $type = $level . ':' . $type if defined $level;
   my @arg;
   {
@@ -542,6 +542,13 @@ sub get_text ($) {
       my $msg = $Msg->{$type}->[1];
       $msg =~ s{<var>\$([0-9]+)</var>}{
         defined $arg[$1] ? htescape ($arg[$1]) : '(undef)';
+      }ge;
+      $msg =~ s{<var>{\@([A-Za-z0-9:_.-]+)}</var>}{
+        UNIVERSAL::can ($node, 'get_attribute_ns')
+            ? htescape ($node->get_attribute_ns (undef, $1)) : ''
+      }ge;
+      $msg =~ s{<var>{\@}</var>}{
+        UNIVERSAL::can ($node, 'value') ? htescape ($node->value) : ''
       }ge;
       return ($type, $Msg->{$type}->[0], $msg);
     } elsif ($type =~ s/:([^:]*)$//) {
@@ -716,4 +723,4 @@ and/or modify it under the same terms as Perl itself.
 
 =cut
 
-## $Date: 2007/07/17 14:28:20 $
+## $Date: 2007/07/21 04:58:17 $

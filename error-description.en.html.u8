@@ -58,14 +58,14 @@ Web Document Conformance Checker (BETA)</title>
 
 <div class="section tokenize-error" id="bare-stago"><h3>A <code>&lt;</code> character is not followed
   by tag name or by a <code>!</code> character.</h3>
-    <p>A <code>&lt;</code> (<code>U+003C</code> <code class="charname">LESS-THAN
-    SIGN</code>) character which is not part of any markup appears
-    in the input stream.</p>
+    <p>A <code>&lt;</code> (<code>U+003C</code> 
+    <code class="charname">LESS-THAN SIGN</code>) character which is not part
+    of any markup appears in the input stream.</p>
 
     <p>The <code>&lt;</code> character as a data character must
     be escaped as:
     <pre class="html example">
-<code>&lt;lt;</code></pre>
+<code>&amp;lt;</code></pre>
     </p>
   </div>
 
@@ -79,7 +79,6 @@ Web Document Conformance Checker (BETA)</title>
     The document is non-conforming.</p>
 
     <p>The string <code>&amp;#</code> must be the first two characters
-    <code>NUMBER SIGN</code>) character must be the first two characters
     of a reference:
       <dl>
       <dt>Numeric character reference</dt>
@@ -96,7 +95,7 @@ Web Document Conformance Checker (BETA)</title>
     </p>
 
     <p>To represent <code>&amp;#</code> as data characters, use
-    named entity reference:
+    a named entity reference for the <code>&amp;</code> character:
       <pre class="html example">
 <code>&amp;amp;#</code></pre>
     </p>
@@ -116,7 +115,7 @@ Web Document Conformance Checker (BETA)</title>
     of the code point of the character to be referenced.</p>
 
     <p>To represent <code>&amp;#x</code> as data characters, use
-    named entity reference:
+    a named entity reference for the <code>&amp;</code> character:
       <pre class="html example">
 <code>&amp;amp;#x</code></pre>
     </p>
@@ -135,7 +134,8 @@ Web Document Conformance Checker (BETA)</title>
     declaration.</p>
   </div>
 
-<div class="section tokenize-error" id="duplicate-attribute"><h3>There are two attributes with same name.</h3>
+<div class="section tokenize-error" id="duplicate-attribute"><h3>There are two attributes with name
+      <code><var>$0</var></code>.</h3>
     <p>There are more than one attributes with the same
     name in a tag.  The document is non-conforming.</p>
 
@@ -175,8 +175,8 @@ Web Document Conformance Checker (BETA)</title>
     <p>Instead of XML style sheet,
     <abbr title="processing instruction">PI</abbr>s, you must
     use the HTML <code>link</code> element whose <code>rel</code>
-    attribute is set to <code>stylesheet</code> (or <code>alternate 
-    stylesheet</code> for an aleternate style sheet).</p>
+    attribute is set to <code>stylesheet</code> (or 
+    <code>alternate stylesheet</code> for an aleternate style sheet).</p>
 
     <p>Web browsers will parse processing instructions as bogus
     comments.  Some legacy Web browsers, such as IE:mac and
@@ -215,15 +215,25 @@ Web Document Conformance Checker (BETA)</title>
   </div>
 
 <div class="section parse-error" id="in-body"><h3>Tag <code>&lt;<var>$0</var>&gt;</code>
-  is not allowed in <code>body</code>.</h3>
+  is not allowed in a <code>body</code> element.</h3>
     <p>The start or end tag of an element, which 
     cannot be a descendant of <code>body</code> element, appears
     in the input stream while the <code>body</code> element has been opened.
     The document is non-conforming.</p>
   </div>
 
+<div class="section parse-error" id="in-head:head"><h3>Start tag <code>&lt;<var>head</var>&gt;</code>
+  is not allowed in the <code>head</code> element.</h3>
+    <p>There is a start tag <code>&lt;head&gt;</code> in the
+    <code>&lt;head&gt;</code> element.  The document is non-conforming.</p>
+
+    <p>In an HTML document there must not be more than
+    one <code>head</code> element, therefore no more than one
+    start tag <code>&lt;head&gt;</code> can appear in the input stream.</p>
+  </div>
+
 <div class="section parse-error" id="in-table"><h3>Tag <code>&lt;<var>$0</var>&gt;</code>
-  is not allowed in <code>table</code>.</h3>
+  is not allowed in a <code>table</code> element.</h3>
     <p>The start or end tag of an element, which
     cannot be a child of <code>table</code> element, appears
     in the input stream while the <code>table</code> element has been opened
@@ -260,7 +270,7 @@ Web Document Conformance Checker (BETA)</title>
     these start tags, it must be explicitly specified.</p>
   </div>
 
-<div class="section parse-error" id="no-DOCTYPE"><h3>This document does not start with the
+<div class="section parse-error" id="no-DOCTYPE"><h3>This document does not start with a
   <code>DOCTYPE</code>.</h3>
     <p>The document does not start with a <code>DOCTYPE</code>.
     The document is non-conforming.</p>
@@ -281,11 +291,25 @@ Web Document Conformance Checker (BETA)</title>
     the end of the document.  The document is non-conforming.</p>
   </div>
 
+<div class="section parse-error" id="not-first-start-tag"><h3>This <code>&lt;html&gt;</code> tag is not
+  the first start tag.</h3>
+    <p>There is a start tag of the <code>html</code> element
+    that it not the first start tag in the input stream.
+    The document is non-conforming.</p>
+
+    <p>In an HTML document, there cannot be more than one
+    <code>html</code> element and therefore there cannot be
+    more than one <code>&lt;html&gt;</code> tag.  In addition,
+    nothing can be placed before the <code>&lt;html&gt;</code> tag
+    except a <code>DOCTYPE</code>, white space characters, 
+    and comments.</p>
+  </div>
+
 <div class="section parse-error" id="not-HTML5"><h3>This document is written in an old version of 
   HTML.</h3>
     <p>The document contains a <code>DOCTYPE</code> declaration
-    that is different from HTML5 <code>DOCTYPE</code> (i.e. <code>&lt;!DOCTYPE 
-    HTML&gt;</code>).  The document is non-conforming.</p>
+    that is different from HTML5 <code>DOCTYPE</code> (i.e. 
+    <code>&lt;!DOCTYPE HTML&gt;</code>).  The document is non-conforming.</p>
 
     <p>The document might or might not be conformant to
     some version of HTML.  However, conformance to any HTML
@@ -314,24 +338,20 @@ Web Document Conformance Checker (BETA)</title>
     context.  The document is non-conforming.</p>
 
     <p>Possible causes:
-      <dl>
-      <dt>If the erred element is an inline-level element (such
-      as <code>a</code> or <code>span</code>)</dt>
-          <dd><p>A data character cannot be a child
-          of certain sectioning elements such as <code>body</code>,
-          <code>section</code>, and <code>blockquote</code>.</p>
+      <ul>
+      <li><p>A data character cannot be a child
+      of certain sectioning elements such as <code>body</code>,
+      <code>section</code>, and <code>blockquote</code>.</p>
 
-          <p>Any inline-level content must be put
-          in e.g. paragraph element such as <code>p</code>.</p></dd>
-      <dt>If the erred element is a block-level element (such as
-      <code>div</code> or <code>h<var>n</var></code>)</dt>
-          <dd><p>Though some elements such as <code>div</code>,
-          <code>li</code>, and <code>td</code> allow
-          <em>either one</em> of block-level or inline-level content
-          is allowed.  If there is a block-level content, 
-          any inline-level content must be put
-          in e.g. paragraph element such as <code>p</code>.</p></dd>
-      </dl>
+      <p>Any inline-level content must be put
+      in e.g. paragraph element such as <code>p</code>.</p></li>
+      <li><p>Though some elements such as <code>div</code>,
+      <code>li</code>, and <code>td</code> allow
+      <em>either one</em> of block-level or inline-level content
+      is allowed.  If there is a block-level content, 
+      any inline-level content must be put
+      in e.g. paragraph element such as <code>p</code>.</p></li>
+      </ul>
     </p>
   </div>
 
@@ -368,30 +388,47 @@ Web Document Conformance Checker (BETA)</title>
     <em>not</em> support form elements yet.</p>
 
     <p>Possible causes:
-      <dl>
-      <dt>If the erred element is an inline-level element (such
-      as <code>a</code> or <code>span</code>)</dt>
+      <dl class="switch">
+      <dt>If the element with the error is an inline-level element,
+      such as <code>a</code>, <code>progress</code>, or <code>img</code></dt>
           <dd><p>An inline-level element cannot be a child
           of certain sectioning elements such as <code>body</code>,
           <code>section</code>, and <code>blockquote</code>.</p>
 
           <p>Any inline-level content must be put
           in e.g. paragraph element such as <code>p</code>.</p></dd>
-      <dt>If the erred element is a block-level element (such as
-      <code>div</code> or <code>h<var>n</var></code>)</dt>
+      <dt>If the element with the error is a block-level element,
+      such as <code>div</code>, <code>h<var>n</var></code>, or
+      <code>section</code></dt>
           <dd><p>Though some elements such as <code>div</code>,
           <code>li</code>, and <code>td</code> allow
           <em>either one</em> of block-level or inline-level content
           is allowed.  If there is a block-level content, 
           any inline-level content must be put
           in e.g. paragraph element such as <code>p</code>.</p></dd>
-      <dt>If the erred element is the root <code>html</code> element</dt>
+      <dt>If the element with the error is a <code>noscript</code> element</dt>
+          <dd>The <code>noscript</code> element is allowed only in the context
+          where a block-level or inline-level content is expected
+          and in the <code>head</code> element.
+          It cannot be used in e.g. <code>ul</code>, <code>table</code>,
+          or <code>select</code>.</dd>
+      <dt>If the element with the error is the <code>html</code> element
+      that is the root element of an XHTML document</dt>
           <dd><p>In an XHTML document, the root <code>html</code>
           element must have an <code>xmlns</code> attribute
           whose value is set to 
           <code>http://www.w3.org/1999/xhtml</code>.</p></dd>
       </dl>
     </p>
+  </div>
+
+<div class="section content-model-error" id="ps-element-missing"><h3>There is no <code><var>$0</var></code>
+  element before this element.</h3>
+    <p>There must be an element before another element, but there
+    is not.  The document is non-conforming.</p>
+
+    <p>For example, there must be a <code>dt</code> element
+    before any <code>dd</code> element.</p>
   </div>
 
 </section>
@@ -423,6 +460,13 @@ Web Document Conformance Checker (BETA)</title>
 
     <p>To specify natural language information in HTML document,
     use <code>lang</code> attribute instead.</p>
+
+    <p>XHTML 1.0 Appendix C was encouraged to specify both
+    <code>lang</code> and <code>xml:lang</code> attributes with
+    the same value.  Such a duplication has <em>no effect</em> in practice.
+    Use only one of <code>lang</code> (in HTML) or <code>xml:lang</code> (in
+    XML).</p>
+
     <!-- @@ ISSUE: xml:lang in non-HTML element in DOM5 HTML created
          from an HTML document? -->
   </div>
@@ -469,7 +513,8 @@ Web Document Conformance Checker (BETA)</title>
 <h2>Attribute Value Errors</h2>
 
 <div class="section attribute-value-error" id="enumerated:invalid"><h3>This attribute only allow a limited set of 
-  values and the specified value is not one of them.</h3></div>
+  values and the specified value <code><var>{@}</var></code> is not one 
+  of them.</h3></div>
 
 <div class="section attribute-value-error" id="duplicate-ID"><h3>This identifier has already been
   assigned to another element.</h3></div>
@@ -489,14 +534,38 @@ Web Document Conformance Checker (BETA)</title>
 
 <div class="section attribute-value-error" id="link-type:non-conforming"><h3>The link type <code><var>$0</var></code>
   is non-conforming.</h3>
-    <p>The specified link type is non-conforming.  The entire document
-    is non-conforming.</p>
+    <p>The specified link type is non-conforming, and therefore
+    the document is non-conforming.</p>
 
-    <p>For example, in place of non-conforming link type <code>copyright</code>
-    you must use link type <code>license</code>.</p>
+    <dl>
+    <dt>Link type <code>contents</code></dt>
+      <dd>Use link type <code>index</code>.</dd>
+    <dt>Link type <code>copyright</code></dt>
+      <dd>Use link type <code>license</code>.</dd>
+    <dt>Link type <code>home</code></dt>
+      <dd>Use link type <code>index</code>.</dd>
+    <dt>Link type <code>start</code></dt>
+      <dd>Use link type <code>first</code>.</dd>
+    <dt>Link type <code>toc</code></dt>
+      <dd>Use link type <code>index</code>.</dd>
+    </dl>
   </div>
 
-<div class="section attribute-value-error" id="reserved-browsing-context-name"><h3>This browsing context name is reserved.</h3></div>
+<div class="section attribute-value-error" id="reserved-browsing-context-name"><h3>Browsing context name 
+  <code><var>{@}</var></code> is reserved.</h3>
+    <p>The specified browsing context name is reserved.
+    The document is non-conforming.</p>
+
+    <p>Names of browsing contexts starting with <code>_</code>
+    (<code>U+005F</code> <code class="charname">LOW LINE</code>)
+    are reserved so that it must not be used.</p>
+
+    <p>Old version of HTML, non-HTML markup languages, and
+    Web browsers define or implements special reserved
+    browsing context names <code>_blank</code>,
+    <code>_main</code>, and <code>_replace</code>.
+    However, they are <em>not</em> conforming attribute values.</p>
+  </div>
 
 </section>
 
@@ -529,24 +598,58 @@ Web Document Conformance Checker (BETA)</title>
 <div class="section table-model-error" id="table:no-cell-in-last-row"><h3>The table has no cell (<code>td</code> or
   <code>th</code>) in the last row.</h3></div>
 
+<div class="section table-model-error" id="table:rowspan-extends-table"><h3>This <code>rowspan</code> attribute
+  results in creating a table row that does not contain
+  any cell anchored to it.</h3>
+    <p>The <code>rowspan</code> attribute value of the cell
+    is so specified that it extends a table in the row axis.
+    However, the extended row does not contain any cell by itself.
+    The document is non-conforming.</p>
+
+    <p>For example, the table below is non-conforming:
+      <pre class="html non-conforming example">
+<code>&lt;table&gt;
+&lt;tbody&gt;
+&lt;tr&gt;&lt;td rowspan=2&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;</code></pre>
+    ... is non-conforming, since the second row contains only
+    a cell that spans the first and the second rows.</p>
+  </div>
+
 </section>
 
 <section id="imt-warnings">
 <h2>Internet Media Type Warnings</h2>
 
-<div class="section should" id="s:IMT:obsolete-subtype"><h3>An <em>obsolete</em> subtype is used.</h3></div>
-
-<div class="section should" id="s:IMT:private-subtype"><h3>A private (<code>x-</code> or <code>x.</code>)
+<div class="section should" id="s:IMT:obsolete-subtype"><h3><code><var>{@}</var></code>: An <em>obsolete</em>
   subtype is used.</h3></div>
 
-<div class="section should" id="s:IMT:unregistered-subtype"><h3>The subtype is not registered to IANA.</h3></div>
+<div class="section should" id="s:IMT:private-subtype"><h3><code><var>{@}</var></code>: A private
+  (<code>x-</code> or <code>x.</code>) subtype is used.</h3></div>
+
+<div class="section should" id="s:IMT:unregistered-subtype"><h3><code><var>{@}</var></code>: The subtype is
+  not registered to IANA.</h3></div>
 
 </section>
 
 <section id="uri-errors">
 <h2>URI (or IRI) Errors</h2>
 
-<div class="section must" id="m:URI::syntax-error"><h3>This string is syntactically not an IRI.</h3></div>
+<div class="section must" id="m:URI::syntax-error"><h3>The specified value is syntactically not an IRI
+  reference.</h3>
+    <p>The specified value does not satisfy the syntactical requirements
+    for IRI references.  The document is non-conforming.</p>
+
+    <p>Possible causes:
+      <ul>
+      <li>The string might contain one or more white space characters.
+      Especially, the <code> </code> (<code>U+0020</code>
+      <code class="charname">SPACE</code>) character cannot be
+      used in IRI references.</li>
+      </ul>
+    </p>
+  </div>
 
 </section>
 
@@ -580,6 +683,22 @@ Web Document Conformance Checker (BETA)</title>
     <p>An unreserved character is percent-encoded in the IRI.
     Though it <em>is</em> conforming, it should be in the 
     decoded (or bare) form.</p>
+  </div>
+
+<div class="section should" id="s:URI::uppercase-scheme-name"><h3>URI scheme name is in uppercase.</h3>
+    <p>The scheme part of the IRI is written in uppercase letter.</p>
+
+    <p>Uppercase scheme names are not required to be processed
+    correctly.</p>
+<!-- @@
+ RFC 3986 3.1.
+ > Although schemes are case-
+   insensitive, the canonical form is lowercase and documents that
+   specify schemes must do so with lowercase letters.
+ 
+ > An implementation ... should only produce lowercase scheme names for
+   consistency.
+-->
   </div>
 
 </section>
@@ -644,6 +763,6 @@ Web Document Conformance Checker (BETA)</title>
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2007/07/17 13:52:54 $ -->
+<!-- $Date: 2007/07/21 04:58:17 $ -->
 </body>
 </html>

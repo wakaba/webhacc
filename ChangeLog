@@ -1,3 +1,17 @@
+2007-07-21  Wakaba  <wakaba@suika.fam.cx>
+
+	* cc-style.css: Don't remove bullet of the document node
+	in the document tree.  Don't collapse white space
+	in the |code| elements.
+
+	* cc.cgi: Put identifiers and class names into |code|
+	element.
+	(get_text): Template for attribute values are supported.
+
+	* error-descriotion-source.en.xml: More error descriptions
+	are included.  Use |{@}| attribute value insertion macro
+	for errors in which it should be useful.
+
 2007-07-17  Wakaba  <wakaba@suika.fam.cx>
 
 	* cc.cgi: Output HTTP and HTML header before try to
