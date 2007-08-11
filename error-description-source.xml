@@ -28,6 +28,21 @@ Web Document Conformance Checker (BETA)</title>
   </d:desc>
 </d:item>
 
+<d:item name="after body"
+    class="parse-error">
+  <d:message xml:lang="en">Tag <code>&lt;<var>$0</var>&gt;</code>
+  is not allowed after the end tag <code>&lt;/body></code>.</d:message>
+  <d:desc xml:lang="en">
+    <p>The start or end tag of an element appears after the
+    <code>body</code> element has been closed.  The document is
+    non-conforming.</p>
+
+    <p>Any content of the document other than <code>head</code>
+    contents and comments must be put into the <code>body</code>
+    element.</p>
+  </d:desc>
+</d:item>
+
 <d:item name="bare ero"
     class="tokenize-error">
   <d:message xml:lang="en">The <code>&amp;</code> character must
@@ -59,6 +74,29 @@ Web Document Conformance Checker (BETA)</title>
     <p>To represent <code>&amp;</code> as a data character, use
     named entity reference:
       <pre class="html example"><code>&amp;amp;</code></pre>
+    </p>
+  </d:desc>
+</d:item>
+
+<d:item name="bare etago"
+    class="tokenize-error">
+  <d:message xml:lang="en">A <code>&lt;/</code> string is not followed
+  by a tag name.</d:message><!-- </ EOF -->
+  <d:desc xml:lang="en">
+    <p>There is a <code>&lt;</code> (<code>U+003C</code> 
+    <code class="charname">LESS-THAN SIGN</code>) character
+    immediately followed by a <code>/</code> (<code>U+005F</code>
+    <code>SOLIDUS</code>) character, which is not part
+    of any end tag, in the input stream.  The document
+    is non-conforming.</p>
+
+    <p>The <code>&lt;/</code> sequence immediately followed
+    by an <abbr title="End of file pseudo-character">EOF</abbr> is
+    interpreted as a string data of <code>&lt;/</code>.</p>
+
+    <p>The <code>&lt;/</code> sequence as string data must
+    be escaped as:
+    <pre class="html example"><code>&amp;lt;/</code></pre>
     </p>
   </d:desc>
 </d:item>
@@ -130,6 +168,28 @@ Web Document Conformance Checker (BETA)</title>
     <p>To represent <code>&amp;#x</code> as data characters, use
     a named entity reference for the <code>&amp;</code> character:
       <pre class="html example"><code>&amp;amp;#x</code></pre>
+    </p>
+  </d:desc>
+</d:item>
+
+<d:item name="bogus end tag"
+    class="tokenize-error">
+  <d:message xml:lang="en">A <code>&lt;/</code> string is not followed
+  by a tag name.</d:message><!-- </ non-name-start-char-non-EOF -->
+  <d:desc xml:lang="en">
+    <p>There is a <code>&lt;</code> (<code>U+003C</code> 
+    <code class="charname">LESS-THAN SIGN</code>) character
+    immediately followed by a <code>/</code> (<code>U+005F</code>
+    <code>SOLIDUS</code>) character, which is not part
+    of any end tag, in the input stream.  The document
+    is non-conforming.</p>
+
+    <p>The <code>&lt;/</code> sequence not followed by a
+    tag name is parsed as an opening of bogus comment.</p>
+
+    <p>The <code>&lt;/</code> sequence as string data must
+    be escaped as:
+    <pre class="html example"><code>&amp;lt;/</code></pre>
     </p>
   </d:desc>
 </d:item>
@@ -981,6 +1041,6 @@ manakaiIsHTML:0;;XML Document
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2007/07/21 04:58:17 $ -->
+<!-- $Date: 2007/08/11 13:54:55 $ -->
 </body>
 </html>

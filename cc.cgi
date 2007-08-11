@@ -2,12 +2,10 @@
 use strict;
 
 use lib qw[/home/httpd/html/www/markup/html/whatpm
-           /home/wakaba/work/manakai/lib
-           /home/wakaba/public_html/-temp/wiki/lib];
+           /home/wakaba/work/manakai2/lib];
 use CGI::Carp qw[fatalsToBrowser];
 use Scalar::Util qw[refaddr];
-
-use SuikaWiki::Input::HTTP; ## TODO: Use some better CGI module
+use Time::HiRes qw/time/;
 
 sub htescape ($) {
   my $s = $_[0];
@@ -21,11 +19,10 @@ sub htescape ($) {
   return $s;
 } # htescape
 
-my $http = SuikaWiki::Input::HTTP->new;
+  use Message::CGI::HTTP;
+  my $http = Message::CGI::HTTP->new;
 
-## TODO: _charset_
-
-  if ($http->meta_variable ('PATH_INFO') ne '/') {
+  if ($http->get_meta_variable ('PATH_INFO') ne '/') {
     print STDOUT "Status: 404 Not Found\nContent-Type: text/plain; charset=us-ascii\n\n400";
     exit;
   }
@@ -54,7 +51,11 @@ my $http = SuikaWiki::Input::HTTP->new;
 
   $| = 0;
   my $input = get_input_document ($http, $dom);
-  my $inner_html_element = $http->parameter ('e');
+  my $inner_html_element = $http->get_parameter ('e');
+  my $char_length = 0;
+  my %time;
+  my $time1;
+  my $time2;
 
   print qq[
 <div id="document-info" class="section">
@@ -67,6 +68,7 @@ my $http = SuikaWiki::Input::HTTP->new;
   push @nav, ['#document-info' => 'Information'];
 
 if (defined $input->{s}) {
+  $char_length = length $input->{s};
 
   print STDOUT qq[
 <dt>Base URI</dt>
@@ -77,6 +79,8 @@ if (defined $input->{s}) {
 <dt>Character Encoding</dt>
     <dd>@{[defined $input->{charset} ? '<code class="charset" lang="en">'.htescape ($input->{charset}).'</code>' : '(none)']}
     @{[$input->{charset_overridden} ? '<em>(overridden)</em>' : '']}</dd>
+<dt>Length</dt>
+    <dd>$char_length byte@{[$char_length == 1 ? '' : 's']}</dd>
 </dl>
 </div>
 ];
@@ -91,8 +95,11 @@ if (defined $input->{s}) {
     require Whatpm::HTML;
 
     $input->{charset} ||= 'ISO-8859-1'; ## TODO: for now.
-    
+
+    $time1 = time;
     my $t = Encode::decode ($input->{charset}, $input->{s});
+    $time2 = time;
+    $time{decode} = $time2 - $time1;
 
     print STDOUT qq[
 <div id="parse-errors" class="section">
@@ -117,6 +124,7 @@ if (defined $input->{s}) {
   };
 
   $doc = $dom->create_document;
+  $time1 = time;
   if (defined $inner_html_element and length $inner_html_element) {
     $el = $doc->create_element_ns
         ('http://www.w3.org/1999/xhtml', [undef, $inner_html_element]);
@@ -124,6 +132,8 @@ if (defined $input->{s}) {
   } else {
     Whatpm::HTML->parse_string ($t => $doc, $onerror);
   }
+  $time2 = time;
+  $time{parse} = $time2 - $time1;
 
   print STDOUT qq[</dl>
 </div>
@@ -132,6 +142,9 @@ if (defined $input->{s}) {
     print_source_string_section (\($input->{s}), $input->{charset});
   } elsif ({
             'text/xml' => 1,
+            'application/atom+xml' => 1,
+            'application/rss+xml' => 1,
+            'application/svg+xml' => 1,
             'application/xhtml+xml' => 1,
             'application/xml' => 1,
            }->{$input->{media_type}}) {
@@ -153,9 +166,12 @@ if (defined $input->{s}) {
     return 1;
   };
 
+  $time1 = time;
   open my $fh, '<', \($input->{s});
   $doc = Message::DOM::XMLParserTemp->parse_byte_stream
       ($fh => $dom, $onerror, charset => $input->{charset});
+  $time2 = time;
+  $time{parse_xml} = $time2 - $time1;
 
     print STDOUT qq[</dl>
 </div>
@@ -202,12 +218,15 @@ if (defined $input->{s}) {
           qq[</dt>\n<dd class="$cls">], $msg, "</dd>\n";
     };
 
+    $time1 = time;
     my $elements;
     if ($el) {
       $elements = Whatpm::ContentChecker->check_element ($el, $onerror);
     } else {
       $elements = Whatpm::ContentChecker->check_document ($doc, $onerror);
     }
+    $time2 = time;
+    $time{check} = $time2 - $time1;
 
     print STDOUT qq[</dl>
 </div>
@@ -347,6 +366,12 @@ if (defined $input->{s}) {
 </body>
 </html>
 ];
+
+  for (qw/decode parse parse_xml check/) {
+    next unless defined $time{$_};
+    open my $file, '>>', ".cc-$_.txt" or die ".cc-$_.txt: $!";
+    print $file $char_length, "\t", $time{$_}, "\n";
+  }
 
 exit;
 
@@ -564,7 +589,7 @@ sub get_text ($) {
 sub get_input_document ($$) {
   my ($http, $dom) = @_;
 
-  my $request_uri = $http->parameter ('uri');
+  my $request_uri = $http->get_parameter ('uri');
   my $r = {};
   if (defined $request_uri and length $request_uri) {
     my $uri = $dom->create_uri_reference ($request_uri);
@@ -613,7 +638,8 @@ EOH
     $ua->max_size (1000_000);
     my $req = HTTP::Request->new (GET => $request_uri);
     my $res = $ua->request ($req);
-    if ($res->is_success or $http->parameter ('error-page')) {
+    ## TODO: 401 sets |is_success| true.
+    if ($res->is_success or $http->get_parameter ('error-page')) {
       $r->{base_uri} = $res->base; ## NOTE: It does check |Content-Base|, |Content-Location|, and <base>. ## TODO: Use our own code!
       $r->{uri} = $res->request->uri;
       $r->{request_uri} = $request_uri;
@@ -628,7 +654,7 @@ EOH
         $r->{charset} =~ tr/\\//d;
       }
 
-      my $input_charset = $http->parameter ('charset');
+      my $input_charset = $http->get_parameter ('charset');
       if (defined $input_charset and length $input_charset) {
         $r->{charset_overridden}
             = (not defined $r->{charset} or $r->{charset} ne $input_charset);
@@ -649,17 +675,17 @@ EOH
     $r->{header_status_code} = $res->code;
     $r->{header_status_text} = $res->message;
   } else {
-    $r->{s} = ''.$http->parameter ('s');
+    $r->{s} = ''.$http->get_parameter ('s');
     $r->{uri} = q<thismessage:/>;
     $r->{request_uri} = q<thismessage:/>;
     $r->{base_uri} = q<thismessage:/>;
-    $r->{charset} = ''.$http->parameter ('_charset_');
+    $r->{charset} = ''.$http->get_parameter ('_charset_');
     $r->{charset} =~ s/\s+//g;
     $r->{charset} = 'utf-8' if $r->{charset} eq '';
     $r->{header_field} = [];
   }
 
-  my $input_format = $http->parameter ('i');
+  my $input_format = $http->get_parameter ('i');
   if (defined $input_format and length $input_format) {
     $r->{media_type_overridden}
         = (not defined $r->{media_type} or $input_format ne $r->{media_type});
@@ -723,4 +749,4 @@ and/or modify it under the same terms as Perl itself.
 
 =cut
 
-## $Date: 2007/07/21 04:58:17 $
+## $Date: 2007/08/11 13:54:55 $

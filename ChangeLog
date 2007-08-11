@@ -1,3 +1,18 @@
+2007-08-11  Wakaba  <wakaba@suika.fam.cx>
+
+	* cc.cgi, parser-manakai.cgi, parser.cgi: Use |Message::CGI::HTTP|
+	instead of |SuikaWiki::Input::HTTP|.
+
+2007-08-05  Wakaba  <wakaba@suika.fam.cx>
+
+	* cc-interface.en.html: IMT |application/atom+xml| is added.
+	Link to |cc-todo| is added.
+
+2007-07-24  Wakaba  <wakaba@suika.fam.cx>
+
+	* error-description.xml: Description for "after body", "bare etago",
+	and "bogus end tag" are added.
+
 2007-07-21  Wakaba  <wakaba@suika.fam.cx>
 
 	* cc-style.css: Don't remove bullet of the document node

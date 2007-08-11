@@ -1,8 +1,11 @@
 after html;parse-error;Tag <code>&lt;<var>$0</var>&gt;</code> is not allowed after the end tag <code>&lt;/html&gt;</code>.
+after body;parse-error;Tag <code>&lt;<var>$0</var>&gt;</code> is not allowed after the end tag <code>&lt;/body&gt;</code>.
 bare ero;tokenize-error;The <code>&amp;</code> character must introduce a reference.
+bare etago;tokenize-error;A <code>&lt;/</code> string is not followed by a tag name.
 bare stago;tokenize-error;A <code>&lt;</code> character is not followed by tag name or by a <code>!</code> character.
 bare nero;tokenize-error;The decimal representation of the code position of a character must be specified after <code>&amp;#</code>.
 bare hcro;tokenize-error;The hexadecimal representation of the code position of a character must be specified after <code>&amp;#x</code>.
+bogus end tag;tokenize-error;A <code>&lt;/</code> string is not followed by a tag name.
 dash in comment;tokenize-error;There is a <code>--</code> sequence in a comment.
 duplicate attribute;tokenize-error;There are two attributes with name <code><var>$0</var></code>.
 nestc;tokenize-error;Void element syntax (<code>/&gt;</code>) cannot be used for this element.

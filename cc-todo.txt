@@ -1,0 +1,57 @@
+Web Document Conformance Checker - TO DO
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* Checking
+
+- <script language=javascript> content
+- <style type=text/css> content
+- onfoo="" value
+- style="" value
+- media="" value
+- <time> content
+- <progress> content
+- <meter> content
+- <figure> content
+- <object> content
+- <meta charset> requirements
+- <meta charset> reparsing
+- Errors and warnings in Unicode layer
+- Errors and warnings in character encoding layer
+- Warning for class="" value
+- Errors and warnings for URI (scheme dependent)
+- Errors and warnings for language tag
+- Atom 1.0
+- Atom Threading Extension
+- Atom rel=license
+- XBL 2.0
+
+In addition, grep by "## TODO" and "## ISSUE" 
+<http://suika.fam.cx/www/markup/html/whatpm/Whatpm/HTML.pm.src> and
+<http://suika.fam.cx/www/markup/html/whatpm/Whatpm/ContentChecker.pm>.
+
+** Oldies
+
+- %Color;
+- profile=""
+- rev=""
+- <font face>, <basefont face>
+- <font size>, <basefont size>
+- align="", valign="", char="", charoff=""
+- accesskey=""
+- border="", frame=""
+- cellpadding="", cellspacing="", hspace="", vspace=""
+
+and so on.
+
+* Visualization
+
+- Image maps
+- Sections
+
+* Interface
+
+- Scoring
+- Progress
+- File upload
+- Cross referencing in result
+- XML inner_html
