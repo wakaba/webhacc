@@ -468,6 +468,10 @@ Web Document Conformance Checker (BETA)</title>
           element must have an <code>xmlns</code> attribute
           whose value is set to 
           <code>http://www.w3.org/1999/xhtml</code>.</p></dd>
+      <dt>If the element with the error is <code>blink</code>,
+      <code>center</code>, or <code>marquee</code> element</dt>
+          <dd>These elements are not part of the HTML standard.
+          Use CSS for styling control.</dd>
       </dl>
     </p>
   </div>
@@ -497,6 +501,20 @@ Web Document Conformance Checker (BETA)</title>
     Without required attributes specified, user agents 
     cannot provide the full functionality of the element
     to the user.</p>
+  </div>
+
+<div class="section attribute-error" id="attribute-not-allowed"><h3>Attribute
+  <code><var>{local-name}</var></code> is not allowed for
+  <code><var>{element-local-name}</var></code> element.</h3>
+    <p>An attribute is specified where it is not allowed.
+    The document is non-conforming.</p>
+
+    <dl>
+    <dt>HTML <code>meta</code> element</dt>
+        <dd>For HTML <code>meta</code> element, <em>only one</em> of
+        <code>name</code>, <code>http-equiv</code>, or <code>charset</code>
+        attribute is allowed.</dd>
+    </dl>
   </div>
 
 <div class="section attribute-error" id="in-HTML:xml:lang"><h3>The <code>xml:lang</code> attribute is not 
@@ -564,7 +582,31 @@ Web Document Conformance Checker (BETA)</title>
 
 <div class="section attribute-value-error" id="enumerated:invalid"><h3>This attribute only allow a limited set of 
   values and the specified value <code><var>{@}</var></code> is not one 
-  of them.</h3></div>
+  of them.</h3>
+    <p>For this attribute only several values are allowed and the
+    value of the attribute is not one of them.  The document
+    is non-conforming.</p>
+
+    <dl>
+    <dt>HTML <code>meta</code> element, <code>http-equiv</code> attribute</dt>
+        <dd><p>Only <code>Default-Style</code> and <code>Refresh</code>
+        is allowed.</p>
+        <p>Value <code>Content-Type</code> is obsolete; for charset
+        declaration, the <code>charset</code> attribute can be used as:
+        <pre class="html example">
+<code>&lt;meta charset=&quot;<var>charset-name</var>&quot;&gt;</code></pre>
+        ... where <var>charset-name</var> is a name of the character encoding
+        of the document, such as <code>utf-8</code>.</p>
+        <p>Values <code>Content-Style-Type</code> and
+        <code>Content-Script-Type</code> are currently not allowed.</p>
+        <p>Value <code>Keywords</code> is not allowed.  Use
+        <code>name</code> attribute instead of <code>http-equiv</code>
+        attribute.</p>
+        <p>Values <code>Expires</code>, <code>Pragma</code>,
+        and <code>Cache-Control</code> are not allowed;
+        use <em>real</em> HTTP header fields for cache control.</p></dd>
+    </dl>
+  </div>
 
 <div class="section attribute-value-error" id="duplicate-ID"><h3>This identifier has already been
   assigned to another element.</h3></div>
@@ -782,6 +824,12 @@ Web Document Conformance Checker (BETA)</title>
     The link type might have been added to the registry since then.
     In such case it might be conforming.  Otherwise, the
     document is non-conforming.</p>
+
+    <dl>
+    <dt>Link types <code>shortcut icon</code></dt>
+        <dd>Link type <code>shortcut</code> is not registered.
+        Use only <code>icon</code> for linking to so-called favicon.</dd>
+    </dl>
   </div>
 
 <div class="section unsupported" id="unsupported:event-handler"><h3>Conformance checking for event handler attribute
@@ -813,6 +861,6 @@ Web Document Conformance Checker (BETA)</title>
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2007/08/11 13:54:55 $ -->
+<!-- $Date: 2007/09/02 07:59:01 $ -->
 </body>
 </html>

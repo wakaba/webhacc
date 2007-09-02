@@ -29,6 +29,7 @@ child element missing:td|th;content-model-error;There must be a <code>td</code> 
 element not allowed;content-model-error;This element is not allowed in this context.
 ps element missing;content-model-error;There is no <code><var>$0</var></code> element before this element.
 attribute missing;attribute-error;Required attribute <code><var>$0</var></code> is not specified.
+attribute not allowed;attribute-error;Attribute <code><var>{local-name}</var></code> is not allowed for <code><var>{element-local-name}</var></code> element.
 in HTML:xml:lang;attribute-error;The <code>xml:lang</code> attribute is not allowed in HTML document.
 in XML:charset;attribute-error;The <code>charset</code> attribute is not allowed in XML document.
 in XML:lang;attribute-error;The <code>lang</code> attribute is not allowed in XML document.

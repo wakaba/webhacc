@@ -1,3 +1,7 @@
+2007-08-26  Wakaba  <wakaba@suika.fam.cx>
+
+	* cc.cgi: New catalog macros |local-name| and |element-local-name|.
+
 2007-08-11  Wakaba  <wakaba@suika.fam.cx>
 
 	* cc.cgi, parser-manakai.cgi, parser.cgi: Use |Message::CGI::HTTP|

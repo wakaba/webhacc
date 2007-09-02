@@ -575,6 +575,16 @@ sub get_text ($) {
       $msg =~ s{<var>{\@}</var>}{
         UNIVERSAL::can ($node, 'value') ? htescape ($node->value) : ''
       }ge;
+      $msg =~ s{<var>{local-name}</var>}{
+        UNIVERSAL::can ($node, 'manakai_local_name')
+          ? htescape ($node->manakai_local_name) : ''
+      }ge;
+      $msg =~ s{<var>{element-local-name}</var>}{
+        (UNIVERSAL::can ($node, 'owner_element') and
+         $node->owner_element)
+          ? htescape ($node->owner_element->manakai_local_name)
+          : ''
+      }ge;
       return ($type, $Msg->{$type}->[0], $msg);
     } elsif ($type =~ s/:([^:]*)$//) {
       unshift @arg, $1;
@@ -749,4 +759,4 @@ and/or modify it under the same terms as Perl itself.
 
 =cut
 
-## $Date: 2007/08/11 13:54:55 $
+## $Date: 2007/09/02 07:59:01 $
