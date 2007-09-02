@@ -54,8 +54,6 @@ sub htescape ($) {
   my $inner_html_element = $http->get_parameter ('e');
   my $char_length = 0;
   my %time;
-  my $time1;
-  my $time2;
 
   print qq[
 <div id="document-info" class="section">
@@ -91,54 +89,7 @@ if (defined $input->{s}) {
   my $el;
 
   if ($input->{media_type} eq 'text/html') {
-    require Encode;
-    require Whatpm::HTML;
-
-    $input->{charset} ||= 'ISO-8859-1'; ## TODO: for now.
-
-    $time1 = time;
-    my $t = Encode::decode ($input->{charset}, $input->{s});
-    $time2 = time;
-    $time{decode} = $time2 - $time1;
-
-    print STDOUT qq[
-<div id="parse-errors" class="section">
-<h2>Parse Errors</h2>
-
-<dl>];
-  push @nav, ['#parse-errors' => 'Parse Error'];
-
-  my $onerror = sub {
-    my (%opt) = @_;
-    my ($type, $cls, $msg) = get_text ($opt{type}, $opt{level});
-    if ($opt{column} > 0) {
-      print STDOUT qq[<dt class="$cls"><a href="#line-$opt{line}">Line $opt{line}</a> column $opt{column}</dt>\n];
-    } else {
-      $opt{line} = $opt{line} - 1 || 1;
-      print STDOUT qq[<dt class="$cls"><a href="#line-$opt{line}">Line $opt{line}</a></dt>\n];
-    }
-    $type =~ tr/ /-/;
-    $type =~ s/\|/%7C/g;
-    $msg .= qq[ [<a href="../error-description#@{[htescape ($type)]}">Description</a>]];
-    print STDOUT qq[<dd class="$cls">$msg</dd>\n];
-  };
-
-  $doc = $dom->create_document;
-  $time1 = time;
-  if (defined $inner_html_element and length $inner_html_element) {
-    $el = $doc->create_element_ns
-        ('http://www.w3.org/1999/xhtml', [undef, $inner_html_element]);
-    Whatpm::HTML->set_inner_html ($el, $t, $onerror);
-  } else {
-    Whatpm::HTML->parse_string ($t => $doc, $onerror);
-  }
-  $time2 = time;
-  $time{parse} = $time2 - $time1;
-
-  print STDOUT qq[</dl>
-</div>
-];
-
+    ($doc, $el) = print_syntax_error_html_section ($input);
     print_source_string_section (\($input->{s}), $input->{charset});
   } elsif ({
             'text/xml' => 1,
@@ -148,211 +99,26 @@ if (defined $input->{s}) {
             'application/xhtml+xml' => 1,
             'application/xml' => 1,
            }->{$input->{media_type}}) {
-    require Message::DOM::XMLParserTemp;
-
-    print STDOUT qq[
-<div id="parse-errors" class="section">
-<h2>Parse Errors</h2>
-
-<dl>];
-  push @nav, ['#parse-errors' => 'Parse Error'];
-
-  my $onerror = sub {
-    my $err = shift;
-    my $line = $err->location->line_number;
-    print STDOUT qq[<dt><a href="#line-$line">Line $line</a> column ];
-    print STDOUT $err->location->column_number, "</dt><dd>";
-    print STDOUT htescape $err->text, "</dd>\n";
-    return 1;
-  };
-
-  $time1 = time;
-  open my $fh, '<', \($input->{s});
-  $doc = Message::DOM::XMLParserTemp->parse_byte_stream
-      ($fh => $dom, $onerror, charset => $input->{charset});
-  $time2 = time;
-  $time{parse_xml} = $time2 - $time1;
-
-    print STDOUT qq[</dl>
-</div>
-
-];
+    ($doc, $el) = print_syntax_error_xml_section ($input);
     print_source_string_section (\($input->{s}), $doc->input_encoding);
   } else {
     ## TODO: Change HTTP status code??
-    print STDOUT qq[
-<div id="result-summary" class="section">
-<p><em>Media type <code class="MIME" lang="en">@{[htescape $input->{media_type}]}</code> is not supported!</em></p>
-</div>
-];
-    push @nav, ['#result-summary' => 'Result'];
+    print_result_unknown_type_section ($input);
   }
 
-
   if (defined $doc or defined $el) {
-    print STDOUT qq[
-<div id="document-tree" class="section">
-<h2>Document Tree</h2>
-];
-    push @nav, ['#document-tree' => 'Tree'];
-
-    print_document_tree ($el || $doc);
-
-    print STDOUT qq[
-</div>
-
-<div id="document-errors" class="section">
-<h2>Document Errors</h2>
-
-<dl>];
-    push @nav, ['#document-errors' => 'Document Error'];
-
-    require Whatpm::ContentChecker;
-    my $onerror = sub {
-      my %opt = @_;
-      my ($type, $cls, $msg) = get_text ($opt{type}, $opt{level}, $opt{node});
-      $type =~ tr/ /-/;
-      $type =~ s/\|/%7C/g;
-      $msg .= qq[ [<a href="../error-description#@{[htescape ($type)]}">Description</a>]];
-      print STDOUT qq[<dt class="$cls">] . get_node_link ($opt{node}) .
-          qq[</dt>\n<dd class="$cls">], $msg, "</dd>\n";
-    };
-
-    $time1 = time;
-    my $elements;
-    if ($el) {
-      $elements = Whatpm::ContentChecker->check_element ($el, $onerror);
-    } else {
-      $elements = Whatpm::ContentChecker->check_document ($doc, $onerror);
-    }
-    $time2 = time;
-    $time{check} = $time2 - $time1;
-
-    print STDOUT qq[</dl>
-</div>
-];
-
-    if (@{$elements->{table}}) {
-      require JSON;
-
-      push @nav, ['#tables' => 'Tables'];
-      print STDOUT qq[
-<div id="tables" class="section">
-<h2>Tables</h2>
-
-<!--[if IE]><script type="text/javascript" src="../excanvas.js"></script><![endif]-->
-<script src="../table-script.js" type="text/javascript"></script>
-<noscript>
-<p><em>Structure of tables are visualized here if scripting is enabled.</em></p>
-</noscript>
-];
-
-      my $i = 0;
-      for my $table_el (@{$elements->{table}}) {
-        $i++;
-        print STDOUT qq[<div class="section" id="table-$i"><h3>] .
-            get_node_link ($table_el) . q[</h3>];
-
-        ## TODO: Make |ContentChecker| return |form_table| result
-        ## so that this script don't have to run the algorithm twice.
-        my $table = Whatpm::HTMLTable->form_table ($table_el);
-        
-        for (@{$table->{column_group}}, @{$table->{column}}, $table->{caption}) {
-          next unless $_;
-          delete $_->{element};
-        }
-        
-        for (@{$table->{row_group}}) {
-          next unless $_;
-          next unless $_->{element};
-          $_->{type} = $_->{element}->manakai_local_name;
-          delete $_->{element};
-        }
-        
-        for (@{$table->{cell}}) {
-          next unless $_;
-          for (@{$_}) {
-            next unless $_;
-            for (@$_) {
-              $_->{id} = refaddr $_->{element} if defined $_->{element};
-              delete $_->{element};
-              $_->{is_header} = $_->{is_header} ? 1 : 0;
-            }
-          }
-        }
-        
-        print STDOUT '</div><script type="text/javascript">tableToCanvas (';
-        print STDOUT JSON::objToJson ($table);
-        print STDOUT qq[, document.getElementById ('table-$i'));</script>];
-      }
-    
-      print STDOUT qq[</div>];
-    }
-
-    if (keys %{$elements->{id}}) {
-      push @nav, ['#identifiers' => 'IDs'];
-      print STDOUT qq[
-<div id="identifiers" class="section">
-<h2>Identifiers</h2>
-
-<dl>
-];
-      for my $id (sort {$a cmp $b} keys %{$elements->{id}}) {
-        print STDOUT qq[<dt><code>@{[htescape $id]}</code></dt>];
-        for (@{$elements->{id}->{$id}}) {
-          print STDOUT qq[<dd>].get_node_link ($_).qq[</dd>];
-        }
-      }
-      print STDOUT qq[</dl></div>];
-    }
-
-    if (keys %{$elements->{term}}) {
-      push @nav, ['#terms' => 'Terms'];
-      print STDOUT qq[
-<div id="terms" class="section">
-<h2>Terms</h2>
-
-<dl>
-];
-      for my $term (sort {$a cmp $b} keys %{$elements->{term}}) {
-        print STDOUT qq[<dt>@{[htescape $term]}</dt>];
-        for (@{$elements->{term}->{$term}}) {
-          print STDOUT qq[<dd>].get_node_link ($_).qq[</dd>];
-        }
-      }
-      print STDOUT qq[</dl></div>];
-    }
-
-    if (keys %{$elements->{class}}) {
-      push @nav, ['#classes' => 'Classes'];
-      print STDOUT qq[
-<div id="classes" class="section">
-<h2>Classes</h2>
-
-<dl>
-];
-      for my $class (sort {$a cmp $b} keys %{$elements->{class}}) {
-        print STDOUT qq[<dt><code>@{[htescape $class]}</code></dt>];
-        for (@{$elements->{class}->{$class}}) {
-          print STDOUT qq[<dd>].get_node_link ($_).qq[</dd>];
-        }
-      }
-      print STDOUT qq[</dl></div>];
-    }
+    print_structure_dump_section ($doc, $el);
+    my $elements = print_structure_error_section ($doc, $el);
+    print_table_section ($elements->{table}) if @{$elements->{table}};
+    print_id_section ($elements->{id}) if keys %{$elements->{id}};
+    print_term_section ($elements->{term}) if keys %{$elements->{term}};
+    print_class_section ($elements->{class}) if keys %{$elements->{class}};
   }
 
   ## TODO: Show result
 } else {
-  print STDOUT qq[
-</dl>
-</div>
-
-<div class="section" id="result-summary">
-<p><em><strong>Input Error</strong>: @{[htescape ($input->{error_status_text})]}</em></p>
-</div>
-];
-  push @nav, ['#result-summary' => 'Result'];
-
+  print STDOUT qq[</dl></div>];
+  print_result_input_error_section ($input);
 }
 
   print STDOUT qq[
@@ -408,6 +174,89 @@ not be the real header.</p>
 
   print STDOUT qq[</tbody></table></div>];
 } # print_http_header_section
+
+sub print_syntax_error_html_section ($) {
+  my $input = shift;
+  
+  require Encode;
+  require Whatpm::HTML;
+
+  $input->{charset} ||= 'ISO-8859-1'; ## TODO: for now.
+  
+  my $time1 = time;
+  my $t = Encode::decode ($input->{charset}, $input->{s});
+  $time{decode} = time - $time1;
+
+  print STDOUT qq[
+<div id="parse-errors" class="section">
+<h2>Parse Errors</h2>
+
+<dl>];
+  push @nav, ['#parse-errors' => 'Parse Error'];
+
+  my $onerror = sub {
+    my (%opt) = @_;
+    my ($type, $cls, $msg) = get_text ($opt{type}, $opt{level});
+    if ($opt{column} > 0) {
+      print STDOUT qq[<dt class="$cls"><a href="#line-$opt{line}">Line $opt{line}</a> column $opt{column}</dt>\n];
+    } else {
+      $opt{line} = $opt{line} - 1 || 1;
+      print STDOUT qq[<dt class="$cls"><a href="#line-$opt{line}">Line $opt{line}</a></dt>\n];
+    }
+    $type =~ tr/ /-/;
+    $type =~ s/\|/%7C/g;
+    $msg .= qq[ [<a href="../error-description#@{[htescape ($type)]}">Description</a>]];
+    print STDOUT qq[<dd class="$cls">$msg</dd>\n];
+  };
+
+  my $doc = $dom->create_document;
+  my $el;
+  $time1 = time;
+  if (defined $inner_html_element and length $inner_html_element) {
+    $el = $doc->create_element_ns
+        ('http://www.w3.org/1999/xhtml', [undef, $inner_html_element]);
+    Whatpm::HTML->set_inner_html ($el, $t, $onerror);
+  } else {
+    Whatpm::HTML->parse_string ($t => $doc, $onerror);
+  }
+  $time{parse} = time - $time1;
+
+  print STDOUT qq[</dl></div>];
+
+  return ($doc, $el);
+} # print_syntax_error_html_section
+
+sub print_syntax_error_xml_section ($) {
+  my $input = shift;
+  
+  require Message::DOM::XMLParserTemp;
+  
+  print STDOUT qq[
+<div id="parse-errors" class="section">
+<h2>Parse Errors</h2>
+
+<dl>];
+  push @nav, ['#parse-errors' => 'Parse Error'];
+
+  my $onerror = sub {
+    my $err = shift;
+    my $line = $err->location->line_number;
+    print STDOUT qq[<dt><a href="#line-$line">Line $line</a> column ];
+    print STDOUT $err->location->column_number, "</dt><dd>";
+    print STDOUT htescape $err->text, "</dd>\n";
+    return 1;
+  };
+
+  my $time1 = time;
+  open my $fh, '<', \($input->{s});
+  my $doc = Message::DOM::XMLParserTemp->parse_byte_stream
+      ($fh => $dom, $onerror, charset => $input->{charset});
+  $time{parse_xml} = time - $time1;
+
+  print STDOUT qq[</dl></div>];
+
+  return ($doc, undef);
+} # print_syntax_error_xml_section
 
 sub print_source_string_section ($$) {
   require Encode;
@@ -510,6 +359,189 @@ sub print_document_tree ($) {
   $r .= '</ol>';
   print STDOUT $r;
 } # print_document_tree
+
+sub print_structure_dump_section ($$) {
+  my ($doc, $el) = @_;
+
+  print STDOUT qq[
+<div id="document-tree" class="section">
+<h2>Document Tree</h2>
+];
+  push @nav, ['#document-tree' => 'Tree'];
+
+  print_document_tree ($el || $doc);
+
+  print STDOUT qq[</div>];
+} # print_structure_dump_section
+
+sub print_structure_error_section ($$) {
+  my ($doc, $el) = @_;
+
+  print STDOUT qq[<div id="document-errors" class="section">
+<h2>Document Errors</h2>
+
+<dl>];
+  push @nav, ['#document-errors' => 'Document Error'];
+
+  require Whatpm::ContentChecker;
+  my $onerror = sub {
+    my %opt = @_;
+    my ($type, $cls, $msg) = get_text ($opt{type}, $opt{level}, $opt{node});
+    $type =~ tr/ /-/;
+    $type =~ s/\|/%7C/g;
+    $msg .= qq[ [<a href="../error-description#@{[htescape ($type)]}">Description</a>]];
+    print STDOUT qq[<dt class="$cls">] . get_node_link ($opt{node}) .
+        qq[</dt>\n<dd class="$cls">], $msg, "</dd>\n";
+  };
+
+  my $elements;
+  my $time1 = time;
+  if ($el) {
+    $elements = Whatpm::ContentChecker->check_element ($el, $onerror);
+  } else {
+    $elements = Whatpm::ContentChecker->check_document ($doc, $onerror);
+  }
+  $time{check} = time - $time1;
+
+  print STDOUT qq[</dl></div>];
+
+  return $elements;
+} # print_structure_error_section
+
+sub print_table_section ($) {
+  my $tables = shift;
+  
+  push @nav, ['#tables' => 'Tables'];
+  print STDOUT qq[
+<div id="tables" class="section">
+<h2>Tables</h2>
+
+<!--[if IE]><script type="text/javascript" src="../excanvas.js"></script><![endif]-->
+<script src="../table-script.js" type="text/javascript"></script>
+<noscript>
+<p><em>Structure of tables are visualized here if scripting is enabled.</em></p>
+</noscript>
+];
+  
+  require JSON;
+  
+  my $i = 0;
+  for my $table_el (@$tables) {
+    $i++;
+    print STDOUT qq[<div class="section" id="table-$i"><h3>] .
+        get_node_link ($table_el) . q[</h3>];
+
+    ## TODO: Make |ContentChecker| return |form_table| result
+    ## so that this script don't have to run the algorithm twice.
+    my $table = Whatpm::HTMLTable->form_table ($table_el);
+    
+    for (@{$table->{column_group}}, @{$table->{column}}, $table->{caption}) {
+      next unless $_;
+      delete $_->{element};
+    }
+    
+    for (@{$table->{row_group}}) {
+      next unless $_;
+      next unless $_->{element};
+      $_->{type} = $_->{element}->manakai_local_name;
+      delete $_->{element};
+    }
+    
+    for (@{$table->{cell}}) {
+      next unless $_;
+      for (@{$_}) {
+        next unless $_;
+        for (@$_) {
+          $_->{id} = refaddr $_->{element} if defined $_->{element};
+          delete $_->{element};
+          $_->{is_header} = $_->{is_header} ? 1 : 0;
+        }
+      }
+    }
+        
+    print STDOUT '</div><script type="text/javascript">tableToCanvas (';
+    print STDOUT JSON::objToJson ($table);
+    print STDOUT qq[, document.getElementById ('table-$i'));</script>];
+  }
+  
+  print STDOUT qq[</div>];
+} # print_table_section
+
+sub print_id_section ($) {
+  my $ids = shift;
+  
+  push @nav, ['#identifiers' => 'IDs'];
+  print STDOUT qq[
+<div id="identifiers" class="section">
+<h2>Identifiers</h2>
+
+<dl>
+];
+  for my $id (sort {$a cmp $b} keys %$ids) {
+    print STDOUT qq[<dt><code>@{[htescape $id]}</code></dt>];
+    for (@{$ids->{$id}}) {
+      print STDOUT qq[<dd>].get_node_link ($_).qq[</dd>];
+    }
+  }
+  print STDOUT qq[</dl></div>];
+} # print_id_section
+
+sub print_term_section ($) {
+  my $terms = shift;
+  
+  push @nav, ['#terms' => 'Terms'];
+  print STDOUT qq[
+<div id="terms" class="section">
+<h2>Terms</h2>
+
+<dl>
+];
+  for my $term (sort {$a cmp $b} keys %$terms) {
+    print STDOUT qq[<dt>@{[htescape $term]}</dt>];
+    for (@{$terms->{$term}}) {
+      print STDOUT qq[<dd>].get_node_link ($_).qq[</dd>];
+    }
+  }
+  print STDOUT qq[</dl></div>];
+} # print_term_section
+
+sub print_class_section ($) {
+  my $classes = shift;
+  
+  push @nav, ['#classes' => 'Classes'];
+  print STDOUT qq[
+<div id="classes" class="section">
+<h2>Classes</h2>
+
+<dl>
+];
+  for my $class (sort {$a cmp $b} keys %$classes) {
+    print STDOUT qq[<dt><code>@{[htescape $class]}</code></dt>];
+    for (@{$classes->{$class}}) {
+      print STDOUT qq[<dd>].get_node_link ($_).qq[</dd>];
+    }
+  }
+  print STDOUT qq[</dl></div>];
+} # print_class_section
+
+sub print_result_unknown_type_section ($) {
+  my $input = shift;
+
+  print STDOUT qq[
+<div id="result-summary" class="section">
+<p><em>Media type <code class="MIME" lang="en">@{[htescape $input->{media_type}]}</code> is not supported!</em></p>
+</div>
+];
+  push @nav, ['#result-summary' => 'Result'];
+} # print_result_unknown_type_section
+
+sub print_result_input_error_section ($) {
+  my $input = shift;
+  print STDOUT qq[<div class="section" id="result-summary">
+<p><em><strong>Input Error</strong>: @{[htescape ($input->{error_status_text})]}</em></p>
+</div>];
+  push @nav, ['#result-summary' => 'Result'];
+} # print_Result_input_error_section
 
 sub get_node_path ($) {
   my $node = shift;
@@ -759,4 +791,4 @@ and/or modify it under the same terms as Perl itself.
 
 =cut
 
-## $Date: 2007/09/02 07:59:01 $
+## $Date: 2007/09/02 08:40:49 $

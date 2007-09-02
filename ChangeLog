@@ -1,3 +1,8 @@
+2007-09-02  Wakaba  <wakaba@suika.fam.cx>
+
+	* cc.cgi: Report document sections are now output by
+	corresponding subroutines.
+
 2007-08-26  Wakaba  <wakaba@suika.fam.cx>
 
 	* cc.cgi: New catalog macros |local-name| and |element-local-name|.
