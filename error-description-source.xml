@@ -53,6 +53,9 @@ Web Document Conformance Checker (BETA)</title>
     is not part of any reference appears in the input stream.
     The document is non-conforming.</p>
 
+    <p><strong>Any <code>&amp;</code> character in URI (or IRI)
+    must be escaped as <code>&amp;amp;</code>.</strong></p>
+
     <p>The <code>&amp;</code> character must
     be the first character of a reference:
       <dl>
@@ -172,10 +175,42 @@ Web Document Conformance Checker (BETA)</title>
   </d:desc>
 </d:item>
 
+<d:item name="bogus comment"
+    class="tokenize-error">
+  <d:message xml:lang="en">String <code>&lt;!</code> is not followed
+  by <code>--</code>.</d:message>
+  <d:desc xml:lang="en">
+    <p>There is a <code>&lt;</code> (<code>U+003C</code> 
+    <code class="charname">LESS-THAN SIGN</code>) character
+    followed by a <code>!</code> (<code>U+0021</code>
+    <code class="charname">EXCLAMATION MARK</code>) character,
+    which is not followed by a <code>--</code> or
+    <code>!DOCTYPE</code>.  The document is non-conforming.</p>
+
+    <dl class="switch">
+    <dt>Comments</dt>
+      <dd>In HTML documents, comments must be introduced by
+      <code>&lt;!--</code> (<code>&lt;!</code> <em>immediately</em> followed
+      by <em>two</em> <code>-</code>s) and must be terminated by
+      <code>--></code>.  Strings <code>&lt;!</code> not followed
+      by <code>--</code> and <code>&lt;!-</code> not followed by
+      <code>-</code> are not valid open delimiters for comments.</dd>
+    <dt>Marked sections, including <code>CDATA</code> sections</dt>
+      <dd>Marked sections are not allowed in HTML documents.</dd>
+    <dt>Markup declarations</dt>
+      <dd>Markup declarations, except <code>DOCTYPE</code>
+      and comment declarations, are not allowed in HTML documents.</dd>
+    <dt>String <code>&lt;!</code></dt>
+      <dd>String <code>&lt;!</code> must be escaped as
+      <code>&amp;lt;!</code>.</dd>
+    </dl>
+  </d:desc>
+</d:item>
+
 <d:item name="bogus end tag"
     class="tokenize-error">
-  <d:message xml:lang="en">A <code>&lt;/</code> string is not followed
-  by a tag name.</d:message><!-- </ non-name-start-char-non-EOF -->
+  <d:message xml:lang="en">String <code>&lt;/</code> is not followed
+  by tag name.</d:message><!-- </ non-name-start-char-non-EOF -->
   <d:desc xml:lang="en">
     <p>There is a <code>&lt;</code> (<code>U+003C</code> 
     <code class="charname">LESS-THAN SIGN</code>) character
@@ -238,6 +273,30 @@ Web Document Conformance Checker (BETA)</title>
     <code>embed</code>, <code>param</code>, <code>area</code>,
     <code>col</code>, and <code>input</code> elements.</p>
 
+    <dl>
+    <dt><code>&lt;script/></code></dt>
+        <dd><p>The void element syntax cannot be used for <code>script</code>
+        element.  Even for an empty <code>script</code> element,
+        there must be an explicit end tag <code>&lt;/script></code>.</p>
+
+        <p><strong>NOTE</strong>: Though some user agents interpret
+        void element syntax for <code>script</code> element as the 
+        closing of the element, such usage is not allowed under
+        the current standard.</p></dd>
+    <dt><code>&lt;basefont/></code>, <code>&lt;bgsound/></code>,
+    <code>&lt;frame/></code>, <code>&lt;keygen/></code>,
+    <code>&lt;spacer/></code>, <code>&lt;wbr/></code></dt>
+        <dd>These elements are themselves non-conforming.</dd>
+    <!-- isindex, image -->
+    <dt><code>&lt;command/></code>, <code>&lt;event-source/></code>,
+    <code>&lt;source/></code></dt>
+        <dd>Future revision of HTML5 parsing algorithm is expected
+        to allow void element syntax for these elements.</dd>
+    <dt><code>&lt;a/></code>, <code>&lt;p/></code></dt>
+        <dd>These elements are not always empty and therefore
+        void element syntax is not allowed.</dd>
+    </dl>
+
     <p>Note that, unlike in XML, the void element syntax has
     no effect in HTML.</p>
   </d:desc>
@@ -247,28 +306,35 @@ Web Document Conformance Checker (BETA)</title>
 <d:item name="pio"
     class="tokenize-error">
   <d:message xml:lang="en">Processing instruction 
-  (<code>&lt;?<var>...</var>?></code>) cannot be used.</d:message>
+  (<code>&lt;?<var>...</var>></code>) cannot be used.</d:message>
   <d:desc xml:lang="en">
     <p>Processing instructions (<code>&lt;?<var>...</var>?></code>),
     including XML declaration (<code>&lt;?xml <var>...</var>?></code>)
     and XML style sheet <abbr title="processing instruction">PI</abbr>
-    (<code>&lt;xml-stylesheet <var>...</var>?></code>), are not allowed 
+    (<code>&lt;?xml-stylesheet <var>...</var>?></code>), are not allowed 
     in the HTML syntax.  The document is non-conforming.</p>
 
-    <p>If it is necessary to embed a processing instruction
-    in the HTML document, you must use the XML syntax instead.</p>
-
-    <p>In the HTML syntax, XML declaration is not necessary.</p>
-
-    <p>Instead of XML style sheet,
-    <abbr title="processing instruction">PI</abbr>s, you must
-    use the HTML <code>link</code> element whose <code>rel</code>
-    attribute is set to <code>stylesheet</code> (or 
-    <code>alternate stylesheet</code> for an aleternate style sheet).</p>
+    <dl>
+    <dt><code>&lt;?xml?&gt;</code> (XML declaration)</dt>
+        <dd>XML declaration is unnecessary for HTML documents.</dd>
+    <dt><code>&lt;?xml-stylesheet?></code> (XML style sheet
+    <abbr title="processing instruction">PI</abbr></dt>
+        <dd>Use HTML <code>link</code> element with <code>rel</code>
+        attribute set to <code>stylesheet</code> (or,
+        <code>alternate stylesheet</code> for an alternate style 
+        sheet).</dd>
+    <dt><code>&lt;?php?&gt;</code> (PHP code)</dt>
+        <dd>The conformance checker does <em>not</em> support
+        checking for PHP source documents.</dd>
+    <dt>Other processing instructions</dt>
+        <dd>Processing instructions cannot be inserted in an HTML
+        document.  Use XML document or insert 
+        <code>ProcessingInstruction</code> node by scripting.</dd>
+    </dl>
 
     <p>Web browsers will parse processing instructions as bogus
     comments.  Some legacy Web browsers, such as IE:mac and
-    some mobile browsers, will display processing instructions
+    some mobile Web browsers, will display processing instructions
     as string.</p>
   </d:desc>
 </d:item>
@@ -318,7 +384,7 @@ Web Document Conformance Checker (BETA)</title>
 <d:item name="in body"
     class="parse-error">
   <d:message xml:lang="en">Tag <code>&lt;<var>$0</var>&gt;</code>
-  is not allowed in a <code>body</code> element.</d:message>
+  is not allowed in the <code>body</code> element.</d:message>
   <d:desc xml:lang="en">
     <p>The start or end tag of an element, which 
     cannot be a descendant of <code>body</code> element, appears
@@ -329,7 +395,7 @@ Web Document Conformance Checker (BETA)</title>
 
 <d:item name="in head:head"
     class="parse-error">
-  <d:message xml:lang="en">Start tag <code>&lt;<var>head</var>&gt;</code>
+  <d:message xml:lang="en">Start tag <code>&lt;head&gt;</code>
   is not allowed in the <code>head</code> element.</d:message>
   <d:desc xml:lang="en">
     <p>There is a start tag <code>&lt;head></code> in the
@@ -539,9 +605,6 @@ Web Document Conformance Checker (BETA)</title>
     <p>An element appears where it is not allowed.  The document
     is non-conforming.</p>
 
-    <p><strong>Note</strong>: The conformance checker does
-    <em>not</em> support form elements yet.</p>
-
     <p>Possible causes:
       <dl class="switch">
       <dt>If the element with the error is an inline-level element,
@@ -552,15 +615,31 @@ Web Document Conformance Checker (BETA)</title>
 
           <p>Any inline-level content must be put
           in e.g. paragraph element such as <code>p</code>.</p></dd>
-      <dt>If the element with the error is a block-level element,
-      such as <code>div</code>, <code>h<var>n</var></code>, or
-      <code>section</code></dt>
-          <dd><p>Though some elements such as <code>div</code>,
-          <code>li</code>, and <code>td</code> allow
-          <em>either one</em> of block-level or inline-level content
-          is allowed.  If there is a block-level content, 
-          any inline-level content must be put
-          in e.g. paragraph element such as <code>p</code>.</p></dd>
+      <dt>If it is a block-level elements, such as <code>aside</code>,
+      <code>div</code>, <code>h<var>n</var></code>,
+      <code>p</code>, or <code>section</code></dt>
+          <dd><dl class="switch">
+              <dt>If the parent element is <code>div</code>,
+              <code>li</code>, <code>td</code>, or <code>th</code></dt>
+              <!-- @@ TODO: more... -->
+                  <!-- @@ TODO: <p><ul><li><p> -->
+                  <dd><p>The parent element allows <em>either</em>
+                  block-level or inline-level content.  If there is a
+                  block-level content, any inline-level content must be
+                  put in e.g. paragraph element such as <code>p</code>.</p>
+                  <p>For example, an HTML document fragment
+                  <code class="bad example">&lt;div>&lt;p>Hello!&lt;/p> World!&lt;/div></code>
+                  is non-conforming, since a word <q>World!</q> does not belong
+                  to any paragraph.  (If not part of any paragraph, what is
+                  it!?)  A conforming example would be:
+                    <pre class="example"><code>&lt;div>&lt;p>Hello!&lt;/p> &lt;p>World!&lt;/p>&lt;/div></code></pre>
+                  </p></dd>
+              <dt>If the parent element does <em>not</em> allow 
+              block-level elements as content</dt>
+                  <dd>The element is not allowed to be inserted here.
+                  For example, a <code>div</code> element cannot be 
+                  a child of an <code>h1</code> element.</dd>
+          </dl></dd>
       <dt>If the element with the error is a <code>noscript</code> element</dt>
           <dd>The <code>noscript</code> element is allowed only in the context
           where a block-level or inline-level content is expected
@@ -577,6 +656,15 @@ Web Document Conformance Checker (BETA)</title>
       <code>center</code>, or <code>marquee</code> element</dt>
           <dd>These elements are not part of the HTML standard.
           Use CSS for styling control.</dd>
+
+      <dt><code>button</code>, <code>datalist</code>, <code>form</code>,
+      <code>input</code>, <code>label</code>,
+      <code>optgroup</code>, <code>option</code>, <code>output</code>,
+      <code>rb</code>, <code>rp</code>, <code>rt</code>, <code>ruby</code>,
+      <code>textarea</code>, or <code>textarea</code> element</dt>
+      <!-- rbc, rtc ? -->
+          <dd>These elements are intentionally not supported by the conformance
+          checker <em>yet</em>.</dd>
       </dl>
     </p>
   </d:desc>
@@ -609,11 +697,18 @@ Web Document Conformance Checker (BETA)</title>
     is non-conforming.</p>
 
     <p>Some attribute is defined as <i>required</i>.
-    For example, any <code>img</code> element must have
-    <code>alt</code> and <code>src</code> attributes specified.
     Without required attributes specified, user agents 
-    cannot provide the full functionality of the element
-    to the user.</p>
+    cannot provide full functionality of the element to the user.</p>
+
+    <dl class="switch">
+    <dt>HTML <code>img</code> element</dt>
+        <dd>The <code>src</code> attribute must be specified.
+        Additionally, the <code>alt</code> attribute must be specified
+        in many cases.</dd>
+    <dt>HTML <code>link</code> element</dt>
+        <dd>The <code>rel</code> attribute must be specified.
+        Note that the <code>rev</code> attribute is obsolete.</dd>
+    </dl>
   </d:desc>
 </d:item>
 
@@ -642,9 +737,8 @@ Web Document Conformance Checker (BETA)</title>
     <p>The <code>xml:lang</code> attribute is not allowed in
     HTML document.  The document is non-conforming.</p>
 
-    <p>The <code>lang</code> attribute in the <code>null</code>
-    namespace for HTML elements is defined as conforming <em>only</em> for
-    XML document.</p>
+    <p>Use of the <code>xml:lang</code> attribute is conforming
+    <em>only</em> in XML documents.</p>
 
     <p>To specify natural language information in HTML document,
     use <code>lang</code> attribute instead.</p>
@@ -685,8 +779,8 @@ Web Document Conformance Checker (BETA)</title>
     XML document.  The document is non-conforming.</p>
 
     <p>The <code>lang</code> attribute in <code>null</code>
-    namespace for HTML elements is defined as conforming <em>only</em> for
-    HTML document.</p>
+    namespace for HTML elements is conforming <em>only</em> in
+    HTML documents.</p>
 
     <p>To specify natural language information in XML document,
     use <code>xml:lang</code> attribute instead.</p>
@@ -868,8 +962,8 @@ Web Document Conformance Checker (BETA)</title>
 &lt;tr>&lt;td rowspan=2>&lt;/td>&lt;/tr>
 &lt;/tbody>
 &lt;/table></code></pre>
-    ... is non-conforming, since the second row contains only
-    a cell that spans the first and the second rows.</p>
+    ... since the second row contains only
+    a cell that spans between first and second rows.</p>
   </d:desc>
 </d:item>
 
@@ -923,13 +1017,13 @@ Web Document Conformance Checker (BETA)</title>
 
 </section>
 
-<section id="uri-warnings">
-<h2>URI (or IRI) Warnings</h2>
+<section id="uri-shoulds">
+<h2>URI (or IRI) Should-level Errors</h2>
 
 <d:item name="URI::dot-segment"
     class="should" level="s">
-  <d:message xml:lang="en">Dot-segment (<code>.</code> or
-  <code>..</code>) should not occur in an absolute reference.</d:message>
+  <d:message xml:lang="en">A dot-segment (<code>.</code> or
+  <code>..</code>) occurs in an absolute reference.</d:message>
   <d:desc>
     <p>Dot-segment (<code>.</code> or <code>..</code>) should
     not occur in an absolute reference.</p>
@@ -944,14 +1038,14 @@ Web Document Conformance Checker (BETA)</title>
 
 <d:item name="URI::empty path"
     class="should" level="s">
-  <d:message xml:lang="en">This IRI should explicitly end with
-  <code>/</code>.</d:message>
+  <d:message xml:lang="en">This IRI does not end with
+  a <code>/</code>.</d:message>
 </d:item>
 
 <d:item name="URI::lowercase hexadecimal digit"
     class="should" level="s">
-  <d:message xml:lang="en">Hexadecimal digit in percent-encoding
-  should be in lowercase.</d:message>
+  <d:message xml:lang="en">A lowercase hexadecimal digit is used
+  in percent-encoding.</d:message>
   <d:desc xml:lang="en">
     <p>The hexadecimal digit in percent-encoding string in the IRI
     is in lowercase.  Though the IRI <em>is</em> conforming,
@@ -995,31 +1089,34 @@ Web Document Conformance Checker (BETA)</title>
 <section id="unsupported-messages">
 <h2><i>Unsupported</i> Messages</h2>
 
-<d:item name="attribute"
-    class="unsupported" level="unsupported">
-  <d:message xml:lang="en">This attribute is not supported by the
-  conformance checker; <em>it might or might not be conforming</em>.</d:message>
-  <d:desc xml:lang="en">
-    <p>The conformant checker does not support the attribute.
-    It cannot determine whether the document is conforming or not.</p>
-  </d:desc>
-</d:item>
-
 <d:item name="element"
     class="unsupported" level="unsupported">
-  <d:message xml:lang="en">This element is not supported by the
-  conformance checker; <em>it might or might not be conforming</em>.</d:message>
+  <d:message xml:lang="en">Conformance checking for element
+  <code><var>{local-name}</var></code> is not supported; <em>it might or
+  might not be conforming</em>.</d:message>
   <d:desc xml:lang="en">
     <p>The conformant checker does not support the element.
     It cannot determine whether the document is conforming or not.</p>
   </d:desc>
 </d:item>
 
+<d:item name="attribute"
+    class="unsupported" level="unsupported">
+  <d:message xml:lang="en">Conformance checking for attribute
+  <code><var>{local-name}</var></code> of element 
+  <code><var>{element-local-name}</var></code> is not supported;
+  <em>it might or might not be conforming</em>.</d:message>
+  <d:desc xml:lang="en">
+    <p>The conformant checker does not support the attribute.
+    It cannot determine whether the document is conforming or not.</p>
+  </d:desc>
+</d:item>
+
 <d:item name="link type"
     class="unsupported" level="unsupported">
-  <d:message xml:lang="en">The link type <code><var>$0</var></code> is not
+  <d:message xml:lang="en">Link type <code><var>$0</var></code> is not
   standardized or registered at the time of the release of the conformance
-  checker; <em>it is non-conforming unless it has now been
+  checker; <em>it is non-conforming unless it now has been
   registered</em>.</d:message>
   <d:desc xml:lang="en">
     <p>The <code>rel</code> attribute is defined as a list of link types.
@@ -1087,11 +1184,11 @@ manakaiIsHTML:0;;XML Document
 <section id="license">
 <h2>License of This Document</h2>
 
-<p>Copyright 2007 <a href="http://suika.fam.cx/~wakaba/who?">Wakaba</a></p>
-<p>This library is free software; you can redistribute it
+<p>Copyright 2007 <a href="http://suika.fam.cx/~wakaba/who?" rel="author" xml:lang="ja">Wakaba</a></p>
+<p>This document is free software; you can redistribute it
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2007/09/02 07:59:01 $ -->
+<!-- $Date: 2007/09/03 14:30:46 $ -->
 </body>
 </html>

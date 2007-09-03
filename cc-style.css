@@ -7,7 +7,7 @@
   padding: 0.5em 1em;
 }
 
-dt {
+dt, strong {
   font-weight: bolder;
   font-family: sans-serif;
 }
@@ -193,6 +193,6 @@ Copyright 2007 Wakaba <w@suika.fam.cx>
 This library is free software; you can redistribute it
 and/or modify it under the same terms as Perl itself.
 
-$Date: 2007/07/21 04:58:17 $
+$Date: 2007/09/03 14:30:46 $
 
 */

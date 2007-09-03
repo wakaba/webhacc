@@ -5,16 +5,17 @@ bare etago;tokenize-error;A <code>&lt;/</code> string is not followed by a tag n
 bare stago;tokenize-error;A <code>&lt;</code> character is not followed by tag name or by a <code>!</code> character.
 bare nero;tokenize-error;The decimal representation of the code position of a character must be specified after <code>&amp;#</code>.
 bare hcro;tokenize-error;The hexadecimal representation of the code position of a character must be specified after <code>&amp;#x</code>.
-bogus end tag;tokenize-error;A <code>&lt;/</code> string is not followed by a tag name.
+bogus comment;tokenize-error;String <code>&lt;!</code> is not followed by <code>--</code>.
+bogus end tag;tokenize-error;String <code>&lt;/</code> is not followed by tag name.
 dash in comment;tokenize-error;There is a <code>--</code> sequence in a comment.
 duplicate attribute;tokenize-error;There are two attributes with name <code><var>$0</var></code>.
 nestc;tokenize-error;Void element syntax (<code>/&gt;</code>) cannot be used for this element.
-pio;tokenize-error;Processing instruction (<code>&lt;?<var>...</var>?&gt;</code>) cannot be used.
+pio;tokenize-error;Processing instruction (<code>&lt;?<var>...</var>&gt;</code>) cannot be used.
 after head;parse-error;The <code><var>$0</var></code> element cannot be inserted between <code>head</code> and <code>body</code> elements.
 DOCTYPE in the middle;parse-error;A <code>DOCTYPE</code> appears after any element or data character has been seen.
 in a:a;parse-error;Anchor cannot be nested.
-in body;parse-error;Tag <code>&lt;<var>$0</var>&gt;</code> is not allowed in a <code>body</code> element.
-in head:head;parse-error;Start tag <code>&lt;<var>head</var>&gt;</code> is not allowed in the <code>head</code> element.
+in body;parse-error;Tag <code>&lt;<var>$0</var>&gt;</code> is not allowed in the <code>body</code> element.
+in head:head;parse-error;Start tag <code>&lt;head&gt;</code> is not allowed in the <code>head</code> element.
 in table;parse-error;Tag <code>&lt;<var>$0</var>&gt;</code> is not allowed in a <code>table</code> element.
 in table:#character;parse-error;Data character is not allowed in <code>table</code>.
 missing start tag:tr;parse-error;Start tag of <code>tr</code> element is missing.
@@ -47,14 +48,14 @@ s:IMT:obsolete subtype;should;<code><var>{@}</var></code>: An <em>obsolete</em> 
 s:IMT:private subtype;should;<code><var>{@}</var></code>: A private (<code>x-</code> or <code>x.</code>) subtype is used.
 s:IMT:unregistered subtype;should;<code><var>{@}</var></code>: The subtype is not registered to IANA.
 m:URI::syntax error;must;The specified value is syntactically not an IRI reference.
-s:URI::dot-segment;should;Dot-segment (<code>.</code> or <code>..</code>) should not occur in an absolute reference.
-s:URI::empty path;should;This IRI should explicitly end with <code>/</code>.
-s:URI::lowercase hexadecimal digit;should;Hexadecimal digit in percent-encoding should be in lowercase.
+s:URI::dot-segment;should;A dot-segment (<code>.</code> or <code>..</code>) occurs in an absolute reference.
+s:URI::empty path;should;This IRI does not end with a <code>/</code>.
+s:URI::lowercase hexadecimal digit;should;A lowercase hexadecimal digit is used in percent-encoding.
 s:URI::percent-encoded unreserved;should;An unreserved character is percent-encoded.
 s:URI::uppercase scheme name;should;URI scheme name is in uppercase.
-unsupported:attribute;unsupported;This attribute is not supported by the conformance checker; <em>it might or might not be conforming</em>.
-unsupported:element;unsupported;This element is not supported by the conformance checker; <em>it might or might not be conforming</em>.
-unsupported:link type;unsupported;The link type <code><var>$0</var></code> is not standardized or registered at the time of the release of the conformance checker; <em>it is non-conforming unless it has now been registered</em>.
+unsupported:element;unsupported;Conformance checking for element <code><var>{local-name}</var></code> is not supported; <em>it might or might not be conforming</em>.
+unsupported:attribute;unsupported;Conformance checking for attribute <code><var>{local-name}</var></code> of element <code><var>{element-local-name}</var></code> is not supported; <em>it might or might not be conforming</em>.
+unsupported:link type;unsupported;Link type <code><var>$0</var></code> is not standardized or registered at the time of the release of the conformance checker; <em>it is non-conforming unless it now has been registered</em>.
 unsupported:event handler;unsupported;Conformance checking for event handler attribute is not supported; <em>it might or might not be conforming.</em>
 unsupported:language tag;unsupported;Conformance checking for language tag is not supported; <em>it might or might not be conforming.</em>
 unsupported:media query;unsupported;Conformance checking for media query is not supported; <em>it might or might not be conforming.</em>
