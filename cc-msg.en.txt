@@ -9,7 +9,7 @@ bogus comment;tokenize-error;String <code>&lt;!</code> is not followed by <code>
 bogus end tag;tokenize-error;String <code>&lt;/</code> is not followed by tag name.
 dash in comment;tokenize-error;There is a <code>--</code> sequence in a comment.
 duplicate attribute;tokenize-error;There are two attributes with name <code><var>$0</var></code>.
-nestc;tokenize-error;Void element syntax (<code>/&gt;</code>) cannot be used for this element.
+nestc;tokenize-error;Polytheistic slash (<code>/&gt;</code>) cannot be used for this element.
 pio;tokenize-error;Processing instruction (<code>&lt;?<var>...</var>&gt;</code>) cannot be used.
 after head;parse-error;The <code><var>$0</var></code> element cannot be inserted between <code>head</code> and <code>body</code> elements.
 DOCTYPE in the middle;parse-error;A <code>DOCTYPE</code> appears after any element or data character has been seen.

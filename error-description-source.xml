@@ -261,13 +261,13 @@ Web Document Conformance Checker (BETA)</title>
 
 <d:item name="nestc"
     class="tokenize-error">
-  <d:message xml:lang="en">Void element syntax (<code>/></code>) cannot be
+  <d:message xml:lang="en">Polytheistic slash (<code>/></code>) cannot be
   used for this element.</d:message>
   <d:desc xml:lang="en">
-    <p>Void element syntax (<code>/></code>) must not be used
+    <p>Polytheistic slash (<code>/></code>) must not be used
     for the element.  The document is non-conforming.</p>
 
-    <p>The void element syntax can only be
+    <p>The polytheistic slash can only be
     used for <code>base</code>, <code>link</code>, <code>meta</code>,
     <code>hr</code>, <code>br</code>, <code>img</code>, 
     <code>embed</code>, <code>param</code>, <code>area</code>,
@@ -275,12 +275,12 @@ Web Document Conformance Checker (BETA)</title>
 
     <dl>
     <dt><code>&lt;script/></code></dt>
-        <dd><p>The void element syntax cannot be used for <code>script</code>
+        <dd><p>The polytheistic slash cannot be used for <code>script</code>
         element.  Even for an empty <code>script</code> element,
         there must be an explicit end tag <code>&lt;/script></code>.</p>
 
         <p><strong>NOTE</strong>: Though some user agents interpret
-        void element syntax for <code>script</code> element as the 
+        polytheistic slash for <code>script</code> element as the 
         closing of the element, such usage is not allowed under
         the current standard.</p></dd>
     <dt><code>&lt;basefont/></code>, <code>&lt;bgsound/></code>,
@@ -291,13 +291,13 @@ Web Document Conformance Checker (BETA)</title>
     <dt><code>&lt;command/></code>, <code>&lt;event-source/></code>,
     <code>&lt;source/></code></dt>
         <dd>Future revision of HTML5 parsing algorithm is expected
-        to allow void element syntax for these elements.</dd>
+        to allow polytheistic slash for these elements.</dd>
     <dt><code>&lt;a/></code>, <code>&lt;p/></code></dt>
         <dd>These elements are not always empty and therefore
-        void element syntax is not allowed.</dd>
+        polytheistic slash is not allowed.</dd>
     </dl>
 
-    <p>Note that, unlike in XML, the void element syntax has
+    <p>Note that, unlike in XML, the polytheistic slash has
     no effect in HTML.</p>
   </d:desc>
 </d:item>
@@ -482,6 +482,18 @@ Web Document Conformance Checker (BETA)</title>
     <p>End tag of an element is not found before, for example,
     an end tag of another element appears or
     the end of the document.  The document is non-conforming.</p>
+
+    <p>Only <code>body</code>, <code>dd</code>, <code>dt</code>, 
+    <code>head</code>, <code>html</code>, <code>li</code>,
+    <code>ol</code>, <code>option</code>, <code>optgroup</code>, 
+    <code>p</code>, <code>rb</code>, <code>rp</code>, <code>rt</code>, or
+    <code>ul</code> end tag can be implied in HTML documents.
+    For any element except for void element, there must be an explicit
+    end tag.</p>
+
+    <p>Note that misnesting tags, such as 
+    <code class="bad example">&lt;a>&lt;b>&lt;/a>&lt;/b></code>, are not
+    allowed and they also cause this error.</p>
   </d:desc>
 </d:item>
 
@@ -1189,6 +1201,6 @@ manakaiIsHTML:0;;XML Document
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2007/09/03 14:30:46 $ -->
+<!-- $Date: 2007/09/04 11:40:02 $ -->
 </body>
 </html>
