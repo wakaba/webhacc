@@ -83,7 +83,7 @@ if (defined $input->{s}) {
 </div>
 ];
 
-  my $result = {};
+  my $result = {conforming_min => 1, conforming_max => 1};
   print_http_header_section ($input, $result);
 
   my $doc;
@@ -914,4 +914,4 @@ and/or modify it under the same terms as Perl itself.
 
 =cut
 
-## $Date: 2007/09/10 11:51:09 $
+## $Date: 2007/09/10 12:09:34 $
