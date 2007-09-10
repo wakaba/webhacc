@@ -483,11 +483,13 @@ Web Document Conformance Checker (BETA)</title>
     an end tag of another element appears or
     the end of the document.  The document is non-conforming.</p>
 
-    <p>Only <code>body</code>, <code>dd</code>, <code>dt</code>, 
-    <code>head</code>, <code>html</code>, <code>li</code>,
+    <p>Only <code>body</code>, <code>colgroup</code>, <code>dd</code>,
+    <code>dt</code>, <code>head</code>, <code>html</code>, <code>li</code>,
     <code>ol</code>, <code>option</code>, <code>optgroup</code>, 
-    <code>p</code>, <code>rb</code>, <code>rp</code>, <code>rt</code>, or
-    <code>ul</code> end tag can be implied in HTML documents.
+    <code>p</code>, <code>rb</code>, <code>rp</code>, <code>rt</code>,
+    <code>tbody</code>, <code>td</code>, <code>tfoot</code>,
+    <code>th</code>, <code>thead</code>, <code>tr</code>,
+    <code>ul</code> end tag can be omitted in HTML documents.
     For any element except for void element, there must be an explicit
     end tag.</p>
 
@@ -669,7 +671,8 @@ Web Document Conformance Checker (BETA)</title>
           <dd>These elements are not part of the HTML standard.
           Use CSS for styling control.</dd>
 
-      <dt><code>button</code>, <code>datalist</code>, <code>form</code>,
+      <dt><code>button</code>, <code>datalist</code>,
+      <code>fieldset</code>, <code>form</code>,
       <code>input</code>, <code>label</code>,
       <code>optgroup</code>, <code>option</code>, <code>output</code>,
       <code>rb</code>, <code>rp</code>, <code>rt</code>, <code>ruby</code>,
@@ -1201,6 +1204,6 @@ manakaiIsHTML:0;;XML Document
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2007/09/04 11:40:02 $ -->
+<!-- $Date: 2007/09/10 11:51:09 $ -->
 </body>
 </html>

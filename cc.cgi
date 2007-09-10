@@ -83,13 +83,14 @@ if (defined $input->{s}) {
 </div>
 ];
 
-  print_http_header_section ($input);
+  my $result = {};
+  print_http_header_section ($input, $result);
 
   my $doc;
   my $el;
 
   if ($input->{media_type} eq 'text/html') {
-    ($doc, $el) = print_syntax_error_html_section ($input);
+    ($doc, $el) = print_syntax_error_html_section ($input, $result);
     print_source_string_section (\($input->{s}), $input->{charset});
   } elsif ({
             'text/xml' => 1,
@@ -99,7 +100,7 @@ if (defined $input->{s}) {
             'application/xhtml+xml' => 1,
             'application/xml' => 1,
            }->{$input->{media_type}}) {
-    ($doc, $el) = print_syntax_error_xml_section ($input);
+    ($doc, $el) = print_syntax_error_xml_section ($input, $result);
     print_source_string_section (\($input->{s}), $doc->input_encoding);
   } else {
     ## TODO: Change HTTP status code??
@@ -108,14 +109,14 @@ if (defined $input->{s}) {
 
   if (defined $doc or defined $el) {
     print_structure_dump_section ($doc, $el);
-    my $elements = print_structure_error_section ($doc, $el);
+    my $elements = print_structure_error_section ($doc, $el, $result);
     print_table_section ($elements->{table}) if @{$elements->{table}};
     print_id_section ($elements->{id}) if keys %{$elements->{id}};
     print_term_section ($elements->{term}) if keys %{$elements->{term}};
     print_class_section ($elements->{class}) if keys %{$elements->{class}};
   }
 
-  ## TODO: Show result
+  print_result_section ($result);
 } else {
   print STDOUT qq[</dl></div>];
   print_result_input_error_section ($input);
@@ -141,8 +142,36 @@ if (defined $input->{s}) {
 
 exit;
 
-sub print_http_header_section ($) {
-  my $input = shift;
+sub add_error ($$$) {
+  my ($layer, $err, $result) = @_;
+  if (defined $err->{level}) {
+    if ($err->{level} eq 's') {
+      $result->{$layer}->{should}++;
+      $result->{$layer}->{score_min} -= 2;
+      $result->{conforming_min} = 0;
+    } elsif ($err->{level} eq 'w' or $err->{level} eq 'g') {
+      $result->{$layer}->{warning}++;
+    } elsif ($err->{level} eq 'unsupported') {
+      $result->{$layer}->{unsupported}++;
+      $result->{unsupported} = 1;
+    } else {
+      $result->{$layer}->{must}++;
+      $result->{$layer}->{score_max} -= 2;
+      $result->{$layer}->{score_min} -= 2;
+      $result->{conforming_min} = 0;
+      $result->{conforming_max} = 0;
+    }
+  } else {
+    $result->{$layer}->{must}++;
+    $result->{$layer}->{score_max} -= 2;
+    $result->{$layer}->{score_min} -= 2;
+    $result->{conforming_min} = 0;
+    $result->{conforming_max} = 0;
+  }
+} # add_error
+
+sub print_http_header_section ($$) {
+  my ($input, $result) = @_;
   return unless defined $input->{header_status_code} or
       defined $input->{header_status_text} or
       @{$input->{header_field}};
@@ -175,8 +204,8 @@ not be the real header.</p>
   print STDOUT qq[</tbody></table></div>];
 } # print_http_header_section
 
-sub print_syntax_error_html_section ($) {
-  my $input = shift;
+sub print_syntax_error_html_section ($$) {
+  my ($input, $result) = @_;
   
   require Encode;
   require Whatpm::HTML;
@@ -207,6 +236,8 @@ sub print_syntax_error_html_section ($) {
     $type =~ s/\|/%7C/g;
     $msg .= qq[ [<a href="../error-description#@{[htescape ($type)]}">Description</a>]];
     print STDOUT qq[<dd class="$cls">$msg</dd>\n];
+
+    add_error ('syntax', \%opt => $result);
   };
 
   my $doc = $dom->create_document;
@@ -226,8 +257,8 @@ sub print_syntax_error_html_section ($) {
   return ($doc, $el);
 } # print_syntax_error_html_section
 
-sub print_syntax_error_xml_section ($) {
-  my $input = shift;
+sub print_syntax_error_xml_section ($$) {
+  my ($input, $result) = @_;
   
   require Message::DOM::XMLParserTemp;
   
@@ -244,6 +275,14 @@ sub print_syntax_error_xml_section ($) {
     print STDOUT qq[<dt><a href="#line-$line">Line $line</a> column ];
     print STDOUT $err->location->column_number, "</dt><dd>";
     print STDOUT htescape $err->text, "</dd>\n";
+
+    add_error ('syntax', {type => $err->text,
+                level => [
+                          $err->SEVERITY_FATAL_ERROR => 'm',
+                          $err->SEVERITY_ERROR => 'm',
+                          $err->SEVERITY_WARNING => 's',
+                         ]->[$err->severity]} => $result);
+
     return 1;
   };
 
@@ -374,8 +413,8 @@ sub print_structure_dump_section ($$) {
   print STDOUT qq[</div>];
 } # print_structure_dump_section
 
-sub print_structure_error_section ($$) {
-  my ($doc, $el) = @_;
+sub print_structure_error_section ($$$) {
+  my ($doc, $el, $result) = @_;
 
   print STDOUT qq[<div id="document-errors" class="section">
 <h2>Document Errors</h2>
@@ -392,6 +431,7 @@ sub print_structure_error_section ($$) {
     $msg .= qq[ [<a href="../error-description#@{[htescape ($type)]}">Description</a>]];
     print STDOUT qq[<dt class="$cls">] . get_node_link ($opt{node}) .
         qq[</dt>\n<dd class="$cls">], $msg, "</dd>\n";
+    add_error ('structure', \%opt => $result);
   };
 
   my $elements;
@@ -523,6 +563,89 @@ sub print_class_section ($) {
   }
   print STDOUT qq[</dl></div>];
 } # print_class_section
+
+sub print_result_section ($) {
+  my $result = shift;
+
+  print STDOUT qq[
+<div id="result-summary" class="section">
+<h2>Result</h2>];
+
+  if ($result->{unsupported}) {  
+    print STDOUT qq[<p class=uncertain id=result-para>The conformance
+        checker cannot decide whether the document is conforming or
+        not, since the document contains one or more unsupported
+        features.</p>];
+  } elsif ($result->{conforming_min}) {
+    print STDOUT qq[<p class=PASS id=result-para>No conformance-error is
+        found in this document.</p>];
+  } elsif ($result->{conforming_max}) {
+    print STDOUT qq[<p class=SEE-RESULT id=result-para>This document
+        is <strong>likely <em>non</em>-conforming</strong>, but in rare case
+        it might be conforming.</p>];
+  } else {
+    print STDOUT qq[<p class=FAIL id=result-para>This document is 
+        <strong><em>non</em>-conforming</strong>.</p>];
+  }
+
+  print STDOUT qq[<table>
+<colgroup><col><colgroup><col><col><col><colgroup><col>
+<thead>
+<tr><th scope=col></th><th scope=col><em class=rfc2119>MUST</em>-level
+Errors</th><th scope=col><em class=rfc2119>SHOULD</em>-level
+Errors</th><th scope=col>Warnings</th><th scope=col>Score</th></tr>
+</thead><tbody>];
+
+  my $must_error = 0;
+  my $should_error = 0;
+  my $warning = 0;
+  my $score_min = 0;
+  my $score_max = 0;
+  my $score_base = 20;
+  for (
+    [Transfer => 'transfer', ''],
+    [Character => 'char', ''],
+    [Syntax => 'syntax', '#parse-errors'],
+    [Structure => 'structure', '#document-errors'],
+  ) {
+    $must_error += ($result->{$_->[1]}->{must} += 0);
+    $should_error += ($result->{$_->[1]}->{should} += 0);
+    $warning += ($result->{$_->[1]}->{warning} += 0);
+    $score_min += ($result->{$_->[1]}->{score_min} += $score_base);
+    $score_max += ($result->{$_->[1]}->{score_max} += $score_base);
+
+    my $uncertain = $result->{$_->[1]}->{unsupported} ? '?' : '';
+    my $label = $_->[0];
+    if ($result->{$_->[1]}->{must} or
+        $result->{$_->[1]}->{should} or
+        $result->{$_->[1]}->{warning} or
+        $result->{$_->[1]}->{unsupported}) {
+      $label = qq[<a href="$_->[2]">$label</a>];
+    }
+
+    print STDOUT qq[<tr class="@{[$uncertain ? 'uncertain' : '']}"><th scope=row>$label</th><td class="@{[$result->{$_->[1]}->{must} ? 'FAIL' : '']}">$result->{$_->[1]}->{must}$uncertain</td><td class="@{[$result->{$_->[1]}->{should} ? 'SEE-RESULT' : '']}">$result->{$_->[1]}->{should}$uncertain</td><td>$result->{$_->[1]}->{warning}$uncertain</td>];
+    if ($uncertain) {
+      print qq[<td class="@{[$score_max < $score_base ? $score_min < $score_max ? 'FAIL' : 'SEE-RESULT' : '']}">&#x2212;&#x221E;..$result->{$_->[1]}->{score_max}</td>];
+    } elsif ($result->{$_->[1]}->{score_min} != $result->{$_->[1]}->{score_max}) {
+      print qq[<td class="@{[$score_max < $score_base ? 'FAIL' : 'SEE-RESULT']}">$result->{$_->[1]}->{score_min}..$result->{$_->[1]}->{score_max} + $score_base</td></tr>];
+    } else {
+      print qq[<td class="@{[$score_max < $score_base ? 'FAIL' : '']}">$result->{$_->[1]}->{score_min}</td></tr>];
+    }
+  }
+
+  $score_max += $score_base;
+
+  print STDOUT qq[
+<tr class=uncertain><th scope=row>Semantics</th><td>0?</td><td>0?</td><td>0?</td><td>&#x2212;&#x221E;..$score_base</td></tr>
+</tbody>
+<tfoot><tr class=uncertain><th scope=row>Total</th><td>$must_error?</td><td>$should_error?</td><td>$warning?</td><td><strong>&#x2212;&#x221E;..$score_max</strong></td></tr></tfoot>
+</table>
+
+<p><strong>Important</strong>: This conformance checking service
+is <em>under development</em>.  The result above might be <em>wrong</em>.</p>
+</div>];
+  push @nav, ['#result-summary' => 'Result'];
+} # print_result_section
 
 sub print_result_unknown_type_section ($) {
   my $input = shift;
@@ -791,4 +914,4 @@ and/or modify it under the same terms as Perl itself.
 
 =cut
 
-## $Date: 2007/09/02 08:40:49 $
+## $Date: 2007/09/10 11:51:09 $
