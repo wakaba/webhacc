@@ -7,7 +7,7 @@
   padding: 0.5em 1em;
 }
 
-dt, strong {
+dt, strong, th {
   font-weight: bolder;
   font-family: sans-serif;
 }
@@ -103,7 +103,8 @@ q:before, q:after {
   font-size: 90%;
 }
 
-#parse-errors dd, #document-errors dd, #error-description h3 {
+#parse-errors dd, #document-errors dd, #error-description h3,
+#result-para {
   margin-left: 20px;
   padding-left: 40px;
   min-height: 32px;
@@ -129,7 +130,8 @@ q:before, q:after {
   margin-right: 1em;
 }
 
-#document-errors dd.should, #error-description .should h3 {
+#document-errors dd.should, #error-description .should h3,
+#result-para.SEE-RESULT {
   background-image: url(large-alert);
 }
 
@@ -139,8 +141,13 @@ q:before, q:after {
   padding: 0.5em;
 }
 
-#document-errors dd.unsupported, #error-description .unsupported h3 {
+#document-errors dd.unsupported, #error-description .unsupported h3,
+#result-para.uncertain {
   background-image: none;
+}
+
+#result-para.PASS {
+  background-image: url(ok);
 }
 
 #nav-items {
@@ -210,8 +217,6 @@ code {
 #result-summary th {
   background-color: #fff0f0;
   color: black;
-  font-weight: bolder;
-  font-family: sans-serif;
 }
 
 #result-summary th, #result-summary td {
@@ -226,12 +231,12 @@ code {
   color: black;
 }
 
-.FAIL {
+.FAIL, .uncertain td.FAIL {
   background-color: #ffcece;
   color: black;
 }
 
-.SEE-RESULT {
+.SEE-RESULT, .uncertain td.SEE-RESULT {
   background-color: #e1e1ff;
   color: black;
 }
@@ -242,7 +247,9 @@ code {
 }
 
 #result-para {
-  padding: 0.2em 1em;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  padding-right: 1em;
 }
 
 /*
@@ -252,6 +259,6 @@ Copyright 2007 Wakaba <w@suika.fam.cx>
 This library is free software; you can redistribute it
 and/or modify it under the same terms as Perl itself.
 
-$Date: 2007/09/10 11:51:09 $
+$Date: 2007/09/11 08:25:23 $
 
 */

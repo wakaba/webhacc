@@ -571,11 +571,11 @@ sub print_result_section ($) {
 <div id="result-summary" class="section">
 <h2>Result</h2>];
 
-  if ($result->{unsupported}) {  
+  if ($result->{unsupported} and $result->{conforming_max}) {  
     print STDOUT qq[<p class=uncertain id=result-para>The conformance
         checker cannot decide whether the document is conforming or
         not, since the document contains one or more unsupported
-        features.</p>];
+        features.  The document might or might not be conforming.</p>];
   } elsif ($result->{conforming_min}) {
     print STDOUT qq[<p class=PASS id=result-para>No conformance-error is
         found in this document.</p>];
@@ -602,6 +602,7 @@ Errors</th><th scope=col>Warnings</th><th scope=col>Score</th></tr>
   my $score_min = 0;
   my $score_max = 0;
   my $score_base = 20;
+  my $score_unit = $score_base / 100;
   for (
     [Transfer => 'transfer', ''],
     [Character => 'char', ''],
@@ -611,8 +612,8 @@ Errors</th><th scope=col>Warnings</th><th scope=col>Score</th></tr>
     $must_error += ($result->{$_->[1]}->{must} += 0);
     $should_error += ($result->{$_->[1]}->{should} += 0);
     $warning += ($result->{$_->[1]}->{warning} += 0);
-    $score_min += ($result->{$_->[1]}->{score_min} += $score_base);
-    $score_max += ($result->{$_->[1]}->{score_max} += $score_base);
+    $score_min += (($result->{$_->[1]}->{score_min} *= $score_unit) += $score_base);
+    $score_max += (($result->{$_->[1]}->{score_max} *= $score_unit) += $score_base);
 
     my $uncertain = $result->{$_->[1]}->{unsupported} ? '?' : '';
     my $label = $_->[0];
@@ -625,11 +626,11 @@ Errors</th><th scope=col>Warnings</th><th scope=col>Score</th></tr>
 
     print STDOUT qq[<tr class="@{[$uncertain ? 'uncertain' : '']}"><th scope=row>$label</th><td class="@{[$result->{$_->[1]}->{must} ? 'FAIL' : '']}">$result->{$_->[1]}->{must}$uncertain</td><td class="@{[$result->{$_->[1]}->{should} ? 'SEE-RESULT' : '']}">$result->{$_->[1]}->{should}$uncertain</td><td>$result->{$_->[1]}->{warning}$uncertain</td>];
     if ($uncertain) {
-      print qq[<td class="@{[$score_max < $score_base ? $score_min < $score_max ? 'FAIL' : 'SEE-RESULT' : '']}">&#x2212;&#x221E;..$result->{$_->[1]}->{score_max}</td>];
+      print qq[<td class="@{[$result->{$_->[1]}->{must} ? 'FAIL' : $result->{$_->[1]}->{should} ? 'SEE-RESULT' : '']}">&#x2212;&#x221E;..$result->{$_->[1]}->{score_max}</td>];
     } elsif ($result->{$_->[1]}->{score_min} != $result->{$_->[1]}->{score_max}) {
-      print qq[<td class="@{[$score_max < $score_base ? 'FAIL' : 'SEE-RESULT']}">$result->{$_->[1]}->{score_min}..$result->{$_->[1]}->{score_max} + $score_base</td></tr>];
+      print qq[<td class="@{[$result->{$_->[1]}->{must} ? 'FAIL' : 'SEE-RESULT']}">$result->{$_->[1]}->{score_min}..$result->{$_->[1]}->{score_max}</td></tr>];
     } else {
-      print qq[<td class="@{[$score_max < $score_base ? 'FAIL' : '']}">$result->{$_->[1]}->{score_min}</td></tr>];
+      print qq[<td class="@{[$result->{$_->[1]}->{must} ? 'FAIL' : '']}">$result->{$_->[1]}->{score_min}</td></tr>];
     }
   }
 
@@ -638,7 +639,11 @@ Errors</th><th scope=col>Warnings</th><th scope=col>Score</th></tr>
   print STDOUT qq[
 <tr class=uncertain><th scope=row>Semantics</th><td>0?</td><td>0?</td><td>0?</td><td>&#x2212;&#x221E;..$score_base</td></tr>
 </tbody>
-<tfoot><tr class=uncertain><th scope=row>Total</th><td>$must_error?</td><td>$should_error?</td><td>$warning?</td><td><strong>&#x2212;&#x221E;..$score_max</strong></td></tr></tfoot>
+<tfoot><tr class=uncertain><th scope=row>Total</th>
+<td class="@{[$must_error ? 'FAIL' : '']}">$must_error?</td>
+<td class="@{[$should_error ? 'SEE-RESULT' : '']}">$should_error?</td>
+<td>$warning?</td>
+<td class="@{[$must_error ? 'FAIL' : $should_error ? 'SEE-RESULT' : '']}"><strong>&#x2212;&#x221E;..$score_max</strong></td></tr></tfoot>
 </table>
 
 <p><strong>Important</strong>: This conformance checking service
@@ -914,4 +919,4 @@ and/or modify it under the same terms as Perl itself.
 
 =cut
 
-## $Date: 2007/09/10 12:09:34 $
+## $Date: 2007/09/11 08:25:23 $
