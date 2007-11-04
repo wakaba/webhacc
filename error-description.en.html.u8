@@ -235,7 +235,7 @@ Web Document Conformance Checker (BETA)</title>
     <code>embed</code>, <code>param</code>, <code>area</code>,
     <code>col</code>, and <code>input</code> elements.</p>
 
-    <dl>
+    <dl class="switch">
     <dt><code>&lt;script/&gt;</code></dt>
         <dd><p>The polytheistic slash cannot be used for <code>script</code>
         element.  Even for an empty <code>script</code> element,
@@ -251,7 +251,7 @@ Web Document Conformance Checker (BETA)</title>
         <dd>These elements are themselves non-conforming.</dd>
     <!-- isindex, image -->
     <dt><code>&lt;command/&gt;</code>, <code>&lt;event-source/&gt;</code>,
-    <code>&lt;source/&gt;</code></dt>
+    <code>&lt;nest/&gt;</code>, or <code>&lt;source/&gt;</code></dt>
         <dd>Future revision of HTML5 parsing algorithm is expected
         to allow polytheistic slash for these elements.</dd>
     <dt><code>&lt;a/&gt;</code>, <code>&lt;p/&gt;</code></dt>
@@ -272,16 +272,23 @@ Web Document Conformance Checker (BETA)</title>
     (<code>&lt;?xml-stylesheet <var>...</var>?&gt;</code>), are not allowed 
     in the HTML syntax.  The document is non-conforming.</p>
 
-    <dl>
+    <dl class="switch">
+    <dt><code>&lt;?xbl?&gt;</code> (<abbr>XBL</abbr> Association)</dt>
+      <dd>An <abbr>XBL</abbr> binding cannot be associated by 
+      <abbr title="processing instruction">PI</abbr> in <abbr>HTML</abbr>
+      document.  Use <code>binding</code> property in <abbr>CSS</abbr>
+      style sheet.</dd>
     <dt><code>&lt;?xml?&gt;</code> (XML declaration)</dt>
         <dd>XML declaration is unnecessary for HTML documents.</dd>
     <dt><code>&lt;?xml-stylesheet?&gt;</code> (XML style sheet
-    <abbr title="processing instruction">PI</abbr></dt>
+    <abbr title="processing instruction">PI</abbr>)</dt>
         <dd>Use HTML <code>link</code> element with <code>rel</code>
         attribute set to <code>stylesheet</code> (or,
         <code>alternate stylesheet</code> for an alternate style 
         sheet).</dd>
-    <dt><code>&lt;?php?&gt;</code> (PHP code)</dt>
+    <dt><code>&lt;?php?&gt;</code> or 
+    <code>&lt;? <var>... <abbr>PHP</abbr> code ...</var> ?&gt;</code> 
+    (<abbr>PHP</abbr> code)</dt>
         <dd>The conformance checker does <em>not</em> support
         checking for PHP source documents.</dd>
     <dt>Other processing instructions</dt>
@@ -393,7 +400,8 @@ Web Document Conformance Checker (BETA)</title>
     </p>
 
     <p>Only white space characters and comments are allowed
-    before the <code>DOCTYPE</code>.</p>
+    before the <code>DOCTYPE</code>.  XML declaration is <em>not</em>
+    allowed in HTML document.</p>
   </div>
 
 <div class="section parse-error" id="not-closed"><h3>Element <code><var>$0</var></code> is not
@@ -402,13 +410,23 @@ Web Document Conformance Checker (BETA)</title>
     an end tag of another element appears or
     the end of the document.  The document is non-conforming.</p>
 
-    <p>Only <code>body</code>, <code>dd</code>, <code>dt</code>, 
-    <code>head</code>, <code>html</code>, <code>li</code>,
+    <p>Only <code>body</code>, <code>colgroup</code>, <code>dd</code>,
+    <code>dt</code>, <code>head</code>, <code>html</code>, <code>li</code>,
     <code>ol</code>, <code>option</code>, <code>optgroup</code>, 
-    <code>p</code>, <code>rb</code>, <code>rp</code>, <code>rt</code>, or
-    <code>ul</code> end tag can be implied in HTML documents.
+    <code>p</code>, <code>rb</code>, <code>rp</code>, <code>rt</code>,
+    <code>tbody</code>, <code>td</code>, <code>tfoot</code>,
+    <code>th</code>, <code>thead</code>, <code>tr</code>,
+    <code>ul</code> end tag can be omitted in HTML documents.
     For any element except for void element, there must be an explicit
     end tag.</p>
+
+    <dl class="switch">
+    <dt>HTML <code>canvas</code> element</dt>
+      <dd>Though the element is void in earlier versions of Safari,
+      the <code>canvas</code> element is <em>no</em> longer
+      defined as empty.  There must be an end tag
+      <code>&lt;/canvas&gt;</code>.</dd>
+    </dl>
 
     <p>Note that misnesting tags, such as 
     <code class="bad example">&lt;a&gt;&lt;b&gt;&lt;/a&gt;&lt;/b&gt;</code>, are not
@@ -449,6 +467,19 @@ Web Document Conformance Checker (BETA)</title>
 
     <p>For any end tag in HTML document, there must be a
     corresponding start tag.</p>
+
+    <dl class="switch">
+    <dt>HTML <code>base</code>, <code>basefont</code>,
+    <code>bgsound</code>, <code>br</code>, <code>col</code>,
+    <code>embed</code>, <code>frame</code>, <code>hr</code>,
+    <code>image</code>, <code>img</code>, <code>input</code>,
+    <code>isindex</code>, <code>link</code>, <code>meta</code>,
+    <code>param</code>, <code>spacer</code>, or <code>wbr</code> element</dt>
+      <dd>End tag is not allowed for these elements, since
+      those content must always be empty.  Remove end tag.</dd>
+    <!-- keygen -->
+    <!-- command, event-source, nest, source -->
+    </dl>
   </div>
 
 </section>
@@ -485,15 +516,16 @@ Web Document Conformance Checker (BETA)</title>
     must contain a <code><var>$0</var></code> child element.
     The document is non-conforming.</p>
 
-    <p>For example:
-      <ul>
-      <li>The <code>head</code> element must contain exactly one
-      <code>title</code> child element.</li>
-      <li><a href="#child-element-missing:td%7Cth">The <code>tr</code>
-      element must contain one or more <code>td</code> or <code>th</code>
-      child element.</a></li>
-      </ul>
-    </p>
+    <dl class="switch">
+    <dt>HTML <code>head</code> element</dt>
+      <dd>There must be a <code>title</code> child element.</dd>
+    <dt>HTML <code>html</code> element</dt>
+      <dd>There must be a <code>head</code> child element followed
+      by a <code>body</code> element.</dd>
+    <dt>HTML <code>tr</code> element</dt>
+      <dd><a href="#child-element-missing:td%7Cth">There must be
+      one or more <code>td</code> or <code>th</code> child element.</a></dd>
+    </dl>
   </div>
 
 <div class="section content-model-error" id="child-element-missing:td|th"><h3>There must be a <code>td</code>
@@ -550,18 +582,13 @@ Web Document Conformance Checker (BETA)</title>
           and in the <code>head</code> element.
           It cannot be used in e.g. <code>ul</code>, <code>table</code>,
           or <code>select</code>.</dd>
-      <dt>If the element with the error is the <code>html</code> element
-      that is the root element of an XHTML document</dt>
-          <dd><p>In an XHTML document, the root <code>html</code>
-          element must have an <code>xmlns</code> attribute
-          whose value is set to 
-          <code>http://www.w3.org/1999/xhtml</code>.</p></dd>
       <dt>If the element with the error is <code>blink</code>,
       <code>center</code>, or <code>marquee</code> element</dt>
           <dd>These elements are not part of the HTML standard.
           Use CSS for styling control.</dd>
 
-      <dt><code>button</code>, <code>datalist</code>, <code>form</code>,
+      <dt><code>button</code>, <code>datalist</code>,
+      <code>fieldset</code>, <code>form</code>,
       <code>input</code>, <code>label</code>,
       <code>optgroup</code>, <code>option</code>, <code>output</code>,
       <code>rb</code>, <code>rp</code>, <code>rt</code>, <code>ruby</code>,
@@ -571,6 +598,31 @@ Web Document Conformance Checker (BETA)</title>
           checker <em>yet</em>.</dd>
       </dl>
     </p>
+  </div>
+
+<div class="section content-model-error" id="element-not-allowed:root"><h3>This element is not allowed as a root
+  element.</h3>
+    <p>An element that is not allowed as the root element
+    is used as the root element of the document.  The document is
+    non-conforming, as far as the conformance checker can tell.</p>
+
+    <dl class="switch">
+    <dt><code>html</code> element in an XHTML document</dt>
+        <dd><p>In an XHTML document, the root <code>html</code>
+        element must have an <code>xmlns</code> attribute
+        whose value is set to 
+        <code>http://www.w3.org/1999/xhtml</code>.</p></dd>
+    <dt><code>rss</code> element</dt>
+        <dd><p>The document is written in some version of RSS.</p>
+        <p>The conformance checker does not support any version
+        of RSS.  Use Atom 1.0 for feed documents.</p></dd>
+    <dt><code>feed</code> element</dt>
+        <dd><p>The Atom <code>feed</code> element must be
+        in the <code>http://www.w3.org/2004/Atom</code>
+        namespace.</p>
+        <p>The conformance checker does not support Atom 0.3.
+        Use Atom 1.0 for feed documents.</p></dd>
+    </dl>
   </div>
 
 <div class="section content-model-error" id="ps-element-missing"><h3>There is no <code><var>$0</var></code>
@@ -732,16 +784,18 @@ Web Document Conformance Checker (BETA)</title>
     <p>The specified link type is non-conforming, and therefore
     the document is non-conforming.</p>
 
-    <dl>
+    <dl class="switch">
     <dt>Link type <code>contents</code></dt>
       <dd>Use link type <code>index</code>.</dd>
     <dt>Link type <code>copyright</code></dt>
       <dd>Use link type <code>license</code>.</dd>
     <dt>Link type <code>home</code></dt>
       <dd>Use link type <code>index</code>.</dd>
+    <dt>Link type <code>previous</code></dt>
+      <dd>Use link type <code>prev</code>.</dd>
     <dt>Link type <code>start</code></dt>
       <dd>Use link type <code>first</code>.</dd>
-    <dt>Link type <code>toc</code></dt>
+    <dt>Link type <code>toc</code> or <code>top</code></dt>
       <dd>Use link type <code>index</code>.</dd>
     </dl>
   </div>
@@ -776,8 +830,8 @@ Web Document Conformance Checker (BETA)</title>
 
     <p><strong>Warning</strong>: The data served to the
     conforming checker might be out of date; it might have already
-    been accepted or rejected, depending on which the document
-    might be conforming or non-conforming.  See WHATWG Wiki
+    been accepted or rejected.  The document might or might not be
+    conforming depending on the status.  See WHATWG Wiki
     for the latest information.</p>
   </div>
 
@@ -898,6 +952,22 @@ Web Document Conformance Checker (BETA)</title>
 
 </section>
 
+<section id="cache-manifest-errors">
+<h2>Cache Manifest Errors</h2>
+
+<div class="section must" id="m:not-manifest"><h3>This document is not a cache manifest.</h3>
+    <p>The specified document is <em>not</em> a cache manifest.
+    The document is non-conforming.</p>
+
+    <p>An entity labeled as Internet media type 
+    <code>text/cache-manifest</code> must contain a cache manifest.</p>
+
+    <p>A cache manifest must start with a line whose content is 
+    <code>CACHE MANIFEST</code> (exactly one space character between
+    <code>CACHE</code> and <code>MANIFEST</code>).</p>
+  </div>
+</section>
+
 <section id="unsupported-messages">
 <h2><i>Unsupported</i> Messages</h2>
 
@@ -941,9 +1011,6 @@ Web Document Conformance Checker (BETA)</title>
 <div class="section unsupported" id="unsupported:event-handler"><h3>Conformance checking for event handler attribute
   is not supported; <em>it might or might not be conforming.</em></h3></div>
 
-<div class="section unsupported" id="unsupported:language-tag"><h3>Conformance checking for language tag
-  is not supported; <em>it might or might not be conforming.</em></h3></div>
-
 <div class="section unsupported" id="unsupported:media-query"><h3>Conformance checking for media query
   is not supported; <em>it might or might not be conforming.</em></h3></div>
 
@@ -962,11 +1029,14 @@ Web Document Conformance Checker (BETA)</title>
 <section id="license">
 <h2>License of This Document</h2>
 
-<p>Copyright 2007 <a href="http://suika.fam.cx/~wakaba/who?" rel="author" xml:lang="ja">Wakaba</a></p>
+<p>Copyright <time>2007</time> 
+<a href="http://suika.fam.cx/~wakaba/who?" rel="author" xml:lang="ja">Wakaba</a>
+<code class="mail">&lt;<a href="mailto:w@suika.fam.cx">w@suika.fam.cx</a>&gt;</code>.</p>
+
 <p>This document is free software; you can redistribute it
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2007/09/04 11:40:02 $ -->
+<!-- $Date: 2007/11/04 09:15:02 $ -->
 </body>
 </html>

@@ -103,6 +103,30 @@ q:before, q:after {
   font-size: 90%;
 }
 
+#dump-manifest tbody:empty {
+  display: table-caption;
+  caption-side: bottom;
+}
+
+#dump-manifest tbody:empty::after {
+  content: "This cache manifest contains no oppotunistic caching namespace.";
+  font-style: italic;
+}
+
+#dump-manifest dt:first-child + dt::before,
+#dump-manifest dt:last-child::after {
+  display: block;
+  content: "This cache manifest contains no explicit entry.";
+  margin-left: 2.5em;
+  font-style: italic;
+  font-weight: normal;
+  font-family: serif;
+}
+
+#dump-manifest dt:last-child::after {
+  content: "This cache manifest has an empty online whitelist.";
+}
+
 #parse-errors dd, #document-errors dd, #error-description h3,
 #result-para {
   margin-left: 20px;
@@ -252,13 +276,40 @@ code {
   padding-right: 1em;
 }
 
+/* dl.switch from WHATWG specification style sheet */
+
+dl.switch {
+  padding-left: 2em;
+}
+
+dl.switch dt {
+  display: block;
+  text-indent: -1.5em;
+  font-weight: bolder;
+  font-family: sans-serif;
+  font-style: normal;
+}
+
+dl.switch dt:before {
+  content: '\21AA';
+  padding: 0 0.5em 0 0;
+  display: inline-block;
+  width: 1em;
+  text-align: right;
+  line-height: 0.5em;
+}
+
+dl.switch dt:after {
+  content: " :";
+}
+
 /*
 
-Copyright 2007 Wakaba <w@suika.fam.cx>
+Copyright 2007 Wakaba <w@suika.fam.cx>.
 
 This library is free software; you can redistribute it
 and/or modify it under the same terms as Perl itself.
 
-$Date: 2007/09/11 08:25:23 $
+$Date: 2007/11/04 09:15:02 $
 
 */

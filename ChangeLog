@@ -1,3 +1,14 @@
+2007-11-04  Wakaba  <wakaba@suika.fam.cx>
+
+	* cc-interface.en.html (i): |text/cache-manifest| is added.
+
+	* cc-style.css: New rules for manifest dump.
+
+	* cc.cgi: Support for |text/cache-manifest|.
+
+	* error-description-soruce.en.xml (#cache-manifest-errors): New
+	section.
+
 2007-09-10  Wakaba  <wakaba@suika.fam.cx>
 
 	* cc.cgi, cc-style.css: Scoring support.

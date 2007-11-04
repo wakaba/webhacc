@@ -28,6 +28,7 @@ character not allowed;content-model-error;Data character is not allowed in this 
 child element missing;content-model-error;There must be a <code><var>$0</var></code> element as a child of this element.
 child element missing:td|th;content-model-error;There must be a <code>td</code> or <code>th</code> element as a child of this element.
 element not allowed;content-model-error;This element is not allowed in this context.
+element not allowed:root;content-model-error;This element is not allowed as a root element.
 ps element missing;content-model-error;There is no <code><var>$0</var></code> element before this element.
 attribute missing;attribute-error;Required attribute <code><var>$0</var></code> is not specified.
 attribute not allowed;attribute-error;Attribute <code><var>{local-name}</var></code> is not allowed for <code><var>{element-local-name}</var></code> element.
@@ -53,11 +54,11 @@ s:URI::empty path;should;This IRI does not end with a <code>/</code>.
 s:URI::lowercase hexadecimal digit;should;A lowercase hexadecimal digit is used in percent-encoding.
 s:URI::percent-encoded unreserved;should;An unreserved character is percent-encoded.
 s:URI::uppercase scheme name;should;URI scheme name is in uppercase.
+m:not manifest;must;This document is not a cache manifest.
 unsupported:element;unsupported;Conformance checking for element <code><var>{local-name}</var></code> is not supported; <em>it might or might not be conforming</em>.
 unsupported:attribute;unsupported;Conformance checking for attribute <code><var>{local-name}</var></code> of element <code><var>{element-local-name}</var></code> is not supported; <em>it might or might not be conforming</em>.
 unsupported:link type;unsupported;Link type <code><var>$0</var></code> is not standardized or registered at the time of the release of the conformance checker; <em>it is non-conforming unless it now has been registered</em>.
 unsupported:event handler;unsupported;Conformance checking for event handler attribute is not supported; <em>it might or might not be conforming.</em>
-unsupported:language tag;unsupported;Conformance checking for language tag is not supported; <em>it might or might not be conforming.</em>
 unsupported:media query;unsupported;Conformance checking for media query is not supported; <em>it might or might not be conforming.</em>
 unsupported:script;unsupported;Conformance checking for script language <code><var>$0</var></code> is not supported; <em>it might or might not be conforming.</em>
 unsupported:style;unsupported;Conformance checking for style language <code><var>$0</var></code> is not supported; <em>it might or might not be conforming.</em>

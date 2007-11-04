@@ -88,6 +88,7 @@ if (defined $input->{s}) {
 
   my $doc;
   my $el;
+  my $manifest;
 
   if ($input->{media_type} eq 'text/html') {
     ($doc, $el) = print_syntax_error_html_section ($input, $result);
@@ -102,18 +103,25 @@ if (defined $input->{s}) {
            }->{$input->{media_type}}) {
     ($doc, $el) = print_syntax_error_xml_section ($input, $result);
     print_source_string_section (\($input->{s}), $doc->input_encoding);
+  } elsif ($input->{media_type} eq 'text/cache-manifest') {
+## TODO: MUST be text/cache-manifest
+    $manifest = print_syntax_error_manifest_section ($input, $result);
+    print_source_string_section (\($input->{s}), 'utf-8');
   } else {
     ## TODO: Change HTTP status code??
     print_result_unknown_type_section ($input);
   }
 
   if (defined $doc or defined $el) {
-    print_structure_dump_section ($doc, $el);
-    my $elements = print_structure_error_section ($doc, $el, $result);
+    print_structure_dump_dom_section ($doc, $el);
+    my $elements = print_structure_error_dom_section ($doc, $el, $result);
     print_table_section ($elements->{table}) if @{$elements->{table}};
     print_id_section ($elements->{id}) if keys %{$elements->{id}};
     print_term_section ($elements->{term}) if keys %{$elements->{term}};
     print_class_section ($elements->{class}) if keys %{$elements->{class}};
+  } elsif (defined $manifest) {
+    print_structure_dump_manifest_section ($manifest);
+    print_structure_error_manifest_section ($manifest, $result);
   }
 
   print_result_section ($result);
@@ -134,7 +142,7 @@ if (defined $input->{s}) {
 </html>
 ];
 
-  for (qw/decode parse parse_xml check/) {
+  for (qw/decode parse parse_xml parse_manifest check check_manifest/) {
     next unless defined $time{$_};
     open my $file, '>>', ".cc-$_.txt" or die ".cc-$_.txt: $!";
     print $file $char_length, "\t", $time{$_}, "\n";
@@ -297,6 +305,40 @@ sub print_syntax_error_xml_section ($$) {
   return ($doc, undef);
 } # print_syntax_error_xml_section
 
+sub print_syntax_error_manifest_section ($$) {
+  my ($input, $result) = @_;
+
+  require Whatpm::CacheManifest;
+
+  print STDOUT qq[
+<div id="parse-errors" class="section">
+<h2>Parse Errors</h2>
+
+<dl>];
+  push @nav, ['#parse-errors' => 'Parse Error'];
+
+  my $onerror = sub {
+    my (%opt) = @_;
+    my ($type, $cls, $msg) = get_text ($opt{type}, $opt{level});
+    print STDOUT qq[<dt class="$cls">], get_error_label (\%opt), qq[</dt>];
+    $type =~ tr/ /-/;
+    $type =~ s/\|/%7C/g;
+    $msg .= qq[ [<a href="../error-description#@{[htescape ($type)]}">Description</a>]];
+    print STDOUT qq[<dd class="$cls">$msg</dd>\n];
+
+    add_error ('syntax', \%opt => $result);
+  };
+
+  my $time1 = time;
+  my $manifest = Whatpm::CacheManifest->parse_byte_string
+      ($input->{s}, $input->{uri}, $input->{base_uri}, $onerror);
+  $time{parse_manifest} = time - $time1;
+
+  print STDOUT qq[</dl></div>];
+
+  return $manifest;
+} # print_syntax_error_manifest_section
+
 sub print_source_string_section ($$) {
   require Encode;
   my $enc = Encode::find_encoding ($_[1]); ## TODO: charset name -> Perl name
@@ -399,7 +441,7 @@ sub print_document_tree ($) {
   print STDOUT $r;
 } # print_document_tree
 
-sub print_structure_dump_section ($$) {
+sub print_structure_dump_dom_section ($$) {
   my ($doc, $el) = @_;
 
   print STDOUT qq[
@@ -411,9 +453,43 @@ sub print_structure_dump_section ($$) {
   print_document_tree ($el || $doc);
 
   print STDOUT qq[</div>];
-} # print_structure_dump_section
+} # print_structure_dump_dom_section
 
-sub print_structure_error_section ($$$) {
+sub print_structure_dump_manifest_section ($) {
+  my $manifest = shift;
+
+  print STDOUT qq[
+<div id="dump-manifest" class="section">
+<h2>Cache Manifest</h2>
+];
+  push @nav, ['#dump-manifest' => 'Caceh Manifest'];
+
+  print STDOUT qq[<dl><dt>Explicit entries</dt>];
+  for my $uri (@{$manifest->[0]}) {
+    my $euri = htescape ($uri);
+    print STDOUT qq[<dd><code class=uri>&lt;<a href="$euri">$euri</a>></code></dd>];
+  }
+
+  print STDOUT qq[<dt>Fallback entries</dt><dd>
+      <table><thead><tr><th scope=row>Oppotunistic Caching Namespace</th>
+      <th scope=row>Fallback Entry</tr><tbody>];
+  for my $uri (sort {$a cmp $b} keys %{$manifest->[1]}) {
+    my $euri = htescape ($uri);
+    my $euri2 = htescape ($manifest->[1]->{$uri});
+    print STDOUT qq[<tr><td><code class=uri>&lt;<a href="$euri">$euri</a>></code></td>
+        <td><code class=uri>&lt;<a href="$euri2">$euri2</a>></code></td>];
+  }
+
+  print STDOUT qq[</table><dt>Online whitelist</dt>];
+  for my $uri (@{$manifest->[2]}) {
+    my $euri = htescape ($uri);
+    print STDOUT qq[<dd><code class=uri>&lt;<a href="$euri">$euri</a>></code></dd>];
+  }
+
+  print STDOUT qq[</dl></div>];
+} # print_structure_dump_manifest_section
+
+sub print_structure_error_dom_section ($$$) {
   my ($doc, $el, $result) = @_;
 
   print STDOUT qq[<div id="document-errors" class="section">
@@ -429,7 +505,7 @@ sub print_structure_error_section ($$$) {
     $type =~ tr/ /-/;
     $type =~ s/\|/%7C/g;
     $msg .= qq[ [<a href="../error-description#@{[htescape ($type)]}">Description</a>]];
-    print STDOUT qq[<dt class="$cls">] . get_node_link ($opt{node}) .
+    print STDOUT qq[<dt class="$cls">] . get_error_label (\%opt) .
         qq[</dt>\n<dd class="$cls">], $msg, "</dd>\n";
     add_error ('structure', \%opt => $result);
   };
@@ -446,7 +522,31 @@ sub print_structure_error_section ($$$) {
   print STDOUT qq[</dl></div>];
 
   return $elements;
-} # print_structure_error_section
+} # print_structure_error_dom_section
+
+sub print_structure_error_manifest_section ($$$) {
+  my ($manifest, $result) = @_;
+
+  print STDOUT qq[<div id="document-errors" class="section">
+<h2>Document Errors</h2>
+
+<dl>];
+  push @nav, ['#document-errors' => 'Document Error'];
+
+  require Whatpm::CacheManifest;
+  Whatpm::CacheManifest->check_manifest ($manifest, sub {
+    my %opt = @_;
+    my ($type, $cls, $msg) = get_text ($opt{type}, $opt{level}, $opt{node});
+    $type =~ tr/ /-/;
+    $type =~ s/\|/%7C/g;
+    $msg .= qq[ [<a href="../error-description#@{[htescape ($type)]}">Description</a>]];
+    print STDOUT qq[<dt class="$cls">] . get_error_label (\%opt) .
+        qq[</dt>\n<dd class="$cls">], $msg, "</dd>\n";
+    add_error ('structure', \%opt => $result);
+  });
+
+  print STDOUT qq[</div>];
+} # print_structure_error_manifest_section
 
 sub print_table_section ($) {
   my $tables = shift;
@@ -671,6 +771,38 @@ sub print_result_input_error_section ($) {
   push @nav, ['#result-summary' => 'Result'];
 } # print_Result_input_error_section
 
+sub get_error_label ($) {
+  my $err = shift;
+
+  my $r = '';
+
+  if (defined $err->{line}) {
+    if ($err->{column} > 0) {
+      $r = qq[<a href="#line-$err->{line}">Line $err->{line}</a> column $err->{column}];
+    } else {
+      $err->{line} = $err->{line} - 1 || 1;
+      $r = qq[<a href="#line-$err->{line}">Line $err->{line}</a>];
+    }
+  }
+
+  if (defined $err->{node}) {
+    $r .= ' ' if length $r;
+    $r = get_node_path ($err->{node});
+  }
+
+  if (defined $err->{index}) {
+    $r .= ' ' if length $r;
+    $r .= 'Index ' . (0+$err->{index});
+  }
+
+  if (defined $err->{value}) {
+    $r .= ' ' if length $r;
+    $r .= '<q><code>' . htescape ($err->{value}) . '</code></q>';
+  }
+
+  return $r;
+} # get_error_label
+
 sub get_node_path ($) {
   my $node = shift;
   my @r;
@@ -819,7 +951,7 @@ EOH
       if (defined $ct and $ct =~ m#^([0-9A-Za-z._+-]+/[0-9A-Za-z._+-]+)#) {
         $r->{media_type} = lc $1;
       }
-      if (defined $ct and $ct =~ /;\s*charset\s*=\s*"?(\S+)"?/i) {
+      if (defined $ct and $ct =~ /;\s*charset\s*=\s*"?([^\s;"]+)"?/i) {
         $r->{charset} = lc $1;
         $r->{charset} =~ tr/\\//d;
       }
@@ -919,4 +1051,4 @@ and/or modify it under the same terms as Perl itself.
 
 =cut
 
-## $Date: 2007/09/11 08:25:23 $
+## $Date: 2007/11/04 09:15:02 $

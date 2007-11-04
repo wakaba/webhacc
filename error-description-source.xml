@@ -273,7 +273,7 @@ Web Document Conformance Checker (BETA)</title>
     <code>embed</code>, <code>param</code>, <code>area</code>,
     <code>col</code>, and <code>input</code> elements.</p>
 
-    <dl>
+    <dl class="switch">
     <dt><code>&lt;script/></code></dt>
         <dd><p>The polytheistic slash cannot be used for <code>script</code>
         element.  Even for an empty <code>script</code> element,
@@ -289,7 +289,7 @@ Web Document Conformance Checker (BETA)</title>
         <dd>These elements are themselves non-conforming.</dd>
     <!-- isindex, image -->
     <dt><code>&lt;command/></code>, <code>&lt;event-source/></code>,
-    <code>&lt;source/></code></dt>
+    <code>&lt;nest/></code>, or <code>&lt;source/></code></dt>
         <dd>Future revision of HTML5 parsing algorithm is expected
         to allow polytheistic slash for these elements.</dd>
     <dt><code>&lt;a/></code>, <code>&lt;p/></code></dt>
@@ -314,16 +314,23 @@ Web Document Conformance Checker (BETA)</title>
     (<code>&lt;?xml-stylesheet <var>...</var>?></code>), are not allowed 
     in the HTML syntax.  The document is non-conforming.</p>
 
-    <dl>
+    <dl class="switch">
+    <dt><code>&lt;?xbl?></code> (<abbr>XBL</abbr> Association)</dt>
+      <dd>An <abbr>XBL</abbr> binding cannot be associated by 
+      <abbr title="processing instruction">PI</abbr> in <abbr>HTML</abbr>
+      document.  Use <code>binding</code> property in <abbr>CSS</abbr>
+      style sheet.</dd>
     <dt><code>&lt;?xml?&gt;</code> (XML declaration)</dt>
         <dd>XML declaration is unnecessary for HTML documents.</dd>
     <dt><code>&lt;?xml-stylesheet?></code> (XML style sheet
-    <abbr title="processing instruction">PI</abbr></dt>
+    <abbr title="processing instruction">PI</abbr>)</dt>
         <dd>Use HTML <code>link</code> element with <code>rel</code>
         attribute set to <code>stylesheet</code> (or,
         <code>alternate stylesheet</code> for an alternate style 
         sheet).</dd>
-    <dt><code>&lt;?php?&gt;</code> (PHP code)</dt>
+    <dt><code>&lt;?php?&gt;</code> or 
+    <code>&lt;? <var>... <abbr>PHP</abbr> code ...</var> ?&gt;</code> 
+    (<abbr>PHP</abbr> code)</dt>
         <dd>The conformance checker does <em>not</em> support
         checking for PHP source documents.</dd>
     <dt>Other processing instructions</dt>
@@ -470,7 +477,8 @@ Web Document Conformance Checker (BETA)</title>
     </p>
 
     <p>Only white space characters and comments are allowed
-    before the <code>DOCTYPE</code>.</p>
+    before the <code>DOCTYPE</code>.  XML declaration is <em>not</em>
+    allowed in HTML document.</p>
   </d:desc>
 </d:item>
 
@@ -492,6 +500,14 @@ Web Document Conformance Checker (BETA)</title>
     <code>ul</code> end tag can be omitted in HTML documents.
     For any element except for void element, there must be an explicit
     end tag.</p>
+
+    <dl class="switch">
+    <dt>HTML <code>canvas</code> element</dt>
+      <dd>Though the element is void in earlier versions of Safari,
+      the <code>canvas</code> element is <em>no</em> longer
+      defined as empty.  There must be an end tag
+      <code>&lt;/canvas></code>.</dd>
+    </dl>
 
     <p>Note that misnesting tags, such as 
     <code class="bad example">&lt;a>&lt;b>&lt;/a>&lt;/b></code>, are not
@@ -544,6 +560,19 @@ Web Document Conformance Checker (BETA)</title>
 
     <p>For any end tag in HTML document, there must be a
     corresponding start tag.</p>
+
+    <dl class="switch">
+    <dt>HTML <code>base</code>, <code>basefont</code>,
+    <code>bgsound</code>, <code>br</code>, <code>col</code>,
+    <code>embed</code>, <code>frame</code>, <code>hr</code>,
+    <code>image</code>, <code>img</code>, <code>input</code>,
+    <code>isindex</code>, <code>link</code>, <code>meta</code>,
+    <code>param</code>, <code>spacer</code>, or <code>wbr</code> element</dt>
+      <dd>End tag is not allowed for these elements, since
+      those content must always be empty.  Remove end tag.</dd>
+    <!-- keygen -->
+    <!-- command, event-source, nest, source -->
+    </dl>
   </d:desc>
 </d:item>
 
@@ -588,15 +617,16 @@ Web Document Conformance Checker (BETA)</title>
     must contain a <code><var>$0</var></code> child element.
     The document is non-conforming.</p>
 
-    <p>For example:
-      <ul>
-      <li>The <code>head</code> element must contain exactly one
-      <code>title</code> child element.</li>
-      <li><a href="#child-element-missing:td%7Cth">The <code>tr</code>
-      element must contain one or more <code>td</code> or <code>th</code>
-      child element.</a></li>
-      </ul>
-    </p>
+    <dl class="switch">
+    <dt>HTML <code>head</code> element</dt>
+      <dd>There must be a <code>title</code> child element.</dd>
+    <dt>HTML <code>html</code> element</dt>
+      <dd>There must be a <code>head</code> child element followed
+      by a <code>body</code> element.</dd>
+    <dt>HTML <code>tr</code> element</dt>
+      <dd><a href="#child-element-missing:td%7Cth">There must be
+      one or more <code>td</code> or <code>th</code> child element.</a></dd>
+    </dl>
   </d:desc>
 </d:item>
 
@@ -660,12 +690,6 @@ Web Document Conformance Checker (BETA)</title>
           and in the <code>head</code> element.
           It cannot be used in e.g. <code>ul</code>, <code>table</code>,
           or <code>select</code>.</dd>
-      <dt>If the element with the error is the <code>html</code> element
-      that is the root element of an XHTML document</dt>
-          <dd><p>In an XHTML document, the root <code>html</code>
-          element must have an <code>xmlns</code> attribute
-          whose value is set to 
-          <code>http://www.w3.org/1999/xhtml</code>.</p></dd>
       <dt>If the element with the error is <code>blink</code>,
       <code>center</code>, or <code>marquee</code> element</dt>
           <dd>These elements are not part of the HTML standard.
@@ -682,6 +706,35 @@ Web Document Conformance Checker (BETA)</title>
           checker <em>yet</em>.</dd>
       </dl>
     </p>
+  </d:desc>
+</d:item>
+
+<d:item name="element not allowed:root"
+    class="content-model-error">
+  <d:message xml:lang="en">This element is not allowed as a root
+  element.</d:message>
+  <d:desc xml:lang="en">
+    <p>An element that is not allowed as the root element
+    is used as the root element of the document.  The document is
+    non-conforming, as far as the conformance checker can tell.</p>
+
+    <dl class="switch">
+    <dt><code>html</code> element in an XHTML document</dt>
+        <dd><p>In an XHTML document, the root <code>html</code>
+        element must have an <code>xmlns</code> attribute
+        whose value is set to 
+        <code>http://www.w3.org/1999/xhtml</code>.</p></dd>
+    <dt><code>rss</code> element</dt>
+        <dd><p>The document is written in some version of RSS.</p>
+        <p>The conformance checker does not support any version
+        of RSS.  Use Atom 1.0 for feed documents.</p></dd>
+    <dt><code>feed</code> element</dt>
+        <dd><p>The Atom <code>feed</code> element must be
+        in the <code>http://www.w3.org/2004/Atom</code>
+        namespace.</p>
+        <p>The conformance checker does not support Atom 0.3.
+        Use Atom 1.0 for feed documents.</p></dd>
+    </dl>
   </d:desc>
 </d:item>
 
@@ -884,16 +937,18 @@ Web Document Conformance Checker (BETA)</title>
     <p>The specified link type is non-conforming, and therefore
     the document is non-conforming.</p>
 
-    <dl>
+    <dl class="switch">
     <dt>Link type <code>contents</code></dt>
       <dd>Use link type <code>index</code>.</dd>
     <dt>Link type <code>copyright</code></dt>
       <dd>Use link type <code>license</code>.</dd>
     <dt>Link type <code>home</code></dt>
       <dd>Use link type <code>index</code>.</dd>
+    <dt>Link type <code>previous</code></dt>
+      <dd>Use link type <code>prev</code>.</dd>
     <dt>Link type <code>start</code></dt>
       <dd>Use link type <code>first</code>.</dd>
-    <dt>Link type <code>toc</code></dt>
+    <dt>Link type <code>toc</code> or <code>top</code></dt>
       <dd>Use link type <code>index</code>.</dd>
     </dl>
   </d:desc>
@@ -936,8 +991,8 @@ Web Document Conformance Checker (BETA)</title>
 
     <p><strong>Warning</strong>: The data served to the
     conforming checker might be out of date; it might have already
-    been accepted or rejected, depending on which the document
-    might be conforming or non-conforming.  See WHATWG Wiki
+    been accepted or rejected.  The document might or might not be
+    conforming depending on the status.  See WHATWG Wiki
     for the latest information.</p>
   </d:desc>
 </d:item>
@@ -991,6 +1046,23 @@ Web Document Conformance Checker (BETA)</title>
     class="should" level="s">
   <d:message xml:lang="en"><code><var>{@}</var></code>: An <em>obsolete</em>
   subtype is used.</d:message>
+  <d:item xml:lang="en">
+    <p>The specified Internet Media Type is registered with status
+    of <i>OBSOLETE</i>.</p><!-- @@ SHOULD NOT? -->
+    
+    <dl class="swtich">
+    <dt>Media type <code>text/ecmascript</code></dt>
+      <dd>Media type <code>text/ecmascript</code> is obsoleted in
+      favor of <code>application/ecmascript</code>.  Note that
+      <code>text/javascript</code> would be better alternative
+      for many cases.</dd>
+    <dt>Media type <code>text/javascript</code></dt>
+      <dd>Media type <code>text/javascript</code> is obsoleted by 
+      <abbr>IETF</abbr> with backward incompatible alternate
+      <code>application/javascript</code> for architectural 
+      purity.<!-- @@ ref? -->  Realist may ignore this warning.</dd>
+    </dl>
+  </d:item>
 </d:item>
 
 <d:item name="IMT:private subtype"
@@ -1055,6 +1127,14 @@ Web Document Conformance Checker (BETA)</title>
     class="should" level="s">
   <d:message xml:lang="en">This IRI does not end with
   a <code>/</code>.</d:message>
+  <d:item xml:lang="en">
+    <p>The IRI does not end with a <code>/</code>.  If there is an
+    authority component in an IRI, a <code>/</code> should be present
+    instead of empty path component.</p>
+
+    <p>For example, <code>http://www.example.com<strong>/</strong></code>
+    is preferred to <code>http://www.example.com</code>.</p>
+  </d:item>
 </d:item>
 
 <d:item name="URI::lowercase hexadecimal digit"
@@ -1099,6 +1179,25 @@ Web Document Conformance Checker (BETA)</title>
   </d:desc>
 </d:item>
 
+</section>
+
+<section id="cache-manifest-errors">
+<h2>Cache Manifest Errors</h2>
+
+<d:item name="not manifest" class="must" level="m">
+  <d:message xml:lang="en">This document is not a cache manifest.</d:message>
+  <d:desc xml:lang="en">
+    <p>The specified document is <em>not</em> a cache manifest.
+    The document is non-conforming.</p>
+
+    <p>An entity labeled as Internet media type 
+    <code>text/cache-manifest</code> must contain a cache manifest.</p>
+
+    <p>A cache manifest must start with a line whose content is 
+    <code>CACHE MANIFEST</code> (exactly one space character between
+    <code>CACHE</code> and <code>MANIFEST</code>).</p>
+  </d:desc>
+</d:item>
 </section>
 
 <section id="unsupported-messages">
@@ -1159,12 +1258,6 @@ Web Document Conformance Checker (BETA)</title>
   is not supported; <em>it might or might not be conforming.</em></d:message>
 </d:item>
 
-<d:item name="language tag"
-    class="unsupported" level="unsupported">
-  <d:message xml:lang="en">Conformance checking for language tag
-  is not supported; <em>it might or might not be conforming.</em></d:message>
-</d:item>
-
 <d:item name="media query"
     class="unsupported" level="unsupported">
   <d:message xml:lang="en">Conformance checking for media query
@@ -1199,11 +1292,14 @@ manakaiIsHTML:0;;XML Document
 <section id="license">
 <h2>License of This Document</h2>
 
-<p>Copyright 2007 <a href="http://suika.fam.cx/~wakaba/who?" rel="author" xml:lang="ja">Wakaba</a></p>
+<p>Copyright <time>2007</time> 
+<a href="http://suika.fam.cx/~wakaba/who?" rel="author" xml:lang="ja">Wakaba</a>
+<code class="mail">&lt;<a href="mailto:w@suika.fam.cx">w@suika.fam.cx</a>></code>.</p>
+
 <p>This document is free software; you can redistribute it
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2007/09/10 11:51:09 $ -->
+<!-- $Date: 2007/11/04 09:15:02 $ -->
 </body>
 </html>
