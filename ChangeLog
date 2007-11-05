@@ -1,3 +1,12 @@
+2007-11-05  Wakaba  <wakaba@suika.fam.cx>
+
+	* cc.cgi (get_error_level_label): New.
+
+	* cc-style.css: New rules for error level descriptions.
+
+	* error-description-source.xml: Description for error
+	levels is added.
+
 2007-11-04  Wakaba  <wakaba@suika.fam.cx>
 
 	* cc-interface.en.html (i): |text/cache-manifest| is added.

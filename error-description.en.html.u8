@@ -1026,6 +1026,49 @@ Web Document Conformance Checker (BETA)</title>
 
 
 
+<section id="levels">
+<h2>Error Levels</h2>
+
+<table id="levels-table">
+<thead>
+<tr><th scope="col">Level</th>
+<th scope="col">Conforming?</th>
+<th scope="col">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="level-m" id="level-m">
+<th scope="row"><em class="rfc2119">MUST</em>‐level error</th>
+<td>Non‐conforming.</td>
+<td>A violation to a hard requirement of the specification.
+The document is non‐conforming.</td>
+</tr>
+<tr class="level-s" id="level-s">
+<th scope="row"><em class="rfc2119">SHOULD</em>‐level error</th>
+<td>Non‐conforming, but <em>in some case</em>
+conforming.</td>
+<td>A violation to a requirement of the specification.
+The violation might be legitimize in some case.  Otherwise,
+the document is non‐conforming.</td>
+</tr>
+<tr class="level-w" id="level-w">
+<th scope="row">Warning</th>
+<td>Conforming.</td>
+<td>A warning is an advice from the conformance checker to avoid
+to solve a problem in a confusing or possibly wrong way.
+It does not affect to the conformance of the document, and
+may sometimes be inappropriate.</td>
+</tr>
+<tr class="level-unsupported" id="level-unsupported">
+<th scope="row">Not supported</th>
+<td><em>Unknown</em>.</td>
+<td>Some feature that is not supported by the conformance checker
+is used in the document.</td>
+</tr>
+</tbody>
+</table>
+</section>
+
 <section id="license">
 <h2>License of This Document</h2>
 
@@ -1037,6 +1080,6 @@ Web Document Conformance Checker (BETA)</title>
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2007/11/04 09:15:02 $ -->
+<!-- $Date: 2007/11/05 09:33:52 $ -->
 </body>
 </html>

@@ -1,5 +1,6 @@
 #!/usr/bin/perl
 use strict;
+use utf8;
 
 use lib qw[/home/httpd/html/www/markup/html/whatpm
            /home/wakaba/work/manakai2/lib];
@@ -243,7 +244,8 @@ sub print_syntax_error_html_section ($$) {
     $type =~ tr/ /-/;
     $type =~ s/\|/%7C/g;
     $msg .= qq[ [<a href="../error-description#@{[htescape ($type)]}">Description</a>]];
-    print STDOUT qq[<dd class="$cls">$msg</dd>\n];
+    print STDOUT qq[<dd class="$cls">], get_error_level_label (\%opt);
+    print STDOUT qq[$msg</dd>\n];
 
     add_error ('syntax', \%opt => $result);
   };
@@ -324,7 +326,8 @@ sub print_syntax_error_manifest_section ($$) {
     $type =~ tr/ /-/;
     $type =~ s/\|/%7C/g;
     $msg .= qq[ [<a href="../error-description#@{[htescape ($type)]}">Description</a>]];
-    print STDOUT qq[<dd class="$cls">$msg</dd>\n];
+    print STDOUT qq[<dd class="$cls">], get_error_level_label (\%opt);
+    print STDOUT qq[$msg</dd>\n];
 
     add_error ('syntax', \%opt => $result);
   };
@@ -506,7 +509,8 @@ sub print_structure_error_dom_section ($$$) {
     $type =~ s/\|/%7C/g;
     $msg .= qq[ [<a href="../error-description#@{[htescape ($type)]}">Description</a>]];
     print STDOUT qq[<dt class="$cls">] . get_error_label (\%opt) .
-        qq[</dt>\n<dd class="$cls">], $msg, "</dd>\n";
+        qq[</dt>\n<dd class="$cls">], get_error_level_label (\%opt);
+    print STDOUT $msg, "</dd>\n";
     add_error ('structure', \%opt => $result);
   };
 
@@ -691,10 +695,13 @@ sub print_result_section ($) {
   print STDOUT qq[<table>
 <colgroup><col><colgroup><col><col><col><colgroup><col>
 <thead>
-<tr><th scope=col></th><th scope=col><em class=rfc2119>MUST</em>-level
-Errors</th><th scope=col><em class=rfc2119>SHOULD</em>-level
-Errors</th><th scope=col>Warnings</th><th scope=col>Score</th></tr>
-</thead><tbody>];
+<tr><th scope=col></th>
+<th scope=col><a href="../error-description#level-m"><em class=rfc2119>MUST</em>‐level
+Errors</a></th>
+<th scope=col><a href="../error-description#level-s"><em class=rfc2119>SHOULD</em>‐level
+Errors</a></th>
+<th scope=col><a href="../error-description#level-w">Warnings</a></th>
+<th scope=col>Score</th></tr></thead><tbody>];
 
   my $must_error = 0;
   my $should_error = 0;
@@ -787,7 +794,7 @@ sub get_error_label ($) {
 
   if (defined $err->{node}) {
     $r .= ' ' if length $r;
-    $r = get_node_path ($err->{node});
+    $r = get_node_link ($err->{node});
   }
 
   if (defined $err->{index}) {
@@ -802,6 +809,32 @@ sub get_error_label ($) {
 
   return $r;
 } # get_error_label
+
+sub get_error_level_label ($) {
+  my $err = shift;
+
+  my $r = '';
+
+  if (not defined $err->{level} or $err->{level} eq 'm') {
+    $r = qq[<strong><a href="../error-description#level-m"><em class=rfc2119>MUST</em>‐level
+        error</a></strong>: ];
+  } elsif ($err->{level} eq 's') {
+    $r = qq[<strong><a href="../error-description#level-s"><em class=rfc2119>SHOULD</em>‐level
+        error</a></strong>: ];
+  } elsif ($err->{level} eq 'w') {
+    $r = qq[<strong><a href="../error-description#level-w">Warning</a></strong>:
+        ];
+  } elsif ($err->{level} eq 'unsupported') {
+    $r = qq[<strong><a href="../error-description#level-u">Not
+        supported</a></strong>: ];
+  } else {
+    my $elevel = htescape ($err->{level});
+    $r = qq[<strong><a href="../error-description#level-$elevel">$elevel</a></strong>:
+        ];
+  }
+
+  return $r;
+} # get_error_level_label
 
 sub get_node_path ($) {
   my $node = shift;
@@ -1051,4 +1084,4 @@ and/or modify it under the same terms as Perl itself.
 
 =cut
 
-## $Date: 2007/11/04 09:15:02 $
+## $Date: 2007/11/05 09:33:52 $
