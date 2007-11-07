@@ -48,17 +48,16 @@ Web Document Conformance Checker (BETA)</title>
   <d:message xml:lang="en">The <code>&amp;</code> character must
   introduce a reference.</d:message>
   <d:desc xml:lang="en">
-    <p>An <code>&amp;</code> (<code>U+0026</code>
-    <code class="charname">AMPERSAND</code>) character which
+    <p>An <code>&amp;</code> character which
     is not part of any reference appears in the input stream.
-    The document is non-conforming.</p>
+    The document is non‐conforming.</p>
 
-    <p><strong>Any <code>&amp;</code> character in URI (or IRI)
-    must be escaped as <code>&amp;amp;</code>.</strong></p>
+    <p><em>Any <code>&amp;</code> character in URI (or IRI)
+    must be escaped as <code class="example">&amp;amp;</code>.</em></p>
 
     <p>The <code>&amp;</code> character must
     be the first character of a reference:
-      <dl>
+      <dl class="switch">
       <dt>Named entity reference</dt>
           <dd><pre class="html example"><code>&amp;<var>entity-name</var>;</code></pre>
           where <var>entity-name</var> is the name of the
@@ -134,7 +133,7 @@ Web Document Conformance Checker (BETA)</title>
 
     <p>The string <code>&amp;#</code> must be the first two characters
     of a reference:
-      <dl>
+      <dl class="switch">
       <dt>Numeric character reference</dt>
           <dd><pre class="html example"><code>&amp;#<var>d</var>;</code></pre>
           where <var>d</var> is the decimal representation of
@@ -189,20 +188,22 @@ Web Document Conformance Checker (BETA)</title>
 
     <dl class="switch">
     <dt>Comments</dt>
-      <dd>In HTML documents, comments must be introduced by
-      <code>&lt;!--</code> (<code>&lt;!</code> <em>immediately</em> followed
+      <dd>In HTML document, comments must be introduced by
+      <code class="example">&lt;!--</code> (<code>&lt;!</code>
+      <em>immediately</em> followed
       by <em>two</em> <code>-</code>s) and must be terminated by
-      <code>--></code>.  Strings <code>&lt;!</code> not followed
+      <code class="example">--></code>.
+      Strings <code>&lt;!</code> not followed
       by <code>--</code> and <code>&lt;!-</code> not followed by
       <code>-</code> are not valid open delimiters for comments.</dd>
     <dt>Marked sections, including <code>CDATA</code> sections</dt>
-      <dd>Marked sections are not allowed in HTML documents.</dd>
+      <dd>Marked sections are not allowed in HTML document.</dd>
     <dt>Markup declarations</dt>
-      <dd>Markup declarations, except <code>DOCTYPE</code>
-      and comment declarations, are not allowed in HTML documents.</dd>
+      <dd>Markup declarations, except for <code>DOCTYPE</code>
+      and comment declarations, are not allowed in HTML document.</dd>
     <dt>String <code>&lt;!</code></dt>
       <dd>String <code>&lt;!</code> must be escaped as
-      <code>&amp;lt;!</code>.</dd>
+      <code class="example">&amp;lt;!</code>.</dd>
     </dl>
   </d:desc>
 </d:item>
@@ -277,7 +278,8 @@ Web Document Conformance Checker (BETA)</title>
     <dt><code>&lt;script/></code></dt>
         <dd><p>The polytheistic slash cannot be used for <code>script</code>
         element.  Even for an empty <code>script</code> element,
-        there must be an explicit end tag <code>&lt;/script></code>.</p>
+        there must be an explicit end tag
+        <code class="html example">&lt;/script></code>.</p>
 
         <p><strong>NOTE</strong>: Though some user agents interpret
         polytheistic slash for <code>script</code> element as the 
@@ -294,7 +296,10 @@ Web Document Conformance Checker (BETA)</title>
         to allow polytheistic slash for these elements.</dd>
     <dt><code>&lt;a/></code>, <code>&lt;p/></code></dt>
         <dd>These elements are not always empty and therefore
-        polytheistic slash is not allowed.</dd>
+        polytheistic slash is not allowed.  Use explicit end tag
+        to represent empty element as:
+          <pre class="example html"><code>&lt;p>&lt;/p></code></pre>
+        </dd>
     </dl>
 
     <p>Note that, unlike in XML, the polytheistic slash has
@@ -319,7 +324,13 @@ Web Document Conformance Checker (BETA)</title>
       <dd>An <abbr>XBL</abbr> binding cannot be associated by 
       <abbr title="processing instruction">PI</abbr> in <abbr>HTML</abbr>
       document.  Use <code>binding</code> property in <abbr>CSS</abbr>
-      style sheet.</dd>
+      style sheet as:
+        <pre class="html example"><code>&lt;style>
+p {
+  binding: url(binding.xbl);
+}
+&lt;/style></code></pre>
+      </dd>
     <dt><code>&lt;?xml?&gt;</code> (XML declaration)</dt>
         <dd>XML declaration is unnecessary for HTML documents.</dd>
     <dt><code>&lt;?xml-stylesheet?></code> (XML style sheet
@@ -327,7 +338,9 @@ Web Document Conformance Checker (BETA)</title>
         <dd>Use HTML <code>link</code> element with <code>rel</code>
         attribute set to <code>stylesheet</code> (or,
         <code>alternate stylesheet</code> for an alternate style 
-        sheet).</dd>
+        sheet).
+          <pre class="example html"><code>&lt;link rel=stylesheet href="path/to/stylesheet.css"></code></pre>
+        </dd>
     <dt><code>&lt;?php?&gt;</code> or 
     <code>&lt;? <var>... <abbr>PHP</abbr> code ...</var> ?&gt;</code> 
     (<abbr>PHP</abbr> code)</dt>
@@ -506,7 +519,7 @@ Web Document Conformance Checker (BETA)</title>
       <dd>Though the element is void in earlier versions of Safari,
       the <code>canvas</code> element is <em>no</em> longer
       defined as empty.  There must be an end tag
-      <code>&lt;/canvas></code>.</dd>
+      <code class="html example">&lt;/canvas></code>.</dd>
     </dl>
 
     <p>Note that misnesting tags, such as 
@@ -540,7 +553,8 @@ Web Document Conformance Checker (BETA)</title>
   <d:desc xml:lang="en">
     <p>The document contains a <code>DOCTYPE</code> declaration
     that is different from HTML5 <code>DOCTYPE</code> (i.e. 
-    <code>&lt;!DOCTYPE HTML&gt;</code>).  The document is non-conforming.</p>
+    <code class="example html">&lt;!DOCTYPE HTML&gt;</code>).
+    The document is non‐conforming.</p>
 
     <p>The document might or might not be conformant to
     some version of HTML.  However, conformance to any HTML
@@ -672,11 +686,11 @@ Web Document Conformance Checker (BETA)</title>
                   block-level content, any inline-level content must be
                   put in e.g. paragraph element such as <code>p</code>.</p>
                   <p>For example, an HTML document fragment
-                  <code class="bad example">&lt;div>&lt;p>Hello!&lt;/p> World!&lt;/div></code>
+                  <code class="html bad example">&lt;div>&lt;p>Hello!&lt;/p> World!&lt;/div></code>
                   is non-conforming, since a word <q>World!</q> does not belong
                   to any paragraph.  (If not part of any paragraph, what is
                   it!?)  A conforming example would be:
-                    <pre class="example"><code>&lt;div>&lt;p>Hello!&lt;/p> &lt;p>World!&lt;/p>&lt;/div></code></pre>
+                    <pre class="html example"><code>&lt;div>&lt;p>Hello!&lt;/p> &lt;p>World!&lt;/p>&lt;/div></code></pre>
                   </p></dd>
               <dt>If the parent element does <em>not</em> allow 
               block-level elements as content</dt>
@@ -720,18 +734,19 @@ Web Document Conformance Checker (BETA)</title>
 
     <dl class="switch">
     <dt><code>html</code> element in an XHTML document</dt>
-        <dd><p>In an XHTML document, the root <code>html</code>
-        element must have an <code>xmlns</code> attribute
-        whose value is set to 
-        <code>http://www.w3.org/1999/xhtml</code>.</p></dd>
+        <dd><p>In <abbr>XHTML</abbr> document, the root <code>html</code>
+        element must have an <code>xmlns</code> attribute as:
+          <pre class="xml example"><code>&lt;html xmlns="http://www.w3.org/1999/xhtml"></code></pre></p></dd>
     <dt><code>rss</code> element</dt>
         <dd><p>The document is written in some version of RSS.</p>
         <p>The conformance checker does not support any version
         of RSS.  Use Atom 1.0 for feed documents.</p></dd>
     <dt><code>feed</code> element</dt>
         <dd><p>The Atom <code>feed</code> element must be
-        in the <code>http://www.w3.org/2004/Atom</code>
-        namespace.</p>
+        in the <code>http://www.w3.org/2005/Atom</code>
+        namespace as:
+          <pre class="xml example"><code>&lt;feed xmlns="http://www.w3.org/2005/Atom"></code></pre>
+        </p>
         <p>The conformance checker does not support Atom 0.3.
         Use Atom 1.0 for feed documents.</p></dd>
     </dl>
@@ -886,8 +901,8 @@ Web Document Conformance Checker (BETA)</title>
 
     <dl>
     <dt>HTML <code>meta</code> element, <code>http-equiv</code> attribute</dt>
-        <dd><p>Only <code>Default-Style</code> and <code>Refresh</code>
-        is allowed.</p>
+        <dd><p>Only values <code>Default-Style</code> and <code>Refresh</code>
+        are allowed.</p>
         <p>Value <code>Content-Type</code> is obsolete; for charset
         declaration, the <code>charset</code> attribute can be used as:
         <pre class="html example"><code>&lt;meta charset="<var>charset-name</var>"></code></pre>
@@ -908,15 +923,15 @@ Web Document Conformance Checker (BETA)</title>
 <d:item name="enumerated:invalid:http-equiv:content-type"
     class="attribute-value-error">
   <d:message xml:lang="en">Charset declaration syntax
-  <code>&lt;meta http-equiv="Content-Type" content="text/html; charset=<var>charset-name</var>"></code>
+  <code class="html bad example">&lt;meta http-equiv="Content-Type" content="text/html; charset=<var>charset-name</var>"></code>
   is obsolete.</d:message>
   <d:desc xml:lang="en">
     <p>Old long charset declaration syntax
-    <code>&lt;meta http-equiv="Content-Type" content="text/html; charset=<var>charset-name</var>"></code>
+    <code class="html bad example">&lt;meta http-equiv="Content-Type" content="text/html; charset=<var>charset-name</var>"></code>
     is in use.  The document is non‐conforming.</p>
 
     <p>The new charset declaration syntax is:
-      <pre><code>&lt;meta charset="<var>charset-name</var>"></code></pre>
+      <pre class="html example"><code>&lt;meta charset="<var>charset-name</var>"></code></pre>
     </p>
   </d:desc>
 </d:item>
@@ -1043,7 +1058,7 @@ Web Document Conformance Checker (BETA)</title>
     The document is non-conforming.</p>
 
     <p>For example, the table below is non-conforming:
-      <pre class="html non-conforming example"><code>&lt;table>
+      <pre class="html bad example"><code>&lt;table>
 &lt;tbody>
 &lt;tr>&lt;td rowspan=2>&lt;/td>&lt;/tr>
 &lt;/tbody>
@@ -1210,7 +1225,8 @@ Web Document Conformance Checker (BETA)</title>
     <code>text/cache-manifest</code> must contain a cache manifest.</p>
 
     <p>A cache manifest must start with a line whose content is 
-    <code>CACHE MANIFEST</code> (exactly one space character between
+    <code class="manifest example">CACHE MANIFEST</code>
+    (exactly one space character between
     <code>CACHE</code> and <code>MANIFEST</code>).</p>
   </d:desc>
 </d:item>
@@ -1359,6 +1375,6 @@ is used in the document.</td>
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2007/11/07 11:29:46 $ -->
+<!-- $Date: 2007/11/07 12:20:44 $ -->
 </body>
 </html>

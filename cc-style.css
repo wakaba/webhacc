@@ -230,6 +230,68 @@ code {
   white-space: pre-wrap;
 }
 
+.example {
+  background-color: #ececff;
+}
+
+pre.example {
+  margin-left: 1em;
+  margin-right: 1em;
+  padding: 0.2em 0.5em;
+}
+
+.example.bad {
+  background-color: #fff7f7;
+}
+
+code.example.bad {
+  color: inherit;
+  background-color: #ffeeee;
+}
+
+h3 code.example.bad {
+  color: orangered;
+  background-color: transparent;
+}
+
+pre.example::before {
+  content: "Example";
+  display: block;
+  color: #b0b0ff;
+  background-color: transparent;
+  font-weight: bolder;
+  font-family: sans-serif;
+}
+
+pre.example.html::before {
+  content: "HTML Example";
+}
+
+pre.example.xml::before {
+  content: "XML Example";
+}
+
+pre.example.manifest::before {
+  content: "Cache Manifest Example";
+}
+
+pre.example.bad::before {
+  content: "Bad Example";
+  color: #ffc1c1;
+}
+
+pre.example.bad.html::before {
+  content: "HTML Bad Example";
+}
+
+pre.example.bad.xml::before {
+  content: "XML Bad Example";
+}
+
+pre.example.bad.manifest::before {
+  content: "Cache Manifest Bad Example";
+}
+
 .rfc2119 {
   border-style: none;
   text-transform: lowercase;
@@ -323,6 +385,6 @@ Copyright 2007 Wakaba <w@suika.fam.cx>.
 This library is free software; you can redistribute it
 and/or modify it under the same terms as Perl itself.
 
-$Date: 2007/11/05 09:33:52 $
+$Date: 2007/11/07 12:20:44 $
 
 */
