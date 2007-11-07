@@ -37,6 +37,7 @@ in XML:charset;attribute-error;The <code>charset</code> attribute is not allowed
 in XML:lang;attribute-error;The <code>lang</code> attribute is not allowed in XML document.
 in XML:xmlns;attribute-error;The <code>xmlns</code> attribute in the <code>null</code> namespace is not allowed in XHTML document. The document is non-conforming.
 enumerated:invalid;attribute-value-error;This attribute only allow a limited set of values and the specified value <code><var>{@}</var></code> is not one of them.
+enumerated:invalid:http-equiv:content-type;attribute-value-error;Charset declaration syntax <code>&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=<var>charset-name</var>&quot;&gt;</code> is obsolete.
 duplicate ID;attribute-value-error;This identifier has already been assigned to another element.
 link type:bad context;attribute-value-error;The link type <code><var>$0</var></code> cannot be specified for this element.
 link type:non-conforming;attribute-value-error;The link type <code><var>$0</var></code> is non-conforming.

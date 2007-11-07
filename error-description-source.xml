@@ -905,6 +905,22 @@ Web Document Conformance Checker (BETA)</title>
   </d:desc>
 </d:item>
 
+<d:item name="enumerated:invalid:http-equiv:content-type"
+    class="attribute-value-error">
+  <d:message xml:lang="en">Charset declaration syntax
+  <code>&lt;meta http-equiv="Content-Type" content="text/html; charset=<var>charset-name</var>"></code>
+  is obsolete.</d:message>
+  <d:desc xml:lang="en">
+    <p>Old long charset declaration syntax
+    <code>&lt;meta http-equiv="Content-Type" content="text/html; charset=<var>charset-name</var>"></code>
+    is in use.  The document is non‐conforming.</p>
+
+    <p>The new charset declaration syntax is:
+      <pre><code>&lt;meta charset="<var>charset-name</var>"></code></pre>
+    </p>
+  </d:desc>
+</d:item>
+
 <d:item name="duplicate ID"
     class="attribute-value-error">
   <d:message xml:lang="en">This identifier has already been
@@ -1343,6 +1359,6 @@ is used in the document.</td>
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2007/11/05 09:33:52 $ -->
+<!-- $Date: 2007/11/07 11:29:46 $ -->
 </body>
 </html>

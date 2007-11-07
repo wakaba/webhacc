@@ -763,6 +763,19 @@ Web Document Conformance Checker (BETA)</title>
     </dl>
   </div>
 
+<div class="section attribute-value-error" id="enumerated:invalid:http-equiv:content-type"><h3>Charset declaration syntax
+  <code>&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=<var>charset-name</var>&quot;&gt;</code>
+  is obsolete.</h3>
+    <p>Old long charset declaration syntax
+    <code>&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=<var>charset-name</var>&quot;&gt;</code>
+    is in use.  The document is non‐conforming.</p>
+
+    <p>The new charset declaration syntax is:
+      <pre>
+<code>&lt;meta charset=&quot;<var>charset-name</var>&quot;&gt;</code></pre>
+    </p>
+  </div>
+
 <div class="section attribute-value-error" id="duplicate-ID"><h3>This identifier has already been
   assigned to another element.</h3></div>
 
@@ -1080,6 +1093,6 @@ is used in the document.</td>
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2007/11/05 09:33:52 $ -->
+<!-- $Date: 2007/11/07 11:29:46 $ -->
 </body>
 </html>

@@ -1,3 +1,8 @@
+2007-11-07  Wakaba  <wakaba@suika.fam.cx>
+
+	* error-description-source.xml (enumerated:invalid:http-equiv:content-type):
+	New.
+
 2007-11-05  Wakaba  <wakaba@suika.fam.cx>
 
 	* cc.cgi (get_error_level_label): New.
