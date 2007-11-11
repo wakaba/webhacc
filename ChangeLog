@@ -1,3 +1,8 @@
+2007-11-11  Wakaba  <wakaba@suika.fam.cx>
+
+	* parser.cgi: Use |Whatpm::HTML::Serializer| to serialize
+	an HTML DOM.
+
 2007-11-07  Wakaba  <wakaba@suika.fam.cx>
 
 	* cc-style.css: Styling examples.
