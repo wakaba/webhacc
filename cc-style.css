@@ -172,12 +172,14 @@ q:before, q:after {
   background-image: url(large-info);
 }
 
+#parse-errors dd.unsupported,
 #document-errors dd.unsupported {
   margin-left: 60px;
   border: red 0.2em solid;
   padding: 0.5em;
 }
 
+#parse-errors dd.unsupported,
 #document-errors dd.unsupported, #error-description .unsupported h3,
 #result-para.uncertain, #levels-table #level-unsupported th {
   background-image: none;
@@ -385,6 +387,6 @@ Copyright 2007 Wakaba <w@suika.fam.cx>.
 This library is free software; you can redistribute it
 and/or modify it under the same terms as Perl itself.
 
-$Date: 2007/11/07 12:20:44 $
+$Date: 2007/11/11 06:57:16 $
 
 */

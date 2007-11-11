@@ -110,7 +110,7 @@ if (defined $input->{s}) {
     print_source_string_section (\($input->{s}), 'utf-8');
   } else {
     ## TODO: Change HTTP status code??
-    print_result_unknown_type_section ($input);
+    print_result_unknown_type_section ($input, $result);
   }
 
   if (defined $doc or defined $el) {
@@ -143,7 +143,8 @@ if (defined $input->{s}) {
 </html>
 ];
 
-  for (qw/decode parse parse_xml parse_manifest check check_manifest/) {
+  for (qw/decode parse parse_html parse_xml parse_manifest
+          check check_manifest/) {
     next unless defined $time{$_};
     open my $file, '>>', ".cc-$_.txt" or die ".cc-$_.txt: $!";
     print $file $char_length, "\t", $time{$_}, "\n";
@@ -218,13 +219,7 @@ sub print_syntax_error_html_section ($$) {
   
   require Encode;
   require Whatpm::HTML;
-
-  $input->{charset} ||= 'ISO-8859-1'; ## TODO: for now.
   
-  my $time1 = time;
-  my $t = Encode::decode ($input->{charset}, $input->{s});
-  $time{decode} = time - $time1;
-
   print STDOUT qq[
 <div id="parse-errors" class="section">
 <h2>Parse Errors</h2>
@@ -252,16 +247,24 @@ sub print_syntax_error_html_section ($$) {
 
   my $doc = $dom->create_document;
   my $el;
-  $time1 = time;
   if (defined $inner_html_element and length $inner_html_element) {
+    $input->{charset} ||= 'ISO-8859-1'; ## TODO: for now.
+    my $time1 = time;
+    my $t = Encode::decode ($input->{charset}, $input->{s});
+    $time{decode} = time - $time1;
+    
     $el = $doc->create_element_ns
         ('http://www.w3.org/1999/xhtml', [undef, $inner_html_element]);
+    $time1 = time;
     Whatpm::HTML->set_inner_html ($el, $t, $onerror);
+    $time{parse} = time - $time1;
   } else {
-    Whatpm::HTML->parse_string ($t => $doc, $onerror);
+    my $time1 = time;
+    Whatpm::HTML->parse_byte_string
+        ($input->{charset}, $input->{s} => $doc, $onerror);
+    $time{parse_html} = time - $time1;
   }
-  $time{parse} = time - $time1;
-
+  
   print STDOUT qq[</dl></div>];
 
   return ($doc, $el);
@@ -759,15 +762,28 @@ is <em>under development</em>.  The result above might be <em>wrong</em>.</p>
   push @nav, ['#result-summary' => 'Result'];
 } # print_result_section
 
-sub print_result_unknown_type_section ($) {
-  my $input = shift;
+sub print_result_unknown_type_section ($$) {
+  my ($input, $result) = @_;
 
+  my $euri = htescape ($input->{uri});
   print STDOUT qq[
-<div id="result-summary" class="section">
-<p><em>Media type <code class="MIME" lang="en">@{[htescape $input->{media_type}]}</code> is not supported!</em></p>
+<div id="parse-errors" class="section">
+<h2>Errors</h2>
+
+<dl>
+<dt class=unsupported><code>&lt;<a href="$euri">$euri</a>&gt;</code></dt>
+    <dd class=unsupported><strong><a href="../error-description#level-u">Not
+        supported</a></strong>:
+    Media type
+    <code class="MIME" lang="en">@{[htescape $input->{media_type}]}</code>
+    is not supported.</dd>
+</dl>
 </div>
 ];
-  push @nav, ['#result-summary' => 'Result'];
+  push @nav, ['#parse-errors' => 'Errors'];
+  add_error (char => {level => 'unsupported'} => $result);
+  add_error (syntax => {level => 'unsupported'} => $result);
+  add_error (structure => {level => 'unsupported'} => $result);
 } # print_result_unknown_type_section
 
 sub print_result_input_error_section ($) {
@@ -1084,4 +1100,4 @@ and/or modify it under the same terms as Perl itself.
 
 =cut
 
-## $Date: 2007/11/05 09:33:52 $
+## $Date: 2007/11/11 06:57:16 $

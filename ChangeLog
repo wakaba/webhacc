@@ -1,5 +1,14 @@
 2007-11-11  Wakaba  <wakaba@suika.fam.cx>
 
+	* cc-style.css: Rules for "unsupported" parse errors.
+
+	* cc.cgi (print_syntax_error_html_section): Use HTML
+	parser for byte string.
+	(print_result_unknown_type_section): Make output
+	more consistent with other media types.
+
+2007-11-11  Wakaba  <wakaba@suika.fam.cx>
+
 	* parser.cgi: Use |Whatpm::HTML::Serializer| to serialize
 	an HTML DOM.
 
