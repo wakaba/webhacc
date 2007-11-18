@@ -1,3 +1,8 @@
+2007-11-18  Wakaba  <wakaba@suika.fam.cx>
+
+	* cc.cgi (get_input_document): Use sniffer to determine
+	media type of the entity.
+
 2007-11-11  Wakaba  <wakaba@suika.fam.cx>
 
 	* cc-style.css: Rules for "unsupported" parse errors.

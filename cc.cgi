@@ -62,7 +62,12 @@ sub htescape ($) {
 <dt>Request URI</dt>
     <dd><code class="URI" lang="">&lt;<a href="@{[htescape $input->{request_uri}]}">@{[htescape $input->{request_uri}]}</a>&gt;</code></dd>
 <dt>Document URI</dt>
-    <dd><code class="URI" lang="">&lt;<a href="@{[htescape $input->{uri}]}">@{[htescape $input->{uri}]}</a>&gt;</code></dd>
+    <dd><code class="URI" lang="">&lt;<a href="@{[htescape $input->{uri}]}" id=anchor-document-uri>@{[htescape $input->{uri}]}</a>&gt;</code>
+    <script>
+      document.title = '<'
+          + document.getElementById ('anchor-document-uri').href + '> \\u2014 '
+          + document.title;
+    </script></dd>
 ]; # no </dl> yet
   push @nav, ['#document-info' => 'Information'];
 
@@ -74,7 +79,7 @@ if (defined $input->{s}) {
     <dd><code class="URI" lang="">&lt;<a href="@{[htescape $input->{base_uri}]}">@{[htescape $input->{base_uri}]}</a>&gt;</code></dd>
 <dt>Internet Media Type</dt>
     <dd><code class="MIME" lang="en">@{[htescape $input->{media_type}]}</code>
-    @{[$input->{media_type_overridden} ? '<em>(overridden)</em>' : '']}</dd>
+    @{[$input->{media_type_overridden} ? '<em>(overridden)</em>' : defined $input->{official_type} ? $input->{media_type} eq $input->{official_type} ? '' : '<em>(sniffed; official type is: <code class=MIME lang=en>'.htescape ($input->{official_type}).'</code>)' : '<em>(sniffed)</em>']}</dd>
 <dt>Character Encoding</dt>
     <dd>@{[defined $input->{charset} ? '<code class="charset" lang="en">'.htescape ($input->{charset}).'</code>' : '(none)']}
     @{[$input->{charset_overridden} ? '<em>(overridden)</em>' : '']}</dd>
@@ -93,7 +98,8 @@ if (defined $input->{s}) {
 
   if ($input->{media_type} eq 'text/html') {
     ($doc, $el) = print_syntax_error_html_section ($input, $result);
-    print_source_string_section (\($input->{s}), $input->{charset});
+    print_source_string_section
+        (\($input->{s}), $input->{charset} || $doc->input_encoding);
   } elsif ({
             'text/xml' => 1,
             'application/atom+xml' => 1,
@@ -997,9 +1003,6 @@ EOH
 
       ## TODO: More strict parsing...
       my $ct = $res->header ('Content-Type');
-      if (defined $ct and $ct =~ m#^([0-9A-Za-z._+-]+/[0-9A-Za-z._+-]+)#) {
-        $r->{media_type} = lc $1;
-      }
       if (defined $ct and $ct =~ /;\s*charset\s*=\s*"?([^\s;"]+)"?/i) {
         $r->{charset} = lc $1;
         $r->{charset} =~ tr/\\//d;
@@ -1010,9 +1013,22 @@ EOH
         $r->{charset_overridden}
             = (not defined $r->{charset} or $r->{charset} ne $input_charset);
         $r->{charset} = $input_charset;
-      } 
+      }
+
+      ## TODO: Support for HTTP Content-Encoding
 
       $r->{s} = ''.$res->content;
+
+      require Whatpm::ContentType;
+      ($r->{official_type}, $r->{media_type})
+          = Whatpm::ContentType->get_sniffed_type
+              (get_file_head => sub {
+                 return substr $r->{s}, 0, shift;
+               },
+               http_content_type_byte => $ct,
+               has_http_content_encoding =>
+                   defined $res->header ('Content-Encoding'),
+               supported_image_types => {});
     } else {
       $r->{uri} = $res->request->uri;
       $r->{request_uri} = $request_uri;
@@ -1034,6 +1050,16 @@ EOH
     $r->{charset} =~ s/\s+//g;
     $r->{charset} = 'utf-8' if $r->{charset} eq '';
     $r->{header_field} = [];
+
+    require Whatpm::ContentType;
+    ($r->{official_type}, $r->{media_type})
+        = Whatpm::ContentType->get_sniffed_type
+            (get_file_head => sub {
+               return substr $r->{s}, 0, shift;
+             },
+             http_content_type_byte => undef,
+             has_http_content_encoding => 0,
+             supported_image_types => {});
   }
 
   my $input_format = $http->get_parameter ('i');
@@ -1100,4 +1126,4 @@ and/or modify it under the same terms as Perl itself.
 
 =cut
 
-## $Date: 2007/11/11 06:57:16 $
+## $Date: 2007/11/18 05:30:03 $
