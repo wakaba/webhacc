@@ -1,3 +1,9 @@
+m:character encoding;format-charset must;Character encoding <code><var>$0</var></code> is not allowed for <abbr>HTML</abbr> document.
+s:character encoding;format-charset should;Character encoding <code><var>$0</var></code> should not be used for <abbr>HTML</abbr> document.
+w:character encoding;format-charset warning;Use of UTF-8 is encouraged.
+m:no character encoding declaration;format-charset error;There is no character encoding declaration.
+m:non ascii superset;format-charset error;No character encoding metadata is found in upper‐level protocol nor is there <abbr>BOM</abbr>, while character encoding <code><var>$0</var></code> is not a superset of <abbr>ASCII</abbr>.
+w:charset label detected;format-charset warning;While parsing the document as <code><var>$0</var></code>, a character encoding declaration specifying character encoding as <code><var>$1</var></code> is found. The document is reparsed.
 after html;parse-error;Tag <code>&lt;<var>$0</var>&gt;</code> is not allowed after the end tag <code>&lt;/html&gt;</code>.
 after body;parse-error;Tag <code>&lt;<var>$0</var>&gt;</code> is not allowed after the end tag <code>&lt;/body&gt;</code>.
 bare ero;tokenize-error;The <code>&amp;</code> character must introduce a reference.
@@ -37,7 +43,7 @@ in XML:charset;attribute-error;The <code>charset</code> attribute is not allowed
 in XML:lang;attribute-error;The <code>lang</code> attribute is not allowed in XML document.
 in XML:xmlns;attribute-error;The <code>xmlns</code> attribute in the <code>null</code> namespace is not allowed in XHTML document. The document is non-conforming.
 enumerated:invalid;attribute-value-error;This attribute only allow a limited set of values and the specified value <code><var>{@}</var></code> is not one of them.
-enumerated:invalid:http-equiv:content-type;attribute-value-error;Charset declaration syntax <code class="html bad example">&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=<var>charset-name</var>&quot;&gt;</code> is obsolete.
+enumerated:invalid:http-equiv:content-type;attribute-value-error;Character encoding declaration syntax <code class="html bad example">&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=<var>charset-name</var>&quot;&gt;</code> is obsolete.
 duplicate ID;attribute-value-error;This identifier has already been assigned to another element.
 link type:bad context;attribute-value-error;The link type <code><var>$0</var></code> cannot be specified for this element.
 link type:non-conforming;attribute-value-error;The link type <code><var>$0</var></code> is non-conforming.

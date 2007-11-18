@@ -1,5 +1,24 @@
 2007-11-18  Wakaba  <wakaba@suika.fam.cx>
 
+	* cc-style.css: New rules for warnings.
+
+	* cc-todo.en.txt: Updated.
+
+	* cc.cgi: Default to |Windows-1252| instead of |ISO-8859-1|
+	for |inner_html| with external source.  Set |manakai_charset|
+	attribute if possible.
+	(load_text_catalog): Interpret catalog file as UTF-8.
+
+	* error-description-source.en.xml: New errors for character
+	encodings are added.
+
+2007-11-18  Wakaba  <wakaba@suika.fam.cx>
+
+	* error-description-source.xml: s/charset declaration/character
+	encoding declaration/g, since HTML5 spec says so.
+
+2007-11-18  Wakaba  <wakaba@suika.fam.cx>
+
 	* cc.cgi (get_input_document): Use sniffer to determine
 	media type of the entity.
 

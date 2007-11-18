@@ -14,20 +14,23 @@ Web Document Conformance Checker - TO DO
 - <figure> content
 - <object> content
 - <meta charset> requirements
-- <meta charset> reparsing
+- charset detection preparsing algorithm
+- BOM support
 - Errors and warnings in Unicode layer
 - Errors and warnings in character encoding layer
-- Warning for class="" value
+- Warning for non-semantic class="" value
 - Errors and warnings for URI (scheme dependent)
-- Errors and warnings for language tag
-- Atom 1.0
+- Errors and warnings for language tag (validness)
+- Atom 1.0 (incomplete)
 - Atom Threading Extension
 - Atom rel=license
 - XBL 2.0
 
 In addition, grep by "## TODO" and "## ISSUE" 
-<http://suika.fam.cx/www/markup/html/whatpm/Whatpm/HTML.pm.src> and
-<http://suika.fam.cx/www/markup/html/whatpm/Whatpm/ContentChecker.pm>.
+<http://suika.fam.cx/www/markup/html/whatpm/Whatpm/HTML.pm.src>,
+<http://suika.fam.cx/www/markup/html/whatpm/Whatpm/ContentChecker.pm>,
+<http://suika.fam.cx/www/markup/html/whatpm/Whatpm/ContentChecker/Atom.pm>, and
+<http://suika.fam.cx/www/markup/html/whatpm/Whatpm/ContentChecker/HTML.pm>.
 
 ** Oldies
 
@@ -50,7 +53,6 @@ and so on.
 
 * Interface
 
-- Scoring
 - Progress
 - File upload
 - Cross referencing in result

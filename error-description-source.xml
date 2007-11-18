@@ -11,6 +11,121 @@ Web Document Conformance Checker (BETA)</title>
 <body>
 <h1>Description of Errors</h1>
 
+<section id="html5-character-encoding">
+<h2>HTML5 Character Encoding Errors</h2>
+
+<d:item name="character encoding" class="format-charset must" level="m">
+  <d:message xml:lang="en">Character encoding <code><var>$0</var></code>
+  is not allowed for <abbr>HTML</abbr> document.</d:message>
+  <d:desc xml:lang="en">
+    <p>The character encoding used for the document is not allowed
+    for <abbr>HTML</abbr> document.  The document is non‐conforming.</p>
+  </d:desc>
+</d:item>
+
+<d:item name="character encoding" class="format-charset should"
+    level="s">
+  <d:message xml:lang="en">Character encoding <code><var>$0</var></code>
+  should not be used for <abbr>HTML</abbr> document.</d:message>
+  <d:desc xml:lang="en">
+    <p>The character encoding used for the document is not recommended
+    for <abbr>HTML</abbr> document.  The document is non‐conforming
+    unless there is any good reason to use that encoding.</p>
+  </d:desc>
+</d:item>
+
+<d:item name="character encoding" class="format-charset warning"
+    level="w">
+  <d:message xml:lang="en">Use of UTF-8 is encouraged.</d:message>
+  <d:desc xml:lang="en">
+    <p>Use of UTF-8 as the character encoding of the document is encouraged,
+    though the use of another character encoding is conforming.</p>
+  </d:desc>
+</d:item>
+
+<d:item name="no character encoding declaration" class="format-charset error"
+    level="m">
+  <d:message xml:lang="en">There is no character encoding
+  declaration.</d:message>
+  <d:desc xml:lang="en">
+    <p>The document does not contain a character encoding 
+    declaration.  Unless the character encoding is explicitly 
+    specified in upper‐level protocol, e.g. in <abbr>HTTP</abbr>,
+    or is implied by <abbr>BOM</abbr>, there must be a character
+    encoding declaration.  The document is non‐conforming.</p>
+
+    <p>The long character encoding declaration syntax
+    <code class="html bad example">&lt;meta http-equiv="Content-Type" content="text/html; charset=<var>charset-name</var>"></code>
+    is obsolete.  The new syntax is:</p>
+    <pre class="html example"><code>&lt;meta charset="<var>charset-name</var>"></code></pre>
+
+    <p>Note that the <code>encoding</code> declaration in <abbr>XML</abbr> 
+    declaration has no effect for <abbr>HTML</abbr> document.</p>
+  </d:desc>
+</d:item>
+
+<d:item name="non ascii superset" class="format-charset error"
+    level="m">
+  <d:message xml:lang="en">No character encoding metadata is found
+  in upper‐level protocol nor is there <abbr>BOM</abbr>, while
+  character encoding <code><var>$0</var></code>
+  is not a superset of <abbr>ASCII</abbr>.</d:message>
+  <d:desc xml:lang="en">
+    <p>The document is not labeled with character encoding name
+    in upper‐level protocol, e.g. in <abbr>HTTP</abbr>, and
+    the document is not begin with <abbr>BOM</abbr>.  In addition,
+    the character encoding of the document is not a superset of
+    <abbr>ASCII</abbr>.  The document is non‐conforming.</p>
+
+    <p>Unless there is a <abbr>BOM</abbr>, the character encoding
+    for the document must be specified in e.g. <abbr>HTTP</abbr>‐level,
+    as:</p>
+    <pre class="http example"><code>Content-Type: text/html; charset=<var>charset-name</var></code></pre>
+
+    <p>Existence of <abbr>HTML</abbr> character encoding declaration, i.e.
+    <code class="html example">&lt;meta charset="<var>charset-name</var>"></code>,
+    does not allow to omit <code>charset</code> parameter
+    for <abbr>HTML</abbr> document encoded in non‐<abbr>ASCII</abbr>
+    compatible encoding.</p>
+
+    <p>Character encodings <code>Shift_JIS</code>, <code>Windows-31J</code>,
+    and <code>ISO-2022-JP</code> are <em>not</em> a superset of
+    <abbr>ASCII</abbr> for the purpose of <abbr>HTML</abbr> conformance.</p>
+  </d:desc>
+</d:item>
+
+<d:item name="charset label detected" class="format-charset warning"
+    level="w">
+  <d:message xml:lang="en">While parsing the document as
+  <code><var>$0</var></code>, a character encoding declaration specifying
+  character encoding as <code><var>$1</var></code> is found.  The document
+  is reparsed.</d:message>
+  <d:desc xml:lang="en">
+    <p>While parsing a document in a character encoding,
+    a character encoding declaration which declares the character
+    encoding of the document as another character encoding is found.
+    The occurence of this warning itself does not make the document
+    non‐conforming.  However, the failure of the first attempt to
+    to detect the character encoding might be the result of non‐conformance 
+    of the document.</p>
+
+    <p>The document will be reparsed from the beginning.  Some error
+    or warning might be reported again.</p>
+
+    <p>These are suggestions to avoid this warning:</p>
+    <ul>
+    <li>Specify <code>charset</code> parameter in the <code>Content-Type</code>
+    field in the <abbr>HTTP</abbr> header, as:
+    <pre class="HTTP example"><code>Content-Type: text/html; charset="<var>charset-name</var>"</code></pre></li>
+    <li>Put the character encoding declaration
+    (<code class="html example">&lt;meta charset="<var>charset-name</var>"></code>)
+    just after <code class="html example">&lt;head></code> start tag.</li>
+    <li>Use <code>UTF-8</code>.</li>
+    </ul>
+  </d:desc>
+</d:item>
+</section>
+
 <section id="html5-tokenize-error">
 <h2>HTML5 Parse Errors in Tokenization Stage</h2>
 
@@ -922,15 +1037,15 @@ p {
 
 <d:item name="enumerated:invalid:http-equiv:content-type"
     class="attribute-value-error">
-  <d:message xml:lang="en">Charset declaration syntax
+  <d:message xml:lang="en">Character encoding declaration syntax
   <code class="html bad example">&lt;meta http-equiv="Content-Type" content="text/html; charset=<var>charset-name</var>"></code>
   is obsolete.</d:message>
   <d:desc xml:lang="en">
-    <p>Old long charset declaration syntax
+    <p>Old long character encoding declaration syntax
     <code class="html bad example">&lt;meta http-equiv="Content-Type" content="text/html; charset=<var>charset-name</var>"></code>
     is in use.  The document is non‐conforming.</p>
 
-    <p>The new charset declaration syntax is:
+    <p>The new character encoding declaration syntax is:
       <pre class="html example"><code>&lt;meta charset="<var>charset-name</var>"></code></pre>
     </p>
   </d:desc>
@@ -1375,6 +1490,6 @@ is used in the document.</td>
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2007/11/07 12:20:44 $ -->
+<!-- $Date: 2007/11/18 11:05:12 $ -->
 </body>
 </html>

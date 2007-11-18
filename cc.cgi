@@ -52,7 +52,6 @@ sub htescape ($) {
 
   $| = 0;
   my $input = get_input_document ($http, $dom);
-  my $inner_html_element = $http->get_parameter ('e');
   my $char_length = 0;
   my %time;
 
@@ -253,8 +252,9 @@ sub print_syntax_error_html_section ($$) {
 
   my $doc = $dom->create_document;
   my $el;
+  my $inner_html_element = $http->get_parameter ('e');
   if (defined $inner_html_element and length $inner_html_element) {
-    $input->{charset} ||= 'ISO-8859-1'; ## TODO: for now.
+    $input->{charset} ||= 'windows-1252'; ## TODO: for now.
     my $time1 = time;
     my $t = Encode::decode ($input->{charset}, $input->{s});
     $time{decode} = time - $time1;
@@ -270,6 +270,8 @@ sub print_syntax_error_html_section ($$) {
         ($input->{charset}, $input->{s} => $doc, $onerror);
     $time{parse_html} = time - $time1;
   }
+  $doc->manakai_charset ($input->{official_charset})
+      if defined $input->{official_charset};
   
   print STDOUT qq[</dl></div>];
 
@@ -310,6 +312,8 @@ sub print_syntax_error_xml_section ($$) {
   my $doc = Message::DOM::XMLParserTemp->parse_byte_stream
       ($fh => $dom, $onerror, charset => $input->{charset});
   $time{parse_xml} = time - $time1;
+  $doc->manakai_charset ($input->{official_charset})
+      if defined $input->{official_charset};
 
   print STDOUT qq[</dl></div>];
 
@@ -895,7 +899,8 @@ sub get_node_link ($) {
 
 sub load_text_catalog ($) {
   my $lang = shift; # MUST be a canonical lang name
-  open my $file, '<', "cc-msg.$lang.txt" or die "$0: cc-msg.$lang.txt: $!";
+  open my $file, '<:utf8', "cc-msg.$lang.txt"
+      or die "$0: cc-msg.$lang.txt: $!";
   while (<$file>) {
     if (s/^([^;]+);([^;]*);//) {
       my ($type, $cls, $msg) = ($1, $2, $_);
@@ -1006,6 +1011,7 @@ EOH
       if (defined $ct and $ct =~ /;\s*charset\s*=\s*"?([^\s;"]+)"?/i) {
         $r->{charset} = lc $1;
         $r->{charset} =~ tr/\\//d;
+        $r->{official_charset} = $r->{charset};
       }
 
       my $input_charset = $http->get_parameter ('charset');
@@ -1049,6 +1055,7 @@ EOH
     $r->{charset} = ''.$http->get_parameter ('_charset_');
     $r->{charset} =~ s/\s+//g;
     $r->{charset} = 'utf-8' if $r->{charset} eq '';
+    $r->{official_charset} = $r->{charset};
     $r->{header_field} = [];
 
     require Whatpm::ContentType;
@@ -1076,6 +1083,7 @@ EOH
   if ($r->{media_type} eq 'text/xml') {
     unless (defined $r->{charset}) {
       $r->{charset} = 'us-ascii';
+      $r->{official_charset} = $r->{charset};
     } elsif ($r->{charset_overridden} and $r->{charset} eq 'us-ascii') {
       $r->{charset_overridden} = 0;
     }
@@ -1126,4 +1134,4 @@ and/or modify it under the same terms as Perl itself.
 
 =cut
 
-## $Date: 2007/11/18 05:30:03 $
+## $Date: 2007/11/18 11:05:12 $

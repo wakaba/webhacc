@@ -3,8 +3,7 @@ use strict;
 use encoding 'us-ascii', STDOUT => 'utf-8';
 
 use lib qw[/home/httpd/html/www/markup/html/whatpm
-           /home/wakaba/work/manakai/lib
-           /home/wakaba/public_html/-temp/wiki/lib];
+           /home/wakaba/work/manakai2/lib];
 
 my $HTML_NS = q<http://www.w3.org/1999/xhtml>;
 my $SRC_NS = q<http://suika.fam.cx/~wakaba/archive/2007/wdcc-desc/>;

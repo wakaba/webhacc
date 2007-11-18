@@ -163,11 +163,14 @@ q:before, q:after {
   margin-right: 1em;
 }
 
+#parse-errors dd.should,
 #document-errors dd.should, #error-description .should h3,
 #result-para.SEE-RESULT, #levels-table #level-s th {
   background-image: url(large-alert);
 }
 
+#parse-errors dd.warning,
+#document-errors dd.warning, #error-description .warning h3,
 #levels-table #level-w th {
   background-image: url(large-info);
 }
@@ -387,6 +390,6 @@ Copyright 2007 Wakaba <w@suika.fam.cx>.
 This library is free software; you can redistribute it
 and/or modify it under the same terms as Perl itself.
 
-$Date: 2007/11/11 06:57:16 $
+$Date: 2007/11/18 11:05:12 $
 
 */
