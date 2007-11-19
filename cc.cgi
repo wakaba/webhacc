@@ -403,7 +403,7 @@ sub print_document_tree ($) {
         $r .= '<ul class="attributes">';
         for my $attr (sort {$a->[0] cmp $b->[0]} map { [$_->name, $_->value, $_->namespace_uri, 'node-'.refaddr $_] }
                       @{$child->attributes}) {
-          $r .= qq[<li id="$attr->[3]" class="tree-attribute"><code title="@{[defined $_->[2] ? $_->[2] : '']}">] . htescape ($attr->[0]) . '</code> = '; ## ISSUE: case?
+          $r .= qq[<li id="$attr->[3]" class="tree-attribute"><code title="@{[defined $attr->[2] ? htescape ($attr->[2]) : '']}">] . htescape ($attr->[0]) . '</code> = '; ## ISSUE: case?
           $r .= '<q>' . htescape ($attr->[1]) . '</q></li>'; ## TODO: children
         }
         $r .= '</ul>';
@@ -424,6 +424,21 @@ sub print_document_tree ($) {
     } elsif ($nt == $child->DOCUMENT_NODE) {
       $r .= qq'<li id="$node_id" class="tree-document">Document';
       $r .= qq[<ul class="attributes">];
+      my $cp = $child->manakai_charset;
+      if (defined $cp) {
+        $r .= qq[<li><code>charset</code> parameter = <code>];
+        $r .= htescape ($cp) . qq[</code></li>];
+      }
+      $r .= qq[<li><code>inputEncoding</code> = ];
+      my $ie = $child->input_encoding;
+      if (defined $ie) {
+        $r .= qq[<code>@{[htescape ($ie)]}</code>];
+        if ($child->manakai_has_bom) {
+          $r .= qq[ (with <code class=charname><abbr>BOM</abbr></code>)];
+        }
+      } else {
+        $r .= qq[(<code>null</code>)];
+      }
       $r .= qq[<li>@{[scalar get_text ('manakaiIsHTML:'.($child->manakai_is_html?1:0))]}</li>];
       $r .= qq[<li>@{[scalar get_text ('manakaiCompatMode:'.$child->manakai_compat_mode)]}</li>];
       unless ($child->manakai_is_html) {
@@ -1134,4 +1149,4 @@ and/or modify it under the same terms as Perl itself.
 
 =cut
 
-## $Date: 2007/11/18 11:05:12 $
+## $Date: 2007/11/19 12:20:14 $

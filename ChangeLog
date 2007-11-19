@@ -1,3 +1,8 @@
+2007-11-19  Wakaba  <wakaba@suika.fam.cx>
+
+	* cc.cgi (#document-tree Document): Output |inputEncoding|, 
+	|manakaiCharset|, and |manakaiHasBOM| attributes.
+
 2007-11-18  Wakaba  <wakaba@suika.fam.cx>
 
 	* cc-style.css: New rules for warnings.
