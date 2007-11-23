@@ -29,11 +29,20 @@ Web Document Conformance Checker (BETA)</title>
     though the use of another character encoding is conforming.</p>
   </div>
 
+<div class="section format-charset unsupported" id="unsupported:character-encoding"><h3>Conformance for character encoding requirements
+  cannot be checked.</h3>
+    <p>The conformance checker cannot detect whether the input document
+    met the requirements on character encoding, since the document
+    is not inputed as a serialized byte sequence.  The document is
+    not conforming if it is not encoded in an appropriate character
+    encoding with appropriate labeling.</p>
+  </div>
+
 <div class="section format-charset error" id="m:no-character-encoding-declaration"><h3>There is no character encoding
   declaration.</h3>
     <p>The document does not contain a character encoding 
     declaration.  Unless the character encoding is explicitly 
-    specified in upper‐level protocol, e.g. in <abbr>HTTP</abbr>,
+    specified in lower‐level protocol, e.g. in <abbr>HTTP</abbr>,
     or is implied by <abbr>BOM</abbr>, there must be a character
     encoding declaration.  The document is non‐conforming.</p>
 
@@ -48,11 +57,11 @@ Web Document Conformance Checker (BETA)</title>
   </div>
 
 <div class="section format-charset error" id="m:non-ascii-superset"><h3>No character encoding metadata is found
-  in upper‐level protocol nor is there <abbr>BOM</abbr>, while
+  in lower‐level protocol nor is there <abbr>BOM</abbr>, while
   character encoding <code><var>$0</var></code>
   is not a superset of <abbr>ASCII</abbr>.</h3>
     <p>The document is not labeled with character encoding name
-    in upper‐level protocol, e.g. in <abbr>HTTP</abbr>, and
+    in lower‐level protocol, e.g. in <abbr>HTTP</abbr>, and
     the document is not begin with <abbr>BOM</abbr>.  In addition,
     the character encoding of the document is not a superset of
     <abbr>ASCII</abbr>.  The document is non‐conforming.</p>
@@ -850,6 +859,75 @@ p {
 <section id="attribute-value-errors">
 <h2>Attribute Value Errors</h2>
 
+<div class="section attribute-value-warning warning" id="w:charset:not-registered"><h3>Character encoding name <code><var>$0</var></code>
+  is not registered.</h3>
+    <p>The specified character encoding name is not registered to
+    <abbr>IANA</abbr>.  Use of registered character encoding name
+    is a good practice to facilitate interoperability.</p>
+
+    <dl class="switch">
+    <dt><code>EUC-TW</code></dt>
+      <dd><code>EUC-TW</code> is not registered.  Unfortunately, there
+      is no registered name for that character encoding.  Use
+      Big5 encoding with character encoding name <code>Big5</code> 
+      if it is enough to represent the document.</dd>
+    <dt><code>ISO-2022-JP-1</code></dt>
+      <dd><code>ISO-2022-JP-1</code> is not registered, nevertheless
+      this character encoding name is documented in 
+      <a href="urn:ietf:rfc:2237"><abbr>RFC</abbr> 2237</a>.  Use
+      <code>ISO-2022-JP-2</code> instead, since that character encoding
+      is a superset of ISO-2022-JP-1.</dd>
+    <dt><code>ISO-2022-JP-3</code>, <code>ISO-2022-JP-3-plane1</code></dt>
+      <dd>These names are not registered and obsoleted in favor of
+      <code>ISO-2022-JP-2004</code> and
+      <code>ISO-2022-JP-2004-plane1</code>.</dd>
+    <dt><code>ISO-2022-JP-2003</code>,
+    <code>ISO-2022-JP-2003-plane1</code></dt>
+      <dd>These names are not registered and corrected to
+      <code>ISO-2022-JP-2004</code> and
+      <code>ISO-2022-JP-2004-plane1</code>.</dd>
+    <dt><code>ISO-2022-JP-2004</code>,
+    <code>ISO-2022-JP-2004-plane1</code></dt>
+      <dd>These names are not registered.  Unfortunately, there is 
+      no registered name for these character encodings.</dd>
+    <dt><code>UTF-8N</code></dt>
+      <dd><code>UTF-8N</code> is not registered.  Character encoding
+      name <code>UTF-8</code> represents UTF-8 encoding with or
+      without <abbr>BOM</abbr>.</dd>
+    </dl>
+
+    <p><strong>WARNING</strong>: This error might be raised for
+    a registered character encoding name, since the character encoding
+    name database of the conformance checker is not complete yet.</p>
+  </div>
+
+<div class="section attribute-value-warning warning" id="w:charset:private"><h3><code><var>$0</var></code> is a private
+  character encoding name.</h3>
+    <p>The specified character encoding name is a private name and
+    not registered to <abbr>IANA</abbr>.  Use of registered character
+    encoding name is a good practice to facilitate interoperability.</p>
+
+    <dl class="switch">
+    <dt><code>x-euc-jp</code></dt>
+      <dd>Use <code>EUC-JP</code> for the Japanese <abbr>EUC</abbr>
+      character encoding.</dd>
+    <dt><code>x-sjis</code></dt>
+      <dd>Use <code>Shift_JIS</code> for standard Shift encoding scheme of
+      <abbr>JIS</abbr> coded character set, or <code>Windows-31J</code>
+      for Microsoft standard character set as implemented by
+      Microsoft Windows.</dd>
+    </dl>
+  </div>
+
+<div class="section attribute-value-error" id="m:charset:syntax-error"><h3>The specified value is syntactically not a
+  character encoding name.</h3>
+    <p>The attribute value must be a character encoding name.  However,
+    the specified value is not a character encoding name syntactically.
+    The document is non‐conforming.</p>
+    <p>Character encoding name is a string of <abbr>ASCII</abbr>
+    printable characters, up to 40 characters.</p>
+  </div>
+
 <div class="section attribute-value-error" id="enumerated:invalid"><h3>This attribute only allow a limited set of 
   values and the specified value <code><var>{@}</var></code> is not one 
   of them.</h3>
@@ -927,6 +1005,14 @@ p {
       <dd>Use link type <code>index</code>.</dd>
     </dl>
   </div>
+
+<div class="section attribute-value-error" id="m:mismatched-charset-name"><h3>Character encoding name <code><var>$1</var></code>
+  is different from document character encoding
+  <code><var>$0</var></code>.</h3>
+    <p>The specified character encoding name is different from
+    the character encoding of the document.  The document
+    is non‐conforming.</p>
+  </div> 
 
 <div class="section attribute-value-error" id="reserved-browsing-context-name"><h3>Browsing context name 
   <code><var>{@}</var></code> is reserved.</h3>
@@ -1209,6 +1295,6 @@ is used in the document.</td>
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2007/11/18 11:05:12 $ -->
+<!-- $Date: 2007/11/23 06:36:19 $ -->
 </body>
 </html>

@@ -1014,6 +1014,7 @@ EOH
     $ua->protocols_allowed ([qw/http/]);
     $ua->max_size (1000_000);
     my $req = HTTP::Request->new (GET => $request_uri);
+    $req->header ('Accept-Encoding' => 'identity, *; q=0');
     my $res = $ua->request ($req);
     ## TODO: 401 sets |is_success| true.
     if ($res->is_success or $http->get_parameter ('error-page')) {
@@ -1149,4 +1150,4 @@ and/or modify it under the same terms as Perl itself.
 
 =cut
 
-## $Date: 2007/11/19 12:20:14 $
+## $Date: 2007/11/23 06:36:19 $

@@ -1,3 +1,10 @@
+2007-11-23  Wakaba  <wakaba@suika.fam.cx>
+
+	* error-description-source.xml: New error descriptions.
+
+	* cc.cgi: |Accept-Encoding: *; q=0| is a request for server to send
+	a 406 page!  |identity| encoding is added.
+
 2007-11-19  Wakaba  <wakaba@suika.fam.cx>
 
 	* cc.cgi (#document-tree Document): Output |inputEncoding|, 
