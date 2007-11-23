@@ -163,18 +163,21 @@ q:before, q:after {
   margin-right: 1em;
 }
 
+#parse-errors dd.level-s, #document-errors dd.level-s,
 #parse-errors dd.should,
 #document-errors dd.should, #error-description .should h3,
 #result-para.SEE-RESULT, #levels-table #level-s th {
-  background-image: url(large-alert);
+  background-image: url(large-stop);
 }
 
+#parse-errors dd.level-w, #document-errors dd.level-w,
 #parse-errors dd.warning,
 #document-errors dd.warning, #error-description .warning h3,
 #levels-table #level-w th {
-  background-image: url(large-info);
+  background-image: url(large-alert);
 }
 
+#parse-errors dd.level-unsupported, #document-errors dd.level-unsupported,
 #parse-errors dd.unsupported,
 #document-errors dd.unsupported {
   margin-left: 60px;
@@ -390,6 +393,6 @@ Copyright 2007 Wakaba <w@suika.fam.cx>.
 This library is free software; you can redistribute it
 and/or modify it under the same terms as Perl itself.
 
-$Date: 2007/11/18 11:05:12 $
+$Date: 2007/11/23 12:08:32 $
 
 */

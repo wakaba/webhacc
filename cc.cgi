@@ -928,6 +928,7 @@ sub load_text_catalog ($) {
 sub get_text ($) {
   my ($type, $level, $node) = @_;
   $type = $level . ':' . $type if defined $level;
+  $level = 'm' unless defined $level;
   my @arg;
   {
     if (defined $Msg->{$type}) {
@@ -952,13 +953,13 @@ sub get_text ($) {
           ? htescape ($node->owner_element->manakai_local_name)
           : ''
       }ge;
-      return ($type, $Msg->{$type}->[0], $msg);
+      return ($type, 'level-' . $level . ' ' . $Msg->{$type}->[0], $msg);
     } elsif ($type =~ s/:([^:]*)$//) {
       unshift @arg, $1;
       redo;
     }
   }
-  return ($type, '', htescape ($_[0]));
+  return ($type, 'level-'.$level, htescape ($_[0]));
 } # get_text
 
 }
@@ -1150,4 +1151,4 @@ and/or modify it under the same terms as Perl itself.
 
 =cut
 
-## $Date: 2007/11/23 06:36:19 $
+## $Date: 2007/11/23 12:08:32 $
