@@ -1,3 +1,9 @@
+2008-02-09  Wakaba  <wakaba@suika.fam.cx>
+
+	* standards.en.html: New document.
+
+	* cc-interface.en.html: Linking to |standards.en.html|.
+
 2007-11-23  Wakaba  <wakaba@suika.fam.cx>
 
 	* error-description-source.xml: New error descriptions.
