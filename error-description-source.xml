@@ -1575,7 +1575,7 @@ to solve a problem in a confusing or possibly wrong way.
 It does not affect to the conformance of the document, and
 may sometimes be inappropriate.</td>
 </tr>
-<tr id="level-unsupported" class="level-unsupported">
+<tr id="level-u" class="level-u">
 <th scope="row">Not supported</th>
 <td><em>Unknown</em>.</td>
 <td>Some feature that is not supported by the conformance checker
@@ -1596,6 +1596,6 @@ is used in the document.</td>
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2007/11/23 06:36:19 $ -->
+<!-- $Date: 2008/02/09 12:22:19 $ -->
 </body>
 </html>

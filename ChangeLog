@@ -1,5 +1,15 @@
 2008-02-09  Wakaba  <wakaba@suika.fam.cx>
 
+	* cc-style.css: Rules for s/unsupported/u/'ed version added.
+
+	* cc.cgi: Support for 'u' level.
+
+	* error-description-source.en.xml: s/unsupported/u/;
+
+	* standards.en.html: CSS added.
+
+2008-02-09  Wakaba  <wakaba@suika.fam.cx>
+
 	* standards.en.html: New document.
 
 	* cc-interface.en.html: Linking to |standards.en.html|.

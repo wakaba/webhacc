@@ -177,6 +177,7 @@ q:before, q:after {
   background-image: url(large-alert);
 }
 
+#parse-errors dd.level-u, #document-errors dd.level-u,
 #parse-errors dd.level-unsupported, #document-errors dd.level-unsupported,
 #parse-errors dd.unsupported,
 #document-errors dd.unsupported {
@@ -187,7 +188,9 @@ q:before, q:after {
 
 #parse-errors dd.unsupported,
 #document-errors dd.unsupported, #error-description .unsupported h3,
-#result-para.uncertain, #levels-table #level-unsupported th {
+#result-para.uncertain, 
+#parse-errors dd.level-u, #document-errors dd.level-u,
+#levels-table #level-u th {
   background-image: none;
 }
 
@@ -333,7 +336,8 @@ pre.example.bad.manifest::before {
   empty-cells: show;
 }
 
-.uncertain td, p.uncertain, #level-unsupported, #level-unsupported th {
+.uncertain td, p.uncertain,
+#level-u, #level-u th {
   background-color: #e1e1ff;
   color: black;
 }
@@ -393,6 +397,6 @@ Copyright 2007 Wakaba <w@suika.fam.cx>.
 This library is free software; you can redistribute it
 and/or modify it under the same terms as Perl itself.
 
-$Date: 2007/11/23 12:08:32 $
+$Date: 2008/02/09 12:22:19 $
 
 */

@@ -166,7 +166,7 @@ sub add_error ($$$) {
       $result->{conforming_min} = 0;
     } elsif ($err->{level} eq 'w' or $err->{level} eq 'g') {
       $result->{$layer}->{warning}++;
-    } elsif ($err->{level} eq 'unsupported') {
+    } elsif ($err->{level} eq 'u' or $err->{level} eq 'unsupported') {
       $result->{$layer}->{unsupported}++;
       $result->{unsupported} = 1;
     } else {
@@ -806,9 +806,9 @@ sub print_result_unknown_type_section ($$) {
 </div>
 ];
   push @nav, ['#parse-errors' => 'Errors'];
-  add_error (char => {level => 'unsupported'} => $result);
-  add_error (syntax => {level => 'unsupported'} => $result);
-  add_error (structure => {level => 'unsupported'} => $result);
+  add_error (char => {level => 'u'} => $result);
+  add_error (syntax => {level => 'u'} => $result);
+  add_error (structure => {level => 'u'} => $result);
 } # print_result_unknown_type_section
 
 sub print_result_input_error_section ($) {
@@ -865,7 +865,7 @@ sub get_error_level_label ($) {
   } elsif ($err->{level} eq 'w') {
     $r = qq[<strong><a href="../error-description#level-w">Warning</a></strong>:
         ];
-  } elsif ($err->{level} eq 'unsupported') {
+  } elsif ($err->{level} eq 'u' or $err->{level} eq 'unsupported') {
     $r = qq[<strong><a href="../error-description#level-u">Not
         supported</a></strong>: ];
   } else {
@@ -1151,4 +1151,4 @@ and/or modify it under the same terms as Perl itself.
 
 =cut
 
-## $Date: 2007/11/23 12:08:32 $
+## $Date: 2008/02/09 12:22:19 $

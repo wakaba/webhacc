@@ -32,6 +32,14 @@ Namespaces
 <td>Tentative
 <tr><td>1.1 First Edition
 <td>Tentative
+<tr>
+<th scope=row><a href="#css"><abbr title="Cascading Style Sheets">CSS</abbr></a>
+<td>2.1
+<td>Most part
+<tr>
+<th scope=row>Selectors
+<td>3
+<td><!-- Full -->
 </tbody>
 <tbody>
 <tr><th scope=row><abbr title="Hypertext Transfer Protocol">HTTP</abbr>
@@ -49,12 +57,35 @@ Namespaces
   <li>December 2007 content model is not implemented yet.</li>
   <li>Form elements are not implemented yet.</li>
 </ul>
+
 </div>
 
 <div class=section id=atom>
 <h2>Atom</h2>
 
 <p>Only a part is implemented.</p>
+</div>
+
+<div class=section id=css>
+<h2><abbr title="Cascading Style Sheets">CSS</abbr></h2>
+
+<p>The current implementation assumes that there are following 
+requirements:</p>
+<ul>
+<li id=css-type-charset-param>The <code>charset</code> parameter of the media 
+type <code>text/css</code> <em class=rfc2119>MUST</em> be treated as if it 
+were an unknown parameter for the purpose of determining styling langauge for 
+an <abbr>HTML</abbr> <code>style</code> element.</li>
+<li id=css-style-content>Content of an <abbr>HTML</abbr> <code>style</code> 
+element whose content is interpreted as a CSS style sheet 
+<em class=rfc2119>MUST</em> consist of zero or more 
+<a href="http://www.whatwg.org/specs/web-apps/current-work/#text-node">text nodes</a>.
+Note that it may also contain zero or more comment and/or processing 
+instruction nodes.</li>
+</ul>
+
+<p>...</p>
+
 </div>
 
 </body>
