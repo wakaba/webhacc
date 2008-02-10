@@ -1,5 +1,11 @@
 2008-02-10  Wakaba  <wakaba@suika.fam.cx>
 
+	* cc.cgi: In CSS mode, add 'u' error for 'structure' category (until
+	it is actually implemented).  Support for '-moz-pre-wrap'.
+	Typo in 'collapse' value fixed.
+
+2008-02-10  Wakaba  <wakaba@suika.fam.cx>
+
 	* cc.cgi: |text/css| support.  |id_prefix| support was
 	partially broken.
 
