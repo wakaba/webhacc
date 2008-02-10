@@ -1,5 +1,9 @@
 2008-02-10  Wakaba  <wakaba@suika.fam.cx>
 
+	* cc.cgi: Subdocument validation framework implemented.
+
+2008-02-10  Wakaba  <wakaba@suika.fam.cx>
+
 	* cc.cgi (print_listing_section): ID, class, and term
 	section functions are merged.
 

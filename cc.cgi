@@ -155,6 +155,7 @@ sub check_and_print ($$) {
   my $doc;
   my $el;
   my $manifest;
+  my @subdoc;
 
   if ($input->{media_type} eq 'text/html') {
     ($doc, $el) = print_syntax_error_html_section ($input, $result);
@@ -180,9 +181,13 @@ sub check_and_print ($$) {
   }
 
   if (defined $doc or defined $el) {
+    $doc->document_uri ($input->{uri});
+    $doc->manakai_entity_base_uri ($input->{base_uri});
     print_structure_dump_dom_section ($input, $doc, $el);
     my $elements = print_structure_error_dom_section
-        ($input, $doc, $el, $result);
+        ($input, $doc, $el, $result, sub {
+          push @subdoc, shift;
+        });
     print_table_section ($input, $elements->{table}) if @{$elements->{table}};
     print_listing_section ({
       id => 'identifiers', label => 'IDs', heading => 'Identifiers',
@@ -197,13 +202,38 @@ sub check_and_print ($$) {
     print_structure_dump_manifest_section ($input, $manifest);
     print_structure_error_manifest_section ($input, $manifest, $result);
   }
+
+  my $id_prefix = 0;
+  for my $subinput (@subdoc) {
+    $subinput->{id_prefix} = 'subdoc-' . ++$id_prefix;
+    $subinput->{nested} = 1;
+    $subinput->{base_uri} = $subinput->{container_node}->base_uri
+        unless defined $subinput->{base_uri};
+    my $ebaseuri = htescape ($subinput->{base_uri});
+    push @nav, ['#' . $subinput->{id_prefix} => 'Sub #' . $id_prefix];
+    print STDOUT qq[<div id="$subinput->{id_prefix}" class=section>
+      <h2>Subdocument #$id_prefix</h2>
+
+      <dl>
+      <dt>Internet Media Type</dt>
+        <dd><code class="MIME" lang="en">@{[htescape $subinput->{media_type}]}</code>
+      <dt>Container Node</dt>
+        <dd>@{[get_node_link ($input, $subinput->{container_node})]}</dd>
+      <dt>Base <abbr title="Uniform Resource Identifiers">URI</abbr></dt>
+        <dd><code class=URI>&lt;<a href="$ebaseuri">$ebaseuri</a>></code></dd>
+      </dl>];              
+
+    check_and_print ($subinput => $result);
+
+    print STDOUT qq[</div>];
+  }
 } # check_and_print
 
 sub print_http_header_section ($$) {
   my ($input, $result) = @_;
   return unless defined $input->{header_status_code} or
       defined $input->{header_status_text} or
-      @{$input->{header_field}};
+      @{$input->{header_field} or []};
   
   push @nav, ['#source-header' => 'HTTP Header'] unless $input->{nested};
   print STDOUT qq[<div id="$input->{id_prefix}source-header" class="section">
@@ -537,8 +567,8 @@ sub print_structure_dump_manifest_section ($$) {
   print STDOUT qq[</dl></div>];
 } # print_structure_dump_manifest_section
 
-sub print_structure_error_dom_section ($$$$) {
-  my ($input, $doc, $el, $result) = @_;
+sub print_structure_error_dom_section ($$$$$) {
+  my ($input, $doc, $el, $result, $onsubdoc) = @_;
 
   print STDOUT qq[<div id="$input->{id_prefix}document-errors" class="section">
 <h2>Document Errors</h2>
@@ -562,9 +592,11 @@ sub print_structure_error_dom_section ($$$$) {
   my $elements;
   my $time1 = time;
   if ($el) {
-    $elements = Whatpm::ContentChecker->check_element ($el, $onerror);
+    $elements = Whatpm::ContentChecker->check_element
+        ($el, $onerror, $onsubdoc);
   } else {
-    $elements = Whatpm::ContentChecker->check_document ($doc, $onerror);
+    $elements = Whatpm::ContentChecker->check_document
+        ($doc, $onerror, $onsubdoc);
   }
   $time{check} = time - $time1;
 
@@ -1131,4 +1163,4 @@ and/or modify it under the same terms as Perl itself.
 
 =cut
 
-## $Date: 2008/02/10 02:42:01 $
+## $Date: 2008/02/10 03:11:06 $
