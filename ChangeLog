@@ -1,5 +1,10 @@
 2008-02-10  Wakaba  <wakaba@suika.fam.cx>
 
+	* cc.cgi: |text/css| support.  |id_prefix| support was
+	partially broken.
+
+2008-02-10  Wakaba  <wakaba@suika.fam.cx>
+
 	* cc.cgi: Subdocument validation framework implemented.
 
 2008-02-10  Wakaba  <wakaba@suika.fam.cx>

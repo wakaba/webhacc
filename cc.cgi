@@ -20,6 +20,11 @@ sub htescape ($) {
   return $s;
 } # htescape
 
+  my @nav;
+  my %time;
+  require Message::DOM::DOMImplementation;
+  my $dom = Message::DOM::DOMImplementation->new;
+{
   use Message::CGI::HTTP;
   my $http = Message::CGI::HTTP->new;
 
@@ -31,12 +36,8 @@ sub htescape ($) {
   binmode STDOUT, ':utf8';
   $| = 1;
 
-  require Message::DOM::DOMImplementation;
-  my $dom = Message::DOM::DOMImplementation->new;
-
   load_text_catalog ('en'); ## TODO: conneg
 
-  my @nav;
   print STDOUT qq[Content-Type: text/html; charset=utf-8
 
 <!DOCTYPE html>
@@ -53,7 +54,6 @@ sub htescape ($) {
   $| = 0;
   my $input = get_input_document ($http, $dom);
   my $char_length = 0;
-  my %time;
 
   print qq[
 <div id="document-info" class="section">
@@ -88,6 +88,8 @@ if (defined $input->{s}) {
 </div>
 ];
 
+  $input->{id_prefix} = '';
+  #$input->{nested} = 0;
   my $result = {conforming_min => 1, conforming_max => 1};
   check_and_print ($input => $result);
   print_result_section ($result);
@@ -116,6 +118,7 @@ if (defined $input->{s}) {
   }
 
 exit;
+}
 
 sub add_error ($$$) {
   my ($layer, $err, $result) = @_;
@@ -147,20 +150,21 @@ sub add_error ($$$) {
 
 sub check_and_print ($$) {
   my ($input, $result) = @_;
-  $input->{id_prefix} = '';
-  #$input->{nested} = 1/0;
 
   print_http_header_section ($input, $result);
 
   my $doc;
   my $el;
+  my $cssom;
   my $manifest;
   my @subdoc;
 
   if ($input->{media_type} eq 'text/html') {
     ($doc, $el) = print_syntax_error_html_section ($input, $result);
     print_source_string_section
-        (\($input->{s}), $input->{charset} || $doc->input_encoding);
+        ($input,
+         \($input->{s}),
+         $input->{charset} || $doc->input_encoding);
   } elsif ({
             'text/xml' => 1,
             'application/atom+xml' => 1,
@@ -170,11 +174,19 @@ sub check_and_print ($$) {
             'application/xml' => 1,
            }->{$input->{media_type}}) {
     ($doc, $el) = print_syntax_error_xml_section ($input, $result);
-    print_source_string_section (\($input->{s}), $doc->input_encoding);
+    print_source_string_section ($input,
+                                 \($input->{s}),
+                                 $doc->input_encoding);
+  } elsif ($input->{media_type} eq 'text/css') {
+    $cssom = print_syntax_error_css_section ($input, $result);
+    print_source_string_section
+        ($input, \($input->{s}),
+         $cssom->manakai_input_encoding);
   } elsif ($input->{media_type} eq 'text/cache-manifest') {
 ## TODO: MUST be text/cache-manifest
     $manifest = print_syntax_error_manifest_section ($input, $result);
-    print_source_string_section (\($input->{s}), 'utf-8');
+    print_source_string_section ($input, \($input->{s}),
+                                 'utf-8');
   } else {
     ## TODO: Change HTTP status code??
     print_result_unknown_type_section ($input, $result);
@@ -198,6 +210,9 @@ sub check_and_print ($$) {
     print_listing_section ({
       id => 'classes', label => 'Classes', heading => 'Classes',
     }, $input, $elements->{class}) if keys %{$elements->{class}};
+  } elsif (defined $cssom) {
+    print_structure_dump_cssom_section ($input, $cssom);
+    ## TODO: CSSOM validation
   } elsif (defined $manifest) {
     print_structure_dump_manifest_section ($input, $manifest);
     print_structure_error_manifest_section ($input, $manifest, $result);
@@ -223,6 +238,7 @@ sub check_and_print ($$) {
         <dd><code class=URI>&lt;<a href="$ebaseuri">$ebaseuri</a>></code></dd>
       </dl>];              
 
+    $subinput->{id_prefix} .= '-';
     check_and_print ($subinput => $result);
 
     print STDOUT qq[</div>];
@@ -280,10 +296,10 @@ sub print_syntax_error_html_section ($$) {
     my (%opt) = @_;
     my ($type, $cls, $msg) = get_text ($opt{type}, $opt{level});
     if ($opt{column} > 0) {
-      print STDOUT qq[<dt class="$cls"><a href="#line-$opt{line}">Line $opt{line}</a> column $opt{column}</dt>\n];
+      print STDOUT qq[<dt class="$cls"><a href="#$input->{id_prefix}line-$opt{line}">Line $opt{line}</a> column $opt{column}</dt>\n];
     } else {
       $opt{line} = $opt{line} - 1 || 1;
-      print STDOUT qq[<dt class="$cls"><a href="#line-$opt{line}">Line $opt{line}</a></dt>\n];
+      print STDOUT qq[<dt class="$cls"><a href="#$input->{id_prefix}line-$opt{line}">Line $opt{line}</a></dt>\n];
     }
     $type =~ tr/ /-/;
     $type =~ s/\|/%7C/g;
@@ -296,7 +312,7 @@ sub print_syntax_error_html_section ($$) {
 
   my $doc = $dom->create_document;
   my $el;
-  my $inner_html_element = $http->get_parameter ('e');
+  my $inner_html_element = $input->{inner_html_element};
   if (defined $inner_html_element and length $inner_html_element) {
     $input->{charset} ||= 'windows-1252'; ## TODO: for now.
     my $time1 = time;
@@ -337,7 +353,7 @@ sub print_syntax_error_xml_section ($$) {
   my $onerror = sub {
     my $err = shift;
     my $line = $err->location->line_number;
-    print STDOUT qq[<dt><a href="#line-$line">Line $line</a> column ];
+    print STDOUT qq[<dt><a href="#$input->{id_prefix}line-$line">Line $line</a> column ];
     print STDOUT $err->location->column_number, "</dt><dd>";
     print STDOUT htescape $err->text, "</dd>\n";
 
@@ -363,6 +379,222 @@ sub print_syntax_error_xml_section ($$) {
 
   return ($doc, undef);
 } # print_syntax_error_xml_section
+
+sub get_css_parser () {
+  our $CSSParser;
+  return $CSSParser if $CSSParser;
+
+  require Whatpm::CSS::Parser;
+  my $p = Whatpm::CSS::Parser->new;
+
+#  if ($parse_mode eq 'q') {
+#    $p->{unitless_px} = 1;
+#    $p->{hashless_color} = 1;
+#  }
+
+  $p->{prop}->{$_} = 1 for qw/
+    background background-attachment background-color background-image
+    background-position background-position-x background-position-y
+    background-repeat border border-bottom border-bottom-color
+    border-bottom-style border-bottom-width border-collapse border-color
+    border-left border-left-color
+    border-left-style border-left-width border-right border-right-color
+    border-right-style border-right-width
+    border-spacing -manakai-border-spacing-x -manakai-border-spacing-y
+    border-style border-top border-top-color border-top-style border-top-width
+    border-width bottom
+    caption-side clear clip color content counter-increment counter-reset
+    cursor direction display empty-cells float font
+    font-family font-size font-size-adjust font-stretch
+    font-style font-variant font-weight height left
+    letter-spacing line-height
+    list-style list-style-image list-style-position list-style-type
+    margin margin-bottom margin-left margin-right margin-top marker-offset
+    marks max-height max-width min-height min-width opacity -moz-opacity
+    orphans outline outline-color outline-style outline-width overflow
+    overflow-x overflow-y
+    padding padding-bottom padding-left padding-right padding-top
+    page page-break-after page-break-before page-break-inside
+    position quotes right size table-layout
+    text-align text-decoration text-indent text-transform
+    top unicode-bidi vertical-align visibility white-space width widows
+    word-spacing z-index
+  /;
+  $p->{prop_value}->{display}->{$_} = 1 for qw/
+    block clip inline inline-block inline-table list-item none
+    table table-caption table-cell table-column table-column-group
+    table-header-group table-footer-group table-row table-row-group
+    compact marker
+  /;
+  $p->{prop_value}->{position}->{$_} = 1 for qw/
+    absolute fixed relative static
+  /;
+  $p->{prop_value}->{float}->{$_} = 1 for qw/
+    left right none
+  /;
+  $p->{prop_value}->{clear}->{$_} = 1 for qw/
+    left right none both
+  /;
+  $p->{prop_value}->{direction}->{ltr} = 1;
+  $p->{prop_value}->{direction}->{rtl} = 1;
+  $p->{prop_value}->{marks}->{crop} = 1;
+  $p->{prop_value}->{marks}->{cross} = 1;
+  $p->{prop_value}->{'unicode-bidi'}->{$_} = 1 for qw/
+    normal bidi-override embed
+  /;
+  for my $prop_name (qw/overflow overflow-x overflow-y/) {
+    $p->{prop_value}->{$prop_name}->{$_} = 1 for qw/
+      visible hidden scroll auto -webkit-marquee -moz-hidden-unscrollable
+    /;
+  }
+  $p->{prop_value}->{visibility}->{$_} = 1 for qw/
+    visible hidden collapse
+  /;
+  $p->{prop_value}->{'list-style-type'}->{$_} = 1 for qw/
+    disc circle square decimal decimal-leading-zero
+    lower-roman upper-roman lower-greek lower-latin
+    upper-latin armenian georgian lower-alpha upper-alpha none
+    hebrew cjk-ideographic hiragana katakana hiragana-iroha
+    katakana-iroha
+  /;
+  $p->{prop_value}->{'list-style-position'}->{outside} = 1;
+  $p->{prop_value}->{'list-style-position'}->{inside} = 1;
+  $p->{prop_value}->{'page-break-before'}->{$_} = 1 for qw/
+    auto always avoid left right
+  /;
+  $p->{prop_value}->{'page-break-after'}->{$_} = 1 for qw/
+    auto always avoid left right
+  /;
+  $p->{prop_value}->{'page-break-inside'}->{auto} = 1;
+  $p->{prop_value}->{'page-break-inside'}->{avoid} = 1;
+  $p->{prop_value}->{'background-repeat'}->{$_} = 1 for qw/
+    repeat repeat-x repeat-y no-repeat
+  /;
+  $p->{prop_value}->{'background-attachment'}->{scroll} = 1;
+  $p->{prop_value}->{'background-attachment'}->{fixed} = 1;
+  $p->{prop_value}->{'font-size'}->{$_} = 1 for qw/
+    xx-small x-small small medium large x-large xx-large
+    -manakai-xxx-large -webkit-xxx-large
+    larger smaller
+  /;
+  $p->{prop_value}->{'font-style'}->{normal} = 1;
+  $p->{prop_value}->{'font-style'}->{italic} = 1;
+  $p->{prop_value}->{'font-style'}->{oblique} = 1;
+  $p->{prop_value}->{'font-variant'}->{normal} = 1;
+  $p->{prop_value}->{'font-variant'}->{'small-caps'} = 1;
+  $p->{prop_value}->{'font-stretch'}->{$_} = 1 for
+      qw/normal wider narrower ultra-condensed extra-condensed
+        condensed semi-condensed semi-expanded expanded
+        extra-expanded ultra-expanded/;
+  $p->{prop_value}->{'text-align'}->{$_} = 1 for qw/
+    left right center justify begin end
+  /;
+  $p->{prop_value}->{'text-transform'}->{$_} = 1 for qw/
+    capitalize uppercase lowercase none
+  /;
+  $p->{prop_value}->{'white-space'}->{$_} = 1 for qw/
+    normal pre nowrap pre-line pre-wrap
+  /;
+  $p->{prop_value}->{'text-decoration'}->{$_} = 1 for qw/
+    none blink underline overline line-through
+  /;
+  $p->{prop_value}->{'caption-side'}->{$_} = 1 for qw/
+    top bottom left right
+  /;
+  $p->{prop_value}->{'table-layout'}->{auto} = 1;
+  $p->{prop_value}->{'table-layout'}->{fixed} = 1;
+  $p->{prop_value}->{'border-collapse'}->{collapase} = 1;
+  $p->{prop_value}->{'border-collapse'}->{separate} = 1;
+  $p->{prop_value}->{'empty-cells'}->{show} = 1;
+  $p->{prop_value}->{'empty-cells'}->{hide} = 1;
+  $p->{prop_value}->{cursor}->{$_} = 1 for qw/
+    auto crosshair default pointer move e-resize ne-resize nw-resize n-resize
+    se-resize sw-resize s-resize w-resize text wait help progress
+  /;
+  for my $prop (qw/border-top-style border-left-style
+                   border-bottom-style border-right-style outline-style/) {
+    $p->{prop_value}->{$prop}->{$_} = 1 for qw/
+      none hidden dotted dashed solid double groove ridge inset outset
+    /;
+  }
+  for my $prop (qw/color background-color
+                   border-bottom-color border-left-color border-right-color
+                   border-top-color border-color/) {
+    $p->{prop_value}->{$prop}->{transparent} = 1;
+    $p->{prop_value}->{$prop}->{flavor} = 1;
+    $p->{prop_value}->{$prop}->{'-manakai-default'} = 1;
+  }
+  $p->{prop_value}->{'outline-color'}->{invert} = 1;
+  $p->{prop_value}->{'outline-color'}->{'-manakai-invert-or-currentcolor'} = 1;
+  $p->{pseudo_class}->{$_} = 1 for qw/
+    active checked disabled empty enabled first-child first-of-type
+    focus hover indeterminate last-child last-of-type link only-child
+    only-of-type root target visited
+    lang nth-child nth-last-child nth-of-type nth-last-of-type not
+    -manakai-contains -manakai-current
+  /;
+  $p->{pseudo_element}->{$_} = 1 for qw/
+    after before first-letter first-line
+  /;
+
+  return $CSSParser = $p;
+} # get_css_parser
+
+sub print_syntax_error_css_section ($$) {
+  my ($input, $result) = @_;
+
+  print STDOUT qq[
+<div id="$input->{id_prefix}parse-errors" class="section">
+<h2>Parse Errors</h2>
+
+<dl>];
+  push @nav, ['#parse-errors' => 'Parse Error'] unless $input->{nested};
+
+  my $p = get_css_parser ();
+  $p->{onerror} = sub {
+    my (%opt) = @_;
+    my ($type, $cls, $msg) = get_text ($opt{type}, $opt{level});
+    if ($opt{token}) {
+      print STDOUT qq[<dt class="$cls"><a href="#$input->{id_prefix}line-$opt{token}->{line}">Line $opt{token}->{line}</a> column $opt{token}->{column}];
+    } else {
+      print STDOUT qq[<dt class="$cls">Unknown location];
+    }
+    if (defined $opt{value}) {
+      print STDOUT qq[ (<code>@{[htescape ($opt{value})]}</code>)];
+    } elsif (defined $opt{token}) {
+      print STDOUT qq[ (<code>@{[htescape (Whatpm::CSS::Tokenizer->serialize_token ($opt{token}))]}</code>)];
+    }
+    $type =~ tr/ /-/;
+    $type =~ s/\|/%7C/g;
+    $msg .= qq[ [<a href="../error-description#@{[htescape ($type)]}">Description</a>]];
+    print STDOUT qq[<dd class="$cls">], get_error_level_label (\%opt);
+    print STDOUT qq[$msg</dd>\n];
+
+    add_error ('syntax', \%opt => $result);
+  };
+  $p->{href} = $input->{uri};
+  $p->{base_uri} = $input->{base_uri};
+
+  my $s = \$input->{s};
+  my $charset;
+  unless ($input->{is_char_string}) {
+    require Encode;
+    if (defined $input->{charset}) {## TODO: IANA->Perl
+      $charset = $input->{charset};
+      $s = \(Encode::decode ($input->{charset}, $$s));
+    } else {
+      ## TODO: charset detection
+      $s = \(Encode::decode ($charset = 'utf-8', $$s));
+    }
+  }
+  
+  my $cssom = $p->parse_char_string ($$s);
+  $cssom->manakai_input_encoding ($charset) if defined $charset;
+
+  print STDOUT qq[</dl></div>];
+
+  return $cssom;
+} # print_syntax_error_css_section
 
 sub print_syntax_error_manifest_section ($$) {
   my ($input, $result) = @_;
@@ -400,12 +632,19 @@ sub print_syntax_error_manifest_section ($$) {
   return $manifest;
 } # print_syntax_error_manifest_section
 
-sub print_source_string_section ($$) {
-  require Encode;
-  my $enc = Encode::find_encoding ($_[1]); ## TODO: charset name -> Perl name
-  return unless $enc;
+sub print_source_string_section ($$$) {
+  my $input = shift;
+  my $s;
+  unless ($input->{is_char_string}) {
+    require Encode;
+    my $enc = Encode::find_encoding ($_[1]); ## TODO: charset name -> Perl name
+    return unless $enc;
 
-  my $s = \($enc->decode (${$_[0]}));
+    $s = \($enc->decode (${$_[0]}));
+  } else {
+    $s = $_[0];
+  }
+
   my $i = 1;                             
   push @nav, ['#source-string' => 'Source'] unless $input->{nested};
   print STDOUT qq[<div id="$input->{id_prefix}source-string" class="section">
@@ -427,8 +666,9 @@ sub print_source_string_section ($$) {
   print STDOUT "</ol></div>";
 } # print_input_string_section
 
-sub print_document_tree ($) {
-  my $node = shift;
+sub print_document_tree ($$) {
+  my ($input, $node) = @_;
+
   my $r = '<ol class="xoxo">';
 
   my @node = ($node);
@@ -526,12 +766,29 @@ sub print_structure_dump_dom_section ($$$) {
 <div id="$input->{id_prefix}document-tree" class="section">
 <h2>Document Tree</h2>
 ];
-  push @nav, ['#document-tree' => 'Tree'] unless $input->{nested};
+  push @nav, [qq[#$input->{id_prefix}document-tree] => 'Tree']
+      unless $input->{nested};
 
-  print_document_tree ($el || $doc);
+  print_document_tree ($input, $el || $doc);
 
   print STDOUT qq[</div>];
 } # print_structure_dump_dom_section
+
+sub print_structure_dump_cssom_section ($$) {
+  my ($input, $cssom) = @_;
+
+  print STDOUT qq[
+<div id="$input->{id_prefix}document-tree" class="section">
+<h2>Document Tree</h2>
+];
+  push @nav, [qq[#$input->{id_prefix}document-tree] => 'Tree']
+      unless $input->{nested};
+
+  ## TODO:
+  print STDOUT "<pre>".htescape ($cssom->css_text)."</pre>";
+
+  print STDOUT qq[</div>];
+} # print_structure_dump_cssom_section
 
 sub print_structure_dump_manifest_section ($$) {
   my ($input, $manifest) = @_;
@@ -540,7 +797,8 @@ sub print_structure_dump_manifest_section ($$) {
 <div id="$input->{id_prefix}dump-manifest" class="section">
 <h2>Cache Manifest</h2>
 ];
-  push @nav, ['#dump-manifest' => 'Caceh Manifest'] unless $input->{nested};
+  push @nav, [qq[#$input->{id_prefix}dump-manifest] => 'Cache Manifest']
+      unless $input->{nested};
 
   print STDOUT qq[<dl><dt>Explicit entries</dt>];
   for my $uri (@{$manifest->[0]}) {
@@ -574,7 +832,8 @@ sub print_structure_error_dom_section ($$$$$) {
 <h2>Document Errors</h2>
 
 <dl>];
-  push @nav, ['#document-errors' => 'Document Error'] unless $input->{nested};
+  push @nav, [qq[#$input->{id_prefix}document-errors] => 'Document Error']
+      unless $input->{nested};
 
   require Whatpm::ContentChecker;
   my $onerror = sub {
@@ -612,7 +871,8 @@ sub print_structure_error_manifest_section ($$$) {
 <h2>Document Errors</h2>
 
 <dl>];
-  push @nav, ['#document-errors' => 'Document Error'] unless $input->{nested};
+  push @nav, [qq[#$input->{id_prefix}document-errors] => 'Document Error']
+      unless $input->{nested};
 
   require Whatpm::CacheManifest;
   Whatpm::CacheManifest->check_manifest ($manifest, sub {
@@ -632,7 +892,8 @@ sub print_structure_error_manifest_section ($$$) {
 sub print_table_section ($$) {
   my ($input, $tables) = @_;
   
-  push @nav, ['#tables' => 'Tables'] unless $input->{nested};
+  push @nav, [qq[#$input->{id_prefix}tables] => 'Tables']
+      unless $input->{nested};
   print STDOUT qq[
 <div id="$input->{id_prefix}tables" class="section">
 <h2>Tables</h2>
@@ -692,7 +953,8 @@ sub print_table_section ($$) {
 sub print_listing_section ($$$) {
   my ($opt, $input, $ids) = @_;
   
-  push @nav, ['#' . $opt->{id} => $opt->{label}] unless $input->{nested};
+  push @nav, ['#' . $input->{id_prefix} . $opt->{id} => $opt->{label}]
+      unless $input->{nested};
   print STDOUT qq[
 <div id="$input->{id_prefix}$opt->{id}" class="section">
 <h2>$opt->{heading}</h2>
@@ -804,7 +1066,7 @@ sub print_result_unknown_type_section ($$) {
 
   my $euri = htescape ($input->{uri});
   print STDOUT qq[
-<div id="parse-errors" class="section">
+<div id="$input->{id_prefix}parse-errors" class="section">
 <h2>Errors</h2>
 
 <dl>
@@ -817,7 +1079,8 @@ sub print_result_unknown_type_section ($$) {
 </dl>
 </div>
 ];
-  push @nav, ['#parse-errors' => 'Errors'];
+  push @nav, [qq[#$input->{id_prefix}parse-errors] => 'Errors']
+      unless $input->{nested};
   add_error (char => {level => 'u'} => $result);
   add_error (syntax => {level => 'u'} => $result);
   add_error (structure => {level => 'u'} => $result);
@@ -838,10 +1101,10 @@ sub get_error_label ($$) {
 
   if (defined $err->{line}) {
     if ($err->{column} > 0) {
-      $r = qq[<a href="#line-$err->{line}">Line $err->{line}</a> column $err->{column}];
+      $r = qq[<a href="#$input->{id_prefix}line-$err->{line}">Line $err->{line}</a> column $err->{column}];
     } else {
       $err->{line} = $err->{line} - 1 || 1;
-      $r = qq[<a href="#line-$err->{line}">Line $err->{line}</a>];
+      $r = qq[<a href="#$input->{id_prefix}line-$err->{line}">Line $err->{line}</a>];
     }
   }
 
@@ -1124,6 +1387,8 @@ EOH
     return $r;
   }
 
+  $r->{inner_html_element} = $http->get_parameter ('e');
+
   return $r;
 } # get_input_document
 
@@ -1156,11 +1421,11 @@ Wakaba <w@suika.fam.cx>.
 
 =head1 LICENSE
 
-Copyright 2007 Wakaba <w@suika.fam.cx>
+Copyright 2007-2008 Wakaba <w@suika.fam.cx>
 
 This library is free software; you can redistribute it
 and/or modify it under the same terms as Perl itself.
 
 =cut
 
-## $Date: 2008/02/10 03:11:06 $
+## $Date: 2008/02/10 04:08:04 $
