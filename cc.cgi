@@ -89,47 +89,7 @@ if (defined $input->{s}) {
 ];
 
   my $result = {conforming_min => 1, conforming_max => 1};
-  print_http_header_section ($input, $result);
-
-  my $doc;
-  my $el;
-  my $manifest;
-
-  if ($input->{media_type} eq 'text/html') {
-    ($doc, $el) = print_syntax_error_html_section ($input, $result);
-    print_source_string_section
-        (\($input->{s}), $input->{charset} || $doc->input_encoding);
-  } elsif ({
-            'text/xml' => 1,
-            'application/atom+xml' => 1,
-            'application/rss+xml' => 1,
-            'application/svg+xml' => 1,
-            'application/xhtml+xml' => 1,
-            'application/xml' => 1,
-           }->{$input->{media_type}}) {
-    ($doc, $el) = print_syntax_error_xml_section ($input, $result);
-    print_source_string_section (\($input->{s}), $doc->input_encoding);
-  } elsif ($input->{media_type} eq 'text/cache-manifest') {
-## TODO: MUST be text/cache-manifest
-    $manifest = print_syntax_error_manifest_section ($input, $result);
-    print_source_string_section (\($input->{s}), 'utf-8');
-  } else {
-    ## TODO: Change HTTP status code??
-    print_result_unknown_type_section ($input, $result);
-  }
-
-  if (defined $doc or defined $el) {
-    print_structure_dump_dom_section ($doc, $el);
-    my $elements = print_structure_error_dom_section ($doc, $el, $result);
-    print_table_section ($elements->{table}) if @{$elements->{table}};
-    print_id_section ($elements->{id}) if keys %{$elements->{id}};
-    print_term_section ($elements->{term}) if keys %{$elements->{term}};
-    print_class_section ($elements->{class}) if keys %{$elements->{class}};
-  } elsif (defined $manifest) {
-    print_structure_dump_manifest_section ($manifest);
-    print_structure_error_manifest_section ($manifest, $result);
-  }
-
+  check_and_print ($input => $result);
   print_result_section ($result);
 } else {
   print STDOUT qq[</dl></div>];
@@ -184,6 +144,51 @@ sub add_error ($$$) {
     $result->{conforming_max} = 0;
   }
 } # add_error
+
+sub check_and_print ($$) {
+  my ($input, $result) = @_;
+
+  print_http_header_section ($input, $result);
+
+  my $doc;
+  my $el;
+  my $manifest;
+
+  if ($input->{media_type} eq 'text/html') {
+    ($doc, $el) = print_syntax_error_html_section ($input, $result);
+    print_source_string_section
+        (\($input->{s}), $input->{charset} || $doc->input_encoding);
+  } elsif ({
+            'text/xml' => 1,
+            'application/atom+xml' => 1,
+            'application/rss+xml' => 1,
+            'application/svg+xml' => 1,
+            'application/xhtml+xml' => 1,
+            'application/xml' => 1,
+           }->{$input->{media_type}}) {
+    ($doc, $el) = print_syntax_error_xml_section ($input, $result);
+    print_source_string_section (\($input->{s}), $doc->input_encoding);
+  } elsif ($input->{media_type} eq 'text/cache-manifest') {
+## TODO: MUST be text/cache-manifest
+    $manifest = print_syntax_error_manifest_section ($input, $result);
+    print_source_string_section (\($input->{s}), 'utf-8');
+  } else {
+    ## TODO: Change HTTP status code??
+    print_result_unknown_type_section ($input, $result);
+  }
+
+  if (defined $doc or defined $el) {
+    print_structure_dump_dom_section ($doc, $el);
+    my $elements = print_structure_error_dom_section ($doc, $el, $result);
+    print_table_section ($elements->{table}) if @{$elements->{table}};
+    print_id_section ($elements->{id}) if keys %{$elements->{id}};
+    print_term_section ($elements->{term}) if keys %{$elements->{term}};
+    print_class_section ($elements->{class}) if keys %{$elements->{class}};
+  } elsif (defined $manifest) {
+    print_structure_dump_manifest_section ($manifest);
+    print_structure_error_manifest_section ($manifest, $result);
+  }
+} # check_and_print
 
 sub print_http_header_section ($$) {
   my ($input, $result) = @_;
@@ -1151,4 +1156,4 @@ and/or modify it under the same terms as Perl itself.
 
 =cut
 
-## $Date: 2008/02/09 12:22:19 $
+## $Date: 2008/02/10 02:05:30 $

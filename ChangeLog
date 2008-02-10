@@ -1,3 +1,7 @@
+2008-02-10  Wakaba  <wakaba@suika.fam.cx>
+
+	* cc.cgi (check_and_print): Now this is a subroutine.
+
 2008-02-09  Wakaba  <wakaba@suika.fam.cx>
 
 	* cc-style.css: Rules for s/unsupported/u/'ed version added.
