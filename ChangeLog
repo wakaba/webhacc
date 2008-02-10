@@ -1,5 +1,10 @@
 2008-02-10  Wakaba  <wakaba@suika.fam.cx>
 
+	* cc.cgi (print_listing_section): ID, class, and term
+	section functions are merged.
+
+2008-02-10  Wakaba  <wakaba@suika.fam.cx>
+
 	* table-interface.en.html: Typo fixed.
 
 	* cc.cgi: Use |$input->{id_prefix}| as the prefix for the

@@ -184,9 +184,15 @@ sub check_and_print ($$) {
     my $elements = print_structure_error_dom_section
         ($input, $doc, $el, $result);
     print_table_section ($input, $elements->{table}) if @{$elements->{table}};
-    print_id_section ($input, $elements->{id}) if keys %{$elements->{id}};
-    print_term_section ($input, $elements->{term}) if keys %{$elements->{term}};
-    print_class_section ($input, $elements->{class}) if keys %{$elements->{class}};
+    print_listing_section ({
+      id => 'identifiers', label => 'IDs', heading => 'Identifiers',
+    }, $input, $elements->{id}) if keys %{$elements->{id}};
+    print_listing_section ({
+      id => 'terms', label => 'Terms', heading => 'Terms',
+    }, $input, $elements->{term}) if keys %{$elements->{term}};
+    print_listing_section ({
+      id => 'classes', label => 'Classes', heading => 'Classes',
+    }, $input, $elements->{class}) if keys %{$elements->{class}};
   } elsif (defined $manifest) {
     print_structure_dump_manifest_section ($input, $manifest);
     print_structure_error_manifest_section ($input, $manifest, $result);
@@ -651,13 +657,13 @@ sub print_table_section ($$) {
   print STDOUT qq[</div>];
 } # print_table_section
 
-sub print_id_section ($$) {
-  my ($input, $ids) = @_;
+sub print_listing_section ($$$) {
+  my ($opt, $input, $ids) = @_;
   
-  push @nav, ['#identifiers' => 'IDs'] unless $input->{nested};
+  push @nav, ['#' . $opt->{id} => $opt->{label}] unless $input->{nested};
   print STDOUT qq[
-<div id="$input->{id_prefix}identifiers" class="section">
-<h2>Identifiers</h2>
+<div id="$input->{id_prefix}$opt->{id}" class="section">
+<h2>$opt->{heading}</h2>
 
 <dl>
 ];
@@ -668,45 +674,7 @@ sub print_id_section ($$) {
     }
   }
   print STDOUT qq[</dl></div>];
-} # print_id_section
-
-sub print_term_section ($$) {
-  my ($input, $terms) = @_;
-  
-  push @nav, ['#terms' => 'Terms'] unless $input->{nested};
-  print STDOUT qq[
-<div id="$input->{id_prefix}terms" class="section">
-<h2>Terms</h2>
-
-<dl>
-];
-  for my $term (sort {$a cmp $b} keys %$terms) {
-    print STDOUT qq[<dt>@{[htescape $term]}</dt>];
-    for (@{$terms->{$term}}) {
-      print STDOUT qq[<dd>].get_node_link ($input, $_).qq[</dd>];
-    }
-  }
-  print STDOUT qq[</dl></div>];
-} # print_term_section
-
-sub print_class_section ($$) {
-  my ($input, $classes) = @_;
-  
-  push @nav, ['#classes' => 'Classes'] unless $input->{nested};
-  print STDOUT qq[
-<div id="$input->{id_prefix}classes" class="section">
-<h2>Classes</h2>
-
-<dl>
-];
-  for my $class (sort {$a cmp $b} keys %$classes) {
-    print STDOUT qq[<dt><code>@{[htescape $class]}</code></dt>];
-    for (@{$classes->{$class}}) {
-      print STDOUT qq[<dd>].get_node_link ($input, $_).qq[</dd>];
-    }
-  }
-  print STDOUT qq[</dl></div>];
-} # print_class_section
+} # print_listing_section
 
 sub print_result_section ($) {
   my $result = shift;
@@ -1163,4 +1131,4 @@ and/or modify it under the same terms as Perl itself.
 
 =cut
 
-## $Date: 2008/02/10 02:30:14 $
+## $Date: 2008/02/10 02:42:01 $
