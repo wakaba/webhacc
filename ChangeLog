@@ -1,5 +1,19 @@
 2008-02-10  Wakaba  <wakaba@suika.fam.cx>
 
+	* table-interface.en.html: Typo fixed.
+
+	* cc.cgi: Use |$input->{id_prefix}| as the prefix for the
+	identifiers in report sections.  Don't add headings
+	if the |$input->{nested}| flag is set.
+
+	* table-script.js (tableToCanvas): Now it aceepts third
+	argument, |idPrefix|, for setting ID prefix.
+
+	* table.cgi: Set the third argument to |tableToCanvas| as an
+	empty string.
+
+2008-02-10  Wakaba  <wakaba@suika.fam.cx>
+
 	* cc.cgi (check_and_print): Now this is a subroutine.
 
 2008-02-09  Wakaba  <wakaba@suika.fam.cx>

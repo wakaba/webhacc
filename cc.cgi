@@ -147,6 +147,8 @@ sub add_error ($$$) {
 
 sub check_and_print ($$) {
   my ($input, $result) = @_;
+  $input->{id_prefix} = '';
+  #$input->{nested} = 1/0;
 
   print_http_header_section ($input, $result);
 
@@ -178,15 +180,16 @@ sub check_and_print ($$) {
   }
 
   if (defined $doc or defined $el) {
-    print_structure_dump_dom_section ($doc, $el);
-    my $elements = print_structure_error_dom_section ($doc, $el, $result);
-    print_table_section ($elements->{table}) if @{$elements->{table}};
-    print_id_section ($elements->{id}) if keys %{$elements->{id}};
-    print_term_section ($elements->{term}) if keys %{$elements->{term}};
-    print_class_section ($elements->{class}) if keys %{$elements->{class}};
+    print_structure_dump_dom_section ($input, $doc, $el);
+    my $elements = print_structure_error_dom_section
+        ($input, $doc, $el, $result);
+    print_table_section ($input, $elements->{table}) if @{$elements->{table}};
+    print_id_section ($input, $elements->{id}) if keys %{$elements->{id}};
+    print_term_section ($input, $elements->{term}) if keys %{$elements->{term}};
+    print_class_section ($input, $elements->{class}) if keys %{$elements->{class}};
   } elsif (defined $manifest) {
-    print_structure_dump_manifest_section ($manifest);
-    print_structure_error_manifest_section ($manifest, $result);
+    print_structure_dump_manifest_section ($input, $manifest);
+    print_structure_error_manifest_section ($input, $manifest, $result);
   }
 } # check_and_print
 
@@ -196,8 +199,8 @@ sub print_http_header_section ($$) {
       defined $input->{header_status_text} or
       @{$input->{header_field}};
   
-  push @nav, ['#source-header' => 'HTTP Header'];
-  print STDOUT qq[<div id="source-header" class="section">
+  push @nav, ['#source-header' => 'HTTP Header'] unless $input->{nested};
+  print STDOUT qq[<div id="$input->{id_prefix}source-header" class="section">
 <h2>HTTP Header</h2>
 
 <p><strong>Note</strong>: Due to the limitation of the
@@ -231,11 +234,11 @@ sub print_syntax_error_html_section ($$) {
   require Whatpm::HTML;
   
   print STDOUT qq[
-<div id="parse-errors" class="section">
+<div id="$input->{id_prefix}parse-errors" class="section">
 <h2>Parse Errors</h2>
 
 <dl>];
-  push @nav, ['#parse-errors' => 'Parse Error'];
+  push @nav, ['#parse-errors' => 'Parse Error'] unless $input->{nested};
 
   my $onerror = sub {
     my (%opt) = @_;
@@ -289,11 +292,11 @@ sub print_syntax_error_xml_section ($$) {
   require Message::DOM::XMLParserTemp;
   
   print STDOUT qq[
-<div id="parse-errors" class="section">
+<div id="$input->{id_prefix}parse-errors" class="section">
 <h2>Parse Errors</h2>
 
 <dl>];
-  push @nav, ['#parse-errors' => 'Parse Error'];
+  push @nav, ['#parse-errors' => 'Parse Error'] unless $input->{prefix};
 
   my $onerror = sub {
     my $err = shift;
@@ -331,16 +334,17 @@ sub print_syntax_error_manifest_section ($$) {
   require Whatpm::CacheManifest;
 
   print STDOUT qq[
-<div id="parse-errors" class="section">
+<div id="$input->{id_prefix}parse-errors" class="section">
 <h2>Parse Errors</h2>
 
 <dl>];
-  push @nav, ['#parse-errors' => 'Parse Error'];
+  push @nav, ['#parse-errors' => 'Parse Error'] unless $input->{nested};
 
   my $onerror = sub {
     my (%opt) = @_;
     my ($type, $cls, $msg) = get_text ($opt{type}, $opt{level});
-    print STDOUT qq[<dt class="$cls">], get_error_label (\%opt), qq[</dt>];
+    print STDOUT qq[<dt class="$cls">], get_error_label ($input, \%opt),
+        qq[</dt>];
     $type =~ tr/ /-/;
     $type =~ s/\|/%7C/g;
     $msg .= qq[ [<a href="../error-description#@{[htescape ($type)]}">Description</a>]];
@@ -367,20 +371,22 @@ sub print_source_string_section ($$) {
 
   my $s = \($enc->decode (${$_[0]}));
   my $i = 1;                             
-  push @nav, ['#source-string' => 'Source'];
-  print STDOUT qq[<div id="source-string" class="section">
+  push @nav, ['#source-string' => 'Source'] unless $input->{nested};
+  print STDOUT qq[<div id="$input->{id_prefix}source-string" class="section">
 <h2>Document Source</h2>
 <ol lang="">\n];
   if (length $$s) {
     while ($$s =~ /\G([^\x0A]*?)\x0D?\x0A/gc) {
-      print STDOUT qq[<li id="line-$i">], htescape $1, "</li>\n";
+      print STDOUT qq[<li id="$input->{id_prefix}line-$i">], htescape $1,
+          "</li>\n";
       $i++;
     }
     if ($$s =~ /\G([^\x0A]+)/gc) {
-      print STDOUT qq[<li id="line-$i">], htescape $1, "</li>\n";
+      print STDOUT qq[<li id="$input->{id_prefix}line-$i">], htescape $1,
+          "</li>\n";
     }
   } else {
-    print STDOUT q[<li id="line-1"></li>];
+    print STDOUT q[<li id="$input->{id_prefix}line-1"></li>];
   }
   print STDOUT "</ol></div>";
 } # print_input_string_section
@@ -397,7 +403,7 @@ sub print_document_tree ($) {
       next;
     }
 
-    my $node_id = 'node-'.refaddr $child;
+    my $node_id = $input->{id_prefix} . 'node-'.refaddr $child;
     my $nt = $child->node_type;
     if ($nt == $child->ELEMENT_NODE) {
       my $child_nsuri = $child->namespace_uri;
@@ -408,7 +414,7 @@ sub print_document_tree ($) {
         $r .= '<ul class="attributes">';
         for my $attr (sort {$a->[0] cmp $b->[0]} map { [$_->name, $_->value, $_->namespace_uri, 'node-'.refaddr $_] }
                       @{$child->attributes}) {
-          $r .= qq[<li id="$attr->[3]" class="tree-attribute"><code title="@{[defined $attr->[2] ? htescape ($attr->[2]) : '']}">] . htescape ($attr->[0]) . '</code> = '; ## ISSUE: case?
+          $r .= qq[<li id="$input->{id_prefix}$attr->[3]" class="tree-attribute"><code title="@{[defined $attr->[2] ? htescape ($attr->[2]) : '']}">] . htescape ($attr->[0]) . '</code> = '; ## ISSUE: case?
           $r .= '<q>' . htescape ($attr->[1]) . '</q></li>'; ## TODO: children
         }
         $r .= '</ul>';
@@ -477,28 +483,28 @@ sub print_document_tree ($) {
   print STDOUT $r;
 } # print_document_tree
 
-sub print_structure_dump_dom_section ($$) {
-  my ($doc, $el) = @_;
+sub print_structure_dump_dom_section ($$$) {
+  my ($input, $doc, $el) = @_;
 
   print STDOUT qq[
-<div id="document-tree" class="section">
+<div id="$input->{id_prefix}document-tree" class="section">
 <h2>Document Tree</h2>
 ];
-  push @nav, ['#document-tree' => 'Tree'];
+  push @nav, ['#document-tree' => 'Tree'] unless $input->{nested};
 
   print_document_tree ($el || $doc);
 
   print STDOUT qq[</div>];
 } # print_structure_dump_dom_section
 
-sub print_structure_dump_manifest_section ($) {
-  my $manifest = shift;
+sub print_structure_dump_manifest_section ($$) {
+  my ($input, $manifest) = @_;
 
   print STDOUT qq[
-<div id="dump-manifest" class="section">
+<div id="$input->{id_prefix}dump-manifest" class="section">
 <h2>Cache Manifest</h2>
 ];
-  push @nav, ['#dump-manifest' => 'Caceh Manifest'];
+  push @nav, ['#dump-manifest' => 'Caceh Manifest'] unless $input->{nested};
 
   print STDOUT qq[<dl><dt>Explicit entries</dt>];
   for my $uri (@{$manifest->[0]}) {
@@ -525,14 +531,14 @@ sub print_structure_dump_manifest_section ($) {
   print STDOUT qq[</dl></div>];
 } # print_structure_dump_manifest_section
 
-sub print_structure_error_dom_section ($$$) {
-  my ($doc, $el, $result) = @_;
+sub print_structure_error_dom_section ($$$$) {
+  my ($input, $doc, $el, $result) = @_;
 
-  print STDOUT qq[<div id="document-errors" class="section">
+  print STDOUT qq[<div id="$input->{id_prefix}document-errors" class="section">
 <h2>Document Errors</h2>
 
 <dl>];
-  push @nav, ['#document-errors' => 'Document Error'];
+  push @nav, ['#document-errors' => 'Document Error'] unless $input->{nested};
 
   require Whatpm::ContentChecker;
   my $onerror = sub {
@@ -541,7 +547,7 @@ sub print_structure_error_dom_section ($$$) {
     $type =~ tr/ /-/;
     $type =~ s/\|/%7C/g;
     $msg .= qq[ [<a href="../error-description#@{[htescape ($type)]}">Description</a>]];
-    print STDOUT qq[<dt class="$cls">] . get_error_label (\%opt) .
+    print STDOUT qq[<dt class="$cls">] . get_error_label ($input, \%opt) .
         qq[</dt>\n<dd class="$cls">], get_error_level_label (\%opt);
     print STDOUT $msg, "</dd>\n";
     add_error ('structure', \%opt => $result);
@@ -562,13 +568,13 @@ sub print_structure_error_dom_section ($$$) {
 } # print_structure_error_dom_section
 
 sub print_structure_error_manifest_section ($$$) {
-  my ($manifest, $result) = @_;
+  my ($input, $manifest, $result) = @_;
 
-  print STDOUT qq[<div id="document-errors" class="section">
+  print STDOUT qq[<div id="$input->{id_prefix}document-errors" class="section">
 <h2>Document Errors</h2>
 
 <dl>];
-  push @nav, ['#document-errors' => 'Document Error'];
+  push @nav, ['#document-errors' => 'Document Error'] unless $input->{nested};
 
   require Whatpm::CacheManifest;
   Whatpm::CacheManifest->check_manifest ($manifest, sub {
@@ -577,7 +583,7 @@ sub print_structure_error_manifest_section ($$$) {
     $type =~ tr/ /-/;
     $type =~ s/\|/%7C/g;
     $msg .= qq[ [<a href="../error-description#@{[htescape ($type)]}">Description</a>]];
-    print STDOUT qq[<dt class="$cls">] . get_error_label (\%opt) .
+    print STDOUT qq[<dt class="$cls">] . get_error_label ($input, \%opt) .
         qq[</dt>\n<dd class="$cls">], $msg, "</dd>\n";
     add_error ('structure', \%opt => $result);
   });
@@ -585,12 +591,12 @@ sub print_structure_error_manifest_section ($$$) {
   print STDOUT qq[</div>];
 } # print_structure_error_manifest_section
 
-sub print_table_section ($) {
-  my $tables = shift;
+sub print_table_section ($$) {
+  my ($input, $tables) = @_;
   
-  push @nav, ['#tables' => 'Tables'];
+  push @nav, ['#tables' => 'Tables'] unless $input->{nested};
   print STDOUT qq[
-<div id="tables" class="section">
+<div id="$input->{id_prefix}tables" class="section">
 <h2>Tables</h2>
 
 <!--[if IE]><script type="text/javascript" src="../excanvas.js"></script><![endif]-->
@@ -605,8 +611,8 @@ sub print_table_section ($) {
   my $i = 0;
   for my $table_el (@$tables) {
     $i++;
-    print STDOUT qq[<div class="section" id="table-$i"><h3>] .
-        get_node_link ($table_el) . q[</h3>];
+    print STDOUT qq[<div class="section" id="$input->{id_prefix}table-$i"><h3>] .
+        get_node_link ($input, $table_el) . q[</h3>];
 
     ## TODO: Make |ContentChecker| return |form_table| result
     ## so that this script don't have to run the algorithm twice.
@@ -638,18 +644,19 @@ sub print_table_section ($) {
         
     print STDOUT '</div><script type="text/javascript">tableToCanvas (';
     print STDOUT JSON::objToJson ($table);
-    print STDOUT qq[, document.getElementById ('table-$i'));</script>];
+    print STDOUT qq[, document.getElementById ('$input->{id_prefix}table-$i')];
+    print STDOUT qq[, '$input->{id_prefix}');</script>];
   }
   
   print STDOUT qq[</div>];
 } # print_table_section
 
-sub print_id_section ($) {
-  my $ids = shift;
+sub print_id_section ($$) {
+  my ($input, $ids) = @_;
   
-  push @nav, ['#identifiers' => 'IDs'];
+  push @nav, ['#identifiers' => 'IDs'] unless $input->{nested};
   print STDOUT qq[
-<div id="identifiers" class="section">
+<div id="$input->{id_prefix}identifiers" class="section">
 <h2>Identifiers</h2>
 
 <dl>
@@ -657,18 +664,18 @@ sub print_id_section ($) {
   for my $id (sort {$a cmp $b} keys %$ids) {
     print STDOUT qq[<dt><code>@{[htescape $id]}</code></dt>];
     for (@{$ids->{$id}}) {
-      print STDOUT qq[<dd>].get_node_link ($_).qq[</dd>];
+      print STDOUT qq[<dd>].get_node_link ($input, $_).qq[</dd>];
     }
   }
   print STDOUT qq[</dl></div>];
 } # print_id_section
 
-sub print_term_section ($) {
-  my $terms = shift;
+sub print_term_section ($$) {
+  my ($input, $terms) = @_;
   
-  push @nav, ['#terms' => 'Terms'];
+  push @nav, ['#terms' => 'Terms'] unless $input->{nested};
   print STDOUT qq[
-<div id="terms" class="section">
+<div id="$input->{id_prefix}terms" class="section">
 <h2>Terms</h2>
 
 <dl>
@@ -676,18 +683,18 @@ sub print_term_section ($) {
   for my $term (sort {$a cmp $b} keys %$terms) {
     print STDOUT qq[<dt>@{[htescape $term]}</dt>];
     for (@{$terms->{$term}}) {
-      print STDOUT qq[<dd>].get_node_link ($_).qq[</dd>];
+      print STDOUT qq[<dd>].get_node_link ($input, $_).qq[</dd>];
     }
   }
   print STDOUT qq[</dl></div>];
 } # print_term_section
 
-sub print_class_section ($) {
-  my $classes = shift;
+sub print_class_section ($$) {
+  my ($input, $classes) = @_;
   
-  push @nav, ['#classes' => 'Classes'];
+  push @nav, ['#classes' => 'Classes'] unless $input->{nested};
   print STDOUT qq[
-<div id="classes" class="section">
+<div id="$input->{id_prefix}classes" class="section">
 <h2>Classes</h2>
 
 <dl>
@@ -695,7 +702,7 @@ sub print_class_section ($) {
   for my $class (sort {$a cmp $b} keys %$classes) {
     print STDOUT qq[<dt><code>@{[htescape $class]}</code></dt>];
     for (@{$classes->{$class}}) {
-      print STDOUT qq[<dd>].get_node_link ($_).qq[</dd>];
+      print STDOUT qq[<dd>].get_node_link ($input, $_).qq[</dd>];
     }
   }
   print STDOUT qq[</dl></div>];
@@ -822,10 +829,10 @@ sub print_result_input_error_section ($) {
 <p><em><strong>Input Error</strong>: @{[htescape ($input->{error_status_text})]}</em></p>
 </div>];
   push @nav, ['#result-summary' => 'Result'];
-} # print_Result_input_error_section
+} # print_result_input_error_section
 
-sub get_error_label ($) {
-  my $err = shift;
+sub get_error_label ($$) {
+  my ($input, $err) = @_;
 
   my $r = '';
 
@@ -840,7 +847,7 @@ sub get_error_label ($) {
 
   if (defined $err->{node}) {
     $r .= ' ' if length $r;
-    $r = get_node_link ($err->{node});
+    $r = get_node_link ($input, $err->{node});
   }
 
   if (defined $err->{index}) {
@@ -909,9 +916,9 @@ sub get_node_path ($) {
   return join '/', @r;
 } # get_node_path
 
-sub get_node_link ($) {
-  return qq[<a href="#node-@{[refaddr $_[0]]}">] .
-      htescape (get_node_path ($_[0])) . qq[</a>];
+sub get_node_link ($$) {
+  return qq[<a href="#$_[0]->{id_prefix}node-@{[refaddr $_[1]]}">] .
+      htescape (get_node_path ($_[1])) . qq[</a>];
 } # get_node_link
 
 {
@@ -1156,4 +1163,4 @@ and/or modify it under the same terms as Perl itself.
 
 =cut
 
-## $Date: 2008/02/10 02:05:30 $
+## $Date: 2008/02/10 02:30:14 $
