@@ -177,6 +177,12 @@ q:before, q:after {
   background-image: url(large-alert);
 }
 
+#parse-errors dd.level-i, #document-errors dd.level-i,
+#error-description .level-i h3,
+#levels-table #level-i th {
+  background-image: url(large-info);
+}
+
 #parse-errors dd.level-u, #document-errors dd.level-u,
 #parse-errors dd.level-unsupported, #document-errors dd.level-unsupported,
 #parse-errors dd.unsupported,
@@ -352,7 +358,8 @@ pre.example.bad.manifest::before {
   color: black;
 }
 
-.PASS, #level-w, #level-w th {
+.PASS, #level-w, #level-w th,
+#level-i, #level-i th {
   background-color: #ddffdd;
   color: black;
 }
@@ -397,6 +404,6 @@ Copyright 2007 Wakaba <w@suika.fam.cx>.
 This library is free software; you can redistribute it
 and/or modify it under the same terms as Perl itself.
 
-$Date: 2008/02/09 12:22:19 $
+$Date: 2008/02/24 02:17:51 $
 
 */

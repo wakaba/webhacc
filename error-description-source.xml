@@ -1453,6 +1453,68 @@ p {
 </d:item>
 </section>
 
+<section id="information">
+<h2>Stability Information</h2>
+
+<d:item name="status:cr:element" class="level-i" level="i">
+  <d:message xml:lang="en">This element is in the
+  <strong>call‐for‐implementation</strong> phase.</d:message>
+  <d:desc xml:lang="en">
+    <p>The element is in the call‐for‐implementation phase.</p>
+    
+    <p>Usually, using the element is safe.  However, it is a new feature
+    so that it might not be implemented correctly.  If it is found that
+    the feature is hard or impossible to implement, the feature
+    might be revised, or in some case it might be dropped.</p>
+
+    <p>Elements defined by HTML4, Atom 1.0, and XBL 2.0 belong to this
+    class.</p>
+  </d:desc>
+</d:item>
+
+<d:item name="status:lc:element" class="level-i" level="i">
+  <d:message xml:lang="en">This element is in the <strong>last
+  call‐for‐comments</strong> phase.</d:message>
+  <d:desc xml:lang="en">
+    <p>The element is in the last call‐for‐comments phase.</p>
+    
+    <p>The element is relatively mature, though the standardization
+    is not done yet.  It may be used for experiments.  Since it is a new
+    feature, it might not be implemented correctly or at all.  If it is
+    found that the feature is hard or impossible to implement, the feature
+    might be revised or might be dropped.</p>
+
+    <p>Elements defined by Web Forms 2.0 as well as some elements
+    defined by HTML5 belong to this class.</p>
+  </d:desc>
+</d:item>
+
+<d:item name="status:wd:element" class="level-i" level="i">
+  <d:message xml:lang="en">This element is documented in a <strong>working
+  draft</strong>.</d:message>
+  <d:desc xml:lang="en">
+    <p>The element is documented in a working or editor's draft
+    and not yet completed.</p>
+    
+    <p>The element should not be used for any practical purpose.
+    The feature might be drastically changed later or might be
+    entirely removed.</p>
+
+    <p>Most of new elements defined by HTML5 belong to this class.</p>
+  </d:desc>
+</d:item>
+
+<d:item name="status:non-standard:element" class="level-i" level="i">
+  <d:message xml:lang="en">This element is <strong>not part of any
+  standard</strong>.</d:message>
+  <d:desc xml:lang="en">
+    <p>The element is not part of any standard or draft.</p>
+    
+    <p>The element should not be used for any practical purpose.</p>
+  </d:desc>
+</d:item>
+</section>
+
 <section id="unsupported-messages">
 <h2><i>Unsupported</i> Messages</h2>
 
@@ -1575,6 +1637,14 @@ to solve a problem in a confusing or possibly wrong way.
 It does not affect to the conformance of the document, and
 may sometimes be inappropriate.</td>
 </tr>
+<tr id="level-i" class="level-i">
+<th scope="row">Information</th>
+<td>Conforming.</td>
+<td>An informational message just provides an additional information
+on the feature used in the document or the status of the retrieval
+or so on.
+It does not affect to the conformance of the document.</td>
+</tr>
 <tr id="level-u" class="level-u">
 <th scope="row">Not supported</th>
 <td><em>Unknown</em>.</td>
@@ -1596,6 +1666,6 @@ is used in the document.</td>
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2008/02/09 12:22:19 $ -->
+<!-- $Date: 2008/02/24 02:17:51 $ -->
 </body>
 </html>

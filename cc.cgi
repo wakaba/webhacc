@@ -132,6 +132,8 @@ sub add_error ($$$) {
     } elsif ($err->{level} eq 'u' or $err->{level} eq 'unsupported') {
       $result->{$layer}->{unsupported}++;
       $result->{unsupported} = 1;
+    } elsif ($err->{level} eq 'i') {
+      #
     } else {
       $result->{$layer}->{must}++;
       $result->{$layer}->{score_max} -= 2;
@@ -388,12 +390,8 @@ sub get_css_parser () {
   require Whatpm::CSS::Parser;
   my $p = Whatpm::CSS::Parser->new;
 
-#  if ($parse_mode eq 'q') {
-#    $p->{unitless_px} = 1;
-#    $p->{hashless_color} = 1;
-#  }
-
   $p->{prop}->{$_} = 1 for qw/
+    alignment-baseline
     background background-attachment background-color background-image
     background-position background-position-x background-position-y
     background-repeat border border-bottom border-bottom-color
@@ -405,7 +403,7 @@ sub get_css_parser () {
     border-style border-top border-top-color border-top-style border-top-width
     border-width bottom
     caption-side clear clip color content counter-increment counter-reset
-    cursor direction display empty-cells float font
+    cursor direction display dominant-baseline empty-cells float font
     font-family font-size font-size-adjust font-stretch
     font-style font-variant font-weight height left
     letter-spacing line-height
@@ -417,9 +415,9 @@ sub get_css_parser () {
     padding padding-bottom padding-left padding-right padding-top
     page page-break-after page-break-before page-break-inside
     position quotes right size table-layout
-    text-align text-decoration text-indent text-transform
+    text-align text-anchor text-decoration text-indent text-transform
     top unicode-bidi vertical-align visibility white-space width widows
-    word-spacing z-index
+    word-spacing writing-mode z-index
   /;
   $p->{prop_value}->{display}->{$_} = 1 for qw/
     block clip inline inline-block inline-table list-item none
@@ -496,6 +494,21 @@ sub get_css_parser () {
   $p->{prop_value}->{'white-space'}->{$_} = 1 for qw/
     normal pre nowrap pre-line pre-wrap -moz-pre-wrap
   /;
+  $p->{prop_value}->{'writing-mode'}->{$_} = 1 for qw/
+    lr rl tb lr-tb rl-tb tb-rl
+  /;
+  $p->{prop_value}->{'text-anchor'}->{$_} = 1 for qw/
+    start middle end
+  /;
+  $p->{prop_value}->{'dominant-baseline'}->{$_} = 1 for qw/
+    auto use-script no-change reset-size ideographic alphabetic
+    hanging mathematical central middle text-after-edge text-before-edge
+  /;
+  $p->{prop_value}->{'alignment-baseline'}->{$_} = 1 for qw/
+    auto baseline before-edge text-before-edge middle central
+    after-edge text-after-edge ideographic alphabetic hanging
+    mathematical
+  /;
   $p->{prop_value}->{'text-decoration'}->{$_} = 1 for qw/
     none blink underline overline line-through
   /;
@@ -552,6 +565,7 @@ sub print_syntax_error_css_section ($$) {
   push @nav, ['#parse-errors' => 'Parse Error'] unless $input->{nested};
 
   my $p = get_css_parser ();
+  $p->init;
   $p->{onerror} = sub {
     my (%opt) = @_;
     my ($type, $cls, $msg) = get_text ($opt{type}, $opt{level});
@@ -575,6 +589,13 @@ sub print_syntax_error_css_section ($$) {
   };
   $p->{href} = $input->{uri};
   $p->{base_uri} = $input->{base_uri};
+
+#  if ($parse_mode eq 'q') {
+#    $p->{unitless_px} = 1;
+#    $p->{hashless_color} = 1;
+#  }
+
+## TODO: Make $input->{s} a ref.
 
   my $s = \$input->{s};
   my $charset;
@@ -802,9 +823,10 @@ sub print_structure_dump_manifest_section ($$) {
       unless $input->{nested};
 
   print STDOUT qq[<dl><dt>Explicit entries</dt>];
+  my $i = 0;
   for my $uri (@{$manifest->[0]}) {
     my $euri = htescape ($uri);
-    print STDOUT qq[<dd><code class=uri>&lt;<a href="$euri">$euri</a>></code></dd>];
+    print STDOUT qq[<dd id="$input->{id_prefix}index-@{[$i++]}"><code class=uri>&lt;<a href="$euri">$euri</a>></code></dd>];
   }
 
   print STDOUT qq[<dt>Fallback entries</dt><dd>
@@ -813,14 +835,14 @@ sub print_structure_dump_manifest_section ($$) {
   for my $uri (sort {$a cmp $b} keys %{$manifest->[1]}) {
     my $euri = htescape ($uri);
     my $euri2 = htescape ($manifest->[1]->{$uri});
-    print STDOUT qq[<tr><td><code class=uri>&lt;<a href="$euri">$euri</a>></code></td>
-        <td><code class=uri>&lt;<a href="$euri2">$euri2</a>></code></td>];
+    print STDOUT qq[<tr><td id="$input->{id_prefix}index-@{[$i++]}"><code class=uri>&lt;<a href="$euri">$euri</a>></code></td>
+        <td id="$input->{id_prefix}index-@{[$i++]}"><code class=uri>&lt;<a href="$euri2">$euri2</a>></code></td>];
   }
 
   print STDOUT qq[</table><dt>Online whitelist</dt>];
   for my $uri (@{$manifest->[2]}) {
     my $euri = htescape ($uri);
-    print STDOUT qq[<dd><code class=uri>&lt;<a href="$euri">$euri</a>></code></dd>];
+    print STDOUT qq[<dd id="$input->{id_prefix}index-@{[$i++]}"><code class=uri>&lt;<a href="$euri">$euri</a>></code></dd>];
   }
 
   print STDOUT qq[</dl></div>];
@@ -1115,8 +1137,12 @@ sub get_error_label ($$) {
   }
 
   if (defined $err->{index}) {
-    $r .= ' ' if length $r;
-    $r .= 'Index ' . (0+$err->{index});
+    if (length $r) {
+      $r .= ', Index ' . (0+$err->{index});
+    } else {
+      $r .= "<a href='#$input->{id_prefix}index-@{[0+$err->{index}]}'>Index "
+          . (0+$err->{index}) . '</a>';
+    }
   }
 
   if (defined $err->{value}) {
@@ -1144,6 +1170,8 @@ sub get_error_level_label ($) {
   } elsif ($err->{level} eq 'u' or $err->{level} eq 'unsupported') {
     $r = qq[<strong><a href="../error-description#level-u">Not
         supported</a></strong>: ];
+  } elsif ($err->{level} eq 'i') {
+    $r = qq[<strong><a href="../error-description#level-i">Information</a></strong>: ];
   } else {
     my $elevel = htescape ($err->{level});
     $r = qq[<strong><a href="../error-description#level-$elevel">$elevel</a></strong>:
@@ -1429,4 +1457,4 @@ and/or modify it under the same terms as Perl itself.
 
 =cut
 
-## $Date: 2008/02/10 07:35:23 $
+## $Date: 2008/02/24 02:17:51 $

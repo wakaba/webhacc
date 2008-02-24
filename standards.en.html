@@ -49,8 +49,24 @@ Namespaces
 </table>
 </div>
 
+<div class=section id=dom>
+<h2><abbr title="Document Object Model">DOM</abbr></h2>
+
+<p>The current implementation assumes that there are following 
+requirements:</p>
+<ul>
+<li>The document element (or root element) <em class=rfc2119>MUST</em>
+be allowed to be a root element.  <span class=example>For example,
+an <code>html</code> element in <code>http://www.w3.org/1999/xhtml</code>
+namespace is allowed to be a root element by the HTML5
+specification.</span></li>
+</ul>
+</div>
+
 <div class=section id=html>
 <h2><abbr title="Hypertext Markup Language">HTML</abbr></h2>
+
+<p>HTML5 is partially implemented.</p>
 
 <p>Restrictions:</p>
 <ul>
@@ -69,7 +85,17 @@ Namespaces
 <div class=section id=css>
 <h2><abbr title="Cascading Style Sheets">CSS</abbr></h2>
 
-<p>The current implementation assumes that there are following 
+<p>CSS @namespace and Selectors Level 3 are fully implemented.</p>
+
+<p>CSS 2.1 and CSS Color Level 3 are partially
+implemented.</p>
+
+<p>Since the <abbr title="Cascading Style Sheets">CSS</abbr> 2.1
+specification is sometimes ambigious or disagree with browsers,
+our implementation is tend to copy what browsers do unless
+there is strong resaon to do different thing.</p>
+
+<p>In addition, the current implementation assumes that there are following 
 requirements:</p>
 <ul>
 <li id=css-type-charset-param>The <code>charset</code> parameter of the media 
@@ -83,8 +109,6 @@ element whose content is interpreted as a CSS style sheet
 Note that it may also contain zero or more comment and/or processing 
 instruction nodes.</li>
 </ul>
-
-<p>...</p>
 
 </div>
 

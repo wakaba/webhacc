@@ -67,6 +67,10 @@ s:URI::lowercase hexadecimal digit;should;A lowercase hexadecimal digit is used 
 s:URI::percent-encoded unreserved;should;An unreserved character is percent-encoded.
 s:URI::uppercase scheme name;should;URI scheme name is in uppercase.
 m:not manifest;must;This document is not a cache manifest.
+i:status:cr:element;level-i;This element is in the <strong>call‐for‐implementation</strong> phase.
+i:status:lc:element;level-i;This element is in the <strong>last call‐for‐comments</strong> phase.
+i:status:wd:element;level-i;This element is documented in a <strong>working draft</strong>.
+i:status:non-standard:element;level-i;This element is <strong>not part of any standard</strong>.
 unsupported:element;unsupported;Conformance checking for element <code><var>{local-name}</var></code> is not supported; <em>it might or might not be conforming</em>.
 unsupported:attribute;unsupported;Conformance checking for attribute <code><var>{local-name}</var></code> of element <code><var>{element-local-name}</var></code> is not supported; <em>it might or might not be conforming</em>.
 unsupported:link type;unsupported;Link type <code><var>$0</var></code> is not standardized or registered at the time of the release of the conformance checker; <em>it is non-conforming unless it now has been registered</em>.
