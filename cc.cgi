@@ -298,12 +298,8 @@ sub print_syntax_error_html_section ($$) {
   my $onerror = sub {
     my (%opt) = @_;
     my ($type, $cls, $msg) = get_text ($opt{type}, $opt{level});
-    if ($opt{column} > 0) {
-      print STDOUT qq[<dt class="$cls"><a href="#$input->{id_prefix}line-$opt{line}">Line $opt{line}</a> column $opt{column}</dt>\n];
-    } else {
-      $opt{line} = $opt{line} - 1 || 1;
-      print STDOUT qq[<dt class="$cls"><a href="#$input->{id_prefix}line-$opt{line}">Line $opt{line}</a></dt>\n];
-    }
+    print STDOUT qq[<dt class="$cls">], get_error_label ($input, \%opt),
+        qq[</dt>];
     $type =~ tr/ /-/;
     $type =~ s/\|/%7C/g;
     $msg .= qq[ [<a href="../error-description#@{[htescape ($type)]}">Description</a>]];
@@ -1457,4 +1453,4 @@ and/or modify it under the same terms as Perl itself.
 
 =cut
 
-## $Date: 2008/02/24 02:17:51 $
+## $Date: 2008/03/11 14:10:11 $

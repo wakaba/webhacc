@@ -1,3 +1,8 @@
+2008-03-11  Wakaba  <wakaba@suika.fam.cx>
+
+	* cc.cgi: |value| should be output in |dt| in Parse Errors
+	section.
+
 2008-02-24  Wakaba  <wakaba@suika.fam.cx>
 
 	* cc.cgi: Support for level-i (informational).

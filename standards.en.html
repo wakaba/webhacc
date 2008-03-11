@@ -68,18 +68,37 @@ specification.</span></li>
 
 <p>HTML5 is partially implemented.</p>
 
-<p>Restrictions:</p>
+<p>In addition, the current implementation assumes that there are following 
+requirements:</p>
 <ul>
-  <li>December 2007 content model is not implemented yet.</li>
-  <li>Form elements are not implemented yet.</li>
+<li>Any element in the HTML namespace which is not defined by the HTML5 
+specification (including Web Forms 2.0 specification) <em class=rfc2119>MUST 
+NOT</em> be used.</li>
+<li>For an element in the HTML namespace, any attribute in the null namespace
+(or per‐element partition) <em class=rfc2119>MUST NOT</em> be used
+unless it is allowed by the HTML5 specification (including Web Forms 2.0
+specification).</li>
+<li class=ed>@@ Forms elements: ...
 </ul>
-
 </div>
 
 <div class=section id=atom>
 <h2>Atom</h2>
 
 <p>Only a part is implemented.</p>
+
+<p>In addition, the current implementation assumes that there are following 
+requirements:</p>
+<ul>
+<li>Elements and attributes in the Atom namespace, as well as attributes
+in the null namespace for an element in the Atom namespace,
+<em class=rfc2119>MUST NOT</em>
+be used except for contexts where they are allowed by the Atom 
+specification.</li>
+<li>Inter-element whitespace [HTML5], processing instructions, and
+comments <em class=rfc2119>MUST</em> be ignored for the purpose of 
+conformance of the content of an element.
+</ul>
 </div>
 
 <div class=section id=css>

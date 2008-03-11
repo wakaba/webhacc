@@ -1187,21 +1187,21 @@ p {
 <h2>Stability Information</h2>
 
 <div class="section level-i" id="i:status:cr:element"><h3>This element is in the
-  <strong>call‐for‐implementation</strong> phase.</h3>
-    <p>The element is in the call‐for‐implementation phase.</p>
+  <strong>call‐for‐implementation</strong> stage.</h3>
+    <p>The element is in the call‐for‐implementation stage.</p>
     
     <p>Usually, using the element is safe.  However, it is a new feature
     so that it might not be implemented correctly.  If it is found that
     the feature is hard or impossible to implement, the feature
     might be revised, or in some case it might be dropped.</p>
 
-    <p>Elements defined by HTML4, Atom 1.0, and XBL 2.0 belong to this
+    <p>Elements defined by Atom 1.0, and XBL 2.0 belong to this
     class.</p>
   </div>
 
 <div class="section level-i" id="i:status:lc:element"><h3>This element is in the <strong>last
-  call‐for‐comments</strong> phase.</h3>
-    <p>The element is in the last call‐for‐comments phase.</p>
+  call for comments</strong> stage.</h3>
+    <p>The element is in the last call for comments stage.</p>
     
     <p>The element is relatively mature, though the standardization
     is not done yet.  It may be used for experiments.  Since it is a new
@@ -1353,6 +1353,6 @@ is used in the document.</td>
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2008/02/24 02:17:51 $ -->
+<!-- $Date: 2008/03/11 14:10:11 $ -->
 </body>
 </html>
