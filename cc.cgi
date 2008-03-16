@@ -1121,7 +1121,14 @@ sub get_error_label ($$) {
 
   my $r = '';
 
-  if (defined $err->{line}) {
+  if (defined $err->{token} and defined $err->{token}->{line}) {
+    if ($err->{token}->{column} > 0) {
+      $r = qq[<a href="#$input->{id_prefix}line-$err->{token}->{line}">Line $err->{token}->{line}</a> column $err->{token}->{column}];
+    } else {
+      $err->{token}->{line} = $err->{token}->{line} - 1 || 1;
+      $r = qq[<a href="#$input->{id_prefix}line-$err->{token}->{line}">Line $err->{token}->{line}</a>];
+    }
+  } elsif (defined $err->{line}) {
     if ($err->{column} > 0) {
       $r = qq[<a href="#$input->{id_prefix}line-$err->{line}">Line $err->{line}</a> column $err->{column}];
     } else {
@@ -1456,4 +1463,4 @@ and/or modify it under the same terms as Perl itself.
 
 =cut
 
-## $Date: 2008/03/16 01:30:56 $
+## $Date: 2008/03/16 07:08:34 $

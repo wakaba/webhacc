@@ -1,5 +1,10 @@
 2008-03-16  Wakaba  <wakaba@suika.fam.cx>
 
+	* cc.cgi (get_error_label): Use token's line and column
+	if available.
+
+2008-03-16  Wakaba  <wakaba@suika.fam.cx>
+
 	* cc-script.js: Character was not marked if the line
 	is less than 50 characters.
 
