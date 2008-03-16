@@ -86,6 +86,8 @@ if (defined $input->{s}) {
     <dd>$char_length byte@{[$char_length == 1 ? '' : 's']}</dd>
 </dl>
 </div>
+
+<script src="../cc-script.js"></script>
 ];
 
   $input->{id_prefix} = '';
@@ -292,7 +294,7 @@ sub print_syntax_error_html_section ($$) {
 <div id="$input->{id_prefix}parse-errors" class="section">
 <h2>Parse Errors</h2>
 
-<dl>];
+<dl id="$input->{id_prefix}parse-errors-list">];
   push @nav, ['#parse-errors' => 'Parse Error'] unless $input->{nested};
 
   my $onerror = sub {
@@ -346,7 +348,7 @@ sub print_syntax_error_xml_section ($$) {
 <div id="$input->{id_prefix}parse-errors" class="section">
 <h2>Parse Errors</h2>
 
-<dl>];
+<dl id="$input->{id_prefix}parse-errors-list">];
   push @nav, ['#parse-errors' => 'Parse Error'] unless $input->{prefix};
 
   my $onerror = sub {
@@ -557,7 +559,7 @@ sub print_syntax_error_css_section ($$) {
 <div id="$input->{id_prefix}parse-errors" class="section">
 <h2>Parse Errors</h2>
 
-<dl>];
+<dl id="$input->{id_prefix}parse-errors-list">];
   push @nav, ['#parse-errors' => 'Parse Error'] unless $input->{nested};
 
   my $p = get_css_parser ();
@@ -623,7 +625,7 @@ sub print_syntax_error_manifest_section ($$) {
 <div id="$input->{id_prefix}parse-errors" class="section">
 <h2>Parse Errors</h2>
 
-<dl>];
+<dl id="$input->{id_prefix}parse-errors-list">];
   push @nav, ['#parse-errors' => 'Parse Error'] unless $input->{nested};
 
   my $onerror = sub {
@@ -681,7 +683,8 @@ sub print_source_string_section ($$$) {
   } else {
     print STDOUT q[<li id="$input->{id_prefix}line-1"></li>];
   }
-  print STDOUT "</ol></div>";
+  print STDOUT "</ol></div>
+<script> addSourceToParseErrorList ('$input->{id_prefix}'); </script>";
 } # print_input_string_section
 
 sub print_document_tree ($$) {
@@ -1453,4 +1456,4 @@ and/or modify it under the same terms as Perl itself.
 
 =cut
 
-## $Date: 2008/03/11 14:10:11 $
+## $Date: 2008/03/16 01:30:56 $

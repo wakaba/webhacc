@@ -1,3 +1,11 @@
+2008-03-16  Wakaba  <wakaba@suika.fam.cx>
+
+	* cc.cgi: Link to the script added.
+
+	* cc-style.css (mark): Added.
+
+	* cc-script.js: New script.
+
 2008-03-11  Wakaba  <wakaba@suika.fam.cx>
 
 	* cc.cgi: |value| should be output in |dt| in Parse Errors

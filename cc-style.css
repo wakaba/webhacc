@@ -397,13 +397,17 @@ dl.switch dt:after {
   content: " :";
 }
 
+mark {
+  background-color: #ffff4d;
+}
+
 /*
 
-Copyright 2007 Wakaba <w@suika.fam.cx>.
+Copyright 2007-2008 Wakaba <w@suika.fam.cx>.
 
 This library is free software; you can redistribute it
 and/or modify it under the same terms as Perl itself.
 
-$Date: 2008/02/24 02:17:51 $
+$Date: 2008/03/16 01:30:56 $
 
 */
