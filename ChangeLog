@@ -1,5 +1,9 @@
 2008-03-16  Wakaba  <wakaba@suika.fam.cx>
 
+	* cc-script.js: Unquote U+hhhh escapes.
+
+2008-03-16  Wakaba  <wakaba@suika.fam.cx>
+
 	* cc.cgi (get_error_label): Use token's line and column
 	if available.
 

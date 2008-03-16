@@ -24,6 +24,9 @@ function addSourceToParseErrorList (idPrefix) {
         var lineEl = document.getElementById (idPrefix + 'line-' + line);
         if (lineEl) {
           lineText = lineEl.innerHTML
+              .replace (/<var>U\+([0-9A-F]{4})<\/var>/g, function (s) {
+                return String.fromCharCode (parseInt (s, 16));
+              })
               .replace (/&lt;/g, '<')
               .replace (/&gt;/g, '>')
               .replace (/&nbsp;/g, '\u00A0')
@@ -88,4 +91,4 @@ function addSourceToParseErrorList (idPrefix) {
   }
 } // addSourceToParseErrorList
 
-// $Date: 2008/03/16 05:45:10 $
+// $Date: 2008/03/16 07:25:10 $
