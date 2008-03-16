@@ -1,5 +1,10 @@
 2008-03-16  Wakaba  <wakaba@suika.fam.cx>
 
+	* cc.cgi: Line break treatment was different from
+	that of HTML and CSS parsers.
+
+2008-03-16  Wakaba  <wakaba@suika.fam.cx>
+
 	* cc-script.js: Unquote U+hhhh escapes.
 
 2008-03-16  Wakaba  <wakaba@suika.fam.cx>

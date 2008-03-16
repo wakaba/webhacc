@@ -671,12 +671,12 @@ sub print_source_string_section ($$$) {
 <h2>Document Source</h2>
 <ol lang="">\n];
   if (length $$s) {
-    while ($$s =~ /\G([^\x0A]*?)\x0D?\x0A/gc) {
+    while ($$s =~ /\G([^\x0D\x0A]*?)(?>\x0D\x0A?|\x0A)/gc) {
       print STDOUT qq[<li id="$input->{id_prefix}line-$i">], htescape $1,
           "</li>\n";
       $i++;
     }
-    if ($$s =~ /\G([^\x0A]+)/gc) {
+    if ($$s =~ /\G([^\x0D\x0A]+)/gc) {
       print STDOUT qq[<li id="$input->{id_prefix}line-$i">], htescape $1,
           "</li>\n";
     }
@@ -1463,4 +1463,4 @@ and/or modify it under the same terms as Perl itself.
 
 =cut
 
-## $Date: 2008/03/16 07:08:34 $
+## $Date: 2008/03/16 11:38:47 $
