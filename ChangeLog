@@ -1,5 +1,10 @@
 2008-03-16  Wakaba  <wakaba@suika.fam.cx>
 
+	* cc-script.js: Character was not marked if the line
+	is less than 50 characters.
+
+2008-03-16  Wakaba  <wakaba@suika.fam.cx>
+
 	* cc.cgi: Link to the script added.
 
 	* cc-style.css (mark): Added.

@@ -66,7 +66,17 @@ function addSourceToParseErrorList (idPrefix) {
                   = '...';
             }
           } else {
-            code.appendChild (document.createTextNode (lineText));
+            if (column > 0) {
+              code.appendChild (document.createTextNode
+                  (lineText.substring (0, column - 1)));
+              code.appendChild (document.createElement ('mark'))
+                  .appendChild (document.createTextNode
+                      (lineText.charAt (column - 1)));
+              code.appendChild (document.createTextNode
+                  (lineText.substring (column, lineText.length)));
+            } else {
+              code.appendChild (document.createTextNode (lineText));
+            }
             p.appendChild (code);
           }
           child.appendChild (p);
@@ -78,4 +88,4 @@ function addSourceToParseErrorList (idPrefix) {
   }
 } // addSourceToParseErrorList
 
-// $Date: 2008/03/16 01:30:56 $
+// $Date: 2008/03/16 05:45:10 $
