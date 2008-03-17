@@ -1,5 +1,9 @@
 2008-03-17  Wakaba  <wakaba@suika.fam.cx>
 
+	* cc.cgi (get_error_label): No-parent case was not considered.
+
+2008-03-17  Wakaba  <wakaba@suika.fam.cx>
+
 	* cc.cgi (get_error_label): Use the error location
 	of the parent node, if the node does not have one.
 
