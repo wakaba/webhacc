@@ -1138,6 +1138,10 @@ sub get_error_label ($$) {
         my $owner = $err->{node}->owner_element;
         $line = $owner->get_user_data ('manakai_source_line');
         $column = $owner->get_user_data ('manakai_source_column');
+      } else {
+        my $parent = $err->{node}->parent_node;
+        $line = $parent->get_user_data ('manakai_source_line');
+        $column = $parent->get_user_data ('manakai_source_column');
       }
     }
   }
@@ -1486,4 +1490,4 @@ and/or modify it under the same terms as Perl itself.
 
 =cut
 
-## $Date: 2008/03/17 13:25:19 $
+## $Date: 2008/03/17 13:45:35 $
