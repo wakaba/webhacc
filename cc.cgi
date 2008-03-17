@@ -684,7 +684,9 @@ sub print_source_string_section ($$$) {
     print STDOUT q[<li id="$input->{id_prefix}line-1"></li>];
   }
   print STDOUT "</ol></div>
-<script> addSourceToParseErrorList ('$input->{id_prefix}'); </script>";
+<script>
+  addSourceToParseErrorList ('$input->{id_prefix}', 'parse-errors-list');
+</script>";
 } # print_input_string_section
 
 sub print_document_tree ($$) {
@@ -853,7 +855,7 @@ sub print_structure_error_dom_section ($$$$$) {
   print STDOUT qq[<div id="$input->{id_prefix}document-errors" class="section">
 <h2>Document Errors</h2>
 
-<dl>];
+<dl id=document-errors-list>];
   push @nav, [qq[#$input->{id_prefix}document-errors] => 'Document Error']
       unless $input->{nested};
 
@@ -881,7 +883,10 @@ sub print_structure_error_dom_section ($$$$$) {
   }
   $time{check} = time - $time1;
 
-  print STDOUT qq[</dl></div>];
+  print STDOUT qq[</dl>
+<script>
+  addSourceToParseErrorList ('$input->{id_prefix}', 'document-errors-list');
+</script></div>];
 
   return $elements;
 } # print_structure_error_dom_section
@@ -1121,25 +1126,43 @@ sub get_error_label ($$) {
 
   my $r = '';
 
-  if (defined $err->{token} and defined $err->{token}->{line}) {
-    if ($err->{token}->{column} > 0) {
-      $r = qq[<a href="#$input->{id_prefix}line-$err->{token}->{line}">Line $err->{token}->{line}</a> column $err->{token}->{column}];
+  my $line;
+  my $column;
+    
+  if (defined $err->{node}) {
+    $line = $err->{node}->get_user_data ('manakai_source_line');
+    if (defined $line) {
+      $column = $err->{node}->get_user_data ('manakai_source_column');
     } else {
-      $err->{token}->{line} = $err->{token}->{line} - 1 || 1;
-      $r = qq[<a href="#$input->{id_prefix}line-$err->{token}->{line}">Line $err->{token}->{line}</a>];
+      if ($err->{node}->node_type == $err->{node}->ATTRIBUTE_NODE) {
+        my $owner = $err->{node}->owner_element;
+        $line = $owner->get_user_data ('manakai_source_line');
+        $column = $owner->get_user_data ('manakai_source_column');
+      }
     }
-  } elsif (defined $err->{line}) {
-    if ($err->{column} > 0) {
-      $r = qq[<a href="#$input->{id_prefix}line-$err->{line}">Line $err->{line}</a> column $err->{column}];
+  }
+  unless (defined $line) {
+    if (defined $err->{token} and defined $err->{token}->{line}) {
+      $line = $err->{token}->{line};
+      $column = $err->{token}->{column};
+    } elsif (defined $err->{line}) {
+      $line = $err->{line};
+      $column = $err->{column};
+    }
+  }
+ 
+  if (defined $line) {
+    if (defined $column and $column > 0) {
+      $r = qq[<a href="#$input->{id_prefix}line-$line">Line $line</a> column $column];
     } else {
-      $err->{line} = $err->{line} - 1 || 1;
-      $r = qq[<a href="#$input->{id_prefix}line-$err->{line}">Line $err->{line}</a>];
+      $line = $line - 1 || 1;
+      $r = qq[<a href="#$input->{id_prefix}line-$line">Line $line</a>];
     }
   }
 
   if (defined $err->{node}) {
     $r .= ' ' if length $r;
-    $r = get_node_link ($input, $err->{node});
+    $r .= get_node_link ($input, $err->{node});
   }
 
   if (defined $err->{index}) {
@@ -1463,4 +1486,4 @@ and/or modify it under the same terms as Perl itself.
 
 =cut
 
-## $Date: 2008/03/16 11:38:47 $
+## $Date: 2008/03/17 13:25:19 $

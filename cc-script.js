@@ -1,6 +1,6 @@
-function addSourceToParseErrorList (idPrefix) {
+function addSourceToParseErrorList (idPrefix, dlId) {
   var parseErrorsList = document.getElementById
-      (idPrefix + 'parse-errors-list');
+      (idPrefix + dlId);
   if (!parseErrorsList) return;
   var childs = parseErrorsList.childNodes;
   var childsL = childs.length;
@@ -91,4 +91,4 @@ function addSourceToParseErrorList (idPrefix) {
   }
 } // addSourceToParseErrorList
 
-// $Date: 2008/03/16 07:25:10 $
+// $Date: 2008/03/17 13:25:19 $
