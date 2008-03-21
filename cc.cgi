@@ -1282,10 +1282,10 @@ sub get_node_path ($) {
   while (defined $node) {
     my $rs;
     if ($node->node_type == 1) {
-      $rs = $node->manakai_local_name;
+      $rs = $node->node_name;
       $node = $node->parent_node;
     } elsif ($node->node_type == 2) {
-      $rs = '@' . $node->manakai_local_name;
+      $rs = '@' . $node->node_name;
       $node = $node->owner_element;
     } elsif ($node->node_type == 3) {
       $rs = '"' . $node->data . '"';
@@ -1552,4 +1552,4 @@ and/or modify it under the same terms as Perl itself.
 
 =cut
 
-## $Date: 2008/03/21 09:17:45 $
+## $Date: 2008/03/21 11:17:00 $

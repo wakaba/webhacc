@@ -1,5 +1,10 @@
 2008-03-21  Wakaba  <wakaba@suika.fam.cx>
 
+	* cc.cgi (get_node_path): Use qualified name, not just
+	local name.
+
+2008-03-21  Wakaba  <wakaba@suika.fam.cx>
+
 	* cc.cgi (get_rdf_resource_html): undef vs false bug fixed.
 
 2008-03-21  Wakaba  <wakaba@suika.fam.cx>
