@@ -1032,11 +1032,11 @@ sub print_rdf_section ($$$) {
 
 sub get_rdf_resource_html ($) {
   my $resource = shift;
-  if ($resource->{uri}) {
+  if (defined $resource->{uri}) {
     my $euri = htescape ($resource->{uri});
     return '<code class=uri>&lt;<a href="' . $euri . '">' . $euri .
         '</a>></code>';
-  } elsif ($resource->{bnodeid}) {
+  } elsif (defined $resource->{bnodeid}) {
     return htescape ('_:' . $resource->{bnodeid});
   } elsif ($resource->{nodes}) {
     return '(rdf:XMLLiteral)';
@@ -1552,4 +1552,4 @@ and/or modify it under the same terms as Perl itself.
 
 =cut
 
-## $Date: 2008/03/21 08:59:47 $
+## $Date: 2008/03/21 09:17:45 $

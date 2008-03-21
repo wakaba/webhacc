@@ -1,5 +1,9 @@
 2008-03-21  Wakaba  <wakaba@suika.fam.cx>
 
+	* cc.cgi (get_rdf_resource_html): undef vs false bug fixed.
+
+2008-03-21  Wakaba  <wakaba@suika.fam.cx>
+
 	* cc.cgi: Experimental support for application/rdf+xml type.
 	Generate section on RDF triples extracted from the document.
 	(print_rdf_section): New function.
