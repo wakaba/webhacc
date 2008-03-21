@@ -173,9 +173,13 @@ sub check_and_print ($$) {
             'text/xml' => 1,
             'application/atom+xml' => 1,
             'application/rss+xml' => 1,
-            'application/svg+xml' => 1,
+            'image/svg+xml' => 1,
             'application/xhtml+xml' => 1,
             'application/xml' => 1,
+            ## TODO: Should we make all XML MIME Types fall
+            ## into this category?
+
+            'application/rdf+xml' => 1, ## NOTE: This type has different model.
            }->{$input->{media_type}}) {
     ($doc, $el) = print_syntax_error_xml_section ($input, $result);
     print_source_string_section ($input,
@@ -214,6 +218,7 @@ sub check_and_print ($$) {
     print_listing_section ({
       id => 'classes', label => 'Classes', heading => 'Classes',
     }, $input, $elements->{class}) if keys %{$elements->{class}};
+    print_rdf_section ($input, $elements->{rdf}) if @{$elements->{rdf}};
   } elsif (defined $cssom) {
     print_structure_dump_cssom_section ($input, $cssom);
     ## TODO: CSSOM validation
@@ -997,6 +1002,61 @@ sub print_listing_section ($$$) {
   print STDOUT qq[</dl></div>];
 } # print_listing_section
 
+sub print_rdf_section ($$$) {
+  my ($input, $rdfs) = @_;
+  
+  push @nav, ['#' . $input->{id_prefix} . 'rdf' => 'RDF']
+      unless $input->{nested};
+  print STDOUT qq[
+<div id="$input->{id_prefix}rdf" class="section">
+<h2>RDF Triples</h2>
+
+<dl>];
+  my $i = 0;
+  for my $rdf (@$rdfs) {
+    print STDOUT qq[<dt id="$input->{id_prefix}rdf-@{[$i++]}">];
+    print STDOUT get_node_link ($input, $rdf->[0]);
+    print STDOUT qq[<dd><dl>];
+    for my $triple (@{$rdf->[1]}) {
+      print STDOUT '<dt>' . get_node_link ($input, $triple->[0]) . '<dd>';
+      print STDOUT get_rdf_resource_html ($triple->[1]);
+      print STDOUT ' ';
+      print STDOUT get_rdf_resource_html ($triple->[2]);
+      print STDOUT ' ';
+      print STDOUT get_rdf_resource_html ($triple->[3]);
+    }
+    print STDOUT qq[</dl>];
+  }
+  print STDOUT qq[</dl></div>];
+} # print_rdf_section
+
+sub get_rdf_resource_html ($) {
+  my $resource = shift;
+  if ($resource->{uri}) {
+    my $euri = htescape ($resource->{uri});
+    return '<code class=uri>&lt;<a href="' . $euri . '">' . $euri .
+        '</a>></code>';
+  } elsif ($resource->{bnodeid}) {
+    return htescape ('_:' . $resource->{bnodeid});
+  } elsif ($resource->{nodes}) {
+    return '(rdf:XMLLiteral)';
+  } elsif (defined $resource->{value}) {
+    my $elang = htescape (defined $resource->{language}
+                              ? $resource->{language} : '');
+    my $r = qq[<q lang="$elang">] . htescape ($resource->{value}) . '</q>';
+    if (defined $resource->{datatype}) {
+      my $euri = htescape ($resource->{datatype});
+      $r .= '^^<code class=uri>&lt;<a href="' . $euri . '">' . $euri .
+          '</a>></code>';
+    } elsif (length $resource->{language}) {
+      $r .= '@' . htescape ($resource->{language});
+    }
+    return $r;
+  } else {
+    return '??';
+  }
+} # get_rdf_resource_html
+
 sub print_result_section ($) {
   my $result = shift;
 
@@ -1492,4 +1552,4 @@ and/or modify it under the same terms as Perl itself.
 
 =cut
 
-## $Date: 2008/03/17 13:52:48 $
+## $Date: 2008/03/21 08:59:47 $

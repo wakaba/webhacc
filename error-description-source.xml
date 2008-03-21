@@ -39,7 +39,7 @@ Web Document Conformance Checker (BETA)</title>
   <d:message xml:lang="en">Use of UTF-8 is encouraged.</d:message>
   <d:desc xml:lang="en">
     <p>Use of UTF-8 as the character encoding of the document is encouraged,
-    though the use of another character encoding is conforming.</p>
+    though the use of another character encoding is still conforming.</p>
   </d:desc>
 </d:item>
 
@@ -119,7 +119,7 @@ Web Document Conformance Checker (BETA)</title>
     encoding of the document as another character encoding is found.
     The occurence of this warning itself does not make the document
     non‐conforming.  However, the failure of the first attempt to
-    to detect the character encoding might be the result of non‐conformance 
+    to detect the character encoding might be a result of non‐conformance 
     of the document.</p>
 
     <p>The document will be reparsed from the beginning.  Some error
@@ -1458,17 +1458,17 @@ p {
 
 <d:item name="status:cr:element" class="level-i" level="i">
   <d:message xml:lang="en">This element is in the
-  <strong>call‐for‐implementation</strong> stage.</d:message>
+  <strong>call for implementation</strong> stage.</d:message>
   <d:desc xml:lang="en">
-    <p>The element is in the call‐for‐implementation stage.</p>
+    <p>The element is in the call for implementation stage.</p>
     
     <p>Usually, using the element is safe.  However, it is a new feature
     so that it might not be implemented correctly.  If it is found that
     the feature is hard or impossible to implement, the feature
     might be revised, or in some case it might be dropped.</p>
 
-    <p>Elements defined by Atom 1.0, and XBL 2.0 belong to this
-    class.</p>
+    <p>Elements defined by Atom 1.0 (IETF Proposed Standard), and XBL 2.0
+    (W3C Candidate Recommendation) belong to this class.</p>
   </d:desc>
 </d:item>
 
@@ -1506,11 +1506,13 @@ p {
 
 <d:item name="status:non-standard:element" class="level-i" level="i">
   <d:message xml:lang="en">This element is <strong>not part of any
-  standard</strong>.</d:message>
+  standard</strong> the conformance checker knows.</d:message>
   <d:desc xml:lang="en">
-    <p>The element is not part of any standard or draft.</p>
+    <p>The element is not part of any standard or draft the conformance
+    checker is aware of.</p>
     
-    <p>The element should not be used for any practical purpose.</p>
+    <p>The element should not be used for any practical purpose unless
+    there is really a standard that defines the element.</p>
   </d:desc>
 </d:item>
 </section>
@@ -1658,7 +1660,7 @@ is used in the document.</td>
 <section id="license">
 <h2>License of This Document</h2>
 
-<p>Copyright <time>2007</time> 
+<p>Copyright <time>2007</time>‐<time>2008</time>
 <a href="http://suika.fam.cx/~wakaba/who?" rel="author" xml:lang="ja">Wakaba</a>
 <code class="mail">&lt;<a href="mailto:w@suika.fam.cx">w@suika.fam.cx</a>></code>.</p>
 
@@ -1666,6 +1668,6 @@ is used in the document.</td>
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2008/03/11 14:10:11 $ -->
+<!-- $Date: 2008/03/21 08:59:47 $ -->
 </body>
 </html>

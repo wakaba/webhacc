@@ -1,3 +1,10 @@
+2008-03-21  Wakaba  <wakaba@suika.fam.cx>
+
+	* cc.cgi: Experimental support for application/rdf+xml type.
+	Generate section on RDF triples extracted from the document.
+	(print_rdf_section): New function.
+	(get_rdf_resource_html): New function.
+
 2008-03-17  Wakaba  <wakaba@suika.fam.cx>
 
 	* cc.cgi (get_error_label): No-parent case was not considered.

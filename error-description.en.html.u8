@@ -1187,8 +1187,8 @@ p {
 <h2>Stability Information</h2>
 
 <div class="section level-i" id="i:status:cr:element"><h3>This element is in the
-  <strong>call‐for‐implementation</strong> stage.</h3>
-    <p>The element is in the call‐for‐implementation stage.</p>
+  <strong>call for implementation</strong> stage.</h3>
+    <p>The element is in the call for implementation stage.</p>
     
     <p>Usually, using the element is safe.  However, it is a new feature
     so that it might not be implemented correctly.  If it is found that
@@ -1226,10 +1226,12 @@ p {
   </div>
 
 <div class="section level-i" id="i:status:non-standard:element"><h3>This element is <strong>not part of any
-  standard</strong>.</h3>
-    <p>The element is not part of any standard or draft.</p>
+  standard</strong> the conformance checker knows.</h3>
+    <p>The element is not part of any standard or draft the conformance
+    checker is aware of.</p>
     
-    <p>The element should not be used for any practical purpose.</p>
+    <p>The element should not be used for any practical purpose unless
+    there is really a standard that defines the element.</p>
   </div>
 </section>
 
@@ -1345,7 +1347,7 @@ is used in the document.</td>
 <section id="license">
 <h2>License of This Document</h2>
 
-<p>Copyright <time>2007</time> 
+<p>Copyright <time>2007</time>‐<time>2008</time>
 <a href="http://suika.fam.cx/~wakaba/who?" rel="author" xml:lang="ja">Wakaba</a>
 <code class="mail">&lt;<a href="mailto:w@suika.fam.cx">w@suika.fam.cx</a>&gt;</code>.</p>
 
@@ -1353,6 +1355,6 @@ is used in the document.</td>
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2008/03/11 14:10:11 $ -->
+<!-- $Date: 2008/03/21 08:59:47 $ -->
 </body>
 </html>
