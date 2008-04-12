@@ -79,15 +79,113 @@ NOT</em> be used.</li>
 unless it is allowed by the HTML5 specification (including Web Forms 2.0
 specification).</li>
 <li class=ed>@@ Forms elements: ...
+
+<li>For the attribute not defined in HTML5, the following definitions are
+applied.
+
+  <div class="note memo">
+  <p>These definitions are updated version of their original definitions
+  in previous versions of HTML4.
+  </div>
+
+  <p>For each row in the table below, if an attribute (i.e. an
+  <code>Attr</code> node) met the following conditions, then the
+  <code>value</code> attribute value of the node <em class=rfc2119>MUST</em>
+  be valid with regard to the constraints shown in the <q>Value</q>
+  cell of the row.  The conditions are:
+    <ul>
+    <li>There is an owner element (i.e. the <code>Element</code> node
+    pointed by the <code>ownerElement</code> attribute of the 
+    <code>Attr</code> node).
+    <li>The <code>namespaceURI</code> attribute value of the owner element
+    is <code>http://www.w3.org/1999/xhtml</code>.
+    <li>The <code>manakaiLocalName</code> attribute value [@@ TODO: ref]
+    of the owner element is equal to the value in the <q>Element</q> cell
+    of the row.
+    <li>The <code>namespaceURI</code> attribute value of the <code>Attr</code>
+    node is <code>null</code>.
+    <li>The <code>manakaiLocalName</code> attribute value of the
+    <code>Attr</code> node is equal to the value in the <q>Attribute</q>
+    cell of the row.
+    </ul>
+
+  <table>
+  <thead>
+  <tr><th scope=row>Element<th scope=row>Attribute
+  <th scope=row>Value
+  <tbody>
+  <tr><td><code>body</code><td><code>background</code>
+  <td>Same as <code>img</code> <code>src</code> [HTML5]
+  <tr><td><code>img</code><td><code>longdesc</code>
+  <td>Same as <code>img</code> <code>src</code> [HTML5]
+  <tr><td><code>object</code><td><code>classid</code> or <code>codebase</code>
+  <td>Same as <code>object</code> <code>classid</code> [HTML5]
+  <tr><td><code>object</code><td><code>archive
+  <td>Same as <code>a</code> <code>ping</code> [HTML5]
+  <tr><td><code>object</code><td><code>codetype</code>
+  <td>Same as <code>object</code> <code>type</code> [HTML5]
+  <tr><td><code>param</code><td><code>type</code>
+  <td>Same as <code>object</code> <code>type</code> [HTML5]
+  <tr><td><code>div</code>, <code>h1</code>, <code>h2</code>, <code>h3</code>,
+  <code>h4</code>, <code>h5</code>, <code>h6</code>, or <code>p</code>
+  <td><code>align</code>
+  <td>Enumerated attribute [HTML5]
+  <tr><td><code>img</code> or <code>object</code><td><code>align</code>
+  <td>Enumerated attribute [HTML5]
+  <tr><td><code>br</code><td><code>clear</code>
+  <td>Enumerated attribute [HTML5]
+  <tr><td><code>param</code><td><code>valuetype</code>
+  <td>Enumerated attribute [HTML5]
+  <tr><td><code>pre</code><td><code>width</code>
+  <td>Valid non-negative integer [HTML5]
+  <tr><td><code>ul</code>, <code>ol</code>, <code>dir</code>,
+  <code>menu</code>, or <code>dl</code><td><code>compact</code>
+  <td>Boolean attribute [HTML5]
+  <tr><td><code>table</code><td><code>frame</code> or <code>rules</code>
+  <td>Enumerated attribute [HTML5]
+  <tr><td><code>td</code><td><code>scope</code>
+  <td>Same as <code>scope</code> attribute of the <code>th</code> element
+  [HTML5]
+  <tr><td><code>tbody</code>, <code>thead</code>, <code>tfoot</code>,
+  <code>colgroup</code>, <code>col</code>, <code>tr</code>, <code>td</code>,
+  or <code>th</code><td><code>align</code> or <code>valign</code>
+  <td>Enumerated attribute [HTML5]
+  <tr><td><code>link</code><td><code>target</code>
+  <td>Valid browsing context name [HTML5]
+  <tr id=html-meta-scheme><td><code>meta</code><td><code>schema</code>
+  <td>Any string
+  <!--
+    NOTE: According to HTML4, values for the |scheme| attribute
+    depend on |name| attribute and |profile| of |head|.  Otherwise
+    it is "cdata".  The only profile with any scheme value defined
+    is <http://dublincore.org/documents/dcq-html/> (and those
+    references that profile; see
+    <http://suika.fam.cx/gate/2005/sw/scheme#anchor-55> for more
+    information).
+  -->
+  <tr id=html-rev><code>a</code> or <code>link</code><td><code>rev</code>
+  <td>Unordered set of unique space-separated tokens [HTML5]
+  (where any word is allowed)
+  </table>
+<li>Any value <em class=rfc2119>MAY</em> be specified to the
+<code>version</code> attribute of an <code>html</code> element.
+<li>@@ elements ...
+
+  <table>
+  <thead>
+  <tr><th scope=row>Element<th scope=row>Content Model
+  <th scope=row>Allowed Context
+  <tbody>
+  <tr><th scope=col><code>center</code>
+  <td colspan=2>Same as <code>div</code> [HTML5]
+  </table>
 </ul>
 </div>
 
 <div class=section id=atom>
 <h2>Atom</h2>
 
-<p>Only a part is implemented.</p>
-
-<p>In addition, the current implementation assumes that there are following 
+<p>The current implementation assumes that there are following 
 requirements:</p>
 <ul>
 <li>Elements and attributes in the Atom namespace, as well as attributes

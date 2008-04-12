@@ -218,6 +218,7 @@ sub check_and_print ($$) {
     print_listing_section ({
       id => 'classes', label => 'Classes', heading => 'Classes',
     }, $input, $elements->{class}) if keys %{$elements->{class}};
+    print_uri_section ($input, $elements->{uri}) if keys %{$elements->{uri}};
     print_rdf_section ($input, $elements->{rdf}) if @{$elements->{rdf}};
   } elsif (defined $cssom) {
     print_structure_dump_cssom_section ($input, $cssom);
@@ -322,18 +323,25 @@ sub print_syntax_error_html_section ($$) {
   if (defined $inner_html_element and length $inner_html_element) {
     $input->{charset} ||= 'windows-1252'; ## TODO: for now.
     my $time1 = time;
-    my $t = Encode::decode ($input->{charset}, $input->{s});
+    my $t = \($input->{s});
+    unless ($input->{is_char_string}) {
+      $t = \(Encode::decode ($input->{charset}, $$t));
+    }
     $time{decode} = time - $time1;
     
     $el = $doc->create_element_ns
         ('http://www.w3.org/1999/xhtml', [undef, $inner_html_element]);
     $time1 = time;
-    Whatpm::HTML->set_inner_html ($el, $t, $onerror);
+    Whatpm::HTML->set_inner_html ($el, $$t, $onerror);
     $time{parse} = time - $time1;
   } else {
     my $time1 = time;
-    Whatpm::HTML->parse_byte_string
-        ($input->{charset}, $input->{s} => $doc, $onerror);
+    if ($input->{is_char_string}) {
+      Whatpm::HTML->parse_char_string ($input->{s} => $doc, $onerror);
+    } else {
+      Whatpm::HTML->parse_byte_string
+          ($input->{charset}, $input->{s} => $doc, $onerror);
+    }
     $time{parse_html} = time - $time1;
   }
   $doc->manakai_charset ($input->{official_charset})
@@ -373,8 +381,15 @@ sub print_syntax_error_xml_section ($$) {
     return 1;
   };
 
+  my $t = \($input->{s});
+  if ($input->{is_char_string}) {
+    require Encode;
+    $t = \(Encode::encode ('utf8', $$t));
+    $input->{charset} = 'utf-8';
+  }
+
   my $time1 = time;
-  open my $fh, '<', \($input->{s});
+  open my $fh, '<', $t;
   my $doc = Message::DOM::XMLParserTemp->parse_byte_stream
       ($fh => $dom, $onerror, charset => $input->{charset});
   $time{parse_xml} = time - $time1;
@@ -647,8 +662,9 @@ sub print_syntax_error_manifest_section ($$) {
     add_error ('syntax', \%opt => $result);
   };
 
+  my $m = $input->{is_char_string} ? 'parse_char_string' : 'parse_byte_string';
   my $time1 = time;
-  my $manifest = Whatpm::CacheManifest->parse_byte_string
+  my $manifest = Whatpm::CacheManifest->$m
       ($input->{s}, $input->{uri}, $input->{base_uri}, $onerror);
   $time{parse_manifest} = time - $time1;
 
@@ -1001,6 +1017,51 @@ sub print_listing_section ($$$) {
   }
   print STDOUT qq[</dl></div>];
 } # print_listing_section
+
+sub print_uri_section ($$$) {
+  my ($input, $uris) = @_;
+
+  ## NOTE: URIs contained in the DOM (i.e. in HTML or XML documents),
+  ## except for those in RDF triples.
+  ## TODO: URIs in CSS
+  
+  push @nav, ['#' . $input->{id_prefix} . 'uris' => 'URIs']
+      unless $input->{nested};
+  print STDOUT qq[
+<div id="$input->{id_prefix}uris" class="section">
+<h2>URIs</h2>
+
+<dl>];
+  for my $uri (sort {$a cmp $b} keys %$uris) {
+    my $euri = htescape ($uri);
+    print STDOUT qq[<dt><code class=uri>&lt;<a href="$euri">$euri</a>></code>];
+    my $eccuri = htescape (get_cc_uri ($uri));
+    print STDOUT qq[<dd><a href="$eccuri">Check conformance of this document</a>];
+    print STDOUT qq[<dd>Found at: <ul>];
+    for my $entry (@{$uris->{$uri}}) {
+      print STDOUT qq[<li>], get_node_link ($input, $entry->{node});
+      if (keys %{$entry->{type} or {}}) {
+        print STDOUT ' (';
+        print STDOUT join ', ', map {
+          {
+            hyperlink => 'Hyperlink',
+            resource => 'Link to an external resource',
+            namespace => 'Namespace URI',
+            cite => 'Citation or link to a long description',
+            embedded => 'Link to an embedded content',
+            base => 'Base URI',
+            action => 'Submission URI',
+          }->{$_} 
+            or
+          htescape ($_)
+        } keys %{$entry->{type}};
+        print STDOUT ')';
+      }
+    }
+    print STDOUT qq[</ul>];
+  }
+  print STDOUT qq[</dl></div>];
+} # print_uri_section
 
 sub print_rdf_section ($$$) {
   my ($input, $rdfs) = @_;
@@ -1363,6 +1424,17 @@ sub get_text ($) {
 
 }
 
+sub encode_uri_component ($) {
+  require Encode;
+  my $s = Encode::encode ('utf8', shift);
+  $s =~ s/([^0-9A-Za-z_.~-])/sprintf '%%%02X', ord $1/ge;
+  return $s;
+} # encode_uri_component
+
+sub get_cc_uri ($) {
+  return './?uri=' . encode_uri_component ($_[0]);
+} # get_cc_uri
+
 sub get_input_document ($$) {
   my ($http, $dom) = @_;
 
@@ -1552,4 +1624,4 @@ and/or modify it under the same terms as Perl itself.
 
 =cut
 
-## $Date: 2008/03/21 11:17:00 $
+## $Date: 2008/04/12 15:57:56 $

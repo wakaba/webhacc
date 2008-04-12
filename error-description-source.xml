@@ -174,7 +174,7 @@ Web Document Conformance Checker (BETA)</title>
 <d:item name="bare ero"
     class="tokenize-error">
   <d:message xml:lang="en">The <code>&amp;</code> character must
-  introduce a reference.</d:message>
+  be escaped as <code class="html example">&amp;amp;</code>.</d:message>
   <d:desc xml:lang="en">
     <p>An <code>&amp;</code> character which
     is not part of any reference appears in the input stream.
@@ -1668,6 +1668,6 @@ is used in the document.</td>
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2008/03/21 08:59:47 $ -->
+<!-- $Date: 2008/04/12 15:57:56 $ -->
 </body>
 </html>
