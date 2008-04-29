@@ -152,7 +152,9 @@ q:before, q:after {
   min-height: 20px;
 }
 
-#identifiers dd + dd, #terms dd + dd {
+#identifiers dd + dd
+/* , #terms dd + dd */ /* Now allowed - HTML5 revision 1467 */
+{
   background-image: url(error);
   background-position: center left;
   background-repeat: no-repeat;
@@ -408,6 +410,6 @@ Copyright 2007-2008 Wakaba <w@suika.fam.cx>.
 This library is free software; you can redistribute it
 and/or modify it under the same terms as Perl itself.
 
-$Date: 2008/03/16 01:30:56 $
+$Date: 2008/04/29 10:59:25 $
 
 */

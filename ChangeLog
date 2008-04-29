@@ -1,3 +1,8 @@
+2008-04-29  Wakaba  <wakaba@suika.fam.cx>
+
+	* cc-style.css: Duplicate terms are no longer disallowed (HTML5
+	revision 1467).
+
 2008-04-12  Wakaba  <wakaba@suika.fam.cx>
 
 	* parser-manakai.cgi, parser-manakai-interface.en.html: The |innerHTML|
