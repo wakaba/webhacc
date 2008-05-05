@@ -1,3 +1,8 @@
+2008-05-05  Wakaba  <wakaba@suika.fam.cx>
+
+	* table-script.js: It is now 0-indexed stead
+	of 1-indexed (HTML5 revision 1376).
+
 2008-04-29  Wakaba  <wakaba@suika.fam.cx>
 
 	* cc-style.css: Duplicate terms are no longer disallowed (HTML5
