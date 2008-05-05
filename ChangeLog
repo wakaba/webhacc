@@ -1,5 +1,10 @@
 2008-05-05  Wakaba  <wakaba@suika.fam.cx>
 
+	* table-script.js: Table header/footer fill started at a
+	wrong point.
+
+2008-05-05  Wakaba  <wakaba@suika.fam.cx>
+
 	* table-script.js: It is now 0-indexed stead
 	of 1-indexed (HTML5 revision 1376).
 
