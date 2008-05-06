@@ -119,7 +119,7 @@ applied.
   <tr><td><code>img</code><td><code>longdesc</code>
   <td>Same as <code>img</code> <code>src</code> [HTML5]
   <tr><td><code>object</code><td><code>classid</code> or <code>codebase</code>
-  <td>Same as <code>object</code> <code>classid</code> [HTML5]
+  <td>Same as <code>img</code> <code>src</code> [HTML5]
   <tr><td><code>object</code><td><code>archive
   <td>Same as <code>a</code> <code>ping</code> [HTML5]
   <tr><td><code>object</code><td><code>codetype</code>
@@ -163,9 +163,14 @@ applied.
     <http://suika.fam.cx/gate/2005/sw/scheme#anchor-55> for more
     information).
   -->
-  <tr id=html-rev><code>a</code> or <code>link</code><td><code>rev</code>
+  <tr id=html-rev><td><code>a</code> or <code>link</code><td><code>rev</code>
   <td>Unordered set of unique space-separated tokens [HTML5]
   (where any word is allowed)
+  <tr id=html-table-cellpadding><td rowspan=2><code>table</code>
+  <td><code>cellpadding</code>
+  <td rowspan=2>A non-negative integer [HTML5] or a non-negative integer
+  [HTML5] followed by a <code>%</code> character
+  <tr id=html-table-cellspacing><td><code>cellspacing</code>
   </table>
 <li>Any value <em class=rfc2119>MAY</em> be specified to the
 <code>version</code> attribute of an <code>html</code> element.

@@ -1,3 +1,10 @@
+2008-05-06  Wakaba  <wakaba@suika.fam.cx>
+
+	* table-script.js: Support for header cell highlighting.
+
+	* table.cgi: Set |id| to cells; it enables the cell highlighting
+	feature.
+
 2008-05-05  Wakaba  <wakaba@suika.fam.cx>
 
 	* table-script.js: Table header/footer fill started at a

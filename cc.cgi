@@ -965,7 +965,8 @@ sub print_table_section ($$) {
     ## so that this script don't have to run the algorithm twice.
     my $table = Whatpm::HTMLTable->form_table ($table_el);
     
-    for (@{$table->{column_group}}, @{$table->{column}}, $table->{caption}) {
+    for (@{$table->{column_group}}, @{$table->{column}}, $table->{caption},
+         @{$table->{row}}) {
       next unless $_;
       delete $_->{element};
     }
@@ -1624,4 +1625,4 @@ and/or modify it under the same terms as Perl itself.
 
 =cut
 
-## $Date: 2008/04/12 15:57:56 $
+## $Date: 2008/05/06 07:50:28 $
