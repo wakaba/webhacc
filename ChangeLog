@@ -1,5 +1,14 @@
 2008-05-06  Wakaba  <wakaba@suika.fam.cx>
 
+	* cc.cgi: Use table object returned by the checker; don't
+	form a table by itself.
+
+	* table-script.js: Use different coloring for empty data cells.
+
+	* cc.cgi, table.cgi: Remove table reference for JSON convertion.
+
+2008-05-06  Wakaba  <wakaba@suika.fam.cx>
+
 	* table-script.js: Support for header cell highlighting.
 
 	* table.cgi: Set |id| to cells; it enables the cell highlighting

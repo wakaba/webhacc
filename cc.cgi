@@ -956,15 +956,13 @@ sub print_table_section ($$) {
   require JSON;
   
   my $i = 0;
-  for my $table_el (@$tables) {
+  for my $table (@$tables) {
     $i++;
     print STDOUT qq[<div class="section" id="$input->{id_prefix}table-$i"><h3>] .
-        get_node_link ($input, $table_el) . q[</h3>];
+        get_node_link ($input, $table->{element}) . q[</h3>];
 
-    ## TODO: Make |ContentChecker| return |form_table| result
-    ## so that this script don't have to run the algorithm twice.
-    my $table = Whatpm::HTMLTable->form_table ($table_el);
-    
+    delete $table->{element};
+
     for (@{$table->{column_group}}, @{$table->{column}}, $table->{caption},
          @{$table->{row}}) {
       next unless $_;
@@ -1625,4 +1623,4 @@ and/or modify it under the same terms as Perl itself.
 
 =cut
 
-## $Date: 2008/05/06 07:50:28 $
+## $Date: 2008/05/06 08:47:09 $
