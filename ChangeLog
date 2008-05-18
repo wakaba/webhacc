@@ -1,3 +1,16 @@
+2008-05-18  Wakaba  <wakaba@suika.fam.cx>
+
+	* cc.cgi (print_source_string_section): Use new Message::Charset::Info
+	interface to decode source code, otherwise the Perl native Encode
+	module might decode the source code into different character
+	string with the Info's.
+
+2008-05-10  Wakaba  <wakaba@suika.fam.cx>
+
+	* standards.en.html (requirements): Remove a requirement
+	for an HTML element's allowed context (it is covered by HTML5
+	spec since r1583).
+
 2008-05-06  Wakaba  <wakaba@suika.fam.cx>
 
 	* cc.cgi: Use table object returned by the checker; don't

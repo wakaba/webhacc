@@ -677,11 +677,28 @@ sub print_source_string_section ($$$) {
   my $input = shift;
   my $s;
   unless ($input->{is_char_string}) {
-    require Encode;
-    my $enc = Encode::find_encoding ($_[1]); ## TODO: charset name -> Perl name
-    return unless $enc;
+    open my $byte_stream, '<', $_[0];
+    require Message::Charset::Info;
+    my $charset = Message::Charset::Info->get_by_iana_name ($_[1]);
+    my ($char_stream, $e_status) = $charset->get_decode_handle
+        ($byte_stream, allow_error_reporting => 1, allow_fallback => 1);
+    return unless $char_stream;
 
-    $s = \($enc->decode (${$_[0]}));
+    $char_stream->onerror (sub {
+      my (undef, $type, %opt) = @_;
+      if ($opt{octets}) {
+        ${$opt{octets}} = "\x{FFFD}";
+      }
+    });
+
+    my $t = '';
+    while (1) {
+      my $c = $char_stream->getc;
+      last unless defined $c;
+      $t .= $c;
+    }
+    $s = \$t;
+    ## TODO: Output for each line, don't concat all of lines.
   } else {
     $s = $_[0];
   }
@@ -1182,24 +1199,25 @@ Errors</a></th>
 
     print STDOUT qq[<tr class="@{[$uncertain ? 'uncertain' : '']}"><th scope=row>$label</th><td class="@{[$result->{$_->[1]}->{must} ? 'FAIL' : '']}">$result->{$_->[1]}->{must}$uncertain</td><td class="@{[$result->{$_->[1]}->{should} ? 'SEE-RESULT' : '']}">$result->{$_->[1]}->{should}$uncertain</td><td>$result->{$_->[1]}->{warning}$uncertain</td>];
     if ($uncertain) {
-      print qq[<td class="@{[$result->{$_->[1]}->{must} ? 'FAIL' : $result->{$_->[1]}->{should} ? 'SEE-RESULT' : '']}">&#x2212;&#x221E;..$result->{$_->[1]}->{score_max}</td>];
+      print qq[<td class="@{[$result->{$_->[1]}->{must} ? 'FAIL' : $result->{$_->[1]}->{should} ? 'SEE-RESULT' : '']}">&#x2212;&#x221E;..$result->{$_->[1]}->{score_max}];
     } elsif ($result->{$_->[1]}->{score_min} != $result->{$_->[1]}->{score_max}) {
-      print qq[<td class="@{[$result->{$_->[1]}->{must} ? 'FAIL' : 'SEE-RESULT']}">$result->{$_->[1]}->{score_min}..$result->{$_->[1]}->{score_max}</td></tr>];
+      print qq[<td class="@{[$result->{$_->[1]}->{must} ? 'FAIL' : 'SEE-RESULT']}">$result->{$_->[1]}->{score_min}..$result->{$_->[1]}->{score_max}];
     } else {
-      print qq[<td class="@{[$result->{$_->[1]}->{must} ? 'FAIL' : '']}">$result->{$_->[1]}->{score_min}</td></tr>];
+      print qq[<td class="@{[$result->{$_->[1]}->{must} ? 'FAIL' : '']}">$result->{$_->[1]}->{score_min}];
     }
+    print qq[ / 20];
   }
 
   $score_max += $score_base;
 
   print STDOUT qq[
-<tr class=uncertain><th scope=row>Semantics</th><td>0?</td><td>0?</td><td>0?</td><td>&#x2212;&#x221E;..$score_base</td></tr>
+<tr class=uncertain><th scope=row>Semantics</th><td>0?</td><td>0?</td><td>0?</td><td>&#x2212;&#x221E;..$score_base / 20
 </tbody>
 <tfoot><tr class=uncertain><th scope=row>Total</th>
 <td class="@{[$must_error ? 'FAIL' : '']}">$must_error?</td>
 <td class="@{[$should_error ? 'SEE-RESULT' : '']}">$should_error?</td>
 <td>$warning?</td>
-<td class="@{[$must_error ? 'FAIL' : $should_error ? 'SEE-RESULT' : '']}"><strong>&#x2212;&#x221E;..$score_max</strong></td></tr></tfoot>
+<td class="@{[$must_error ? 'FAIL' : $should_error ? 'SEE-RESULT' : '']}"><strong>&#x2212;&#x221E;..$score_max</strong> / 100
 </table>
 
 <p><strong>Important</strong>: This conformance checking service
@@ -1623,4 +1641,4 @@ and/or modify it under the same terms as Perl itself.
 
 =cut
 
-## $Date: 2008/05/06 08:47:09 $
+## $Date: 2008/05/18 03:47:56 $
