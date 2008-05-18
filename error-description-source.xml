@@ -11,6 +11,14 @@ Web Document Conformance Checker (BETA)</title>
 <body>
 <h1>Description of Errors</h1>
 
+<section id="character-encoding-layer">
+<h2>Character Encoding Layer Errors</h2>
+
+<d:item name="illegal-octets-error" class="error-category-charset" level="m">
+  <d:message xml:lang="en">An illegal octet in the input stream.</d:message>
+</d:item>
+</section>
+
 <section id="html5-character-encoding">
 <h2>HTML5 Character Encoding Errors</h2>
 
@@ -1668,6 +1676,6 @@ is used in the document.</td>
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2008/04/12 15:57:56 $ -->
+<!-- $Date: 2008/05/18 07:24:04 $ -->
 </body>
 </html>

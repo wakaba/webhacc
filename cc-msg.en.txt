@@ -1,3 +1,4 @@
+m:illegal-octets-error;error-category-charset;An illegal octet in the input stream.
 m:character encoding;format-charset must;Character encoding <code><var>$0</var></code> is not allowed for <abbr>HTML</abbr> document.
 s:character encoding;format-charset should;Character encoding <code><var>$0</var></code> should not be used for <abbr>HTML</abbr> document.
 w:character encoding;format-charset warning;Use of UTF-8 is encouraged.
@@ -7,7 +8,7 @@ m:non ascii superset;format-charset error;No character encoding metadata is foun
 w:charset label detected;format-charset warning;While parsing the document as <code><var>$0</var></code>, a character encoding declaration specifying character encoding as <code><var>$1</var></code> is found. The document is reparsed.
 after html;parse-error;Tag <code>&lt;<var>$0</var>&gt;</code> is not allowed after the end tag <code>&lt;/html&gt;</code>.
 after body;parse-error;Tag <code>&lt;<var>$0</var>&gt;</code> is not allowed after the end tag <code>&lt;/body&gt;</code>.
-bare ero;tokenize-error;The <code>&amp;</code> character must introduce a reference.
+bare ero;tokenize-error;The <code>&amp;</code> character must be escaped as <code class="html example">&amp;amp;</code>.
 bare etago;tokenize-error;A <code>&lt;/</code> string is not followed by a tag name.
 bare stago;tokenize-error;A <code>&lt;</code> character is not followed by tag name or by a <code>!</code> character.
 bare nero;tokenize-error;The decimal representation of the code position of a character must be specified after <code>&amp;#</code>.
@@ -67,7 +68,7 @@ s:URI::lowercase hexadecimal digit;should;A lowercase hexadecimal digit is used 
 s:URI::percent-encoded unreserved;should;An unreserved character is percent-encoded.
 s:URI::uppercase scheme name;should;URI scheme name is in uppercase.
 m:not manifest;must;This document is not a cache manifest.
-i:status:cr:element;level-i;This element is in the <strong>call‐for‐implementation</strong> stage.
+i:status:cr:element;level-i;This element is in the <strong>call for implementation</strong> stage.
 i:status:lc:element;level-i;This element is in the <strong>last call for comments</strong> stage.
 i:status:wd:element;level-i;This element is documented in a <strong>working draft</strong>.
 i:status:non-standard:element;level-i;This element is <strong>not part of any standard</strong> the conformance checker knows.

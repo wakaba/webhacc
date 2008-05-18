@@ -8,6 +8,12 @@ Web Document Conformance Checker (BETA)</title>
 <body>
 <h1>Description of Errors</h1>
 
+<section id="character-encoding-layer">
+<h2>Character Encoding Layer Errors</h2>
+
+<div class="section error-category-charset" id="m:illegal-octets-error"><h3>An illegal octet in the input stream.</h3></div>
+</section>
+
 <section id="html5-character-encoding">
 <h2>HTML5 Character Encoding Errors</h2>
 
@@ -26,7 +32,7 @@ Web Document Conformance Checker (BETA)</title>
 
 <div class="section format-charset warning" id="w:character-encoding"><h3>Use of UTF-8 is encouraged.</h3>
     <p>Use of UTF-8 as the character encoding of the document is encouraged,
-    though the use of another character encoding is conforming.</p>
+    though the use of another character encoding is still conforming.</p>
   </div>
 
 <div class="section format-charset unsupported" id="unsupported:character-encoding"><h3>Conformance for character encoding requirements
@@ -92,7 +98,7 @@ Web Document Conformance Checker (BETA)</title>
     encoding of the document as another character encoding is found.
     The occurence of this warning itself does not make the document
     non‐conforming.  However, the failure of the first attempt to
-    to detect the character encoding might be the result of non‐conformance 
+    to detect the character encoding might be a result of non‐conformance 
     of the document.</p>
 
     <p>The document will be reparsed from the beginning.  Some error
@@ -137,7 +143,7 @@ Web Document Conformance Checker (BETA)</title>
   </div>
 
 <div class="section tokenize-error" id="bare-ero"><h3>The <code>&amp;</code> character must
-  introduce a reference.</h3>
+  be escaped as <code class="html example">&amp;amp;</code>.</h3>
     <p>An <code>&amp;</code> character which
     is not part of any reference appears in the input stream.
     The document is non‐conforming.</p>
@@ -1195,8 +1201,8 @@ p {
     the feature is hard or impossible to implement, the feature
     might be revised, or in some case it might be dropped.</p>
 
-    <p>Elements defined by Atom 1.0, and XBL 2.0 belong to this
-    class.</p>
+    <p>Elements defined by Atom 1.0 (IETF Proposed Standard), and XBL 2.0
+    (W3C Candidate Recommendation) belong to this class.</p>
   </div>
 
 <div class="section level-i" id="i:status:lc:element"><h3>This element is in the <strong>last
@@ -1355,6 +1361,6 @@ is used in the document.</td>
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2008/03/21 08:59:47 $ -->
+<!-- $Date: 2008/05/18 07:24:04 $ -->
 </body>
 </html>

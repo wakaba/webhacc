@@ -11,3 +11,7 @@ alert.png, info.png, error.png:
 ok.png:
   LGPL.  See
   <http://www.iconfinder.net/index.php?iconid=1236&size=32&q=OK>.
+
+icons/*.png:
+  LGPL.  See
+  <http://icon-king.com/?p=15>.

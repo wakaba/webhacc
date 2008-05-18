@@ -1,5 +1,14 @@
 2008-05-18  Wakaba  <wakaba@suika.fam.cx>
 
+	* LICENSE: Note on icons/*.png are added.
+
+	* icons/: New directory.
+
+	* cc-style.css: Rules for background images on error category
+	are added.
+
+2008-05-18  Wakaba  <wakaba@suika.fam.cx>
+
 	* cc.cgi (print_source_string_section): Use new Message::Charset::Info
 	interface to decode source code, otherwise the Perl native Encode
 	module might decode the source code into different character

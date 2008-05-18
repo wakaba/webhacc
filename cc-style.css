@@ -202,6 +202,28 @@ q:before, q:after {
   background-image: none;
 }
 
+.error-category-charset {
+  background-image: url(icons/char-16);
+  background-position: left center;
+  background-repeat: no-repeat;
+  padding-left: 20px;
+}
+
+.format-charset, .tokenizer-error, .parse-error {
+  background-image: url(icons/syntax-16);
+  background-position: left center;
+  background-repeat: no-repeat;
+  padding-left: 20px;  
+}
+
+.content-model-error, .attribute-error, .attribute-value-error, 
+.attribute-value-warning, .table-model-error {
+  background-image: url(icons/structure-16);
+  background-position: left center;
+  background-repeat: no-repeat;
+  padding-left: 20px;
+}
+
 #result-para.PASS {
   background-image: url(ok);
 }
@@ -410,6 +432,6 @@ Copyright 2007-2008 Wakaba <w@suika.fam.cx>.
 This library is free software; you can redistribute it
 and/or modify it under the same terms as Perl itself.
 
-$Date: 2008/04/29 10:59:25 $
+$Date: 2008/05/18 07:24:04 $
 
 */
