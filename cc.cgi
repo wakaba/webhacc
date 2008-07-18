@@ -161,6 +161,7 @@ sub check_and_print ($$) {
   my $el;
   my $cssom;
   my $manifest;
+  my $idl;
   my @subdoc;
 
   if ($input->{media_type} eq 'text/html') {
@@ -195,6 +196,10 @@ sub check_and_print ($$) {
     $manifest = print_syntax_error_manifest_section ($input, $result);
     print_source_string_section ($input, \($input->{s}),
                                  'utf-8');
+  } elsif ($input->{media_type} eq 'text/x-webidl') { ## TODO: type
+    $idl = print_syntax_error_webidl_section ($input, $result);
+    print_source_string_section ($input, \($input->{s}),
+                                 'utf-8'); ## TODO: charset
   } else {
     ## TODO: Change HTTP status code??
     print_result_unknown_type_section ($input, $result);
@@ -227,6 +232,9 @@ sub check_and_print ($$) {
   } elsif (defined $manifest) {
     print_structure_dump_manifest_section ($input, $manifest);
     print_structure_error_manifest_section ($input, $manifest, $result);
+  } elsif (defined $idl) {
+    print_structure_dump_webidl_section ($input, $idl);
+    print_structure_error_webidl_section ($input, $idl, $result);
   }
 
   my $id_prefix = 0;
@@ -673,6 +681,42 @@ sub print_syntax_error_manifest_section ($$) {
   return $manifest;
 } # print_syntax_error_manifest_section
 
+sub print_syntax_error_webidl_section ($$) {
+  my ($input, $result) = @_;
+
+  require Whatpm::WebIDL;
+
+  print STDOUT qq[
+<div id="$input->{id_prefix}parse-errors" class="section">
+<h2>Parse Errors</h2>
+
+<dl id="$input->{id_prefix}parse-errors-list">];
+  push @nav, ['#parse-errors' => 'Parse Error'] unless $input->{nested};
+
+  my $onerror = sub {
+    my (%opt) = @_;
+    my ($type, $cls, $msg) = get_text ($opt{type}, $opt{level});
+    print STDOUT qq[<dt class="$cls">], get_error_label ($input, \%opt),
+        qq[</dt>];
+    $type =~ tr/ /-/;
+    $type =~ s/\|/%7C/g;
+    $msg .= qq[ [<a href="../error-description#@{[htescape ($type)]}">Description</a>]];
+    print STDOUT qq[<dd class="$cls">], get_error_level_label (\%opt);
+    print STDOUT qq[$msg</dd>\n];
+
+    add_error ('syntax', \%opt => $result);
+  };
+
+  require Encode;
+  my $s = $input->{is_char_string} ? $input->{s} : Encode::decode ($input->{charset} || 'utf-8', $input->{s}); ## TODO: charset
+  my $parser = Whatpm::WebIDL::Parser->new;
+  my $idl = $parser->parse_char_string ($input->{s}, $onerror);
+
+  print STDOUT qq[</dl></div>];
+
+  return $idl;
+} # print_syntax_error_webidl_section
+
 sub print_source_string_section ($$$) {
   my $input = shift;
   my $s;
@@ -887,6 +931,23 @@ sub print_structure_dump_manifest_section ($$) {
   print STDOUT qq[</dl></div>];
 } # print_structure_dump_manifest_section
 
+sub print_structure_dump_webidl_section ($$) {
+  my ($input, $idl) = @_;
+
+  print STDOUT qq[
+<div id="$input->{id_prefix}dump-webidl" class="section">
+<h2>WebIDL</h2>
+];
+  push @nav, [qq[#$input->{id_prefix}dump-webidl] => 'WebIDL']
+      unless $input->{nested};
+
+  print STDOUT "<pre>";
+  print STDOUT htescape ($idl->idl_text);
+  print STDOUT "</pre>";
+
+  print STDOUT qq[</div>];
+} # print_structure_dump_webidl_section
+
 sub print_structure_error_dom_section ($$$$$) {
   my ($input, $doc, $el, $result, $onsubdoc) = @_;
 
@@ -953,6 +1014,21 @@ sub print_structure_error_manifest_section ($$$) {
 
   print STDOUT qq[</div>];
 } # print_structure_error_manifest_section
+
+sub print_structure_error_webidl_section ($$$) {
+  my ($input, $idl, $result) = @_;
+
+  print STDOUT qq[<div id="$input->{id_prefix}document-errors" class="section">
+<h2>Document Errors</h2>
+
+<dl>];
+  push @nav, [qq[#$input->{id_prefix}document-errors] => 'Document Error']
+      unless $input->{nested};
+
+## TODO:
+
+  print STDOUT qq[</div>];
+} # print_structure_error_webidl_section
 
 sub print_table_section ($$) {
   my ($input, $tables) = @_;
@@ -1641,4 +1717,4 @@ and/or modify it under the same terms as Perl itself.
 
 =cut
 
-## $Date: 2008/05/18 03:47:56 $
+## $Date: 2008/07/18 14:44:16 $
