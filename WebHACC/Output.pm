@@ -119,7 +119,7 @@ sub code ($$) {
 
 sub link ($$%) {
   my ($self, $content, %opt) = @_;
-  $self->html ('<a href="' . $htescape->($opt{url}) . '">');
+  $self->start_tag ('a', %opt, href => $opt{url});
   $self->text ($content);
   $self->html ('</a>');
 } # link
@@ -131,6 +131,12 @@ sub xref ($$%) {
   $self->html ('</a>');
 } # xref
 
+sub link_to_webhacc ($$%) {
+  my ($self, $content, %opt) = @_;
+  $opt{url} = './?uri=' . $self->encode_url_component ($opt{url});
+  $self->link ($content, %opt);
+} # link_to_webhacc
+
 sub nav_list ($) {
   my $self = shift;
   $self->html (q[<ul class="navigation" id="nav-items">]);
@@ -139,5 +145,14 @@ sub nav_list ($) {
   }
   $self->html ('</ul>');
 } # nav_list
+
+
+sub encode_url_component ($$) {
+  shift;
+  require Encode;
+  my $s = Encode::encode ('utf8', shift);
+  $s =~ s/([^0-9A-Za-z_.~-])/sprintf '%%%02X', ord $1/ge;
+  return $s;
+} # encode_url_component
 
 1;

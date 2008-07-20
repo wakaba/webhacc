@@ -1,3 +1,16 @@
+2008-07-21  Wakaba  <wakaba@suika.fam.cx>
+
+	* Input.pm (generate_transfer_sections, generate_http_header_section):
+	New (partially comes from cc.cgi).
+
+	* Output.pm (link): Call |start_tag| such that attributes
+	can be set.
+	(link_to_webhacc): New.
+	(encode_url_component): From WebHACC::Language::Base.
+
+	* Result.pm: Support for error outputting and result table
+	generation.
+
 2008-07-20  Wakaba  <wakaba@suika.fam.cx>
 
 	* ChangeLog: New file.

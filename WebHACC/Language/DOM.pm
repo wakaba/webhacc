@@ -166,17 +166,7 @@ sub generate_structure_error_section ($) {
 
   require Whatpm::ContentChecker;
   my $onerror = sub {
-    my %opt = @_;
-    my ($type, $cls, $msg) = main::get_text ($opt{type}, $opt{level}, $opt{node});
-    $type =~ tr/ /-/;
-    $type =~ s/\|/%7C/g;
-    $out->html (qq[<dt class="$cls">] . $result->get_error_label ($input, \%opt));
-    $out->html (qq[<dd class="$cls">] . $result->get_error_level_label (\%opt));
-    $out->html ($msg);
-    $out->text (' [');
-    $out->link ('Description', url => '../error-description#' . $type);
-    $out->text (']');
-    main::add_error ('structure', \%opt => $result);
+    $result->add_error (@_, layer => 'structure');
   };
 
   my $onsubdoc = $self->onsubdoc;

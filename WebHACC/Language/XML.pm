@@ -21,19 +21,16 @@ sub generate_syntax_error_section ($) {
 
   my $onerror = sub {
     my $err = shift;
-    my $line = $err->location->line_number;
-    $out->start_tag ('dt');
-    $out->xref (qq[Line $line], target => 'line-' . $line);
-    $out->html (' column ' . $err->location->column_number . '<dd>');
-    $out->text ($err->text);
-
-    add_error ('syntax', {type => $err->text,
-                level => [
+    $result->add_error (line => $err->location->line_number,
+                        column => $err->location->column_number,
+                        type => 'xml parse error',
+                        value => $err->text,
+                        level => [
                           $err->SEVERITY_FATAL_ERROR => 'm',
                           $err->SEVERITY_ERROR => 'm',
                           $err->SEVERITY_WARNING => 's',
-                         ]->[$err->severity]} => $result);
-
+                        ]->[$err->severity],
+                        layer => 'syntax');
     return 1;
   };
 

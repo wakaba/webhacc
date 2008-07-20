@@ -23,18 +23,7 @@ sub generate_syntax_error_section ($) {
   my $result = $self->result;
 
   my $onerror = sub {
-    my (%opt) = @_;
-    my ($type, $cls, $msg) = main::get_text ($opt{type}, $opt{level});
-    $out->html (qq[<dt class="$cls">] . $result->get_error_label ($input, \%opt));
-    $type =~ tr/ /-/;
-    $type =~ s/\|/%7C/g;
-    $out->html (qq[<dd class="$cls">] . $result->get_error_level_label (\%opt) , $msg);
-    $out->text (' [');
-    $out->link ('Description',
-                url => '../error-description#' . $type);
-    $out->text (']');
-
-    main::add_error ('syntax', \%opt => $result);
+    $result->add_error (@_, layer => 'syntax');
   };
 
   my $dom = Message::DOM::DOMImplementation->new;

@@ -21,21 +21,11 @@ sub generate_syntax_error_section ($) {
   my $input = $self->input;
   my $result = $self->result;
 
-  my $onerror = sub {
-    my (%opt) = @_;
-    my ($type, $cls, $msg) = get_text ($opt{type}, $opt{level});
-    $out->html (qq[<dt class="$cls">], get_error_label ($input, \%opt));
-    $type =~ tr/ /-/;
-    $type =~ s/\|/%7C/g;
-    $msg .= qq[ [<a href="../error-description#@{[htescape ($type)]}">Description</a>]];
-    $out->html (qq[<dd class="$cls">], get_error_level_label (\%opt) . $msg);
-
-    add_error ('syntax', \%opt => $result);
-  };
-
   my $m = $input->{is_char_string} ? 'parse_char_string' : 'parse_byte_string';
   $self->{structure} = Whatpm::CacheManifest->$m
-      ($input->{s}, $input->{uri}, $input->{base_uri}, $onerror);
+      ($input->{s}, $input->{uri}, $input->{base_uri}, sub {
+        $result->add_error (@_, layer => 'syntax', index_has_link => 1);
+      });
 
   $out->end_tag ('dl');
   $out->end_section;
@@ -87,14 +77,7 @@ sub generate_structure_error_section ($) {
   my $result = $out->result;
 
   Whatpm::CacheManifest->check_manifest ($self->{structure}, sub {
-    my %opt = @_;
-    my ($type, $cls, $msg) = get_text ($opt{type}, $opt{level}, $opt{node});
-    $type =~ tr/ /-/;
-    $type =~ s/\|/%7C/g;
-    $msg .= qq[ [<a href="../error-description#@{[htescape ($type)]}">Description</a>]];
-    $out->html (qq[<dt class="$cls">] . get_error_label ($input, \%opt) .
-        qq[</dt>\n<dd class="$cls">], $msg, "</dd>\n");
-    add_error ('structure', \%opt => $result);
+    $result->add_error (@_, layer => 'structure');
   });
 
   $out->end_section;

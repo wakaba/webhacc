@@ -22,34 +22,10 @@ sub generate_syntax_error_section ($) {
   $p->init;
   $p->{onerror} = sub {
     my (%opt) = @_;
-    my ($type, $cls, $msg) = get_text ($opt{type}, $opt{level});
-    if ($opt{token}) {
-      $out->start_tag ('dt', class => $cls);
-      $out->xref (qq[Line $opt{token}->{line}],
-                  target => 'line-' . $opt{token}->{line});
-      $out->text (qq[column $opt{token}->{column}]);
-    } else {
-      $out->start_tag ('dt', class => $cls);
-      $out->text (q[Unknown location]);
+    if (not defined $opt{value} and defined $opt{token}) {
+      $opt{value} = Whatpm::CSS::Tokenizer->serialize_token ($opt{token});
     }
-    if (defined $opt{value}) {
-      $out->html (q[ (<code>]);
-      $out->text ($opt{token});
-      $out->html (q[</code>)]);
-    } elsif (defined $opt{token}) {
-      $out->html (q[ (<code>]);
-      $out->text (Whatpm::CSS::Tokenizer->serialize_token ($opt{token}));
-      $out->html (q[</code>)]);
-    }
-    $type =~ tr/ /-/;
-    $type =~ s/\|/%7C/g;
-    $out->html (qq[<dd class="$cls">] . get_error_level_label (\%opt));
-    $out->html ($msg);
-    $out->text (' [');
-    $out->link ('Description', url => q<../error-description#> . $type);
-    $out->text (']');
-
-    add_error ('syntax', \%opt => $result);
+    $result->add_error (%opt, layer => 'syntax');
   };
   $p->{href} = $input->{uri};
   $p->{base_uri} = $input->{base_uri};
@@ -100,9 +76,19 @@ sub generate_structure_dump_section ($) {
 } # generate_structure_dump_section
 
 sub generate_structure_error_section ($) {
-  ## TODO: CSSOM validation
-  my $result = shift->result;
-  add_error ('structure', {level => 'u'} => $result);
+  my $self = shift;
+
+  my $out = $self->output;
+
+  $out->start_section (id => 'document-errors', title => 'Document Errors');
+  $out->start_tag ('dl', class => 'document-errors-list');
+
+  $self->result->add_error (level => 'u',
+                            layer => 'structure',
+                            type => 'CSSOM validation not supported');
+
+  $out->end_tag ('dl');
+  $out->end_section;
 } # generate_structure_error_section
 
 sub get_css_parser () {

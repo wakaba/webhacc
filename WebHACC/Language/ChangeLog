@@ -1,3 +1,12 @@
+2008-07-21  Wakaba  <wakaba@suika.fam.cx>
+
+	* Base.pm (_get_cc_url, _encode_url_component): Remove (now
+	supported by WebHACC::Output).
+
+	* CSS.pm, CacheManifest.pm, DOM.pm, Default.pm,
+	HTML.pm, WebIDL.pm, XML.pm: Error reporting is now delegated to
+	WebHACC::Result.
+
 2008-07-20  Wakaba  <wakaba@suika.fam.cx>
 
 	* ChangeLog: New file.

@@ -106,14 +106,22 @@ my $out;
     $out->end_section;
 
     my $result = WebHACC::Result->new;
+    $result->output ($out);
     $result->{conforming_min} = 1;
     $result->{conforming_max} = 1;
     check_and_print ($input => $result => $out);
-    print_result_section ($result);
+    $result->generate_result_section;
   } else {
     $out->html ('</dl>');
     $out->end_section;
-    print_result_input_error_section ($input);
+
+    my $result = WebHACC::Result->new;
+    $result->output ($out);
+    $result->{conforming_min} = 0;
+    $result->{conforming_max} = 1;
+
+    $input->generate_transfer_sections ($result);
+    $result->generate_result_section;
   }
 
   $out->nav_list;
@@ -121,42 +129,12 @@ my $out;
   exit;
 }
 
-sub add_error ($$$) {
-  my ($layer, $err, $result) = @_;
-  if (defined $err->{level}) {
-    if ($err->{level} eq 's') {
-      $result->{$layer}->{should}++;
-      $result->{$layer}->{score_min} -= 2;
-      $result->{conforming_min} = 0;
-    } elsif ($err->{level} eq 'w' or $err->{level} eq 'g') {
-      $result->{$layer}->{warning}++;
-    } elsif ($err->{level} eq 'u' or $err->{level} eq 'unsupported') {
-      $result->{$layer}->{unsupported}++;
-      $result->{unsupported} = 1;
-    } elsif ($err->{level} eq 'i') {
-      #
-    } else {
-      $result->{$layer}->{must}++;
-      $result->{$layer}->{score_max} -= 2;
-      $result->{$layer}->{score_min} -= 2;
-      $result->{conforming_min} = 0;
-      $result->{conforming_max} = 0;
-    }
-  } else {
-    $result->{$layer}->{must}++;
-    $result->{$layer}->{score_max} -= 2;
-    $result->{$layer}->{score_min} -= 2;
-    $result->{conforming_min} = 0;
-    $result->{conforming_max} = 0;
-  }
-} # add_error
-
 sub check_and_print ($$$) {
   my ($input, $result, $out) = @_;
   my $original_input = $out->input;
   $out->input ($input);
 
-  print_http_header_section ($input, $result);
+  $input->generate_transfer_sections ($result);
 
   my @subdoc;
 
@@ -248,43 +226,6 @@ sub check_and_print ($$$) {
 
   $out->input ($original_input);
 } # check_and_print
-
-sub print_http_header_section ($$) {
-  my ($input, $result) = @_;
-  return unless defined $input->{header_status_code} or
-      defined $input->{header_status_text} or
-      @{$input->{header_field} or []};
-  
-  $out->start_section (id => 'source-header', title => 'HTTP Header');
-  print STDOUT qq[<p><strong>Note</strong>: Due to the limitation of the
-network library in use, the content of this section might
-not be the real header.</p>
-
-<table><tbody>
-];
-
-  if (defined $input->{header_status_code}) {
-    print STDOUT qq[<tr><th scope="row">Status code</th>];
-    print STDOUT qq[<td>];
-    $out->code ($input->{header_status_code});
-  }
-  if (defined $input->{header_status_text}) {
-    print STDOUT qq[<tr><th scope="row">Status text</th>];
-    print STDOUT qq[<td>];
-    $out->code ($input->{header_status_text});
-  }
-  
-  for (@{$input->{header_field}}) {
-    print STDOUT qq[<tr><th scope="row">];
-    $out->code ($_->[0]);
-    print STDOUT qq[<td>];
-    $out->code ($_->[1]);
-  }
-
-  print STDOUT qq[</tbody></table>];
-
-  $out->end_section;
-} # print_http_header_section
 
 sub print_table_section ($$) {
   my ($input, $tables) = @_;
@@ -422,104 +363,6 @@ sub get_rdf_resource_html ($) {
   }
 } # get_rdf_resource_html
 
-sub print_result_section ($) {
-  my $result = shift;
-
-  $out->start_section (id => 'result-summary',
-                       title => 'Result');
-
-  if ($result->{unsupported} and $result->{conforming_max}) {  
-    print STDOUT qq[<p class=uncertain id=result-para>The conformance
-        checker cannot decide whether the document is conforming or
-        not, since the document contains one or more unsupported
-        features.  The document might or might not be conforming.</p>];
-  } elsif ($result->{conforming_min}) {
-    print STDOUT qq[<p class=PASS id=result-para>No conformance-error is
-        found in this document.</p>];
-  } elsif ($result->{conforming_max}) {
-    print STDOUT qq[<p class=SEE-RESULT id=result-para>This document
-        is <strong>likely <em>non</em>-conforming</strong>, but in rare case
-        it might be conforming.</p>];
-  } else {
-    print STDOUT qq[<p class=FAIL id=result-para>This document is 
-        <strong><em>non</em>-conforming</strong>.</p>];
-  }
-
-  print STDOUT qq[<table>
-<colgroup><col><colgroup><col><col><col><colgroup><col>
-<thead>
-<tr><th scope=col></th>
-<th scope=col><a href="../error-description#level-m"><em class=rfc2119>MUST</em>‐level
-Errors</a></th>
-<th scope=col><a href="../error-description#level-s"><em class=rfc2119>SHOULD</em>‐level
-Errors</a></th>
-<th scope=col><a href="../error-description#level-w">Warnings</a></th>
-<th scope=col>Score</th></tr></thead><tbody>];
-
-  my $must_error = 0;
-  my $should_error = 0;
-  my $warning = 0;
-  my $score_min = 0;
-  my $score_max = 0;
-  my $score_base = 20;
-  my $score_unit = $score_base / 100;
-  for (
-    [Transfer => 'transfer', ''],
-    [Character => 'char', ''],
-    [Syntax => 'syntax', '#parse-errors'],
-    [Structure => 'structure', '#document-errors'],
-  ) {
-    $must_error += ($result->{$_->[1]}->{must} += 0);
-    $should_error += ($result->{$_->[1]}->{should} += 0);
-    $warning += ($result->{$_->[1]}->{warning} += 0);
-    $score_min += (($result->{$_->[1]}->{score_min} *= $score_unit) += $score_base);
-    $score_max += (($result->{$_->[1]}->{score_max} *= $score_unit) += $score_base);
-
-    my $uncertain = $result->{$_->[1]}->{unsupported} ? '?' : '';
-    my $label = $_->[0];
-    if ($result->{$_->[1]}->{must} or
-        $result->{$_->[1]}->{should} or
-        $result->{$_->[1]}->{warning} or
-        $result->{$_->[1]}->{unsupported}) {
-      $label = qq[<a href="$_->[2]">$label</a>];
-    }
-
-    print STDOUT qq[<tr class="@{[$uncertain ? 'uncertain' : '']}"><th scope=row>$label</th><td class="@{[$result->{$_->[1]}->{must} ? 'FAIL' : '']}">$result->{$_->[1]}->{must}$uncertain</td><td class="@{[$result->{$_->[1]}->{should} ? 'SEE-RESULT' : '']}">$result->{$_->[1]}->{should}$uncertain</td><td>$result->{$_->[1]}->{warning}$uncertain</td>];
-    if ($uncertain) {
-      print qq[<td class="@{[$result->{$_->[1]}->{must} ? 'FAIL' : $result->{$_->[1]}->{should} ? 'SEE-RESULT' : '']}">&#x2212;&#x221E;..$result->{$_->[1]}->{score_max}];
-    } elsif ($result->{$_->[1]}->{score_min} != $result->{$_->[1]}->{score_max}) {
-      print qq[<td class="@{[$result->{$_->[1]}->{must} ? 'FAIL' : 'SEE-RESULT']}">$result->{$_->[1]}->{score_min}..$result->{$_->[1]}->{score_max}];
-    } else {
-      print qq[<td class="@{[$result->{$_->[1]}->{must} ? 'FAIL' : '']}">$result->{$_->[1]}->{score_min}];
-    }
-    print qq[ / 20];
-  }
-
-  $score_max += $score_base;
-
-  print STDOUT qq[
-<tr class=uncertain><th scope=row>Semantics</th><td>0?</td><td>0?</td><td>0?</td><td>&#x2212;&#x221E;..$score_base / 20
-</tbody>
-<tfoot><tr class=uncertain><th scope=row>Total</th>
-<td class="@{[$must_error ? 'FAIL' : '']}">$must_error?</td>
-<td class="@{[$should_error ? 'SEE-RESULT' : '']}">$should_error?</td>
-<td>$warning?</td>
-<td class="@{[$must_error ? 'FAIL' : $should_error ? 'SEE-RESULT' : '']}"><strong>&#x2212;&#x221E;..$score_max</strong> / 100
-</table>
-
-<p><strong>Important</strong>: This conformance checking service
-is <em>under development</em>.  The result above might be <em>wrong</em>.</p>];
-  $out->end_section;
-} # print_result_section
-
-sub print_result_input_error_section ($) {
-  my $input = shift;
-  $out->start_section (id => 'result-summary', title => 'Result');
-  print STDOUT qq[
-<p><em><strong>Input Error</strong>: @{[htescape ($input->{error_status_text})]}</em></p>];
-  $out->end_section;
-} # print_result_input_error_section
-
 {
   my $Msg = {};
 
@@ -581,15 +424,18 @@ sub get_text ($;$$) {
 sub get_input_document ($$) {
   my ($http, $dom) = @_;
 
-  my $request_uri = $http->get_parameter ('uri');
+  require Encode;
+  my $request_uri = Encode::decode ('utf-8', $http->get_parameter ('uri'));
   my $r = WebHACC::Input->new;
   if (defined $request_uri and length $request_uri) {
     my $uri = $dom->create_uri_reference ($request_uri);
     unless ({
              http => 1,
             }->{lc $uri->uri_scheme}) {
-      return {uri => $request_uri, request_uri => $request_uri,
-              error_status_text => 'URI scheme not allowed'};
+      $r = WebHACC::Input::Error->new;
+      $r->{uri} = $request_uri;
+      $r->{request_uri} = $request_uri;
+      $r->{error_status_text} = 'URL scheme not allowed';
     }
 
     require Message::Util::HostPermit;
@@ -616,8 +462,11 @@ Deny ipv6=0::0/0
 Allow host=*
 EOH
     unless ($host_permit->check ($uri->uri_host, $uri->uri_port || 80)) {
-      return {uri => $request_uri, request_uri => $request_uri,
-              error_status_text => 'Connection to the host is forbidden'};
+      my $r = WebHACC::Input::Error->new;
+      $r->{uri} = $request_uri;
+      $r->{request_uri} = $request_uri;
+      $r->{error_status_text} = 'Connection to the host is forbidden';
+      return $r;
     }
 
     require LWP::UserAgent;
@@ -767,4 +616,4 @@ and/or modify it under the same terms as Perl itself.
 
 =cut
 
-## $Date: 2008/07/20 14:58:24 $
+## $Date: 2008/07/20 16:53:10 $

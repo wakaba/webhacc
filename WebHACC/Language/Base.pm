@@ -5,6 +5,12 @@ sub new ($) {
   die "$0: No constructor is defined for " . ref $_[0];
 } # new
 
+## NOTE:
+## Language ->input, ->output, ->result
+## Input
+## Output ->input
+## Result ->output
+
 sub input ($;$) {
   if (@_ > 1) {
     if (defined $_[1]) {
@@ -54,7 +60,7 @@ sub onsubdoc ($;$) {
 } # onsubdoc
 
 sub generate_syntax_error_section ($) {
-  die "$0: Syntactical checking for " . ref $_[0] . " is not supported";
+  die "$0: Syntactical checking for " . (ref $_[0]) . " is not supported";
 } # generate_syntax_error_section
 
 sub generate_structure_dump_section ($) {
@@ -160,8 +166,7 @@ sub generate_url_section ($) {
     $out->start_tag ('dt');
     $out->url ($url);
     $out->start_tag ('dd');
-    $out->link ('Check conformance of this document',
-                url => _get_cc_url ($url));
+    $out->link_to_webhacc ('Check conformance of this document', url => $url);
     $out->html ('<dd>Found in: <ul>');
     for my $entry (@{$urls->{$url}}) {
       $out->html (qq[<li>] . $result->get_node_link ($input, $entry->{node}));
@@ -188,16 +193,5 @@ sub generate_url_section ($) {
   $out->end_tag ('dl');
   $out->end_section;
 } # generate_url_section
-
-sub _encode_url_component ($) {
-  require Encode;
-  my $s = Encode::encode ('utf8', shift);
-  $s =~ s/([^0-9A-Za-z_.~-])/sprintf '%%%02X', ord $1/ge;
-  return $s;
-} # _encode_url_component
-
-sub _get_cc_url ($) {
-  return './?uri=' . _encode_url_component ($_[0]);
-} # _get_cc_url
 
 1;
