@@ -1,0 +1,9 @@
+2008-07-20  Wakaba  <wakaba@suika.fam.cx>
+
+	* ChangeLog: New file.
+
+	* Input.pm, Output.pm, Result.pm: New modules.
+
+	* Langauge/: New directory.
+	
+

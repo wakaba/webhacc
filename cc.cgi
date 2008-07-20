@@ -6,22 +6,13 @@ use lib qw[/home/httpd/html/www/markup/html/whatpm
            /home/wakaba/work/manakai2/lib];
 use CGI::Carp qw[fatalsToBrowser];
 use Scalar::Util qw[refaddr];
-use Time::HiRes qw/time/;
 
-sub htescape ($) {
-  my $s = $_[0];
-  $s =~ s/&/&amp;/g;
-  $s =~ s/</&lt;/g;
-  $s =~ s/>/&gt;/g;
-  $s =~ s/"/&quot;/g;
-  $s =~ s{([\x00-\x09\x0B-\x1F\x7F-\xA0\x{FEFF}\x{FFFC}-\x{FFFF}])}{
-    sprintf '<var>U+%04X</var>', ord $1;
-  }ge;
-  return $s;
-} # htescape
+  require WebHACC::Input;
+  require WebHACC::Result;
+  require WebHACC::Output;
 
-  my @nav;
-  my %time;
+my $out;
+
   require Message::DOM::DOMImplementation;
   my $dom = Message::DOM::DOMImplementation->new;
 {
@@ -32,13 +23,14 @@ sub htescape ($) {
     print STDOUT "Status: 404 Not Found\nContent-Type: text/plain; charset=us-ascii\n\n400";
     exit;
   }
-
-  binmode STDOUT, ':utf8';
-  $| = 1;
-
+  
   load_text_catalog ('en'); ## TODO: conneg
 
-  print STDOUT qq[Content-Type: text/html; charset=utf-8
+  $out = WebHACC::Output->new;
+  $out->handle (*STDOUT);
+  $out->set_utf8;
+  $out->set_flush;
+  $out->html (qq[Content-Type: text/html; charset=utf-8
 
 <!DOCTYPE html>
 <html lang="en">
@@ -49,77 +41,84 @@ sub htescape ($) {
 <body>
 <h1><a href="../cc-interface">Web Document Conformance Checker</a> 
 (<em>beta</em>)</h1>
-];
+]);
 
-  $| = 0;
   my $input = get_input_document ($http, $dom);
+  $out->input ($input);
+  $out->unset_flush;
+
   my $char_length = 0;
 
-  print qq[
-<div id="document-info" class="section">
-<dl>
-<dt>Request URI</dt>
-    <dd><code class="URI" lang="">&lt;<a href="@{[htescape $input->{request_uri}]}">@{[htescape $input->{request_uri}]}</a>&gt;</code></dd>
-<dt>Document URI</dt>
-    <dd><code class="URI" lang="">&lt;<a href="@{[htescape $input->{uri}]}" id=anchor-document-uri>@{[htescape $input->{uri}]}</a>&gt;</code>
+  $out->start_section (id => 'document-info', title => 'Information');
+  $out->html (qq[<dl>
+<dt>Request URL</dt>
+    <dd>]);
+  $out->url ($input->{request_uri});
+  $out->html (q[<dt>Document URL<!-- HTML5 document's address? -->
+    <dd>]);
+  $out->url ($input->{uri}, id => 'anchor-document-url');
+  $out->html (q[
     <script>
       document.title = '<'
-          + document.getElementById ('anchor-document-uri').href + '> \\u2014 '
+          + document.getElementById ('anchor-document-url').href + '> \\u2014 '
           + document.title;
-    </script></dd>
-]; # no </dl> yet
-  push @nav, ['#document-info' => 'Information'];
+    </script>]);
+  ## NOTE: no </dl> yet
 
-if (defined $input->{s}) {
-  $char_length = length $input->{s};
+  if (defined $input->{s}) {
+    $char_length = length $input->{s};
 
-  print STDOUT qq[
-<dt>Base URI</dt>
-    <dd><code class="URI" lang="">&lt;<a href="@{[htescape $input->{base_uri}]}">@{[htescape $input->{base_uri}]}</a>&gt;</code></dd>
-<dt>Internet Media Type</dt>
-    <dd><code class="MIME" lang="en">@{[htescape $input->{media_type}]}</code>
-    @{[$input->{media_type_overridden} ? '<em>(overridden)</em>' : defined $input->{official_type} ? $input->{media_type} eq $input->{official_type} ? '' : '<em>(sniffed; official type is: <code class=MIME lang=en>'.htescape ($input->{official_type}).'</code>)' : '<em>(sniffed)</em>']}</dd>
-<dt>Character Encoding</dt>
-    <dd>@{[defined $input->{charset} ? '<code class="charset" lang="en">'.htescape ($input->{charset}).'</code>' : '(none)']}
-    @{[$input->{charset_overridden} ? '<em>(overridden)</em>' : '']}</dd>
+    $out->html (qq[<dt>Base URI<dd>]);
+    $out->url ($input->{base_uri});
+    $out->html (qq[<dt>Internet Media Type</dt>
+    <dd><code class="MIME" lang="en">]);
+    $out->text ($input->{media_type});
+    $out->html (qq[</code> ]);
+    if ($input->{media_type_overridden}) {
+      $out->html ('<em>(overridden)</em>');
+    } elsif (defined $input->{official_type}) {
+      if ($input->{media_type} eq $input->{official_type}) {
+        #
+      } else {
+        $out->html ('<em>(sniffed; official type is: <code class=MIME lang=en>');
+        $out->text ($input->{official_type});
+        $out->html ('</code>)');
+      }
+    } else {
+      $out->html ('<em>(sniffed)</em>');
+    }
+    $out->html (q[<dt>Character Encoding<dd>]);
+    if (defined $input->{charset}) {
+      $out->html ('<code class="charset" lang="en">');
+      $out->text ($input->{charset});
+      $out->html ('</code>');
+    } else {
+      $out->text ('(none)');
+    }
+    $out->html (' <em>overridden</em>') if $input->{charset_overridden};
+    $out->html (qq[
 <dt>Length</dt>
     <dd>$char_length byte@{[$char_length == 1 ? '' : 's']}</dd>
 </dl>
-</div>
 
 <script src="../cc-script.js"></script>
-];
+]);
+    $out->end_section;
 
-  $input->{id_prefix} = '';
-  #$input->{nested} = 0;
-  my $result = {conforming_min => 1, conforming_max => 1};
-  check_and_print ($input => $result);
-  print_result_section ($result);
-} else {
-  print STDOUT qq[</dl></div>];
-  print_result_input_error_section ($input);
-}
-
-  print STDOUT qq[
-<ul class="navigation" id="nav-items">
-];
-  for (@nav) {
-    print STDOUT qq[<li><a href="$_->[0]">$_->[1]</a></li>];
-  }
-  print STDOUT qq[
-</ul>
-</body>
-</html>
-];
-
-  for (qw/decode parse parse_html parse_xml parse_manifest
-          check check_manifest/) {
-    next unless defined $time{$_};
-    open my $file, '>>', ".cc-$_.txt" or die ".cc-$_.txt: $!";
-    print $file $char_length, "\t", $time{$_}, "\n";
+    my $result = WebHACC::Result->new;
+    $result->{conforming_min} = 1;
+    $result->{conforming_max} = 1;
+    check_and_print ($input => $result => $out);
+    print_result_section ($result);
+  } else {
+    $out->html ('</dl>');
+    $out->end_section;
+    print_result_input_error_section ($input);
   }
 
-exit;
+  $out->nav_list;
+
+  exit;
 }
 
 sub add_error ($$$) {
@@ -152,67 +151,58 @@ sub add_error ($$$) {
   }
 } # add_error
 
-sub check_and_print ($$) {
-  my ($input, $result) = @_;
+sub check_and_print ($$$) {
+  my ($input, $result, $out) = @_;
+  my $original_input = $out->input;
+  $out->input ($input);
 
   print_http_header_section ($input, $result);
 
-  my $doc;
-  my $el;
-  my $cssom;
-  my $manifest;
-  my $idl;
   my @subdoc;
 
-  if ($input->{media_type} eq 'text/html') {
-    ($doc, $el) = print_syntax_error_html_section ($input, $result);
-    print_source_string_section
-        ($input,
-         \($input->{s}),
-         $input->{charset} || $doc->input_encoding);
-  } elsif ({
-            'text/xml' => 1,
-            'application/atom+xml' => 1,
-            'application/rss+xml' => 1,
-            'image/svg+xml' => 1,
-            'application/xhtml+xml' => 1,
-            'application/xml' => 1,
-            ## TODO: Should we make all XML MIME Types fall
-            ## into this category?
+  my $checker_class = {
+    'text/cache-manifest' => 'WebHACC::Language::CacheManifest',
+    'text/css' => 'WebHACC::Language::CSS',
+    'text/html' => 'WebHACC::Language::HTML',
+    'text/x-webidl' => 'WebHACC::Language::WebIDL',
 
-            'application/rdf+xml' => 1, ## NOTE: This type has different model.
-           }->{$input->{media_type}}) {
-    ($doc, $el) = print_syntax_error_xml_section ($input, $result);
-    print_source_string_section ($input,
-                                 \($input->{s}),
-                                 $doc->input_encoding);
-  } elsif ($input->{media_type} eq 'text/css') {
-    $cssom = print_syntax_error_css_section ($input, $result);
-    print_source_string_section
-        ($input, \($input->{s}),
-         $cssom->manakai_input_encoding);
-  } elsif ($input->{media_type} eq 'text/cache-manifest') {
-## TODO: MUST be text/cache-manifest
-    $manifest = print_syntax_error_manifest_section ($input, $result);
-    print_source_string_section ($input, \($input->{s}),
-                                 'utf-8');
-  } elsif ($input->{media_type} eq 'text/x-webidl') { ## TODO: type
-    $idl = print_syntax_error_webidl_section ($input, $result);
-    print_source_string_section ($input, \($input->{s}),
-                                 'utf-8'); ## TODO: charset
-  } else {
-    ## TODO: Change HTTP status code??
-    print_result_unknown_type_section ($input, $result);
-  }
+    'text/xml' => 'WebHACC::Language::XML',
+    'application/atom+xml' => 'WebHACC::Language::XML',
+    'application/rss+xml' => 'WebHACC::Language::XML',
+    'image/svg+xml' => 'WebHACC::Language::XML',
+    'application/xhtml+xml' => 'WebHACC::Language::XML',
+    'application/xml' => 'WebHACC::Language::XML',
+    ## TODO: Should we make all XML MIME Types fall
+    ## into this category?
+
+    ## NOTE: This type has different model from normal XML types.
+    'application/rdf+xml' => 'WebHACC::Language::XML',
+  }->{$input->{media_type}} || 'WebHACC::Language::Default';
+
+  eval qq{ require $checker_class } or die "$0: Loading $checker_class: $@";
+  my $checker = $checker_class->new;
+  $checker->input ($input);
+  $checker->output ($out);
+  $checker->result ($result);
+
+  ## TODO: A cache manifest MUST be text/cache-manifest
+  ## TODO: WebIDL media type "text/x-webidl"
+
+  $checker->generate_syntax_error_section;
+  $checker->generate_source_string_section;
+
+  $checker->onsubdoc (sub {
+    push @subdoc, shift;
+  });
+
+  $checker->generate_structure_dump_section;
+  $checker->generate_structure_error_section;
+  $checker->generate_additional_sections;
+
+=pod
 
   if (defined $doc or defined $el) {
-    $doc->document_uri ($input->{uri});
-    $doc->manakai_entity_base_uri ($input->{base_uri});
-    print_structure_dump_dom_section ($input, $doc, $el);
-    my $elements = print_structure_error_dom_section
-        ($input, $doc, $el, $result, sub {
-          push @subdoc, shift;
-        });
+
     print_table_section ($input, $elements->{table}) if @{$elements->{table}};
     print_listing_section ({
       id => 'identifiers', label => 'IDs', heading => 'Identifiers',
@@ -223,31 +213,24 @@ sub check_and_print ($$) {
     print_listing_section ({
       id => 'classes', label => 'Classes', heading => 'Classes',
     }, $input, $elements->{class}) if keys %{$elements->{class}};
-    print_uri_section ($input, $elements->{uri}) if keys %{$elements->{uri}};
+   
     print_rdf_section ($input, $elements->{rdf}) if @{$elements->{rdf}};
-  } elsif (defined $cssom) {
-    print_structure_dump_cssom_section ($input, $cssom);
-    ## TODO: CSSOM validation
-    add_error ('structure', {level => 'u'} => $result);
-  } elsif (defined $manifest) {
-    print_structure_dump_manifest_section ($input, $manifest);
-    print_structure_error_manifest_section ($input, $manifest, $result);
-  } elsif (defined $idl) {
-    print_structure_dump_webidl_section ($input, $idl);
-    print_structure_error_webidl_section ($input, $idl, $result);
   }
 
+=cut
+
   my $id_prefix = 0;
-  for my $subinput (@subdoc) {
-    $subinput->{id_prefix} = 'subdoc-' . ++$id_prefix;
-    $subinput->{nested} = 1;
+  for my $_subinput (@subdoc) {
+    my $subinput = WebHACC::Input->new;
+    $subinput->{$_} = $_subinput->{$_} for keys %$_subinput;
+    $subinput->id_prefix ('subdoc-' . ++$id_prefix);
+    $subinput->nested (1);
     $subinput->{base_uri} = $subinput->{container_node}->base_uri
         unless defined $subinput->{base_uri};
     my $ebaseuri = htescape ($subinput->{base_uri});
-    push @nav, ['#' . $subinput->{id_prefix} => 'Sub #' . $id_prefix];
-    print STDOUT qq[<div id="$subinput->{id_prefix}" class=section>
-      <h2>Subdocument #$id_prefix</h2>
-
+    $out->start_section (id => $subinput->id_prefix,
+                         title => qq[Subdocument #$id_prefix]);
+    print STDOUT qq[
       <dl>
       <dt>Internet Media Type</dt>
         <dd><code class="MIME" lang="en">@{[htescape $subinput->{media_type}]}</code>
@@ -258,10 +241,12 @@ sub check_and_print ($$) {
       </dl>];              
 
     $subinput->{id_prefix} .= '-';
-    check_and_print ($subinput => $result);
+    check_and_print ($subinput => $result => $out);
 
-    print STDOUT qq[</div>];
+    $out->end_section;
   }
+
+  $out->input ($original_input);
 } # check_and_print
 
 sub print_http_header_section ($$) {
@@ -270,11 +255,8 @@ sub print_http_header_section ($$) {
       defined $input->{header_status_text} or
       @{$input->{header_field} or []};
   
-  push @nav, ['#source-header' => 'HTTP Header'] unless $input->{nested};
-  print STDOUT qq[<div id="$input->{id_prefix}source-header" class="section">
-<h2>HTTP Header</h2>
-
-<p><strong>Note</strong>: Due to the limitation of the
+  $out->start_section (id => 'source-header', title => 'HTTP Header');
+  print STDOUT qq[<p><strong>Note</strong>: Due to the limitation of the
 network library in use, the content of this section might
 not be the real header.</p>
 
@@ -283,758 +265,32 @@ not be the real header.</p>
 
   if (defined $input->{header_status_code}) {
     print STDOUT qq[<tr><th scope="row">Status code</th>];
-    print STDOUT qq[<td><code>@{[htescape ($input->{header_status_code})]}</code></td></tr>];
+    print STDOUT qq[<td>];
+    $out->code ($input->{header_status_code});
   }
   if (defined $input->{header_status_text}) {
     print STDOUT qq[<tr><th scope="row">Status text</th>];
-    print STDOUT qq[<td><code>@{[htescape ($input->{header_status_text})]}</code></td></tr>];
+    print STDOUT qq[<td>];
+    $out->code ($input->{header_status_text});
   }
   
   for (@{$input->{header_field}}) {
-    print STDOUT qq[<tr><th scope="row"><code>@{[htescape ($_->[0])]}</code></th>];
-    print STDOUT qq[<td><code>@{[htescape ($_->[1])]}</code></td></tr>];
+    print STDOUT qq[<tr><th scope="row">];
+    $out->code ($_->[0]);
+    print STDOUT qq[<td>];
+    $out->code ($_->[1]);
   }
 
-  print STDOUT qq[</tbody></table></div>];
+  print STDOUT qq[</tbody></table>];
+
+  $out->end_section;
 } # print_http_header_section
-
-sub print_syntax_error_html_section ($$) {
-  my ($input, $result) = @_;
-  
-  require Encode;
-  require Whatpm::HTML;
-  
-  print STDOUT qq[
-<div id="$input->{id_prefix}parse-errors" class="section">
-<h2>Parse Errors</h2>
-
-<dl id="$input->{id_prefix}parse-errors-list">];
-  push @nav, ['#parse-errors' => 'Parse Error'] unless $input->{nested};
-
-  my $onerror = sub {
-    my (%opt) = @_;
-    my ($type, $cls, $msg) = get_text ($opt{type}, $opt{level});
-    print STDOUT qq[<dt class="$cls">], get_error_label ($input, \%opt),
-        qq[</dt>];
-    $type =~ tr/ /-/;
-    $type =~ s/\|/%7C/g;
-    $msg .= qq[ [<a href="../error-description#@{[htescape ($type)]}">Description</a>]];
-    print STDOUT qq[<dd class="$cls">], get_error_level_label (\%opt);
-    print STDOUT qq[$msg</dd>\n];
-
-    add_error ('syntax', \%opt => $result);
-  };
-
-  my $doc = $dom->create_document;
-  my $el;
-  my $inner_html_element = $input->{inner_html_element};
-  if (defined $inner_html_element and length $inner_html_element) {
-    $input->{charset} ||= 'windows-1252'; ## TODO: for now.
-    my $time1 = time;
-    my $t = \($input->{s});
-    unless ($input->{is_char_string}) {
-      $t = \(Encode::decode ($input->{charset}, $$t));
-    }
-    $time{decode} = time - $time1;
-    
-    $el = $doc->create_element_ns
-        ('http://www.w3.org/1999/xhtml', [undef, $inner_html_element]);
-    $time1 = time;
-    Whatpm::HTML->set_inner_html ($el, $$t, $onerror);
-    $time{parse} = time - $time1;
-  } else {
-    my $time1 = time;
-    if ($input->{is_char_string}) {
-      Whatpm::HTML->parse_char_string ($input->{s} => $doc, $onerror);
-    } else {
-      Whatpm::HTML->parse_byte_string
-          ($input->{charset}, $input->{s} => $doc, $onerror);
-    }
-    $time{parse_html} = time - $time1;
-  }
-  $doc->manakai_charset ($input->{official_charset})
-      if defined $input->{official_charset};
-  
-  print STDOUT qq[</dl></div>];
-
-  return ($doc, $el);
-} # print_syntax_error_html_section
-
-sub print_syntax_error_xml_section ($$) {
-  my ($input, $result) = @_;
-  
-  require Message::DOM::XMLParserTemp;
-  
-  print STDOUT qq[
-<div id="$input->{id_prefix}parse-errors" class="section">
-<h2>Parse Errors</h2>
-
-<dl id="$input->{id_prefix}parse-errors-list">];
-  push @nav, ['#parse-errors' => 'Parse Error'] unless $input->{prefix};
-
-  my $onerror = sub {
-    my $err = shift;
-    my $line = $err->location->line_number;
-    print STDOUT qq[<dt><a href="#$input->{id_prefix}line-$line">Line $line</a> column ];
-    print STDOUT $err->location->column_number, "</dt><dd>";
-    print STDOUT htescape $err->text, "</dd>\n";
-
-    add_error ('syntax', {type => $err->text,
-                level => [
-                          $err->SEVERITY_FATAL_ERROR => 'm',
-                          $err->SEVERITY_ERROR => 'm',
-                          $err->SEVERITY_WARNING => 's',
-                         ]->[$err->severity]} => $result);
-
-    return 1;
-  };
-
-  my $t = \($input->{s});
-  if ($input->{is_char_string}) {
-    require Encode;
-    $t = \(Encode::encode ('utf8', $$t));
-    $input->{charset} = 'utf-8';
-  }
-
-  my $time1 = time;
-  open my $fh, '<', $t;
-  my $doc = Message::DOM::XMLParserTemp->parse_byte_stream
-      ($fh => $dom, $onerror, charset => $input->{charset});
-  $time{parse_xml} = time - $time1;
-  $doc->manakai_charset ($input->{official_charset})
-      if defined $input->{official_charset};
-
-  print STDOUT qq[</dl></div>];
-
-  return ($doc, undef);
-} # print_syntax_error_xml_section
-
-sub get_css_parser () {
-  our $CSSParser;
-  return $CSSParser if $CSSParser;
-
-  require Whatpm::CSS::Parser;
-  my $p = Whatpm::CSS::Parser->new;
-
-  $p->{prop}->{$_} = 1 for qw/
-    alignment-baseline
-    background background-attachment background-color background-image
-    background-position background-position-x background-position-y
-    background-repeat border border-bottom border-bottom-color
-    border-bottom-style border-bottom-width border-collapse border-color
-    border-left border-left-color
-    border-left-style border-left-width border-right border-right-color
-    border-right-style border-right-width
-    border-spacing -manakai-border-spacing-x -manakai-border-spacing-y
-    border-style border-top border-top-color border-top-style border-top-width
-    border-width bottom
-    caption-side clear clip color content counter-increment counter-reset
-    cursor direction display dominant-baseline empty-cells float font
-    font-family font-size font-size-adjust font-stretch
-    font-style font-variant font-weight height left
-    letter-spacing line-height
-    list-style list-style-image list-style-position list-style-type
-    margin margin-bottom margin-left margin-right margin-top marker-offset
-    marks max-height max-width min-height min-width opacity -moz-opacity
-    orphans outline outline-color outline-style outline-width overflow
-    overflow-x overflow-y
-    padding padding-bottom padding-left padding-right padding-top
-    page page-break-after page-break-before page-break-inside
-    position quotes right size table-layout
-    text-align text-anchor text-decoration text-indent text-transform
-    top unicode-bidi vertical-align visibility white-space width widows
-    word-spacing writing-mode z-index
-  /;
-  $p->{prop_value}->{display}->{$_} = 1 for qw/
-    block clip inline inline-block inline-table list-item none
-    table table-caption table-cell table-column table-column-group
-    table-header-group table-footer-group table-row table-row-group
-    compact marker
-  /;
-  $p->{prop_value}->{position}->{$_} = 1 for qw/
-    absolute fixed relative static
-  /;
-  $p->{prop_value}->{float}->{$_} = 1 for qw/
-    left right none
-  /;
-  $p->{prop_value}->{clear}->{$_} = 1 for qw/
-    left right none both
-  /;
-  $p->{prop_value}->{direction}->{ltr} = 1;
-  $p->{prop_value}->{direction}->{rtl} = 1;
-  $p->{prop_value}->{marks}->{crop} = 1;
-  $p->{prop_value}->{marks}->{cross} = 1;
-  $p->{prop_value}->{'unicode-bidi'}->{$_} = 1 for qw/
-    normal bidi-override embed
-  /;
-  for my $prop_name (qw/overflow overflow-x overflow-y/) {
-    $p->{prop_value}->{$prop_name}->{$_} = 1 for qw/
-      visible hidden scroll auto -webkit-marquee -moz-hidden-unscrollable
-    /;
-  }
-  $p->{prop_value}->{visibility}->{$_} = 1 for qw/
-    visible hidden collapse
-  /;
-  $p->{prop_value}->{'list-style-type'}->{$_} = 1 for qw/
-    disc circle square decimal decimal-leading-zero
-    lower-roman upper-roman lower-greek lower-latin
-    upper-latin armenian georgian lower-alpha upper-alpha none
-    hebrew cjk-ideographic hiragana katakana hiragana-iroha
-    katakana-iroha
-  /;
-  $p->{prop_value}->{'list-style-position'}->{outside} = 1;
-  $p->{prop_value}->{'list-style-position'}->{inside} = 1;
-  $p->{prop_value}->{'page-break-before'}->{$_} = 1 for qw/
-    auto always avoid left right
-  /;
-  $p->{prop_value}->{'page-break-after'}->{$_} = 1 for qw/
-    auto always avoid left right
-  /;
-  $p->{prop_value}->{'page-break-inside'}->{auto} = 1;
-  $p->{prop_value}->{'page-break-inside'}->{avoid} = 1;
-  $p->{prop_value}->{'background-repeat'}->{$_} = 1 for qw/
-    repeat repeat-x repeat-y no-repeat
-  /;
-  $p->{prop_value}->{'background-attachment'}->{scroll} = 1;
-  $p->{prop_value}->{'background-attachment'}->{fixed} = 1;
-  $p->{prop_value}->{'font-size'}->{$_} = 1 for qw/
-    xx-small x-small small medium large x-large xx-large
-    -manakai-xxx-large -webkit-xxx-large
-    larger smaller
-  /;
-  $p->{prop_value}->{'font-style'}->{normal} = 1;
-  $p->{prop_value}->{'font-style'}->{italic} = 1;
-  $p->{prop_value}->{'font-style'}->{oblique} = 1;
-  $p->{prop_value}->{'font-variant'}->{normal} = 1;
-  $p->{prop_value}->{'font-variant'}->{'small-caps'} = 1;
-  $p->{prop_value}->{'font-stretch'}->{$_} = 1 for
-      qw/normal wider narrower ultra-condensed extra-condensed
-        condensed semi-condensed semi-expanded expanded
-        extra-expanded ultra-expanded/;
-  $p->{prop_value}->{'text-align'}->{$_} = 1 for qw/
-    left right center justify begin end
-  /;
-  $p->{prop_value}->{'text-transform'}->{$_} = 1 for qw/
-    capitalize uppercase lowercase none
-  /;
-  $p->{prop_value}->{'white-space'}->{$_} = 1 for qw/
-    normal pre nowrap pre-line pre-wrap -moz-pre-wrap
-  /;
-  $p->{prop_value}->{'writing-mode'}->{$_} = 1 for qw/
-    lr rl tb lr-tb rl-tb tb-rl
-  /;
-  $p->{prop_value}->{'text-anchor'}->{$_} = 1 for qw/
-    start middle end
-  /;
-  $p->{prop_value}->{'dominant-baseline'}->{$_} = 1 for qw/
-    auto use-script no-change reset-size ideographic alphabetic
-    hanging mathematical central middle text-after-edge text-before-edge
-  /;
-  $p->{prop_value}->{'alignment-baseline'}->{$_} = 1 for qw/
-    auto baseline before-edge text-before-edge middle central
-    after-edge text-after-edge ideographic alphabetic hanging
-    mathematical
-  /;
-  $p->{prop_value}->{'text-decoration'}->{$_} = 1 for qw/
-    none blink underline overline line-through
-  /;
-  $p->{prop_value}->{'caption-side'}->{$_} = 1 for qw/
-    top bottom left right
-  /;
-  $p->{prop_value}->{'table-layout'}->{auto} = 1;
-  $p->{prop_value}->{'table-layout'}->{fixed} = 1;
-  $p->{prop_value}->{'border-collapse'}->{collapse} = 1;
-  $p->{prop_value}->{'border-collapse'}->{separate} = 1;
-  $p->{prop_value}->{'empty-cells'}->{show} = 1;
-  $p->{prop_value}->{'empty-cells'}->{hide} = 1;
-  $p->{prop_value}->{cursor}->{$_} = 1 for qw/
-    auto crosshair default pointer move e-resize ne-resize nw-resize n-resize
-    se-resize sw-resize s-resize w-resize text wait help progress
-  /;
-  for my $prop (qw/border-top-style border-left-style
-                   border-bottom-style border-right-style outline-style/) {
-    $p->{prop_value}->{$prop}->{$_} = 1 for qw/
-      none hidden dotted dashed solid double groove ridge inset outset
-    /;
-  }
-  for my $prop (qw/color background-color
-                   border-bottom-color border-left-color border-right-color
-                   border-top-color border-color/) {
-    $p->{prop_value}->{$prop}->{transparent} = 1;
-    $p->{prop_value}->{$prop}->{flavor} = 1;
-    $p->{prop_value}->{$prop}->{'-manakai-default'} = 1;
-  }
-  $p->{prop_value}->{'outline-color'}->{invert} = 1;
-  $p->{prop_value}->{'outline-color'}->{'-manakai-invert-or-currentcolor'} = 1;
-  $p->{pseudo_class}->{$_} = 1 for qw/
-    active checked disabled empty enabled first-child first-of-type
-    focus hover indeterminate last-child last-of-type link only-child
-    only-of-type root target visited
-    lang nth-child nth-last-child nth-of-type nth-last-of-type not
-    -manakai-contains -manakai-current
-  /;
-  $p->{pseudo_element}->{$_} = 1 for qw/
-    after before first-letter first-line
-  /;
-
-  return $CSSParser = $p;
-} # get_css_parser
-
-sub print_syntax_error_css_section ($$) {
-  my ($input, $result) = @_;
-
-  print STDOUT qq[
-<div id="$input->{id_prefix}parse-errors" class="section">
-<h2>Parse Errors</h2>
-
-<dl id="$input->{id_prefix}parse-errors-list">];
-  push @nav, ['#parse-errors' => 'Parse Error'] unless $input->{nested};
-
-  my $p = get_css_parser ();
-  $p->init;
-  $p->{onerror} = sub {
-    my (%opt) = @_;
-    my ($type, $cls, $msg) = get_text ($opt{type}, $opt{level});
-    if ($opt{token}) {
-      print STDOUT qq[<dt class="$cls"><a href="#$input->{id_prefix}line-$opt{token}->{line}">Line $opt{token}->{line}</a> column $opt{token}->{column}];
-    } else {
-      print STDOUT qq[<dt class="$cls">Unknown location];
-    }
-    if (defined $opt{value}) {
-      print STDOUT qq[ (<code>@{[htescape ($opt{value})]}</code>)];
-    } elsif (defined $opt{token}) {
-      print STDOUT qq[ (<code>@{[htescape (Whatpm::CSS::Tokenizer->serialize_token ($opt{token}))]}</code>)];
-    }
-    $type =~ tr/ /-/;
-    $type =~ s/\|/%7C/g;
-    $msg .= qq[ [<a href="../error-description#@{[htescape ($type)]}">Description</a>]];
-    print STDOUT qq[<dd class="$cls">], get_error_level_label (\%opt);
-    print STDOUT qq[$msg</dd>\n];
-
-    add_error ('syntax', \%opt => $result);
-  };
-  $p->{href} = $input->{uri};
-  $p->{base_uri} = $input->{base_uri};
-
-#  if ($parse_mode eq 'q') {
-#    $p->{unitless_px} = 1;
-#    $p->{hashless_color} = 1;
-#  }
-
-## TODO: Make $input->{s} a ref.
-
-  my $s = \$input->{s};
-  my $charset;
-  unless ($input->{is_char_string}) {
-    require Encode;
-    if (defined $input->{charset}) {## TODO: IANA->Perl
-      $charset = $input->{charset};
-      $s = \(Encode::decode ($input->{charset}, $$s));
-    } else {
-      ## TODO: charset detection
-      $s = \(Encode::decode ($charset = 'utf-8', $$s));
-    }
-  }
-  
-  my $cssom = $p->parse_char_string ($$s);
-  $cssom->manakai_input_encoding ($charset) if defined $charset;
-
-  print STDOUT qq[</dl></div>];
-
-  return $cssom;
-} # print_syntax_error_css_section
-
-sub print_syntax_error_manifest_section ($$) {
-  my ($input, $result) = @_;
-
-  require Whatpm::CacheManifest;
-
-  print STDOUT qq[
-<div id="$input->{id_prefix}parse-errors" class="section">
-<h2>Parse Errors</h2>
-
-<dl id="$input->{id_prefix}parse-errors-list">];
-  push @nav, ['#parse-errors' => 'Parse Error'] unless $input->{nested};
-
-  my $onerror = sub {
-    my (%opt) = @_;
-    my ($type, $cls, $msg) = get_text ($opt{type}, $opt{level});
-    print STDOUT qq[<dt class="$cls">], get_error_label ($input, \%opt),
-        qq[</dt>];
-    $type =~ tr/ /-/;
-    $type =~ s/\|/%7C/g;
-    $msg .= qq[ [<a href="../error-description#@{[htescape ($type)]}">Description</a>]];
-    print STDOUT qq[<dd class="$cls">], get_error_level_label (\%opt);
-    print STDOUT qq[$msg</dd>\n];
-
-    add_error ('syntax', \%opt => $result);
-  };
-
-  my $m = $input->{is_char_string} ? 'parse_char_string' : 'parse_byte_string';
-  my $time1 = time;
-  my $manifest = Whatpm::CacheManifest->$m
-      ($input->{s}, $input->{uri}, $input->{base_uri}, $onerror);
-  $time{parse_manifest} = time - $time1;
-
-  print STDOUT qq[</dl></div>];
-
-  return $manifest;
-} # print_syntax_error_manifest_section
-
-sub print_syntax_error_webidl_section ($$) {
-  my ($input, $result) = @_;
-
-  require Whatpm::WebIDL;
-
-  print STDOUT qq[
-<div id="$input->{id_prefix}parse-errors" class="section">
-<h2>Parse Errors</h2>
-
-<dl id="$input->{id_prefix}parse-errors-list">];
-  push @nav, ['#parse-errors' => 'Parse Error'] unless $input->{nested};
-
-  my $onerror = sub {
-    my (%opt) = @_;
-    my ($type, $cls, $msg) = get_text ($opt{type}, $opt{level});
-    print STDOUT qq[<dt class="$cls">], get_error_label ($input, \%opt),
-        qq[</dt>];
-    $type =~ tr/ /-/;
-    $type =~ s/\|/%7C/g;
-    $msg .= qq[ [<a href="../error-description#@{[htescape ($type)]}">Description</a>]];
-    print STDOUT qq[<dd class="$cls">], get_error_level_label (\%opt);
-    print STDOUT qq[$msg</dd>\n];
-
-    add_error ('syntax', \%opt => $result);
-  };
-
-  require Encode;
-  my $s = $input->{is_char_string} ? $input->{s} : Encode::decode ($input->{charset} || 'utf-8', $input->{s}); ## TODO: charset
-  my $parser = Whatpm::WebIDL::Parser->new;
-  my $idl = $parser->parse_char_string ($input->{s}, $onerror);
-
-  print STDOUT qq[</dl></div>];
-
-  return $idl;
-} # print_syntax_error_webidl_section
-
-sub print_source_string_section ($$$) {
-  my $input = shift;
-  my $s;
-  unless ($input->{is_char_string}) {
-    open my $byte_stream, '<', $_[0];
-    require Message::Charset::Info;
-    my $charset = Message::Charset::Info->get_by_iana_name ($_[1]);
-    my ($char_stream, $e_status) = $charset->get_decode_handle
-        ($byte_stream, allow_error_reporting => 1, allow_fallback => 1);
-    return unless $char_stream;
-
-    $char_stream->onerror (sub {
-      my (undef, $type, %opt) = @_;
-      if ($opt{octets}) {
-        ${$opt{octets}} = "\x{FFFD}";
-      }
-    });
-
-    my $t = '';
-    while (1) {
-      my $c = $char_stream->getc;
-      last unless defined $c;
-      $t .= $c;
-    }
-    $s = \$t;
-    ## TODO: Output for each line, don't concat all of lines.
-  } else {
-    $s = $_[0];
-  }
-
-  my $i = 1;                             
-  push @nav, ['#source-string' => 'Source'] unless $input->{nested};
-  print STDOUT qq[<div id="$input->{id_prefix}source-string" class="section">
-<h2>Document Source</h2>
-<ol lang="">\n];
-  if (length $$s) {
-    while ($$s =~ /\G([^\x0D\x0A]*?)(?>\x0D\x0A?|\x0A)/gc) {
-      print STDOUT qq[<li id="$input->{id_prefix}line-$i">], htescape $1,
-          "</li>\n";
-      $i++;
-    }
-    if ($$s =~ /\G([^\x0D\x0A]+)/gc) {
-      print STDOUT qq[<li id="$input->{id_prefix}line-$i">], htescape $1,
-          "</li>\n";
-    }
-  } else {
-    print STDOUT q[<li id="$input->{id_prefix}line-1"></li>];
-  }
-  print STDOUT "</ol></div>
-<script>
-  addSourceToParseErrorList ('$input->{id_prefix}', 'parse-errors-list');
-</script>";
-} # print_input_string_section
-
-sub print_document_tree ($$) {
-  my ($input, $node) = @_;
-
-  my $r = '<ol class="xoxo">';
-
-  my @node = ($node);
-  while (@node) {
-    my $child = shift @node;
-    unless (ref $child) {
-      $r .= $child;
-      next;
-    }
-
-    my $node_id = $input->{id_prefix} . 'node-'.refaddr $child;
-    my $nt = $child->node_type;
-    if ($nt == $child->ELEMENT_NODE) {
-      my $child_nsuri = $child->namespace_uri;
-      $r .= qq[<li id="$node_id" class="tree-element"><code title="@{[defined $child_nsuri ? $child_nsuri : '']}">] . htescape ($child->tag_name) .
-          '</code>'; ## ISSUE: case
-
-      if ($child->has_attributes) {
-        $r .= '<ul class="attributes">';
-        for my $attr (sort {$a->[0] cmp $b->[0]} map { [$_->name, $_->value, $_->namespace_uri, 'node-'.refaddr $_] }
-                      @{$child->attributes}) {
-          $r .= qq[<li id="$input->{id_prefix}$attr->[3]" class="tree-attribute"><code title="@{[defined $attr->[2] ? htescape ($attr->[2]) : '']}">] . htescape ($attr->[0]) . '</code> = '; ## ISSUE: case?
-          $r .= '<q>' . htescape ($attr->[1]) . '</q></li>'; ## TODO: children
-        }
-        $r .= '</ul>';
-      }
-
-      if ($child->has_child_nodes) {
-        $r .= '<ol class="children">';
-        unshift @node, @{$child->child_nodes}, '</ol></li>';
-      } else {
-        $r .= '</li>';
-      }
-    } elsif ($nt == $child->TEXT_NODE) {
-      $r .= qq'<li id="$node_id" class="tree-text"><q lang="">' . htescape ($child->data) . '</q></li>';
-    } elsif ($nt == $child->CDATA_SECTION_NODE) {
-      $r .= qq'<li id="$node_id" class="tree-cdata"><code>&lt;[CDATA[</code><q lang="">' . htescape ($child->data) . '</q><code>]]&gt;</code></li>';
-    } elsif ($nt == $child->COMMENT_NODE) {
-      $r .= qq'<li id="$node_id" class="tree-comment"><code>&lt;!--</code><q lang="">' . htescape ($child->data) . '</q><code>--&gt;</code></li>';
-    } elsif ($nt == $child->DOCUMENT_NODE) {
-      $r .= qq'<li id="$node_id" class="tree-document">Document';
-      $r .= qq[<ul class="attributes">];
-      my $cp = $child->manakai_charset;
-      if (defined $cp) {
-        $r .= qq[<li><code>charset</code> parameter = <code>];
-        $r .= htescape ($cp) . qq[</code></li>];
-      }
-      $r .= qq[<li><code>inputEncoding</code> = ];
-      my $ie = $child->input_encoding;
-      if (defined $ie) {
-        $r .= qq[<code>@{[htescape ($ie)]}</code>];
-        if ($child->manakai_has_bom) {
-          $r .= qq[ (with <code class=charname><abbr>BOM</abbr></code>)];
-        }
-      } else {
-        $r .= qq[(<code>null</code>)];
-      }
-      $r .= qq[<li>@{[scalar get_text ('manakaiIsHTML:'.($child->manakai_is_html?1:0))]}</li>];
-      $r .= qq[<li>@{[scalar get_text ('manakaiCompatMode:'.$child->manakai_compat_mode)]}</li>];
-      unless ($child->manakai_is_html) {
-        $r .= qq[<li>XML version = <code>@{[htescape ($child->xml_version)]}</code></li>];
-        if (defined $child->xml_encoding) {
-          $r .= qq[<li>XML encoding = <code>@{[htescape ($child->xml_encoding)]}</code></li>];
-        } else {
-          $r .= qq[<li>XML encoding = (null)</li>];
-        }
-        $r .= qq[<li>XML standalone = @{[$child->xml_standalone ? 'true' : 'false']}</li>];
-      }
-      $r .= qq[</ul>];
-      if ($child->has_child_nodes) {
-        $r .= '<ol class="children">';
-        unshift @node, @{$child->child_nodes}, '</ol></li>';
-      }
-    } elsif ($nt == $child->DOCUMENT_TYPE_NODE) {
-      $r .= qq'<li id="$node_id" class="tree-doctype"><code>&lt;!DOCTYPE&gt;</code><ul class="attributes">';
-      $r .= qq[<li class="tree-doctype-name">Name = <q>@{[htescape ($child->name)]}</q></li>];
-      $r .= qq[<li class="tree-doctype-publicid">Public identifier = <q>@{[htescape ($child->public_id)]}</q></li>];
-      $r .= qq[<li class="tree-doctype-systemid">System identifier = <q>@{[htescape ($child->system_id)]}</q></li>];
-      $r .= '</ul></li>';
-    } elsif ($nt == $child->PROCESSING_INSTRUCTION_NODE) {
-      $r .= qq'<li id="$node_id" class="tree-id"><code>&lt;?@{[htescape ($child->target)]}</code> <q>@{[htescape ($child->data)]}</q><code>?&gt;</code></li>';
-    } else {
-      $r .= qq'<li id="$node_id" class="tree-unknown">@{[$child->node_type]} @{[htescape ($child->node_name)]}</li>'; # error
-    }
-  }
-
-  $r .= '</ol>';
-  print STDOUT $r;
-} # print_document_tree
-
-sub print_structure_dump_dom_section ($$$) {
-  my ($input, $doc, $el) = @_;
-
-  print STDOUT qq[
-<div id="$input->{id_prefix}document-tree" class="section">
-<h2>Document Tree</h2>
-];
-  push @nav, [qq[#$input->{id_prefix}document-tree] => 'Tree']
-      unless $input->{nested};
-
-  print_document_tree ($input, $el || $doc);
-
-  print STDOUT qq[</div>];
-} # print_structure_dump_dom_section
-
-sub print_structure_dump_cssom_section ($$) {
-  my ($input, $cssom) = @_;
-
-  print STDOUT qq[
-<div id="$input->{id_prefix}document-tree" class="section">
-<h2>Document Tree</h2>
-];
-  push @nav, [qq[#$input->{id_prefix}document-tree] => 'Tree']
-      unless $input->{nested};
-
-  ## TODO:
-  print STDOUT "<pre>".htescape ($cssom->css_text)."</pre>";
-
-  print STDOUT qq[</div>];
-} # print_structure_dump_cssom_section
-
-sub print_structure_dump_manifest_section ($$) {
-  my ($input, $manifest) = @_;
-
-  print STDOUT qq[
-<div id="$input->{id_prefix}dump-manifest" class="section">
-<h2>Cache Manifest</h2>
-];
-  push @nav, [qq[#$input->{id_prefix}dump-manifest] => 'Cache Manifest']
-      unless $input->{nested};
-
-  print STDOUT qq[<dl><dt>Explicit entries</dt>];
-  my $i = 0;
-  for my $uri (@{$manifest->[0]}) {
-    my $euri = htescape ($uri);
-    print STDOUT qq[<dd id="$input->{id_prefix}index-@{[$i++]}"><code class=uri>&lt;<a href="$euri">$euri</a>></code></dd>];
-  }
-
-  print STDOUT qq[<dt>Fallback entries</dt><dd>
-      <table><thead><tr><th scope=row>Oppotunistic Caching Namespace</th>
-      <th scope=row>Fallback Entry</tr><tbody>];
-  for my $uri (sort {$a cmp $b} keys %{$manifest->[1]}) {
-    my $euri = htescape ($uri);
-    my $euri2 = htescape ($manifest->[1]->{$uri});
-    print STDOUT qq[<tr><td id="$input->{id_prefix}index-@{[$i++]}"><code class=uri>&lt;<a href="$euri">$euri</a>></code></td>
-        <td id="$input->{id_prefix}index-@{[$i++]}"><code class=uri>&lt;<a href="$euri2">$euri2</a>></code></td>];
-  }
-
-  print STDOUT qq[</table><dt>Online whitelist</dt>];
-  for my $uri (@{$manifest->[2]}) {
-    my $euri = htescape ($uri);
-    print STDOUT qq[<dd id="$input->{id_prefix}index-@{[$i++]}"><code class=uri>&lt;<a href="$euri">$euri</a>></code></dd>];
-  }
-
-  print STDOUT qq[</dl></div>];
-} # print_structure_dump_manifest_section
-
-sub print_structure_dump_webidl_section ($$) {
-  my ($input, $idl) = @_;
-
-  print STDOUT qq[
-<div id="$input->{id_prefix}dump-webidl" class="section">
-<h2>WebIDL</h2>
-];
-  push @nav, [qq[#$input->{id_prefix}dump-webidl] => 'WebIDL']
-      unless $input->{nested};
-
-  print STDOUT "<pre>";
-  print STDOUT htescape ($idl->idl_text);
-  print STDOUT "</pre>";
-
-  print STDOUT qq[</div>];
-} # print_structure_dump_webidl_section
-
-sub print_structure_error_dom_section ($$$$$) {
-  my ($input, $doc, $el, $result, $onsubdoc) = @_;
-
-  print STDOUT qq[<div id="$input->{id_prefix}document-errors" class="section">
-<h2>Document Errors</h2>
-
-<dl id=document-errors-list>];
-  push @nav, [qq[#$input->{id_prefix}document-errors] => 'Document Error']
-      unless $input->{nested};
-
-  require Whatpm::ContentChecker;
-  my $onerror = sub {
-    my %opt = @_;
-    my ($type, $cls, $msg) = get_text ($opt{type}, $opt{level}, $opt{node});
-    $type =~ tr/ /-/;
-    $type =~ s/\|/%7C/g;
-    $msg .= qq[ [<a href="../error-description#@{[htescape ($type)]}">Description</a>]];
-    print STDOUT qq[<dt class="$cls">] . get_error_label ($input, \%opt) .
-        qq[</dt>\n<dd class="$cls">], get_error_level_label (\%opt);
-    print STDOUT $msg, "</dd>\n";
-    add_error ('structure', \%opt => $result);
-  };
-
-  my $elements;
-  my $time1 = time;
-  if ($el) {
-    $elements = Whatpm::ContentChecker->check_element
-        ($el, $onerror, $onsubdoc);
-  } else {
-    $elements = Whatpm::ContentChecker->check_document
-        ($doc, $onerror, $onsubdoc);
-  }
-  $time{check} = time - $time1;
-
-  print STDOUT qq[</dl>
-<script>
-  addSourceToParseErrorList ('$input->{id_prefix}', 'document-errors-list');
-</script></div>];
-
-  return $elements;
-} # print_structure_error_dom_section
-
-sub print_structure_error_manifest_section ($$$) {
-  my ($input, $manifest, $result) = @_;
-
-  print STDOUT qq[<div id="$input->{id_prefix}document-errors" class="section">
-<h2>Document Errors</h2>
-
-<dl>];
-  push @nav, [qq[#$input->{id_prefix}document-errors] => 'Document Error']
-      unless $input->{nested};
-
-  require Whatpm::CacheManifest;
-  Whatpm::CacheManifest->check_manifest ($manifest, sub {
-    my %opt = @_;
-    my ($type, $cls, $msg) = get_text ($opt{type}, $opt{level}, $opt{node});
-    $type =~ tr/ /-/;
-    $type =~ s/\|/%7C/g;
-    $msg .= qq[ [<a href="../error-description#@{[htescape ($type)]}">Description</a>]];
-    print STDOUT qq[<dt class="$cls">] . get_error_label ($input, \%opt) .
-        qq[</dt>\n<dd class="$cls">], $msg, "</dd>\n";
-    add_error ('structure', \%opt => $result);
-  });
-
-  print STDOUT qq[</div>];
-} # print_structure_error_manifest_section
-
-sub print_structure_error_webidl_section ($$$) {
-  my ($input, $idl, $result) = @_;
-
-  print STDOUT qq[<div id="$input->{id_prefix}document-errors" class="section">
-<h2>Document Errors</h2>
-
-<dl>];
-  push @nav, [qq[#$input->{id_prefix}document-errors] => 'Document Error']
-      unless $input->{nested};
-
-## TODO:
-
-  print STDOUT qq[</div>];
-} # print_structure_error_webidl_section
 
 sub print_table_section ($$) {
   my ($input, $tables) = @_;
   
-  push @nav, [qq[#$input->{id_prefix}tables] => 'Tables']
-      unless $input->{nested};
+#  push @nav, [qq[#$input->{id_prefix}tables] => 'Tables']
+#      unless $input->{nested};
   print STDOUT qq[
 <div id="$input->{id_prefix}tables" class="section">
 <h2>Tables</h2>
@@ -1093,8 +349,8 @@ sub print_table_section ($$) {
 sub print_listing_section ($$$) {
   my ($opt, $input, $ids) = @_;
   
-  push @nav, ['#' . $input->{id_prefix} . $opt->{id} => $opt->{label}]
-      unless $input->{nested};
+#  push @nav, ['#' . $input->{id_prefix} . $opt->{id} => $opt->{label}]
+#      unless $input->{nested};
   print STDOUT qq[
 <div id="$input->{id_prefix}$opt->{id}" class="section">
 <h2>$opt->{heading}</h2>
@@ -1110,56 +366,12 @@ sub print_listing_section ($$$) {
   print STDOUT qq[</dl></div>];
 } # print_listing_section
 
-sub print_uri_section ($$$) {
-  my ($input, $uris) = @_;
-
-  ## NOTE: URIs contained in the DOM (i.e. in HTML or XML documents),
-  ## except for those in RDF triples.
-  ## TODO: URIs in CSS
-  
-  push @nav, ['#' . $input->{id_prefix} . 'uris' => 'URIs']
-      unless $input->{nested};
-  print STDOUT qq[
-<div id="$input->{id_prefix}uris" class="section">
-<h2>URIs</h2>
-
-<dl>];
-  for my $uri (sort {$a cmp $b} keys %$uris) {
-    my $euri = htescape ($uri);
-    print STDOUT qq[<dt><code class=uri>&lt;<a href="$euri">$euri</a>></code>];
-    my $eccuri = htescape (get_cc_uri ($uri));
-    print STDOUT qq[<dd><a href="$eccuri">Check conformance of this document</a>];
-    print STDOUT qq[<dd>Found at: <ul>];
-    for my $entry (@{$uris->{$uri}}) {
-      print STDOUT qq[<li>], get_node_link ($input, $entry->{node});
-      if (keys %{$entry->{type} or {}}) {
-        print STDOUT ' (';
-        print STDOUT join ', ', map {
-          {
-            hyperlink => 'Hyperlink',
-            resource => 'Link to an external resource',
-            namespace => 'Namespace URI',
-            cite => 'Citation or link to a long description',
-            embedded => 'Link to an embedded content',
-            base => 'Base URI',
-            action => 'Submission URI',
-          }->{$_} 
-            or
-          htescape ($_)
-        } keys %{$entry->{type}};
-        print STDOUT ')';
-      }
-    }
-    print STDOUT qq[</ul>];
-  }
-  print STDOUT qq[</dl></div>];
-} # print_uri_section
 
 sub print_rdf_section ($$$) {
   my ($input, $rdfs) = @_;
   
-  push @nav, ['#' . $input->{id_prefix} . 'rdf' => 'RDF']
-      unless $input->{nested};
+#  push @nav, ['#' . $input->{id_prefix} . 'rdf' => 'RDF']
+#      unless $input->{nested};
   print STDOUT qq[
 <div id="$input->{id_prefix}rdf" class="section">
 <h2>RDF Triples</h2>
@@ -1213,9 +425,8 @@ sub get_rdf_resource_html ($) {
 sub print_result_section ($) {
   my $result = shift;
 
-  print STDOUT qq[
-<div id="result-summary" class="section">
-<h2>Result</h2>];
+  $out->start_section (id => 'result-summary',
+                       title => 'Result');
 
   if ($result->{unsupported} and $result->{conforming_max}) {  
     print STDOUT qq[<p class=uncertain id=result-para>The conformance
@@ -1297,175 +508,23 @@ Errors</a></th>
 </table>
 
 <p><strong>Important</strong>: This conformance checking service
-is <em>under development</em>.  The result above might be <em>wrong</em>.</p>
-</div>];
-  push @nav, ['#result-summary' => 'Result'];
+is <em>under development</em>.  The result above might be <em>wrong</em>.</p>];
+  $out->end_section;
 } # print_result_section
-
-sub print_result_unknown_type_section ($$) {
-  my ($input, $result) = @_;
-
-  my $euri = htescape ($input->{uri});
-  print STDOUT qq[
-<div id="$input->{id_prefix}parse-errors" class="section">
-<h2>Errors</h2>
-
-<dl>
-<dt class=unsupported><code>&lt;<a href="$euri">$euri</a>&gt;</code></dt>
-    <dd class=unsupported><strong><a href="../error-description#level-u">Not
-        supported</a></strong>:
-    Media type
-    <code class="MIME" lang="en">@{[htescape $input->{media_type}]}</code>
-    is not supported.</dd>
-</dl>
-</div>
-];
-  push @nav, [qq[#$input->{id_prefix}parse-errors] => 'Errors']
-      unless $input->{nested};
-  add_error (char => {level => 'u'} => $result);
-  add_error (syntax => {level => 'u'} => $result);
-  add_error (structure => {level => 'u'} => $result);
-} # print_result_unknown_type_section
 
 sub print_result_input_error_section ($) {
   my $input = shift;
-  print STDOUT qq[<div class="section" id="result-summary">
-<p><em><strong>Input Error</strong>: @{[htescape ($input->{error_status_text})]}</em></p>
-</div>];
-  push @nav, ['#result-summary' => 'Result'];
+  $out->start_section (id => 'result-summary', title => 'Result');
+  print STDOUT qq[
+<p><em><strong>Input Error</strong>: @{[htescape ($input->{error_status_text})]}</em></p>];
+  $out->end_section;
 } # print_result_input_error_section
-
-sub get_error_label ($$) {
-  my ($input, $err) = @_;
-
-  my $r = '';
-
-  my $line;
-  my $column;
-    
-  if (defined $err->{node}) {
-    $line = $err->{node}->get_user_data ('manakai_source_line');
-    if (defined $line) {
-      $column = $err->{node}->get_user_data ('manakai_source_column');
-    } else {
-      if ($err->{node}->node_type == $err->{node}->ATTRIBUTE_NODE) {
-        my $owner = $err->{node}->owner_element;
-        $line = $owner->get_user_data ('manakai_source_line');
-        $column = $owner->get_user_data ('manakai_source_column');
-      } else {
-        my $parent = $err->{node}->parent_node;
-        if ($parent) {
-          $line = $parent->get_user_data ('manakai_source_line');
-          $column = $parent->get_user_data ('manakai_source_column');
-        }
-      }
-    }
-  }
-  unless (defined $line) {
-    if (defined $err->{token} and defined $err->{token}->{line}) {
-      $line = $err->{token}->{line};
-      $column = $err->{token}->{column};
-    } elsif (defined $err->{line}) {
-      $line = $err->{line};
-      $column = $err->{column};
-    }
-  }
- 
-  if (defined $line) {
-    if (defined $column and $column > 0) {
-      $r = qq[<a href="#$input->{id_prefix}line-$line">Line $line</a> column $column];
-    } else {
-      $line = $line - 1 || 1;
-      $r = qq[<a href="#$input->{id_prefix}line-$line">Line $line</a>];
-    }
-  }
-
-  if (defined $err->{node}) {
-    $r .= ' ' if length $r;
-    $r .= get_node_link ($input, $err->{node});
-  }
-
-  if (defined $err->{index}) {
-    if (length $r) {
-      $r .= ', Index ' . (0+$err->{index});
-    } else {
-      $r .= "<a href='#$input->{id_prefix}index-@{[0+$err->{index}]}'>Index "
-          . (0+$err->{index}) . '</a>';
-    }
-  }
-
-  if (defined $err->{value}) {
-    $r .= ' ' if length $r;
-    $r .= '<q><code>' . htescape ($err->{value}) . '</code></q>';
-  }
-
-  return $r;
-} # get_error_label
-
-sub get_error_level_label ($) {
-  my $err = shift;
-
-  my $r = '';
-
-  if (not defined $err->{level} or $err->{level} eq 'm') {
-    $r = qq[<strong><a href="../error-description#level-m"><em class=rfc2119>MUST</em>‐level
-        error</a></strong>: ];
-  } elsif ($err->{level} eq 's') {
-    $r = qq[<strong><a href="../error-description#level-s"><em class=rfc2119>SHOULD</em>‐level
-        error</a></strong>: ];
-  } elsif ($err->{level} eq 'w') {
-    $r = qq[<strong><a href="../error-description#level-w">Warning</a></strong>:
-        ];
-  } elsif ($err->{level} eq 'u' or $err->{level} eq 'unsupported') {
-    $r = qq[<strong><a href="../error-description#level-u">Not
-        supported</a></strong>: ];
-  } elsif ($err->{level} eq 'i') {
-    $r = qq[<strong><a href="../error-description#level-i">Information</a></strong>: ];
-  } else {
-    my $elevel = htescape ($err->{level});
-    $r = qq[<strong><a href="../error-description#level-$elevel">$elevel</a></strong>:
-        ];
-  }
-
-  return $r;
-} # get_error_level_label
-
-sub get_node_path ($) {
-  my $node = shift;
-  my @r;
-  while (defined $node) {
-    my $rs;
-    if ($node->node_type == 1) {
-      $rs = $node->node_name;
-      $node = $node->parent_node;
-    } elsif ($node->node_type == 2) {
-      $rs = '@' . $node->node_name;
-      $node = $node->owner_element;
-    } elsif ($node->node_type == 3) {
-      $rs = '"' . $node->data . '"';
-      $node = $node->parent_node;
-    } elsif ($node->node_type == 9) {
-      @r = ('') unless @r;
-      $rs = '';
-      $node = $node->parent_node;
-    } else {
-      $rs = '#' . $node->node_type;
-      $node = $node->parent_node;
-    }
-    unshift @r, $rs;
-  }
-  return join '/', @r;
-} # get_node_path
-
-sub get_node_link ($$) {
-  return qq[<a href="#$_[0]->{id_prefix}node-@{[refaddr $_[1]]}">] .
-      htescape (get_node_path ($_[1])) . qq[</a>];
-} # get_node_link
 
 {
   my $Msg = {};
 
 sub load_text_catalog ($) {
+#  my $self = shift;
   my $lang = shift; # MUST be a canonical lang name
   open my $file, '<:utf8', "cc-msg.$lang.txt"
       or die "$0: cc-msg.$lang.txt: $!";
@@ -1478,7 +537,8 @@ sub load_text_catalog ($) {
   }
 } # load_text_catalog
 
-sub get_text ($) {
+sub get_text ($;$$) {
+#  my $self = shift;
   my ($type, $level, $node) = @_;
   $type = $level . ':' . $type if defined $level;
   $level = 'm' unless defined $level;
@@ -1487,24 +547,24 @@ sub get_text ($) {
     if (defined $Msg->{$type}) {
       my $msg = $Msg->{$type}->[1];
       $msg =~ s{<var>\$([0-9]+)</var>}{
-        defined $arg[$1] ? htescape ($arg[$1]) : '(undef)';
-      }ge;
+        defined $arg[$1] ? ($arg[$1]) : '(undef)';
+      }ge;                 ##BUG: ^ must be escaped
       $msg =~ s{<var>{\@([A-Za-z0-9:_.-]+)}</var>}{
         UNIVERSAL::can ($node, 'get_attribute_ns')
-            ? htescape ($node->get_attribute_ns (undef, $1)) : ''
-      }ge;
-      $msg =~ s{<var>{\@}</var>}{
-        UNIVERSAL::can ($node, 'value') ? htescape ($node->value) : ''
+            ?  ($node->get_attribute_ns (undef, $1)) : ''
+      }ge; ## BUG: ^ must be escaped
+      $msg =~ s{<var>{\@}</var>}{        ## BUG: v must be escaped
+        UNIVERSAL::can ($node, 'value') ? ($node->value) : ''
       }ge;
       $msg =~ s{<var>{local-name}</var>}{
         UNIVERSAL::can ($node, 'manakai_local_name')
-          ? htescape ($node->manakai_local_name) : ''
-      }ge;
+          ? ($node->manakai_local_name) : ''
+      }ge;  ## BUG: ^ must be escaped
       $msg =~ s{<var>{element-local-name}</var>}{
         (UNIVERSAL::can ($node, 'owner_element') and
          $node->owner_element)
-          ? htescape ($node->owner_element->manakai_local_name)
-          : ''
+          ?  ($node->owner_element->manakai_local_name)
+          : '' ## BUG: ^ must be escaped
       }ge;
       return ($type, 'level-' . $level . ' ' . $Msg->{$type}->[0], $msg);
     } elsif ($type =~ s/:([^:]*)$//) {
@@ -1512,27 +572,17 @@ sub get_text ($) {
       redo;
     }
   }
-  return ($type, 'level-'.$level, htescape ($_[0]));
+  return ($type, 'level-'.$level, ($_[0]));
+                                 ## BUG: ^ must be escaped
 } # get_text
 
 }
-
-sub encode_uri_component ($) {
-  require Encode;
-  my $s = Encode::encode ('utf8', shift);
-  $s =~ s/([^0-9A-Za-z_.~-])/sprintf '%%%02X', ord $1/ge;
-  return $s;
-} # encode_uri_component
-
-sub get_cc_uri ($) {
-  return './?uri=' . encode_uri_component ($_[0]);
-} # get_cc_uri
 
 sub get_input_document ($$) {
   my ($http, $dom) = @_;
 
   my $request_uri = $http->get_parameter ('uri');
-  my $r = {};
+  my $r = WebHACC::Input->new;
   if (defined $request_uri and length $request_uri) {
     my $uri = $dom->create_uri_reference ($request_uri);
     unless ({
@@ -1717,4 +767,4 @@ and/or modify it under the same terms as Perl itself.
 
 =cut
 
-## $Date: 2008/07/18 14:44:16 $
+## $Date: 2008/07/20 14:58:24 $

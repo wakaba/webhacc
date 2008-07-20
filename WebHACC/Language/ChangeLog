@@ -1,0 +1,7 @@
+2008-07-20  Wakaba  <wakaba@suika.fam.cx>
+
+	* ChangeLog: New file.
+
+	* Base.pm, Default.pm, HTML.pm, XML.pm, CSS.pm,
+	CacheManifest.pm, WebIDL.pom, DOM.pm: New modules.
+
