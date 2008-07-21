@@ -10,8 +10,7 @@ sub generate_structure_dump_section ($) {
   
   my $out = $self->output;
 
-  $out->start_section (id => 'document-tree', title => 'Document Tree',
-                       short_title => 'Tree');
+  $out->start_section (role => 'tree');
 
   $out->start_tag ('ol', class => 'xoxo');
 
@@ -158,8 +157,8 @@ sub generate_structure_error_section ($) {
   my $self = shift;
   
   my $out = $self->output;
-  $out->start_section (id => 'document-errors', title => 'Document Errors');
-  $out->start_tag ('dl', class => 'document-errors-list');
+  $out->start_section (role => 'structure-errors');
+  $out->start_error_list (role => 'structure-errors');
 
   my $input = $self->input;
   my $result = $self->result;
@@ -178,11 +177,157 @@ sub generate_structure_error_section ($) {
         ($self->{structure}, $onerror, $onsubdoc);
   }
 
-  $out->end_tag ('dl');
-  $out->html (qq[<script>
-    addSourceToParseErrorList ('@{[$input->id_prefix]}', 'document-errors-list');
-  </script>]);
+  $out->end_error_list (role => 'structure-errors');
   $out->end_section;
 } # generate_structure_error_section
+
+sub generate_additional_sections ($) {
+  my $self = shift;
+  $self->SUPER::generate_additional_sections;
+  $self->generate_table_section;
+} # generate_additional_sections
+
+sub generate_table_section ($) {
+  my $self = shift;
+
+  my $tables = $self->{add_info}->{table} || [];
+  return unless @$tables;
+
+  my $out = $self->output;
+  $out->start_section (id => 'tables', title => 'Tables');
+
+  $out->html (q[<!--[if IE]><script type="text/javascript" src="../excanvas.js"></script><![endif]-->
+<script src="../table-script.js" type="text/javascript"></script>
+<noscript>
+<p><em>Structure of tables are visualized here if scripting is enabled.</em></p>
+</noscript>]);
+  
+  require JSON;
+  
+  my $i = 0;
+  for my $table (@$tables) {
+    $i++;
+    $out->start_section (id => 'table-' . $i,
+                         title => 'Table #' . $i);
+
+    $out->start_tag ('dl');
+    $out->dt ('Table Element');
+    $out->start_tag ('dd');
+    $out->node_link ($table->{element});
+    $out->end_tag ('dl');
+    delete $table->{element};
+
+    for (@{$table->{column_group}}, @{$table->{column}}, $table->{caption},
+         @{$table->{row}}) {
+      next unless $_;
+      delete $_->{element};
+    }
+    
+    for (@{$table->{row_group}}) {
+      next unless $_;
+      next unless $_->{element};
+      $_->{type} = $_->{element}->manakai_local_name;
+      delete $_->{element};
+    }
+    
+    for (@{$table->{cell}}) {
+      next unless $_;
+      for (@{$_}) {
+        next unless $_;
+        for (@$_) {
+          $_->{id} = refaddr $_->{element} if defined $_->{element};
+          delete $_->{element};
+          $_->{is_header} = $_->{is_header} ? 1 : 0;
+        }
+      }
+    }
+
+    my $id_prefix = $self->input->id_prefix;
+    $out->script (q[tableToCanvas (] .
+        JSON::objToJson ($table) .
+        q[, document.getElementById ('] . $id_prefix . 'table-' . $i . q[')] .
+        q[, '] . $id_prefix . q[');]);
+
+    $out->end_section;
+  }
+
+  $out->end_section;
+} # print_table_section
+
+sub print_listing_section ($$$) {
+  my ($opt, $input, $ids) = @_;
+  
+#  push @nav, ['#' . $input->{id_prefix} . $opt->{id} => $opt->{label}]
+#      unless $input->{nested};
+  print STDOUT qq[
+<div id="$input->{id_prefix}$opt->{id}" class="section">
+<h2>$opt->{heading}</h2>
+
+<dl>
+];
+  for my $id (sort {$a cmp $b} keys %$ids) {
+    print STDOUT qq[<dt><code>@{[htescape $id]}</code></dt>];
+    for (@{$ids->{$id}}) {
+      print STDOUT qq[<dd>].get_node_link ($input, $_).qq[</dd>];
+    }
+  }
+  print STDOUT qq[</dl></div>];
+} # print_listing_section
+
+
+sub print_rdf_section ($$$) {
+  my ($input, $rdfs) = @_;
+  
+#  push @nav, ['#' . $input->{id_prefix} . 'rdf' => 'RDF']
+#      unless $input->{nested};
+  print STDOUT qq[
+<div id="$input->{id_prefix}rdf" class="section">
+<h2>RDF Triples</h2>
+
+<dl>];
+  my $i = 0;
+  for my $rdf (@$rdfs) {
+    print STDOUT qq[<dt id="$input->{id_prefix}rdf-@{[$i++]}">];
+    print STDOUT get_node_link ($input, $rdf->[0]);
+    print STDOUT qq[<dd><dl>];
+    for my $triple (@{$rdf->[1]}) {
+      print STDOUT '<dt>' . get_node_link ($input, $triple->[0]) . '<dd>';
+      print STDOUT get_rdf_resource_html ($triple->[1]);
+      print STDOUT ' ';
+      print STDOUT get_rdf_resource_html ($triple->[2]);
+      print STDOUT ' ';
+      print STDOUT get_rdf_resource_html ($triple->[3]);
+    }
+    print STDOUT qq[</dl>];
+  }
+  print STDOUT qq[</dl></div>];
+} # print_rdf_section
+
+sub get_rdf_resource_html ($) {
+  my $resource = shift;
+  if (defined $resource->{uri}) {
+    my $euri = htescape ($resource->{uri});
+    return '<code class=uri>&lt;<a href="' . $euri . '">' . $euri .
+        '</a>></code>';
+  } elsif (defined $resource->{bnodeid}) {
+    return htescape ('_:' . $resource->{bnodeid});
+  } elsif ($resource->{nodes}) {
+    return '(rdf:XMLLiteral)';
+  } elsif (defined $resource->{value}) {
+    my $elang = htescape (defined $resource->{language}
+                              ? $resource->{language} : '');
+    my $r = qq[<q lang="$elang">] . htescape ($resource->{value}) . '</q>';
+    if (defined $resource->{datatype}) {
+      my $euri = htescape ($resource->{datatype});
+      $r .= '^^<code class=uri>&lt;<a href="' . $euri . '">' . $euri .
+          '</a>></code>';
+    } elsif (length $resource->{language}) {
+      $r .= '@' . htescape ($resource->{language});
+    }
+    return $r;
+  } else {
+    return '??';
+  }
+} # get_rdf_resource_html
 
 1;

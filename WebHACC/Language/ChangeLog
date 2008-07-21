@@ -1,5 +1,19 @@
 2008-07-21  Wakaba  <wakaba@suika.fam.cx>
 
+	* Base.pm (generate_source_string_section): Invoke
+	|add_source_to_parse_error_list| method for generating a
+	script fragment.
+
+	* CSS.pm, CacheManifest.pm, DOM.pm, HTML.pm, WebIDL.pm,
+	XML.pm: Use new methods for generating sections and error lists.
+
+	* DOM.pm (generate_additional_sections, generate_table_section): New.
+
+	* Default.pm: Pass |input| in place of |url| for unknown syntax
+	error.
+
+2008-07-21  Wakaba  <wakaba@suika.fam.cx>
+
 	* Base.pm: Use new method for node links.
 
 	* CSS.pm: Typo fixes.  Pass |input| object as an argument

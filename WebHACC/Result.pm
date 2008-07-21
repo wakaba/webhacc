@@ -152,7 +152,7 @@ sub add_error ($%) {
     }
     
     unless ($has_location) {
-      $out->text ('No location information available');
+      $out->text ('Unknown location');
     }
   }
  

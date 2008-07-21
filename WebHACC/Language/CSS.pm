@@ -10,10 +10,11 @@ sub new ($) {
 
 sub generate_syntax_error_section ($) {
   my $self = shift;
-
+  
   my $out = $self->output;
-  $out->start_section (id => 'parse-errors', title => 'Parse Errors');
-  $out->start_tag ('dl', id => 'parse-errors-list');
+  
+  $out->start_section (role => 'parse-errors');
+  $out->start_error_list (role => 'parse-errors');
 
   my $input = $self->input;
   my $result = $self->result;
@@ -53,7 +54,7 @@ sub generate_syntax_error_section ($) {
   $self->{structure} = $p->parse_char_string ($$s);
   $self->{structure}->manakai_input_encoding ($charset) if defined $charset;
 
-  $out->end_tag ('dl');
+  $out->end_error_list (role => 'parse-errors');
   $out->end_section;
 } # generate_syntax_error_section
 
@@ -65,8 +66,8 @@ sub generate_structure_dump_section ($) {
   my $self = shift;
 
   my $out = $self->output;
-  $out->start_section (id => 'document-tree', title => 'Document Tree',
-                       short_title => 'Tree');
+
+  $out->start_section (role => 'reserialized');
 
   $out->start_code_block;
   $out->text ($self->{structure}->css_text);
@@ -80,15 +81,15 @@ sub generate_structure_error_section ($) {
 
   my $out = $self->output;
 
-  $out->start_section (id => 'document-errors', title => 'Document Errors');
-  $out->start_tag ('dl', class => 'document-errors-list');
+  $out->start_section (role => 'structure-errors');
+  $out->start_error_list (role => 'structure-errors');
 
   $self->result->add_error (level => 'u',
                             layer => 'structure',
                             input => $self->input,
                             type => 'CSSOM validation not supported');
 
-  $out->end_tag ('dl');
+  $out->end_error_list (role => 'structure-errors');
   $out->end_section;
 } # generate_structure_error_section
 

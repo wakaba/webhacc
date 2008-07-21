@@ -135,9 +135,7 @@ sub generate_source_string_section ($) {
     $out->start_tag ('li', id => 'line-1');
   }
   $out->end_tag ('ol');
-  $out->html (qq[<script>
-  addSourceToParseErrorList ('@{[$input->id_prefix]}', 'parse-errors-list');
-</script>]);
+  $out->add_source_to_parse_error_list ('parse-errors-list');
   $out->end_section
 } # generate_source_string_section
 

@@ -122,7 +122,6 @@ sub check_and_print ($$$) {
 
   if (defined $doc or defined $el) {
 
-    print_table_section ($input, $elements->{table}) if @{$elements->{table}};
     print_listing_section ({
       id => 'identifiers', label => 'IDs', heading => 'Identifiers',
     }, $input, $elements->{id}) if keys %{$elements->{id}};
@@ -154,141 +153,6 @@ sub check_and_print ($$$) {
   $out->input ($original_input);
 } # check_and_print
 
-sub print_table_section ($$) {
-  my ($input, $tables) = @_;
-  
-#  push @nav, [qq[#$input->{id_prefix}tables] => 'Tables']
-#      unless $input->{nested};
-  print STDOUT qq[
-<div id="$input->{id_prefix}tables" class="section">
-<h2>Tables</h2>
-
-<!--[if IE]><script type="text/javascript" src="../excanvas.js"></script><![endif]-->
-<script src="../table-script.js" type="text/javascript"></script>
-<noscript>
-<p><em>Structure of tables are visualized here if scripting is enabled.</em></p>
-</noscript>
-];
-  
-  require JSON;
-  
-  my $i = 0;
-  for my $table (@$tables) {
-    $i++;
-    print STDOUT qq[<div class="section" id="$input->{id_prefix}table-$i"><h3>] .
-        get_node_link ($input, $table->{element}) . q[</h3>];
-
-    delete $table->{element};
-
-    for (@{$table->{column_group}}, @{$table->{column}}, $table->{caption},
-         @{$table->{row}}) {
-      next unless $_;
-      delete $_->{element};
-    }
-    
-    for (@{$table->{row_group}}) {
-      next unless $_;
-      next unless $_->{element};
-      $_->{type} = $_->{element}->manakai_local_name;
-      delete $_->{element};
-    }
-    
-    for (@{$table->{cell}}) {
-      next unless $_;
-      for (@{$_}) {
-        next unless $_;
-        for (@$_) {
-          $_->{id} = refaddr $_->{element} if defined $_->{element};
-          delete $_->{element};
-          $_->{is_header} = $_->{is_header} ? 1 : 0;
-        }
-      }
-    }
-        
-    print STDOUT '</div><script type="text/javascript">tableToCanvas (';
-    print STDOUT JSON::objToJson ($table);
-    print STDOUT qq[, document.getElementById ('$input->{id_prefix}table-$i')];
-    print STDOUT qq[, '$input->{id_prefix}');</script>];
-  }
-  
-  print STDOUT qq[</div>];
-} # print_table_section
-
-sub print_listing_section ($$$) {
-  my ($opt, $input, $ids) = @_;
-  
-#  push @nav, ['#' . $input->{id_prefix} . $opt->{id} => $opt->{label}]
-#      unless $input->{nested};
-  print STDOUT qq[
-<div id="$input->{id_prefix}$opt->{id}" class="section">
-<h2>$opt->{heading}</h2>
-
-<dl>
-];
-  for my $id (sort {$a cmp $b} keys %$ids) {
-    print STDOUT qq[<dt><code>@{[htescape $id]}</code></dt>];
-    for (@{$ids->{$id}}) {
-      print STDOUT qq[<dd>].get_node_link ($input, $_).qq[</dd>];
-    }
-  }
-  print STDOUT qq[</dl></div>];
-} # print_listing_section
-
-
-sub print_rdf_section ($$$) {
-  my ($input, $rdfs) = @_;
-  
-#  push @nav, ['#' . $input->{id_prefix} . 'rdf' => 'RDF']
-#      unless $input->{nested};
-  print STDOUT qq[
-<div id="$input->{id_prefix}rdf" class="section">
-<h2>RDF Triples</h2>
-
-<dl>];
-  my $i = 0;
-  for my $rdf (@$rdfs) {
-    print STDOUT qq[<dt id="$input->{id_prefix}rdf-@{[$i++]}">];
-    print STDOUT get_node_link ($input, $rdf->[0]);
-    print STDOUT qq[<dd><dl>];
-    for my $triple (@{$rdf->[1]}) {
-      print STDOUT '<dt>' . get_node_link ($input, $triple->[0]) . '<dd>';
-      print STDOUT get_rdf_resource_html ($triple->[1]);
-      print STDOUT ' ';
-      print STDOUT get_rdf_resource_html ($triple->[2]);
-      print STDOUT ' ';
-      print STDOUT get_rdf_resource_html ($triple->[3]);
-    }
-    print STDOUT qq[</dl>];
-  }
-  print STDOUT qq[</dl></div>];
-} # print_rdf_section
-
-sub get_rdf_resource_html ($) {
-  my $resource = shift;
-  if (defined $resource->{uri}) {
-    my $euri = htescape ($resource->{uri});
-    return '<code class=uri>&lt;<a href="' . $euri . '">' . $euri .
-        '</a>></code>';
-  } elsif (defined $resource->{bnodeid}) {
-    return htescape ('_:' . $resource->{bnodeid});
-  } elsif ($resource->{nodes}) {
-    return '(rdf:XMLLiteral)';
-  } elsif (defined $resource->{value}) {
-    my $elang = htescape (defined $resource->{language}
-                              ? $resource->{language} : '');
-    my $r = qq[<q lang="$elang">] . htescape ($resource->{value}) . '</q>';
-    if (defined $resource->{datatype}) {
-      my $euri = htescape ($resource->{datatype});
-      $r .= '^^<code class=uri>&lt;<a href="' . $euri . '">' . $euri .
-          '</a>></code>';
-    } elsif (length $resource->{language}) {
-      $r .= '@' . htescape ($resource->{language});
-    }
-    return $r;
-  } else {
-    return '??';
-  }
-} # get_rdf_resource_html
 
 {
   my $Msg = {};
@@ -543,4 +407,4 @@ and/or modify it under the same terms as Perl itself.
 
 =cut
 
-## $Date: 2008/07/21 05:24:32 $
+## $Date: 2008/07/21 08:39:12 $

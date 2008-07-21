@@ -15,8 +15,8 @@ sub generate_syntax_error_section ($) {
 
   my $out = $self->output;
 
-  $out->start_section (id => 'parse-errors', title => 'Parse Errors');
-  $out->start_tag ('dl', id => 'parse-errors-list');
+  $out->start_section (role => 'parse-errors');
+  $out->start_error_list (role => 'parse-errors');
 
   my $input = $self->input;
   my $result = $self->result;
@@ -26,8 +26,8 @@ sub generate_syntax_error_section ($) {
       ($input->{s}, $input->{uri}, $input->{base_uri}, sub {
         $result->add_error (@_, layer => 'syntax', index_has_link => 1);
       });
-
-  $out->end_tag ('dl');
+       
+  $out->end_error_list (role => 'parse-errors');
   $out->end_section;
 } # generate_syntax_error_section
 
@@ -35,7 +35,7 @@ sub generate_structure_dump_section ($) {
   my $self = shift;
   my $manifest = $self->{structure};
 
-  $self->start_section (id => 'dump-manifest', title => 'Cache Manifest');
+  $self->start_section (role => 'structure');
 
   $self->html (qq[<dl><dt>Explicit entries</dt>]);
   my $i = 0;
@@ -71,8 +71,8 @@ sub generate_structure_error_section ($) {
 
   my $out = $self->output;
 
-  $out->start_section (id => 'document-errors', title => 'Document Errors');
-  $out->start_tag ('dl');
+  $out->start_section (role => 'structure-errors');
+  $out->start_error_list (role => 'structure-errors');
 
   my $result = $out->result;
 
@@ -80,6 +80,7 @@ sub generate_structure_error_section ($) {
     $result->add_error (@_, layer => 'structure');
   });
 
+  $out->end_error_list;
   $out->end_section;
 } # generate_structure_error_section
 

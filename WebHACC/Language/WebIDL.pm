@@ -14,8 +14,8 @@ sub generate_syntax_error_section ($) {
   require Whatpm::WebIDL;
 
   my $out = $self->output;
-  $out->start_section (id => 'parse-errors', title => 'Parse Errors');
-  $out->start_tag ('dl', id => 'parse-errors-list');
+  $out->start_section (role => 'parse-errors');
+  $out->start_error_list (role => 'parse-errors');
 
   my $input = $self->input;
   my $result = $self->result;
@@ -28,18 +28,21 @@ sub generate_syntax_error_section ($) {
     $result->add_error (@_, layer => 'syntax');
   });
 
-  $out->html ('</dl></div>');
+  $out->end_error_list (role => 'parse-errors');
+  $out->end_section;
 } # generate_parse_error_section
 
 sub generate_structure_dump_section ($) {
   my $self = shift;
   
   my $out = $self->output;
-  
-  $out->start_section (id => 'dump-webidl', title => 'WebIDL');
+
+  $out->start_section (role => 'reformatted');
+
   $out->start_code_block;
   $out->text ($self->{structure}->idl_text);
   $out->end_code_block;
+
   $out->end_section
 } # generate_structure_dump_section
 

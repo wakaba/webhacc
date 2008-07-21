@@ -17,7 +17,7 @@ my $htescape = sub ($) {
 };
 
 sub new ($) {
-  return bless {nav => []}, shift;
+  return bless {nav => [], section_rank => 1}, shift;
 } # new
 
 sub input ($;$) {
@@ -91,21 +91,102 @@ sub end_tag ($$) {
 
 sub start_section ($%) {
   my ($self, %opt) = @_;
+
+  if (defined $opt{role}) {
+    if ($opt{role} eq 'parse-errors') {
+      $opt{id} ||= 'parse-errors';
+      $opt{title} ||= 'Parse Errors';
+      delete $opt{role};
+    } elsif ($opt{role} eq 'structure-errors') {
+      $opt{id} ||= 'document-errors';
+      $opt{title} ||= 'Structural Errors';
+      $opt{short_title} ||= 'Struct. Errors';
+      delete $opt{role};
+    } elsif ($opt{role} eq 'reformatted') {
+      $opt{id} ||= 'document-tree';
+      $opt{title} ||= 'Reformatted Document Source';
+      $opt{short_title} ||= 'Reformatted';
+      delete $opt{role}
+    } elsif ($opt{role} eq 'tree') {
+      $opt{id} ||= 'document-tree';
+      $opt{title} ||= 'Document Tree';
+      $opt{short_title} ||= 'Tree';
+      delete $opt{role};
+    } elsif ($opt{role} eq 'structure') {
+      $opt{id} ||= 'document-structure';
+      $opt{title} ||= 'Document Structure';
+      $opt{short_title} ||= 'Structure';
+      delete $opt{role};
+    }
+  }
+
+  $self->{section_rank}++;
   $self->html ('<div class=section');
   if (defined $opt{id}) {
     my $id = $self->input->id_prefix . $opt{id};
     $self->html (' id="' . $htescape->($id) . '"');
     push @{$self->{nav}}, [$id => $opt{short_title} || $opt{title}] 
-        unless $self->input->nested;
+        if $self->{section_rank} == 2;
   }
-  $self->html ('><h2>' . $htescape->($opt{title}) . '</h2>');
+  my $section_rank = $self->{section_rank};
+  $section_rank = 6 if $section_rank > 6;
+  $self->html ('><h' . $section_rank . '>' .
+               $htescape->($opt{title}) .
+               '</h' . $section_rank . '>');
 } # start_section
 
 sub end_section ($) {
   my $self = shift;
   $self->html ('</div>');
   $self->{handle}->flush;
+  $self->{section_rank}--;
 } # end_section
+
+sub start_error_list ($%) {
+  my ($self, %opt) = @_;
+
+  if (defined $opt{role}) {
+    if ($opt{role} eq 'parse-errors') {
+      $opt{id} ||= 'parse-errors-list';
+      delete $opt{role};
+    } elsif ($opt{role} eq 'structure-errors') {
+      $opt{id} ||= 'document-errors-list';
+      delete $opt{role};
+    }
+  }
+
+  $self->start_tag ('dl', %opt);
+} # start_error_list
+
+sub end_error_list ($%) {
+  my ($self, %opt) = @_;
+
+  if (defined $opt{role}) {
+    if ($opt{role} eq 'parse-errors') {
+      delete $opt{role};
+      $self->end_tag ('dl');
+      ## NOTE: For parse error list, the |add_source_to_parse_error_list|
+      ## method is invoked at the end of |generate_source_string_section|,
+      ## since that generation method is invoked after the error list
+      ## is generated.
+    } elsif ($opt{role} eq 'structure-errors') {
+      delete $opt{role};
+      $self->end_tag ('dl');
+      $self->add_source_to_parse_error_list ('document-errors-list');
+    } else {
+      $self->end_tag ('dl');
+    }
+  } else {
+    $self->end_tag ('dl');
+  }
+} # end_error_list
+
+sub add_source_to_parse_error_list ($$) {
+  my $self = shift;
+
+  $self->script (q[addSourceToParseErrorList ('] . $self->input->id_prefix .
+                 q[', '] . shift . q[')]);
+} # add_source_to_parse_error_list
 
 sub start_code_block ($) {
   shift->html ('<pre><code>');

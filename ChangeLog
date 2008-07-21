@@ -1,5 +1,10 @@
 2008-07-21  Wakaba  <wakaba@suika.fam.cx>
 
+	* cc.cgi (print_table_section): Removed (now part of 
+	WebHACC::Language::DOM).
+
+2008-07-21  Wakaba  <wakaba@suika.fam.cx>
+
 	* cc.cgi: Information sections are now handled by WebHACC::Input
 	module.  Input objects for subdocuments now owns their
 	own subclass.

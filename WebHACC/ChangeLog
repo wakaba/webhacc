@@ -1,5 +1,14 @@
 2008-07-21  Wakaba  <wakaba@suika.fam.cx>
 
+	* Output.pm (start_section, end_section): "role" option
+	implemented.  Automatical rank setting implemented.
+	(start_error_list, end_error_list): New.
+	(add_source_to_parse_error_list): New.
+
+	* Result.pm: "Unknown location" message text changed.
+
+2008-07-21  Wakaba  <wakaba@suika.fam.cx>
+
 	* Result.pm (add_label): Output error-level description
 	text before the description of the error itself, which
 	is originally coded in get_error_level_label, which in turn

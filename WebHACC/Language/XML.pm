@@ -13,8 +13,8 @@ sub generate_syntax_error_section ($) {
   require Message::DOM::XMLParserTemp;
 
   my $out = $self->output;
-  $out->start_section (id => 'parse-errors', title => 'Parse Errors');
-  $out->start_tag ('dl', class => 'parse-errors-list');
+  $out->start_section (role => 'parse-errors');
+  $out->start_error_list (role => 'parse-errors');
 
   my $input = $self->input;
   my $result = $self->result;
@@ -50,7 +50,7 @@ sub generate_syntax_error_section ($) {
   $doc->document_uri ($input->{uri});
   $doc->manakai_entity_base_uri ($input->{base_uri});
 
-  $out->end_tag ('dl');
+  $out->end_error_list;
   $out->end_section;
 } # generate_syntax_error_section
 

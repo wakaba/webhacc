@@ -16,7 +16,7 @@ sub generate_syntax_error_section ($) {
   $out->start_section (id => 'parse-errors', title => 'Errors');
   $out->start_tag ('dl');
 
-  $self->result->add_error (url => $self->input->{uri},
+  $self->result->add_error (input => $self->input,
                             level => 'u',
                             layer => 'syntax',
                             type => 'media type not supported',
