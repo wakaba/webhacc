@@ -223,8 +223,10 @@ sub generate_table_section ($) {
   my $i = 0;
   for my $table (@$tables) {
     $i++;
+    my $index = $out->input->full_subdocument_index;
+    $index = $index ? $index . '.' . $i : $i;
     $out->start_section (id => 'table-' . $i,
-                         title => 'Table #' . $i);
+                         title => 'Table #' . $index);
 
     $out->start_tag ('dl');
     $out->dt ('Table Element');

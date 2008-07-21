@@ -1,5 +1,14 @@
 2008-07-21  Wakaba  <wakaba@suika.fam.cx>
 
+	* Input.pm (full_subdocument_index): New method, for the
+	support of hierarchical subdocument numbers.
+	(start_section): Use hierarhical subdocument numbers for
+	section headings.
+	
+	* Output.pm (http_header, http_error, html_header): New methods.
+
+2008-07-21  Wakaba  <wakaba@suika.fam.cx>
+
 	* Output.pm (start_section, end_section): "role" option
 	implemented.  Automatical rank setting implemented.
 	(start_error_list, end_error_list): New.

@@ -1,5 +1,10 @@
 2008-07-21  Wakaba  <wakaba@suika.fam.cx>
 
+	* DOM.pm (generate_table_section): Use hierarhical table
+	number for tables in subdocuments.
+
+2008-07-21  Wakaba  <wakaba@suika.fam.cx>
+
 	* DOM.pm (generate_additional_sections): Support
 	for the other additional information sections are reintroduced.
 	(generate_listing_section, generate_rdf_section): Reimplemented.

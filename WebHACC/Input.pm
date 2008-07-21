@@ -11,6 +11,8 @@ sub nested ($) { 0 }
 
 sub subdocument_index ($) { 0 }
 
+sub full_subdocument_index ($) { 0 }
+
 sub generate_info_section ($$) {
   my $self = shift;
   
@@ -143,15 +145,26 @@ sub subdocument_index ($) {
   return shift->{subdocument_index};
 } # subdocument_index
 
+sub full_subdocument_index ($) {
+  my $self = shift;
+  my $parent = $self->{parent_input}->full_subdocument_index;
+  if ($parent) {
+    return $parent . '.' . $self->{subdocument_index};
+  } else {
+    return $self->{subdocument_index};
+  }
+} # full_subdocument_index
+
 sub start_section ($$) {
   my $self = shift;
 
   my $result = shift;
   my $out = $result->output;
 
+  my $index = $self->full_subdocument_index;
   $out->start_section (id => $self->id_prefix,
-                       title => qq[Subdocument #] . $self->subdocument_index,
-                       short_title => 'Sub #' . $self->subdocument_index);
+                       title => qq[Subdocument #] . $index,
+                       short_title => 'Sub #' . $index);
 } # start_section
 
 sub end_section ($$) {

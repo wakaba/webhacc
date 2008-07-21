@@ -278,6 +278,32 @@ sub nav_list ($) {
   $self->html ('</ul>');
 } # nav_list
 
+sub http_header ($) {
+  shift->html (qq[Content-Type: text/html; charset=utf-8\n\n]);
+} # http_header
+
+sub http_error ($$) {
+  my $self = shift;
+  my $code = 0+shift;
+  my $text = {
+    404 => 'Not Found',
+  }->{$code};
+  $self->html (qq[Status: $code $text\nContent-Type: text/html ; charset=us-ascii\n\n$code $text]);
+} # http_error
+
+sub html_header ($) {
+  my $self = shift;
+  $self->html (q[<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Web Document Conformance Checker (BETA)</title>
+<link rel="stylesheet" href="../cc-style.css" type="text/css">
+</head>
+<body>
+<h1><a href="../cc-interface">Web Document Conformance Checker</a> 
+(<em>beta</em>)</h1>
+]);
+} # html_header
 
 sub encode_url_component ($$) {
   shift;

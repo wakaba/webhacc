@@ -1,53 +1,37 @@
 #!/usr/bin/perl
 use strict;
-use utf8;
 
 use lib qw[/home/httpd/html/www/markup/html/whatpm
            /home/wakaba/work/manakai2/lib];
 use CGI::Carp qw[fatalsToBrowser];
-use Scalar::Util qw[refaddr];
 
   require WebHACC::Input;
-  require WebHACC::Result;
-  require WebHACC::Output;
 
-my $out;
-
-  require Message::DOM::DOMImplementation;
-  my $dom = Message::DOM::DOMImplementation->new;
 {
-  use Message::CGI::HTTP;
+  require Message::CGI::HTTP;
   my $http = Message::CGI::HTTP->new;
 
+  require WebHACC::Output;
+  my $out = WebHACC::Output->new;
+  $out->handle (*STDOUT);
+  $out->set_utf8;
+
   if ($http->get_meta_variable ('PATH_INFO') ne '/') {
-    print STDOUT "Status: 404 Not Found\nContent-Type: text/plain; charset=us-ascii\n\n400";
+    $out->http_error (404);
     exit;
   }
   
   load_text_catalog ('en'); ## TODO: conneg
 
-  $out = WebHACC::Output->new;
-  $out->handle (*STDOUT);
-  $out->set_utf8;
   $out->set_flush;
-  $out->html (qq[Content-Type: text/html; charset=utf-8
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<title>Web Document Conformance Checker (BETA)</title>
-<link rel="stylesheet" href="../cc-style.css" type="text/css">
-</head>
-<body>
-<h1><a href="../cc-interface">Web Document Conformance Checker</a> 
-(<em>beta</em>)</h1>
-]);
-
-  my $input = get_input_document ($http, $dom);
-
-  $out->input ($input);
+  $out->http_header;
+  $out->html_header;
   $out->unset_flush;
 
+  my $input = get_input_document ($http);
+  $out->input ($input);
+
+  require WebHACC::Result;
   my $result = WebHACC::Result->new;
   $result->output ($out);
   $result->{conforming_min} = 1;
@@ -193,8 +177,11 @@ sub get_text ($;$$) {
 
 }
 
-sub get_input_document ($$) {
-  my ($http, $dom) = @_;
+sub get_input_document ($) {
+  my $http = shift;
+
+  require Message::DOM::DOMImplementation;
+  my $dom = Message::DOM::DOMImplementation->new;
 
   require Encode;
   my $request_uri = Encode::decode ('utf-8', $http->get_parameter ('uri'));
@@ -388,4 +375,4 @@ and/or modify it under the same terms as Perl itself.
 
 =cut
 
-## $Date: 2008/07/21 09:15:55 $
+## $Date: 2008/07/21 09:40:59 $
