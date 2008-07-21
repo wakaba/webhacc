@@ -157,19 +157,44 @@ sub add_error ($%) {
   }
  
   $out->start_tag ('dd', class => $class);
+
+  ## Error level
+  
+  if ($error_level eq 'm') {
+    $out->html (qq[<strong><a href="../error-description#level-m"><em class=rfc2119>MUST</em>-level
+        error</a></strong>: ]);
+  } elsif ($error_level eq 's') {
+    $out->html (qq[<strong><a href="../error-description#level-s"><em class=rfc2119>SHOULD</em>-level
+        error</a></strong>: ]);
+  } elsif ($error_level eq 'w') {
+    $out->html (qq[<strong><a href="../error-description#level-w">Warning</a></strong>: ]);
+  } elsif ($error_level eq 'u') {
+    $out->html (qq[<strong><a href="../error-description#level-u">Not
+        supported</a></strong>: ]);
+  } elsif ($error_level eq 'i') {
+    $out->html (qq[<strong><a href="../error-description#level-i">Information</a></strong>: ]);
+  }
+
+  ## Error message
+
   $out->text ($error_type_text);
+
+  ## Additional error description
 
   if (defined $opt{text}) {
     $out->html (' (<q>');
     $out->text ($opt{text});
     $out->html ('</q>)');
   }
+  
+  ## Link to a long description
 
   my $fragment = $opt{type};
   $fragment =~ tr/ /-/;
   $fragment = $out->encode_url_component ($fragment);
   $out->text (' [');
-  $out->link ('Description', url => '../error-description#' . $fragment);
+  $out->link ('Description', url => '../error-description#' . $fragment,
+              rel => 'help');
   $out->text (']');
 
 
@@ -292,34 +317,5 @@ Errors</a></th>
 is <em>under development</em>.  The result above might be <em>wrong</em>.</p>]);
   $out->end_section;
 } # generate_result_section
-
-sub get_error_level_label ($) {
-  my $self = shift;
-  my $err = shift;
-
-  my $r = '';
-
-  if (not defined $err->{level} or $err->{level} eq 'm') {
-    $r = qq[<strong><a href="../error-description#level-m"><em class=rfc2119>MUST</em>-level
-        error</a></strong>: ];
-  } elsif ($err->{level} eq 's') {
-    $r = qq[<strong><a href="../error-description#level-s"><em class=rfc2119>SHOULD</em>-level
-        error</a></strong>: ];
-  } elsif ($err->{level} eq 'w') {
-    $r = qq[<strong><a href="../error-description#level-w">Warning</a></strong>:
-        ];
-  } elsif ($err->{level} eq 'u' or $err->{level} eq 'unsupported') {
-    $r = qq[<strong><a href="../error-description#level-u">Not
-        supported</a></strong>: ];
-  } elsif ($err->{level} eq 'i') {
-    $r = qq[<strong><a href="../error-description#level-i">Information</a></strong>: ];
-  } else {
-    my $elevel = htescape ($err->{level});
-    $r = qq[<strong><a href="../error-description#level-$elevel">$elevel</a></strong>:
-        ];
-  }
-
-  return $r;
-} # get_error_level_label
 
 1;

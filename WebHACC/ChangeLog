@@ -1,5 +1,13 @@
 2008-07-21  Wakaba  <wakaba@suika.fam.cx>
 
+	* Result.pm (add_label): Output error-level description
+	text before the description of the error itself, which
+	is originally coded in get_error_level_label, which in turn
+	comes from cc.cgi at first.
+	(get_error_level_label): Removed.
+
+2008-07-21  Wakaba  <wakaba@suika.fam.cx>
+
 	* Input.pm: A new subclass for subdocuments are added.
 	Methods for information sections are added (from cc.cgi).
 
