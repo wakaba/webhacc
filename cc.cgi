@@ -118,25 +118,6 @@ sub check_and_print ($$$) {
   $checker->generate_structure_error_section;
   $checker->generate_additional_sections;
 
-=pod
-
-  if (defined $doc or defined $el) {
-
-    print_listing_section ({
-      id => 'identifiers', label => 'IDs', heading => 'Identifiers',
-    }, $input, $elements->{id}) if keys %{$elements->{id}};
-    print_listing_section ({
-      id => 'terms', label => 'Terms', heading => 'Terms',
-    }, $input, $elements->{term}) if keys %{$elements->{term}};
-    print_listing_section ({
-      id => 'classes', label => 'Classes', heading => 'Classes',
-    }, $input, $elements->{class}) if keys %{$elements->{class}};
-   
-    print_rdf_section ($input, $elements->{rdf}) if @{$elements->{rdf}};
-  }
-
-=cut
-
   my $id_prefix = 0;
   for my $_subinput (@subdoc) {
     my $subinput = WebHACC::Input::Subdocument->new (++$id_prefix);
@@ -407,4 +388,4 @@ and/or modify it under the same terms as Perl itself.
 
 =cut
 
-## $Date: 2008/07/21 08:39:12 $
+## $Date: 2008/07/21 09:15:55 $

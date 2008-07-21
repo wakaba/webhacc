@@ -1,5 +1,17 @@
 2008-07-21  Wakaba  <wakaba@suika.fam.cx>
 
+	* DOM.pm (generate_additional_sections): Support
+	for the other additional information sections are reintroduced.
+	(generate_listing_section, generate_rdf_section): Reimplemented.
+
+	* XML.pm: Typo fixed.
+
+	* HTML.pm: Load DOMImplementation as late as possible, to
+	save possiblity that another DOM implementation can be used
+	where possible.
+
+2008-07-21  Wakaba  <wakaba@suika.fam.cx>
+
 	* Base.pm (generate_source_string_section): Invoke
 	|add_source_to_parse_error_list| method for generating a
 	script fragment.

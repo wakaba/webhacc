@@ -3,8 +3,6 @@ use strict;
 require WebHACC::Language::DOM;
 push our @ISA, 'WebHACC::Language::DOM';
 
-require Message::DOM::DOMImplementation;
-
 sub new ($) {
   return bless {}, shift;
 } # new
@@ -12,6 +10,7 @@ sub new ($) {
 sub generate_syntax_error_section ($) {
   my $self = shift;
   
+  require Message::DOM::DOMImplementation;
   require Encode;
   require Whatpm::HTML;
   

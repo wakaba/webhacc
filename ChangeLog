@@ -1,5 +1,11 @@
 2008-07-21  Wakaba  <wakaba@suika.fam.cx>
 
+	* cc.cgi: Old commented out code for additional
+	information sections are removed.  They are now
+	implemented as part of |generate_add_info_sections| method.
+
+2008-07-21  Wakaba  <wakaba@suika.fam.cx>
+
 	* cc.cgi (print_table_section): Removed (now part of 
 	WebHACC::Language::DOM).
 

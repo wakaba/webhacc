@@ -10,6 +10,7 @@ sub new ($) {
 sub generate_syntax_error_section ($) {
   my $self = shift;
   
+  require Message::DOM::DOMImplementation;
   require Message::DOM::XMLParserTemp;
 
   my $out = $self->output;
@@ -42,13 +43,14 @@ sub generate_syntax_error_section ($) {
   }
 
   open my $fh, '<', $t;
-  my $doc = Message::DOM::XMLParserTemp->parse_byte_stream
+  my $dom = Message::DOM::DOMImplementation->new;
+  $self->{structure} = Message::DOM::XMLParserTemp->parse_byte_stream
       ($fh => $dom, $onerror, charset => $input->{charset});
-  $doc->manakai_charset ($input->{official_charset})
+  $self->{structure}->manakai_charset ($input->{official_charset})
       if defined $input->{official_charset};
 
-  $doc->document_uri ($input->{uri});
-  $doc->manakai_entity_base_uri ($input->{base_uri});
+  $self->{structure}->document_uri ($input->{uri});
+  $self->{structure}->manakai_entity_base_uri ($input->{base_uri});
 
   $out->end_error_list;
   $out->end_section;

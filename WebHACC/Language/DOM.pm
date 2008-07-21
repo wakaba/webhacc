@@ -184,7 +184,23 @@ sub generate_structure_error_section ($) {
 sub generate_additional_sections ($) {
   my $self = shift;
   $self->SUPER::generate_additional_sections;
+
   $self->generate_table_section;
+
+  $self->generate_listing_section (
+      key => 'id', id => 'identifiers',
+      short_title => 'IDs', title => 'Identifiers',
+  );
+  $self->generate_listing_section (
+      key => 'term', id => 'terms',
+      short_title => 'Terms', title => 'Terms',
+  );
+  $self->generate_listing_section (
+      key => 'class', id => 'classes',
+      short_title => 'Classes', title => 'Classes',
+  );
+
+  $self->generate_rdf_section;
 } # generate_additional_sections
 
 sub generate_table_section ($) {
@@ -252,82 +268,98 @@ sub generate_table_section ($) {
   }
 
   $out->end_section;
-} # print_table_section
+} # generate_table_section
 
-sub print_listing_section ($$$) {
-  my ($opt, $input, $ids) = @_;
-  
-#  push @nav, ['#' . $input->{id_prefix} . $opt->{id} => $opt->{label}]
-#      unless $input->{nested};
-  print STDOUT qq[
-<div id="$input->{id_prefix}$opt->{id}" class="section">
-<h2>$opt->{heading}</h2>
+sub generate_listing_section ($%) {
+  my $self = shift;
+  my %opt = @_;
 
-<dl>
-];
-  for my $id (sort {$a cmp $b} keys %$ids) {
-    print STDOUT qq[<dt><code>@{[htescape $id]}</code></dt>];
-    for (@{$ids->{$id}}) {
-      print STDOUT qq[<dd>].get_node_link ($input, $_).qq[</dd>];
+  my $list = $self->{add_info}->{$opt{key}} || {};
+  return unless keys %$list;
+
+  my $out = $self->output;
+
+  $out->start_section (id => $opt{id},
+                       title => $opt{title},
+                       short_title => $opt{short_title});
+  $out->start_tag ('dl');
+
+  for my $id (sort {$a cmp $b} keys %$list) {
+    $out->start_tag ('dt');
+    $out->code ($id);
+    for (@{$list->{$id}}) {
+      $out->start_tag ('dd');
+      $out->node_link ($_);
     }
   }
-  print STDOUT qq[</dl></div>];
-} # print_listing_section
 
+  $out->end_tag ('dl');
+  $out->end_section;
+} # generate_listing_section
 
-sub print_rdf_section ($$$) {
-  my ($input, $rdfs) = @_;
-  
-#  push @nav, ['#' . $input->{id_prefix} . 'rdf' => 'RDF']
-#      unless $input->{nested};
-  print STDOUT qq[
-<div id="$input->{id_prefix}rdf" class="section">
-<h2>RDF Triples</h2>
+my $generate_rdf_resource_html = sub ($$) {
+  my ($resource, $out) = @_;
 
-<dl>];
-  my $i = 0;
-  for my $rdf (@$rdfs) {
-    print STDOUT qq[<dt id="$input->{id_prefix}rdf-@{[$i++]}">];
-    print STDOUT get_node_link ($input, $rdf->[0]);
-    print STDOUT qq[<dd><dl>];
-    for my $triple (@{$rdf->[1]}) {
-      print STDOUT '<dt>' . get_node_link ($input, $triple->[0]) . '<dd>';
-      print STDOUT get_rdf_resource_html ($triple->[1]);
-      print STDOUT ' ';
-      print STDOUT get_rdf_resource_html ($triple->[2]);
-      print STDOUT ' ';
-      print STDOUT get_rdf_resource_html ($triple->[3]);
-    }
-    print STDOUT qq[</dl>];
-  }
-  print STDOUT qq[</dl></div>];
-} # print_rdf_section
-
-sub get_rdf_resource_html ($) {
-  my $resource = shift;
   if (defined $resource->{uri}) {
-    my $euri = htescape ($resource->{uri});
-    return '<code class=uri>&lt;<a href="' . $euri . '">' . $euri .
-        '</a>></code>';
+    $out->url ($resource->{uri});
   } elsif (defined $resource->{bnodeid}) {
-    return htescape ('_:' . $resource->{bnodeid});
+    $out->text ('_:' . $resource->{bnodeid});
   } elsif ($resource->{nodes}) {
-    return '(rdf:XMLLiteral)';
+    $out->text ('(rdf:XMLLiteral)');
   } elsif (defined $resource->{value}) {
-    my $elang = htescape (defined $resource->{language}
-                              ? $resource->{language} : '');
-    my $r = qq[<q lang="$elang">] . htescape ($resource->{value}) . '</q>';
+    $out->start_tag ('q',
+                     lang => defined $resource->{language}
+                         ? $resource->{language} : '');
+    $out->text ($resource->{value});
+    $out->end_tag ('q');
+
     if (defined $resource->{datatype}) {
-      my $euri = htescape ($resource->{datatype});
-      $r .= '^^<code class=uri>&lt;<a href="' . $euri . '">' . $euri .
-          '</a>></code>';
+      $out->text ('^^');
+      $out->url ($resource->{datatype});
     } elsif (length $resource->{language}) {
-      $r .= '@' . htescape ($resource->{language});
+      $out->text ('@' . $resource->{language});
     }
-    return $r;
   } else {
-    return '??';
+    $out->text ('??'); ## NOTE: An error of the implementation.
   }
-} # get_rdf_resource_html
+}; # $generate_rdf_resource_html
+
+## TODO: Should we move this method to another module,
+## such as Base or RDF?
+sub generate_rdf_section ($) {
+  my $self = shift;
+
+  my $list = $self->{add_info}->{rdf} || [];
+  return unless @$list;
+
+  my $out = $self->output;
+  $out->start_section (id => 'rdf', short_title => 'RDF',
+                       title => 'RDF Triples');
+  $out->start_tag ('dl');
+
+  my $i = 0;
+  for my $rdf (@$list) {
+    $out->start_tag ('dt', id => 'rdf-' . $i++);
+    $out->node_link ($rdf->[0]);
+    $out->start_tag ('dd');
+    $out->start_tag ('dl');
+    for my $triple (@{$rdf->[1]}) {
+      $out->start_tag ('dt');
+      $out->node_link ($triple->[0]);
+      $out->start_tag ('dd');
+      $out->text ('Subject: ');
+      $generate_rdf_resource_html->($triple->[1] => $out);
+      $out->start_tag ('dd');
+      $out->text ('Predicate: ');
+      $generate_rdf_resource_html->($triple->[2] => $out);
+      $out->start_tag ('dd');
+      $out->text ('Object: ');
+      $generate_rdf_resource_html->($triple->[3] => $out);
+    }
+    $out->end_tag ('dl');
+  }
+  $out->end_tag ('dl');
+  $out->end_section;
+} # generate_rdf_section
 
 1;
