@@ -1,5 +1,11 @@
 2008-07-21  Wakaba  <wakaba@suika.fam.cx>
 
+	* cc.cgi: Information sections are now handled by WebHACC::Input
+	module.  Input objects for subdocuments now owns their
+	own subclass.
+
+2008-07-21  Wakaba  <wakaba@suika.fam.cx>
+
 	* cc.cgi: Errors and results are now handled by WebHACC::Result.
 	Decode |uri| parameter as UTF-8.  HTTP header dump and
 	input error are now handled by WebHACC::Input.

@@ -1,6 +1,8 @@
 package WebHACC::Output;
 use strict;
+
 require IO::Handle;
+use Scalar::Util qw/refaddr/;
 
 my $htescape = sub ($) {
   my $s = $_[0];
@@ -113,9 +115,25 @@ sub end_code_block ($) {
   shift->html ('</code></pre>');
 } # end_code_block
 
-sub code ($$) {
-  shift->html ('<code>' . $htescape->(shift) . '</code>');
+sub code ($$;%) {
+  my ($self, $content, %opt) = @_;
+  $self->start_tag ('code', %opt);
+  $self->text ($content);
+  $self->html ('</code>');
 } # code
+
+sub script ($$;%) {
+  my ($self, $content, %opt) = @_;
+  $self->start_tag ('script', %opt);
+  $self->html ($content);
+  $self->html ('</script>');
+} # script
+
+sub dt ($$;%) {
+  my ($self, $content, %opt) = @_;
+  $self->start_tag ('dt', %opt);
+  $self->text ($content);
+} # dt
 
 sub link ($$%) {
   my ($self, $content, %opt) = @_;
@@ -137,11 +155,44 @@ sub link_to_webhacc ($$%) {
   $self->link ($content, %opt);
 } # link_to_webhacc
 
+
+my $get_node_path = sub ($) {
+  my $node = shift;
+  my @r;
+  while (defined $node) {
+    my $rs;
+    if ($node->node_type == 1) {
+      $rs = $node->node_name;
+      $node = $node->parent_node;
+    } elsif ($node->node_type == 2) {
+      $rs = '@' . $node->node_name;
+      $node = $node->owner_element;
+    } elsif ($node->node_type == 3) {
+      $rs = '"' . $node->data . '"';
+      $node = $node->parent_node;
+    } elsif ($node->node_type == 9) {
+      @r = ('') unless @r;
+      $rs = '';
+      $node = $node->parent_node;
+    } else {
+      $rs = '#' . $node->node_type;
+      $node = $node->parent_node;
+    }
+    unshift @r, $rs;
+  }
+  return join '/', @r;
+}; # $get_node_path
+
+sub node_link ($$) {
+  my ($self, $node) = @_;
+  $self->xref ($get_node_path->($node), target => 'node-' . refaddr $node);
+} # node_link
+
 sub nav_list ($) {
   my $self = shift;
   $self->html (q[<ul class="navigation" id="nav-items">]);
   for (@{$self->{nav}}) {
-    $self->html (qq[<li><a href="@{[$htescape->($_->[0])]}">@{[$htescape->($_->[1])]}</a>]);
+    $self->html (qq[<li><a href="#@{[$htescape->($_->[0])]}">@{[$htescape->($_->[1])]}</a>]);
   }
   $self->html ('</ul>');
 } # nav_list

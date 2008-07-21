@@ -169,7 +169,8 @@ sub generate_url_section ($) {
     $out->link_to_webhacc ('Check conformance of this document', url => $url);
     $out->html ('<dd>Found in: <ul>');
     for my $entry (@{$urls->{$url}}) {
-      $out->html (qq[<li>] . $result->get_node_link ($input, $entry->{node}));
+      $out->start_tag ('li');
+      $out->node_link ($entry->{node});
       if (keys %{$entry->{type} or {}}) {
         $out->text (' (');
         $out->text (join ', ', map {

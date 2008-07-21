@@ -2,32 +2,79 @@ package WebHACC::Input;
 use strict;
 
 sub new ($) {
-  return bless {id_prefix => ''}, shift;
+  return bless {}, shift;
 } # new
 
-sub id_prefix ($;$) {
-  if (@_ > 1) {
-    if (defined $_[1]) {
-      $_[0]->{id_prefix} = ''.$_[1];
+sub id_prefix ($) { '' }
+
+sub nested ($) { 0 }
+
+sub subdocument_index ($) { 0 }
+
+sub generate_info_section ($$) {
+  my $self = shift;
+  
+  my $result = shift;
+  my $out = $result->output;
+
+  $out->start_section (id => 'document-info', title => 'Information');
+  $out->start_tag ('dl');
+
+  $out->dt ('Request URL');
+  $out->start_tag ('dd');
+  $out->url ($self->{request_uri});
+
+  $out->dt ('Document URL'); ## TODO: HTML5 "document's address"?
+  $out->start_tag ('dd');
+  $out->url ($self->{uri}, id => 'anchor-document-url');
+  $out->script (q[
+      document.title = '<'
+          + document.getElementById ('anchor-document-url').href + '> \\u2014 '
+          + document.title;
+  ]);
+
+  if (defined $self->{s}) {
+    $out->dt ('Base URL');
+    $out->start_tag ('dd');
+    $out->url ($self->{base_uri});
+    
+    $out->dt ('Internet Media Type');
+    $out->start_tag ('dd');
+    $out->code ($self->{media_type}, class => 'MIME', lang => 'en');
+    if ($self->{media_type_overridden}) {
+      $out->html (' <em>(overridden)</em>');
+    } elsif (defined $self->{official_type}) {
+      if ($self->{media_type} eq $self->{official_type}) {
+        #
+      } else {
+        $out->html (' <em>(sniffed; official type is: ');
+        $out->code ($self->{official_type}, class => 'MIME', lang => 'en');
+        $out->html (')</em>');
+      }
     } else {
-      $_[0]->{id_prefix} = '';
+      $out->html ( '<em>(sniffed)</em>');
     }
+
+    $out->dt ('Character Encoding');
+    $out->start_tag ('dd');
+    if (defined $self->{charset}) {
+      $out->code ($self->{charset}, class => 'charset', lang => 'en');
+    } else {
+      $out->text ('(none)');
+    }
+    $out->html (' <em>overridden</em>') if $self->{charset_overridden};
+
+    $out->dt ($self->{is_char_string} ? 'Character Length' : 'Byte Length');
+    ## TODO: formatting
+    $out->start_tag ('dd');
+    my $length = length $self->{s};
+    $out->text ($length . ($self->{is_char_string} ? ' character' : ' byte') .
+                ($length == 1 ? '' : 's'));
   }
 
-  return $_[0]->{id_prefix};
-} # id_prefix
-
-sub nested ($;$) {
-  if (@_ > 1) {
-    if ($_[1]) {
-      $_[0]->{nested} = 1;
-    } else {
-      delete $_[0]->{nested};
-    }
-  }
-
-  return $_[0]->{nested};
-} # nested
+  $out->end_tag ('dl');
+  $out->end_section;
+} # generate_info_section
 
 sub generate_transfer_sections ($$) {
   my $self = shift;
@@ -76,6 +123,70 @@ not be the real header.</p>
 
   $out->end_section;
 } # generate_http_header_section
+
+package WebHACC::Input::Subdocument;
+push our @ISA, 'WebHACC::Input';
+
+sub new ($$) {
+  my $self = bless {}, shift;
+  $self->{subdocument_index} = shift;
+  return $self;
+} # new
+
+sub id_prefix ($) {
+  return 'subdoc-' . shift->{subdocument_index} . '-';
+} # id_prefix
+
+sub nested ($) { 1 }
+
+sub subdocument_index ($) {
+  return shift->{subdocument_index};
+} # subdocument_index
+
+sub start_section ($$) {
+  my $self = shift;
+
+  my $result = shift;
+  my $out = $result->output;
+
+  $out->start_section (id => $self->id_prefix,
+                       title => qq[Subdocument #] . $self->subdocument_index,
+                       short_title => 'Sub #' . $self->subdocument_index);
+} # start_section
+
+sub end_section ($$) {
+  $_[1]->output->end_section;
+} # end_section
+
+sub generate_info_section ($$) {
+  my $self = shift;
+
+  my $result = shift;
+  my $out = $result->output;
+
+  $out->start_section (id => 'document-info', title => 'Information');
+  $out->start_tag ('dl');
+
+  $out->dt ('Internet Media Type');
+  $out->start_tag ('dd');
+  $out->code ($self->{media_type}, code => 'MIME', lang => 'en');
+
+  if (defined $self->{container_node}) {
+    $out->dt ('Container Node');
+    $out->start_tag ('dd');
+    my $original_input = $out->input;
+    $out->input ($self->{parent_input});
+    $out->node_link ($self->{container_node});
+    $out->input ($original_input);
+  }
+
+  $out->dt ('Base URL');
+  $out->start_tag ('dd');
+  $out->url ($self->{base_uri});
+
+  $out->end_tag ('dl');
+  $out->end_section;
+} # generate_info_section
 
 package WebHACC::Input::Error;
 push our @ISA, 'WebHACC::Input';

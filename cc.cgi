@@ -44,85 +44,20 @@ my $out;
 ]);
 
   my $input = get_input_document ($http, $dom);
+
   $out->input ($input);
   $out->unset_flush;
 
-  my $char_length = 0;
+  my $result = WebHACC::Result->new;
+  $result->output ($out);
+  $result->{conforming_min} = 1;
+  $result->{conforming_max} = 1;
 
-  $out->start_section (id => 'document-info', title => 'Information');
-  $out->html (qq[<dl>
-<dt>Request URL</dt>
-    <dd>]);
-  $out->url ($input->{request_uri});
-  $out->html (q[<dt>Document URL<!-- HTML5 document's address? -->
-    <dd>]);
-  $out->url ($input->{uri}, id => 'anchor-document-url');
-  $out->html (q[
-    <script>
-      document.title = '<'
-          + document.getElementById ('anchor-document-url').href + '> \\u2014 '
-          + document.title;
-    </script>]);
-  ## NOTE: no </dl> yet
+  $out->html ('<script src="../cc-script.js"></script>');
 
-  if (defined $input->{s}) {
-    $char_length = length $input->{s};
-
-    $out->html (qq[<dt>Base URI<dd>]);
-    $out->url ($input->{base_uri});
-    $out->html (qq[<dt>Internet Media Type</dt>
-    <dd><code class="MIME" lang="en">]);
-    $out->text ($input->{media_type});
-    $out->html (qq[</code> ]);
-    if ($input->{media_type_overridden}) {
-      $out->html ('<em>(overridden)</em>');
-    } elsif (defined $input->{official_type}) {
-      if ($input->{media_type} eq $input->{official_type}) {
-        #
-      } else {
-        $out->html ('<em>(sniffed; official type is: <code class=MIME lang=en>');
-        $out->text ($input->{official_type});
-        $out->html ('</code>)');
-      }
-    } else {
-      $out->html ('<em>(sniffed)</em>');
-    }
-    $out->html (q[<dt>Character Encoding<dd>]);
-    if (defined $input->{charset}) {
-      $out->html ('<code class="charset" lang="en">');
-      $out->text ($input->{charset});
-      $out->html ('</code>');
-    } else {
-      $out->text ('(none)');
-    }
-    $out->html (' <em>overridden</em>') if $input->{charset_overridden};
-    $out->html (qq[
-<dt>Length</dt>
-    <dd>$char_length byte@{[$char_length == 1 ? '' : 's']}</dd>
-</dl>
-
-<script src="../cc-script.js"></script>
-]);
-    $out->end_section;
-
-    my $result = WebHACC::Result->new;
-    $result->output ($out);
-    $result->{conforming_min} = 1;
-    $result->{conforming_max} = 1;
-    check_and_print ($input => $result => $out);
-    $result->generate_result_section;
-  } else {
-    $out->html ('</dl>');
-    $out->end_section;
-
-    my $result = WebHACC::Result->new;
-    $result->output ($out);
-    $result->{conforming_min} = 0;
-    $result->{conforming_max} = 1;
-
-    $input->generate_transfer_sections ($result);
-    $result->generate_result_section;
-  }
+  check_and_print ($input => $result => $out);
+  
+  $result->generate_result_section;
 
   $out->nav_list;
 
@@ -134,9 +69,14 @@ sub check_and_print ($$$) {
   my $original_input = $out->input;
   $out->input ($input);
 
+  $input->generate_info_section ($result);
+
   $input->generate_transfer_sections ($result);
 
-  my @subdoc;
+  unless (defined $input->{s}) {
+    $result->{conforming_min} = 0;
+    return;
+  }
 
   my $checker_class = {
     'text/cache-manifest' => 'WebHACC::Language::CacheManifest',
@@ -169,6 +109,7 @@ sub check_and_print ($$$) {
   $checker->generate_syntax_error_section;
   $checker->generate_source_string_section;
 
+  my @subdoc;
   $checker->onsubdoc (sub {
     push @subdoc, shift;
   });
@@ -199,29 +140,15 @@ sub check_and_print ($$$) {
 
   my $id_prefix = 0;
   for my $_subinput (@subdoc) {
-    my $subinput = WebHACC::Input->new;
+    my $subinput = WebHACC::Input::Subdocument->new (++$id_prefix);
     $subinput->{$_} = $_subinput->{$_} for keys %$_subinput;
-    $subinput->id_prefix ('subdoc-' . ++$id_prefix);
-    $subinput->nested (1);
     $subinput->{base_uri} = $subinput->{container_node}->base_uri
         unless defined $subinput->{base_uri};
-    my $ebaseuri = htescape ($subinput->{base_uri});
-    $out->start_section (id => $subinput->id_prefix,
-                         title => qq[Subdocument #$id_prefix]);
-    print STDOUT qq[
-      <dl>
-      <dt>Internet Media Type</dt>
-        <dd><code class="MIME" lang="en">@{[htescape $subinput->{media_type}]}</code>
-      <dt>Container Node</dt>
-        <dd>@{[get_node_link ($input, $subinput->{container_node})]}</dd>
-      <dt>Base <abbr title="Uniform Resource Identifiers">URI</abbr></dt>
-        <dd><code class=URI>&lt;<a href="$ebaseuri">$ebaseuri</a>></code></dd>
-      </dl>];              
+    $subinput->{parent_input} = $input;
 
-    $subinput->{id_prefix} .= '-';
+    $subinput->start_section ($result);
     check_and_print ($subinput => $result => $out);
-
-    $out->end_section;
+    $subinput->end_section ($result);
   }
 
   $out->input ($original_input);
@@ -616,4 +543,4 @@ and/or modify it under the same terms as Perl itself.
 
 =cut
 
-## $Date: 2008/07/20 16:53:10 $
+## $Date: 2008/07/21 05:24:32 $

@@ -54,11 +54,13 @@ sub add_error ($%) {
   my $class = qq[level-$error_level layer-$error_layer];
  
   $out->start_tag ('dt', class => $class);
+  my $has_location;
 
   ## URL
   
   if (defined $opt{url}) {
     $out->url ($opt{url});
+    $has_location = 1;
   }
 
   ## Line & column number
@@ -104,6 +106,7 @@ sub add_error ($%) {
       $line = $line - 1 || 1;
       $out->xref ('Line ' . $line, target => 'line-' . $line);
     }
+    $has_location = 1;
   }
 
   ## Node path
@@ -111,6 +114,7 @@ sub add_error ($%) {
   if (defined $opt{node}) {
     $out->html (' ');
     $out->node_link ($opt{node});
+    $has_location = 1;
   }
 
   if (defined $opt{index}) {
@@ -121,11 +125,35 @@ sub add_error ($%) {
     } else {
       $out->text (' Index ' . (0+$opt{index}));
     }
+    $has_location = 1;
   }
 
   if (defined $opt{value}) {
     $out->html (' ');
     $out->code ($opt{value});
+    $has_location = 1;
+  }
+
+  unless ($has_location) {
+    if (defined $opt{input}) {
+      if (defined $opt{input}->{container_node}) {
+        my $original_input = $out->input;
+        $out->input ($opt{input}->{parent_input});
+        $out->node_link ($opt{input}->{container_node});
+        $out->input ($original_input);
+        $has_location = 1;
+      } elsif (defined $opt{input}->{request_uri}) {
+        $out->url ($opt{input}->{request_uri});
+        $has_location = 1;
+      } elsif (defined $opt{input}->{uri}) {
+        $out->url ($opt{input}->{uri});
+        $has_location = 1;
+      }
+    }
+    
+    unless ($has_location) {
+      $out->text ('No location information available');
+    }
   }
  
   $out->start_tag ('dd', class => $class);
@@ -265,13 +293,6 @@ is <em>under development</em>.  The result above might be <em>wrong</em>.</p>]);
   $out->end_section;
 } # generate_result_section
 
-sub _get_error_label ($$) {
-  my $self = shift;
-  my ($input, $err) = @_;
-
-
-} # get_error_label
-
 sub get_error_level_label ($) {
   my $self = shift;
   my $err = shift;
@@ -300,42 +321,5 @@ sub get_error_level_label ($) {
 
   return $r;
 } # get_error_level_label
-
-sub get_node_path ($) {
-  my $self = shift;
-  my $node = shift;
-  my @r;
-  while (defined $node) {
-    my $rs;
-    if ($node->node_type == 1) {
-      $rs = $node->node_name;
-      $node = $node->parent_node;
-    } elsif ($node->node_type == 2) {
-      $rs = '@' . $node->node_name;
-      $node = $node->owner_element;
-    } elsif ($node->node_type == 3) {
-      $rs = '"' . $node->data . '"';
-      $node = $node->parent_node;
-    } elsif ($node->node_type == 9) {
-      @r = ('') unless @r;
-      $rs = '';
-      $node = $node->parent_node;
-    } else {
-      $rs = '#' . $node->node_type;
-      $node = $node->parent_node;
-    }
-    unshift @r, $rs;
-  }
-  return join '/', @r;
-} # get_node_path
-
-use Scalar::Util qw/refaddr/;
-
-sub get_node_link ($$) {
-  my $self = shift;
-  return qq[<a href="#$_[0]->{id_prefix}node-@{[refaddr $_[1]]}">] .
-       ($self->get_node_path ($_[1])) . qq[</a>];
-        ## BUG: ^ must be escaped
-} # get_node_link
 
 1;

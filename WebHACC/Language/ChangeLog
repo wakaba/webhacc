@@ -1,5 +1,12 @@
 2008-07-21  Wakaba  <wakaba@suika.fam.cx>
 
+	* Base.pm: Use new method for node links.
+
+	* CSS.pm: Typo fixes.  Pass |input| object as an argument
+	to the CSSOM validation not supported error.
+
+2008-07-21  Wakaba  <wakaba@suika.fam.cx>
+
 	* Base.pm (_get_cc_url, _encode_url_component): Remove (now
 	supported by WebHACC::Output).
 

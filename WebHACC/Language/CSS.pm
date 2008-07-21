@@ -1,6 +1,6 @@
 package WebHACC::Language::CSS;
 use strict;
-require WebHACC::Langauge::Base;
+require WebHACC::Language::Base;
 push our @ISA, 'WebHACC::Language::Base';
 
 sub new ($) {
@@ -64,12 +64,12 @@ sub source_charset ($) {
 sub generate_structure_dump_section ($) {
   my $self = shift;
 
-  my $out = $self->input;
+  my $out = $self->output;
   $out->start_section (id => 'document-tree', title => 'Document Tree',
                        short_title => 'Tree');
 
   $out->start_code_block;
-  $out->text ($cssom->css_text);
+  $out->text ($self->{structure}->css_text);
   $out->end_code_block;
   
   $out->end_section;
@@ -85,6 +85,7 @@ sub generate_structure_error_section ($) {
 
   $self->result->add_error (level => 'u',
                             layer => 'structure',
+                            input => $self->input,
                             type => 'CSSOM validation not supported');
 
   $out->end_tag ('dl');
