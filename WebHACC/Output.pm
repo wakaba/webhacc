@@ -296,12 +296,11 @@ sub html_header ($) {
   $self->html (q[<!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Web Document Conformance Checker (BETA)</title>
+<title>WebHACC (BETA) Result</title>
 <link rel="stylesheet" href="../cc-style.css" type="text/css">
 </head>
 <body>
-<h1><a href="../cc-interface">Web Document Conformance Checker</a> 
-(<em>beta</em>)</h1>
+<h1><a href="../cc-interface"><abbr title="Web Hypertext Application Conformance Checker (BETA)"><img src="../icons/title" alt="WebHACC"></abbr></a></h1>
 ]);
 } # html_header
 

@@ -1,5 +1,9 @@
 2008-07-21  Wakaba  <wakaba@suika.fam.cx>
 
+	* Output.pm (html_header): Application name changed.
+
+2008-07-21  Wakaba  <wakaba@suika.fam.cx>
+
 	* Input.pm (full_subdocument_index): New method, for the
 	support of hierarchical subdocument numbers.
 	(start_section): Use hierarhical subdocument numbers for
