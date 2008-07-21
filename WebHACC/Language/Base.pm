@@ -72,9 +72,16 @@ sub generate_structure_error_section ($) {
 
   my $out = $self->output;
   
-  $out->start_section (id => 'document-errors', title => 'Document Errors');
-  $out->html ('<p>Not supported for this kind of contents.');
-  ## TODO: class="???"
+  $out->start_section (role => 'structure-errors');
+  $out->start_error_list (role => 'structure-errors');
+
+  $self->result->add_error (input => $self->input,
+                            level => 'u',
+                            layer => 'structure',
+                            type => 'media type not supported:structure',
+                            text => $self->input->{media_type});
+
+  $out->end_error_list (role => 'structure-errors');
   $out->end_section;
 } # generate_structure_error_section
 

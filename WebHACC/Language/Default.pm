@@ -13,16 +13,16 @@ sub generate_syntax_error_section ($) {
 
   my $out = $self->output;
 
-  $out->start_section (id => 'parse-errors', title => 'Errors');
-  $out->start_tag ('dl');
+  $out->start_section (role => 'parse-errors');
+  $out->start_error_list (role => 'parse-errors');
 
   $self->result->add_error (input => $self->input,
                             level => 'u',
                             layer => 'syntax',
-                            type => 'media type not supported',
+                            type => 'media type not supported:syntax',
                             text => $self->input->{media_type});
 
-  $out->end_tag ('dl');
+  $out->end_error_list (role => 'parse-errors');
   $out->end_section;
 } # generate_syntax_error_section
 
