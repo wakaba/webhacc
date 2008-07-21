@@ -1,5 +1,21 @@
 2008-07-21  Wakaba  <wakaba@suika.fam.cx>
 
+	* Input.pm: Most human-readable texts are now handled by
+	catalog.
+	(id_prefix): Support for nested subdocuments.
+
+	* Output.pm (start_section, dt, xref): Section/item names and
+	link labels are now handled by catalog.
+	(load_text_catalog, nl_text): New methods.
+	(html_header): Application name is moved to catalog.
+
+	* Result.pm (add_error): Important error properties are
+	now exposed to client-side script as data-* attributes.
+	Labels are now handled by catalog.  Error descriptions
+	are now taken from catalog as it were.
+
+2008-07-21  Wakaba  <wakaba@suika.fam.cx>
+
 	* Output.pm (html_header): Application name changed.
 
 2008-07-21  Wakaba  <wakaba@suika.fam.cx>

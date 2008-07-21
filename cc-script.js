@@ -10,15 +10,8 @@ function addSourceToParseErrorList (idPrefix, dlId) {
     var child = childs[i];
     if (child.nodeType != 1) continue;
     if (child.nodeName == 'DT') {
-      var text = child.textContent || child.innerText;
-      var m;
-      if (m = text.match (/Line (\d+)(?: column (\d+))?/)) {
-        line = parseInt (m[1]);
-        column = parseInt (m[2] || 0);
-      } else {
-        line = 0;
-        column = 0;
-      }
+      line = parseInt (child.getAttribute ('data-line') || 0);
+      column = parseInt (child.getAttribute ('data-column') || 0);
     } else if (child.nodeName == 'DD') {
       if (line > 0) {
         var lineEl = document.getElementById (idPrefix + 'line-' + line);
@@ -91,4 +84,4 @@ function addSourceToParseErrorList (idPrefix, dlId) {
   }
 } // addSourceToParseErrorList
 
-// $Date: 2008/03/17 13:25:19 $
+// $Date: 2008/07/21 12:56:33 $

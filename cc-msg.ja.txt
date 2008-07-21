@@ -80,54 +80,54 @@ unsupported:media query;unsupported;Conformance checking for media query is not 
 unsupported:script;unsupported;Conformance checking for script language <code><var>$0</var></code> is not supported; <em>it might or might not be conforming.</em>
 unsupported:style;unsupported;Conformance checking for style language <code><var>$0</var></code> is not supported; <em>it might or might not be conforming.</em>
 WebHACC:Title;;WebHACC (β)
-WebHACC:Heading;; <a href="../cc-interface"><abbr title="Web Hypertext Application Conformance Checker (β)"><img alt="WebHACC" src="../icons/title"></abbr></a> 
-Information;;Information
-HTTP Header;;<abbr title="Hypertext Transfer Protocol">HTTP</abbr> Header
-Parse Errors Section;;Parse Errors
-Parse Errors;;Parse Errors
-Document Source;;Document Source
-Source;;Source
-Tables Section;;Structure of Tables
-Tables;;Tables
-Document Tree;;Document Tree
-Tree;;Tree
-Document;;Document
-Document Structure;;Document Structure
-Structure;;Structure
-Reformatted Document Source;;Reformatted Document Source
-Reformatted;;Reformatted
-Structural Errors;;Structural Errors
-Struct. Errors;;Struct. Errors
-manakaiCompatMode:quirks;;Quirks Mode
-manakaiCompatMode:limited quirks;;Limited Quirks Mode
-manakaiCompatMode:no quirks;;No Quirks Mode
-manakaiIsHTML:1;;HTML Document
-manakaiIsXML:1;;XML Document
-manakaiCharset;;<code>charset</code> parameter
-inputEncoding;;Input character encoding
-xmlVersion;;XML <code>version</code>
-xmlEncoding;;XML <code>encoding</code>
-xmlStandalone;;XML <code>standalone</code>
-... with BOM;; (with <code class="charname"><abbr title="BYTE ORDER MARK">BOM</abbr></code>)
-Request URL;;Request URL
-Document URL;;Document URL
-Container Node;;Container Node
-Table Element;;Table Element
-Base URL;;Base URL
-Internet Media Type;;Internet Media Type
-Character Encoding;;Character Encoding
-Byte Length;;Byte Length
-Character Length;;Character Length
-... overridden;; (<i>overridden</i>)
-... overridden, official type is #;; (<i>overridden</i>; official type is <code class="MIME" lang="en"><var>{text}</var></code>)
-... sniffed;; (<i>sniffed</i>)
-byte;;byte
-bytes;;bytes
-character;;character
-characters;;characters
-Line #;;Line <var>{text}</var>
-column #;;column <var>{text}</var>
-Index #;;Index <var>{text}</var>
-Table #;;Structure of Table #<var>{text}</var>
-Subdocument #;;Subdocument #<var>{text}</var>
-Sub #;;Sub #<var>{text}</var>
+WebHACC:Heading;; <a href="../cc-interface"><abbr title="Web ハイパーテキスト応用適合性検査器 (β)"><img alt="WebHACC" src="../icons/title"></abbr></a> 
+Information;;情報
+HTTP Header;;<abbr lang="en" title="Hypertext Transfer Protocol">HTTP</abbr> 頭部
+Parse Errors Section;;構文誤り
+Parse Errors;;構文誤り
+Document Source;;文書のソース
+Source;;ソース
+Tables Section;;表の構造
+Tables;;表
+Document Tree;;文書木
+Tree;;木
+Document;;文書
+Document Structure;;文書構造
+Structure;;構造
+Reformatted Document Source;;再整形した文書のソース
+Reformatted;;再整形
+Structural Errors;;構造的誤り
+Struct. Errors;;構造誤り
+manakaiCompatMode:quirks;;奇癖モード
+manakaiCompatMode:limited quirks;;限定奇癖モード
+manakaiCompatMode:no quirks;;無奇癖モード
+manakaiIsHTML:1;;HTML 文書
+manakaiIsXML:1;;XML 文書
+manakaiCharset;;<code lang="en">charset</code> 引数
+inputEncoding;;入力に用いた文字符号化
+xmlVersion;;XML <code lang="en">version</code>
+xmlEncoding;;XML <code lang="en">encoding</code>
+xmlStandalone;;XML <code lang="en">standalone</code>
+... with BOM;; (<code class="charname" lang="en"><abbr title="BYTE ORDER MARK">BOM</abbr></code> つき)
+Request URL;;要求 URL
+Document URL;;文書 URL
+Container Node;;この文書を含む節点
+Table Element;;表要素
+Base URL;;基底 URL
+Internet Media Type;;インターネット媒体型
+Character Encoding;;文字符号化
+Byte Length;;バイト長
+Character Length;;文字長
+... overridden;; (<i>上書き</i>)
+... overridden, official type is #;; (<i>上書き</i>, 公\xE5\xBC\x8F型は <code class="MIME" lang="en"><var>{text}</var></code>)
+... sniffed;; (<i>探知結果</i>)
+byte;;バイト
+bytes;;バイト
+character;;文字
+characters;;文字
+Line #;;<var>{text}</var> 行
+column #;;<var>{text}</var> 列
+Index #;;索引 #<var>{text}</var>
+Table #;;表 #<var>{text}</var> の構造
+Subdocument #;;部分文書 #<var>{text}</var>
+Sub #;;部分 #<var>{text}</var>

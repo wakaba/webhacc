@@ -82,38 +82,60 @@ sub generate_structure_dump_section ($) {
       $out->end_tag ('code');
     } elsif ($nt == $child->DOCUMENT_NODE) {
       $out->start_tag ('li', id => $node_id, class => 'tree-document');
-      $out->text ('Document');
+      $out->nl_text ('Document');
+
       $out->start_tag ('ul', class => 'attributes');
+      
       my $cp = $child->manakai_charset;
       if (defined $cp) {
-        $out->html (qq[<li><code>charset</code> parameter = <code>]);
-        $out->text ($cp);
-        $out->html ('</code>');
+        $out->start_tag ('li');
+        $out->nl_text ('manakaiCharset');
+        $out->text (' = ');
+        $out->code ($cp);
       }
-      $out->html (qq[<li><code>inputEncoding</code> = ]);
+      
+      $out->start_tag ('li');
+      $out->nl_text ('inputEncoding');
+      $out->text (' = ');
       my $ie = $child->input_encoding;
       if (defined $ie) {
         $out->code ($ie);
         if ($child->manakai_has_bom) {
-          $out->html (qq[ (with <code class=charname><abbr>BOM</abbr></code>)]);
+          $out->nl_text ('... with BOM');
         }
       } else {
         $out->html (qq[(<code>null</code>)]);
       }
-      $out->html (qq[<li>@{[scalar main::get_text ('manakaiIsHTML:'.($child->manakai_is_html?1:0))]}</li>]);
-      $out->html (qq[<li>@{[scalar main::get_text ('manakaiCompatMode:'.$child->manakai_compat_mode)]}</li>]);
+
+      $out->start_tag ('li');
+      $out->nl_text ('manakaiIsHTML:'.($child->manakai_is_html?1:0));
+
+      $out->start_tag ('li');
+      $out->nl_text ('manakaiCompatMode:'.$child->manakai_compat_mode);
+
       unless ($child->manakai_is_html) {
-        $out->html (qq[<li>XML version = ]);
+        $out->start_tag ('li');
+        $out->nl_text ('xmlVersion');
+        $out->text (' = ');
         $out->code ($child->xml_version);
+        
+        $out->start_tag ('li');
+        $out->nl_text ('xmlEncoding');
+        $out->text (' = ');
         if (defined $child->xml_encoding) {
-          $out->html (qq[<li>XML encoding = ]);
           $out->code ($child->xml_encoding);
         } else {
-          $out->html (qq[<li>XML encoding = (null)</li>]);
+          $out->html ('(<code>null</code>)');
         }
-        $out->html (qq[<li>XML standalone = @{[$child->xml_standalone ? 'true' : 'false']}</li>]);
+
+        $out->start_tag ('li');
+        $out->nl_text ('xmlStandalone');
+        $out->text (' = ');
+        $out->code ($child->xml_standalone ? 'true' : 'false');
       }
+
       $out->end_tag ('ul');
+      
       if ($child->has_child_nodes) {
         $out->start_tag ('ol', class => 'children');
         unshift @node, @{$child->child_nodes}, '</ol></li>';
@@ -210,7 +232,8 @@ sub generate_table_section ($) {
   return unless @$tables;
 
   my $out = $self->output;
-  $out->start_section (id => 'tables', title => 'Tables');
+  $out->start_section (id => 'tables', short_title => 'Tables',
+                       title => 'Tables Section');
 
   $out->html (q[<!--[if IE]><script type="text/javascript" src="../excanvas.js"></script><![endif]-->
 <script src="../table-script.js" type="text/javascript"></script>
@@ -226,7 +249,8 @@ sub generate_table_section ($) {
     my $index = $out->input->full_subdocument_index;
     $index = $index ? $index . '.' . $i : $i;
     $out->start_section (id => 'table-' . $i,
-                         title => 'Table #' . $index);
+                         title => 'Table #',
+                         text => $index);
 
     $out->start_tag ('dl');
     $out->dt ('Table Element');

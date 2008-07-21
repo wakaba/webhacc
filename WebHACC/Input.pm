@@ -44,17 +44,16 @@ sub generate_info_section ($$) {
     $out->start_tag ('dd');
     $out->code ($self->{media_type}, class => 'MIME', lang => 'en');
     if ($self->{media_type_overridden}) {
-      $out->html (' <em>(overridden)</em>');
+      $out->nl_text ('... overridden');
     } elsif (defined $self->{official_type}) {
       if ($self->{media_type} eq $self->{official_type}) {
         #
       } else {
-        $out->html (' <em>(sniffed; official type is: ');
-        $out->code ($self->{official_type}, class => 'MIME', lang => 'en');
-        $out->html (')</em>');
+        $out->nl_text ('... sniffed, official type is #',
+                       text => $self->{official_type});
       }
     } else {
-      $out->html ( '<em>(sniffed)</em>');
+      $out->nl_text ( '... sniffed');
     }
 
     $out->dt ('Character Encoding');
@@ -62,16 +61,17 @@ sub generate_info_section ($$) {
     if (defined $self->{charset}) {
       $out->code ($self->{charset}, class => 'charset', lang => 'en');
     } else {
-      $out->text ('(none)');
+      $out->nl_text ('(unknown)');
     }
-    $out->html (' <em>overridden</em>') if $self->{charset_overridden};
+    $out->nl_text ('... overridden') if $self->{charset_overridden};
 
     $out->dt ($self->{is_char_string} ? 'Character Length' : 'Byte Length');
     ## TODO: formatting
     $out->start_tag ('dd');
     my $length = length $self->{s};
-    $out->text ($length . ($self->{is_char_string} ? ' character' : ' byte') .
-                ($length == 1 ? '' : 's'));
+    $out->text ($length . ' ');
+    $out->nl_text (($self->{is_char_string} ? 'character' : 'byte') .
+                   ($length == 1 ? '' : 's'));
   }
 
   $out->end_tag ('dl');
@@ -136,7 +136,7 @@ sub new ($$) {
 } # new
 
 sub id_prefix ($) {
-  return 'subdoc-' . shift->{subdocument_index} . '-';
+  return 'subdoc-' . shift->full_subdocument_index . '-';
 } # id_prefix
 
 sub nested ($) { 1 }
@@ -163,8 +163,9 @@ sub start_section ($$) {
 
   my $index = $self->full_subdocument_index;
   $out->start_section (id => $self->id_prefix,
-                       title => qq[Subdocument #] . $index,
-                       short_title => 'Sub #' . $index);
+                       title => qq[Subdocument #],
+                       short_title => 'Sub #',
+                       text => $index);
 } # start_section
 
 sub end_section ($$) {

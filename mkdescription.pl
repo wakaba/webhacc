@@ -83,8 +83,8 @@ while (@node) {
 
         $node->parent_node->insert_before ($section, $node);
         $node->parent_node->remove_child ($node); ## TODO: replace_child is not yet implemented
-      } elsif ($node->manakai_local_name eq 'catalog') {
-        $node->parent_node->remove_child ($node); 
+      } elsif ($node->manakai_local_name eq 'cat') {
+        $node->parent_node->remove_child ($node);
       } else {
         warn "$0: ", $node->manakai_local_name, " is not supported\n";
       }

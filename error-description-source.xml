@@ -1605,14 +1605,272 @@ p {
 
 </section>
 
-<d:catalog>
-manakaiCompatMode:quirks;;Quirks Mode
-manakaiCompatMode:limited quirks;;Limited Quirks Mode
-manakaiCompatMode:no quirks;;No Quirks Mode
+<d:cat name="WebHACC:Title">
+  <d:text xml:lang="en">WebHACC (β)</d:text>
+</d:cat>
 
-manakaiIsHTML:1;;HTML Document
-manakaiIsHTML:0;;XML Document
-</d:catalog>
+<d:cat name="WebHACC:Heading">
+  <d:text xml:lang="en">
+    <a href="../cc-interface"><abbr title="Web Hypertext Application Conformance Checker (β)"><img src="../icons/title" alt="WebHACC"/></abbr></a>
+  </d:text>
+  <d:text xml:lang="ja">
+    <a href="../cc-interface"><abbr title="Web ハイパーテキスト応用適合性検査器 (β)"><img src="../icons/title" alt="WebHACC"/></abbr></a>
+  </d:text>
+</d:cat>
+
+<d:cat name="Information">
+  <d:text xml:lang="en">Information</d:text>
+  <d:text xml:lang="ja">情報</d:text>
+</d:cat>
+
+<d:cat name="HTTP Header">
+  <d:text xml:lang="en"><abbr title="Hypertext Transfer Protocol">HTTP</abbr>
+      Header</d:text>
+  <d:text xml:lang="ja"><abbr lang="en" title="Hypertext Transfer Protocol">HTTP</abbr>
+      頭部</d:text>
+</d:cat>
+
+<d:cat name="Parse Errors Section">
+  <d:text xml:lang="en">Parse Errors</d:text>
+  <d:text xml:lang="ja">構文誤り</d:text>
+</d:cat>
+
+<d:cat name="Parse Errors">
+  <d:text xml:lang="en">Parse Errors</d:text>
+  <d:text xml:lang="ja">構文誤り</d:text>
+</d:cat>
+
+<d:cat name="Document Source">
+  <d:text xml:lang="en">Document Source</d:text>
+  <d:text xml:lang="ja">文書のソース</d:text>
+</d:cat>
+
+<d:cat name="Source">
+  <d:text xml:lang="en">Source</d:text>
+  <d:text xml:lang="ja">ソース</d:text>
+</d:cat>
+
+<d:cat name="Tables Section">
+  <d:text xml:lang="en">Structure of Tables</d:text>
+  <d:text xml:lang="ja">表の構造</d:text>
+</d:cat>
+
+<d:cat name="Tables">
+  <d:text xml:lang="en">Tables</d:text>
+  <d:text xml:lang="ja">表</d:text>
+</d:cat>
+
+<d:cat name="Document Tree">
+  <d:text xml:lang="en">Document Tree</d:text>
+  <d:text xml:lang="ja">文書木</d:text>
+</d:cat>
+
+<d:cat name="Tree">
+  <d:text xml:lang="en">Tree</d:text>
+  <d:text xml:lang="ja">木</d:text>
+</d:cat>
+
+<d:cat name="Document">
+  <d:text xml:lang="en">Document</d:text>
+  <d:text xml:lang="ja">文書</d:text>
+</d:cat>
+
+<d:cat name="Document Structure">
+  <d:text xml:lang="en">Document Structure</d:text>
+  <d:text xml:lang="ja">文書構造</d:text>
+</d:cat>
+
+<d:cat name="Structure">
+  <d:text xml:lang="en">Structure</d:text>
+  <d:text xml:lang="ja">構造</d:text>
+</d:cat>
+
+<d:cat name="Reformatted Document Source">
+  <d:text xml:lang="en">Reformatted Document Source</d:text>
+  <d:text xml:lang="ja">再整形した文書のソース</d:text>
+</d:cat>
+
+<d:cat name="Reformatted">
+  <d:text xml:lang="en">Reformatted</d:text>
+  <d:text xml:lang="ja">再整形</d:text>
+</d:cat>
+
+<d:cat name="Structural Errors">
+  <d:text xml:lang="en">Structural Errors</d:text>
+  <d:text xml:lang="ja">構造的誤り</d:text>
+</d:cat>
+
+<d:cat name="Struct. Errors">
+  <d:text xml:lang="en">Struct. Errors</d:text>
+  <d:text xml:lang="ja">構造誤り</d:text>
+</d:cat>
+
+<d:cat name="manakaiCompatMode:quirks">
+  <d:text xml:lang="en">Quirks Mode</d:text>
+  <d:text xml:lang="ja">奇癖モード</d:text>
+</d:cat>
+
+<d:cat name="manakaiCompatMode:limited quirks">
+  <d:text xml:lang="en">Limited Quirks Mode</d:text>
+  <d:text xml:lang="ja">限定奇癖モード</d:text>
+</d:cat>
+
+<d:cat name="manakaiCompatMode:no quirks">
+  <d:text xml:lang="en">No Quirks Mode</d:text>
+  <d:text xml:lang="ja">無奇癖モード</d:text>
+</d:cat>
+
+<d:cat name="manakaiIsHTML:1">
+  <d:text xml:lang="en">HTML Document</d:text>
+  <d:text xml:lang="ja">HTML 文書</d:text>
+</d:cat>
+
+<d:cat name="manakaiIsHTML:0">
+  <d:text xml:lang="en">XML Document</d:text>
+  <d:text xml:lang="ja">XML 文書</d:text>
+</d:cat>
+
+<d:cat name="manakaiCharset">
+  <d:text xml:lang="en"><code>charset</code> parameter</d:text>
+  <d:text xml:lang="ja"><code lang="en">charset</code> 引数</d:text>
+</d:cat>
+
+<d:cat name="inputEncoding">
+  <d:text xml:lang="en">Input character encoding</d:text>
+  <d:text xml:lang="ja">入力に用いた文字符号化</d:text>
+</d:cat>
+
+<d:cat name="xmlVersion">
+  <d:text xml:lang="en">XML <code>version</code></d:text>
+  <d:text xml:lang="ja">XML <code lang="en">version</code></d:text>
+</d:cat>
+
+<d:cat name="xmlEncoding">
+  <d:text xml:lang="en">XML <code>encoding</code></d:text>
+  <d:text xml:lang="ja">XML <code lang="en">encoding</code></d:text>
+</d:cat>
+
+<d:cat name="xmlStandalone">
+  <d:text xml:lang="en">XML <code>standalone</code></d:text>
+  <d:text xml:lang="ja">XML <code lang="en">standalone</code></d:text>
+</d:cat>
+
+<d:cat name="... with BOM">
+  <d:text xml:lang="en"> (with <code class="charname"><abbr title="BYTE ORDER MARK">BOM</abbr></code>)</d:text>
+  <d:text xml:lang="ja"> (<code class="charname" lang="en"><abbr title="BYTE ORDER MARK">BOM</abbr></code> つき)</d:text>
+</d:cat>
+
+<d:cat name="Request URL">
+  <d:text xml:lang="en">Request URL</d:text>
+  <d:text xml:lang="ja">要求 URL</d:text>
+</d:cat>
+
+<d:cat name="Document URL">
+  <d:text xml:lang="en">Document URL</d:text>
+  <d:text xml:lang="ja">文書 URL</d:text>
+</d:cat>
+
+<d:cat name="Container Node">
+  <d:text xml:lang="en">Container Node</d:text>
+  <d:text xml:lang="ja">この文書を含む節点</d:text>
+</d:cat>
+
+<d:cat name="Table Element">
+  <d:text xml:lang="en">Table Element</d:text>
+  <d:text xml:lang="ja">表要素</d:text>
+</d:cat>
+
+<d:cat name="Base URL">
+  <d:text xml:lang="en">Base URL</d:text>
+  <d:text xml:lang="ja">基底 URL</d:text>
+</d:cat>
+
+<d:cat name="Internet Media Type">
+  <d:text xml:lang="en">Internet Media Type</d:text>
+  <d:text xml:lang="ja">インターネット媒体型</d:text>
+</d:cat>
+
+<d:cat name="Character Encoding">
+  <d:text xml:lang="en">Character Encoding</d:text>
+  <d:text xml:lang="ja">文字符号化</d:text>
+</d:cat>
+
+<d:cat name="Byte Length">
+  <d:text xml:lang="en">Byte Length</d:text>
+  <d:text xml:lang="ja">バイト長</d:text>
+</d:cat>
+
+<d:cat name="Character Length">
+  <d:text xml:lang="en">Character Length</d:text>
+  <d:text xml:lang="ja">文字長</d:text>
+</d:cat>
+
+<d:cat name="... overridden">
+  <d:text xml:lang="en"> (<i>overridden</i>)</d:text>
+  <d:text xml:lang="ja"> (<i>上書き</i>)</d:text>
+</d:cat>
+
+<d:cat name="... overridden, official type is #">
+  <d:text xml:lang="en"> (<i>overridden</i>; official type is
+      <code lang="en" class="MIME"><var>{text}</var></code>)</d:text>
+  <d:text xml:lang="ja"> (<i>上書き</i>, 公式型は
+      <code lang="en" class="MIME"><var>{text}</var></code>)</d:text>
+</d:cat>
+
+<d:cat name="... sniffed">
+  <d:text xml:lang="en"> (<i>sniffed</i>)</d:text>
+  <d:text xml:lang="ja"> (<i>探知結果</i>)</d:text>
+</d:cat>
+
+<d:cat name="byte">
+  <d:text xml:lang="en">byte</d:text>
+  <d:text xml:lang="ja">バイト</d:text>
+</d:cat>
+
+<d:cat name="bytes">
+  <d:text xml:lang="en">bytes</d:text>
+  <d:text xml:lang="ja">バイト</d:text>
+</d:cat>
+
+<d:cat name="character">
+  <d:text xml:lang="en">character</d:text>
+  <d:text xml:lang="ja">文字</d:text>
+</d:cat>
+
+<d:cat name="characters">
+  <d:text xml:lang="en">characters</d:text>
+  <d:text xml:lang="ja">文字</d:text>
+</d:cat>
+
+<d:cat name="Line #">
+  <d:text xml:lang="en">Line <var>{text}</var></d:text>
+  <d:text xml:lang="ja"><var>{text}</var> 行</d:text>
+</d:cat>
+
+<d:cat name="column #">
+  <d:text xml:lang="en">column <var>{text}</var></d:text>
+  <d:text xml:lang="ja"><var>{text}</var> 列</d:text>
+</d:cat>
+
+<d:cat name="Index #">
+  <d:text xml:lang="en">Index <var>{text}</var></d:text>
+  <d:text xml:lang="ja">索引 #<var>{text}</var></d:text>
+</d:cat>
+
+<d:cat name="Table #">
+  <d:text xml:lang="en">Structure of Table #<var>{text}</var></d:text>
+  <d:text xml:lang="ja">表 #<var>{text}</var> の構造</d:text>
+</d:cat>
+
+<d:cat name="Subdocument #">
+  <d:text xml:lang="en">Subdocument #<var>{text}</var></d:text>
+  <d:text xml:lang="ja">部分文書 #<var>{text}</var></d:text>
+</d:cat>
+
+<d:cat name="Sub #">
+  <d:text xml:lang="en">Sub #<var>{text}</var></d:text>
+  <d:text xml:lang="ja">部分 #<var>{text}</var></d:text>
+</d:cat>
 
 <section id="levels">
 <h2>Error Levels</h2>
@@ -1676,6 +1934,6 @@ is used in the document.</td>
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2008/05/18 07:24:04 $ -->
+<!-- $Date: 2008/07/21 12:56:34 $ -->
 </body>
 </html>

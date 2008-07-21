@@ -53,17 +53,7 @@ sub add_error ($%) {
 
   my $class = qq[level-$error_level layer-$error_layer];
  
-  $out->start_tag ('dt', class => $class);
-  my $has_location;
-
-  ## URL
-  
-  if (defined $opt{url}) {
-    $out->url ($opt{url});
-    $has_location = 1;
-  }
-
-  ## Line & column number
+  ## Line & column numbers (prepare values)
 
   my $line;
   my $column;
@@ -97,14 +87,33 @@ sub add_error ($%) {
       $column = $opt{column};
     }
   }
+  $line = $line - 1 || 1
+      if defined $line and not (defined $column and $column > 0);
+
+  $out->start_tag ('dt', class => $class,
+                   'data-type' => $opt{type},
+                   'data-level' => $error_level,
+                   'data-layer' => $error_layer,
+                   ($line ? ('data-line' => $line) : ()),
+                   ($column ? ('data-column' => $column) : ()));
+  my $has_location;
+
+  ## URL
+  
+  if (defined $opt{url}) {
+    $out->url ($opt{url});
+    $has_location = 1;
+  }
+
+  ## Line & column numbers (real output)
  
   if (defined $line) {
     if (defined $column and $column > 0) {
-      $out->xref ('Line ' . $line, target => 'line-' . $line);
-      $out->text (' column ' . $column);
+      $out->xref ('Line #', text => $line, target => 'line-' . $line);
+      $out->text (' ');
+      $out->nl_text ('column #', text => $column);
     } else {
-      $line = $line - 1 || 1;
-      $out->xref ('Line ' . $line, target => 'line-' . $line);
+      $out->xref ('Line #', text => $line, target => 'line-' . $line);
     }
     $has_location = 1;
   }
@@ -120,10 +129,11 @@ sub add_error ($%) {
   if (defined $opt{index}) {
     if ($opt{index_has_link}) {
       $out->html (' ');
-      $out->xref ('Index ' . (0+$opt{index}),
+      $out->xref ('Index #', text => (0+$opt{index}),
                   target => 'index-' . (0+$opt{index}));
     } else {
-      $out->text (' Index ' . (0+$opt{index}));
+      $out->html (' ');
+      $out->nl_text ('Index #', text => (0+$opt{index}));
     }
     $has_location = 1;
   }
@@ -177,7 +187,7 @@ sub add_error ($%) {
 
   ## Error message
 
-  $out->text ($error_type_text);
+  $out->nl_text ($error_type_text, node => $opt{node}, text => $opt{text});
 
   ## Additional error description
 

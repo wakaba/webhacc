@@ -53,10 +53,10 @@ Web Document Conformance Checker (BETA)</title>
     encoding declaration.  The document is non‐conforming.</p>
 
     <p>The long character encoding declaration syntax
-    <code class="html bad example">&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=<var>charset-name</var>&quot;&gt;</code>
+    <code class="html bad example">&lt;meta http-equiv="Content-Type" content="text/html; charset=<var>charset-name</var>"&gt;</code>
     is obsolete.  The new syntax is:</p>
     <pre class="html example">
-<code>&lt;meta charset=&quot;<var>charset-name</var>&quot;&gt;</code></pre>
+<code>&lt;meta charset="<var>charset-name</var>"&gt;</code></pre>
 
     <p>Note that the <code>encoding</code> declaration in <abbr>XML</abbr> 
     declaration has no effect for <abbr>HTML</abbr> document.</p>
@@ -79,7 +79,7 @@ Web Document Conformance Checker (BETA)</title>
 <code>Content-Type: text/html; charset=<var>charset-name</var></code></pre>
 
     <p>Existence of <abbr>HTML</abbr> character encoding declaration, i.e.
-    <code class="html example">&lt;meta charset=&quot;<var>charset-name</var>&quot;&gt;</code>,
+    <code class="html example">&lt;meta charset="<var>charset-name</var>"&gt;</code>,
     does not allow to omit <code>charset</code> parameter
     for <abbr>HTML</abbr> document encoded in non‐<abbr>ASCII</abbr>
     compatible encoding.</p>
@@ -109,9 +109,9 @@ Web Document Conformance Checker (BETA)</title>
     <li>Specify <code>charset</code> parameter in the <code>Content-Type</code>
     field in the <abbr>HTTP</abbr> header, as:
     <pre class="HTTP example">
-<code>Content-Type: text/html; charset=&quot;<var>charset-name</var>&quot;</code></pre></li>
+<code>Content-Type: text/html; charset="<var>charset-name</var>"</code></pre></li>
     <li>Put the character encoding declaration
-    (<code class="html example">&lt;meta charset=&quot;<var>charset-name</var>&quot;&gt;</code>)
+    (<code class="html example">&lt;meta charset="<var>charset-name</var>"&gt;</code>)
     just after <code class="html example">&lt;head&gt;</code> start tag.</li>
     <li>Use <code>UTF-8</code>.</li>
     </ul>
@@ -410,7 +410,7 @@ p {
         <code>alternate stylesheet</code> for an alternate style 
         sheet).
           <pre class="example html">
-<code>&lt;link rel=stylesheet href=&quot;path/to/stylesheet.css&quot;&gt;</code></pre>
+<code>&lt;link rel=stylesheet href="path/to/stylesheet.css"&gt;</code></pre>
         </dd>
     <dt><code>&lt;?php?&gt;</code> or 
     <code>&lt;? <var>... <abbr>PHP</abbr> code ...</var> ?&gt;</code> 
@@ -738,7 +738,7 @@ p {
         <dd><p>In <abbr>XHTML</abbr> document, the root <code>html</code>
         element must have an <code>xmlns</code> attribute as:
           <pre class="xml example">
-<code>&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;</code></pre></p></dd>
+<code>&lt;html xmlns="http://www.w3.org/1999/xhtml"&gt;</code></pre></p></dd>
     <dt><code>rss</code> element</dt>
         <dd><p>The document is written in some version of RSS.</p>
         <p>The conformance checker does not support any version
@@ -748,7 +748,7 @@ p {
         in the <code>http://www.w3.org/2005/Atom</code>
         namespace as:
           <pre class="xml example">
-<code>&lt;feed xmlns=&quot;http://www.w3.org/2005/Atom&quot;&gt;</code></pre>
+<code>&lt;feed xmlns="http://www.w3.org/2005/Atom"&gt;</code></pre>
         </p>
         <p>The conformance checker does not support Atom 0.3.
         Use Atom 1.0 for feed documents.</p></dd>
@@ -833,7 +833,7 @@ p {
     <p>To specify the character encoding used for serialization,
     if necessary, use XML declaration instead:
       <pre class="xml example">
-<code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;<var>encoding-name</var>&quot;?&gt;</code></pre>
+<code>&lt;?xml version="1.0" encoding="<var>encoding-name</var>"?&gt;</code></pre>
     </p>
   </div>
 
@@ -948,7 +948,7 @@ p {
         <p>Value <code>Content-Type</code> is obsolete; for charset
         declaration, the <code>charset</code> attribute can be used as:
         <pre class="html example">
-<code>&lt;meta charset=&quot;<var>charset-name</var>&quot;&gt;</code></pre>
+<code>&lt;meta charset="<var>charset-name</var>"&gt;</code></pre>
         ... where <var>charset-name</var> is a name of the character encoding
         of the document, such as <code>utf-8</code>.</p>
         <p>Values <code>Content-Style-Type</code> and
@@ -963,15 +963,15 @@ p {
   </div>
 
 <div class="section attribute-value-error" id="enumerated:invalid:http-equiv:content-type"><h3>Character encoding declaration syntax
-  <code class="html bad example">&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=<var>charset-name</var>&quot;&gt;</code>
+  <code class="html bad example">&lt;meta http-equiv="Content-Type" content="text/html; charset=<var>charset-name</var>"&gt;</code>
   is obsolete.</h3>
     <p>Old long character encoding declaration syntax
-    <code class="html bad example">&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=<var>charset-name</var>&quot;&gt;</code>
+    <code class="html bad example">&lt;meta http-equiv="Content-Type" content="text/html; charset=<var>charset-name</var>"&gt;</code>
     is in use.  The document is non‐conforming.</p>
 
     <p>The new character encoding declaration syntax is:
       <pre class="html example">
-<code>&lt;meta charset=&quot;<var>charset-name</var>&quot;&gt;</code></pre>
+<code>&lt;meta charset="<var>charset-name</var>"&gt;</code></pre>
     </p>
   </div>
 
@@ -1299,6 +1299,108 @@ p {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <section id="levels">
 <h2>Error Levels</h2>
 
@@ -1361,6 +1463,6 @@ is used in the document.</td>
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2008/05/18 07:24:04 $ -->
+<!-- $Date: 2008/07/21 12:56:34 $ -->
 </body>
 </html>

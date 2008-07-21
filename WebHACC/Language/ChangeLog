@@ -1,5 +1,11 @@
 2008-07-21  Wakaba  <wakaba@suika.fam.cx>
 
+	* DOM.pm (generate_structure_dump_section): Use catalog
+	for human-readable texts.
+	(generate_table_section): Use catalog for human readable texts.
+
+2008-07-21  Wakaba  <wakaba@suika.fam.cx>
+
 	* DOM.pm (generate_table_section): Use hierarhical table
 	number for tables in subdocuments.
 

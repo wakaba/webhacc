@@ -1,5 +1,30 @@
 2008-07-21  Wakaba  <wakaba@suika.fam.cx>
 
+	* .htaccess: error-description-source.xml is in UTF-8
+	actually.
+
+	* Makefile: Rule to make Japanese language catalog file
+	is added.
+
+	* cc-script.js: Line and column numbers are now taken
+	from data-* attributes, not from textContent.
+
+	* cc.cgi: Tentative support for Japanese/English conneg.
+	(load_text_catalog, get_text): Removed (catalog text selection
+	is now handled by WebHACC::Output).
+
+	* error-description-source.xml: Catalog entries in new
+	format are added.  Old catalog element is removed.
+
+	* mkcatalog.pl: Support for non-English languages.
+	Drop support for old catalog element.  Add support
+	for new cat element.
+
+	* mkdescription.pl: Drop support for old catalog element.
+	Add support for new cat element.
+
+2008-07-21  Wakaba  <wakaba@suika.fam.cx>
+
 	* cc.cgi: Code clean-up.
 
 2008-07-21  Wakaba  <wakaba@suika.fam.cx>

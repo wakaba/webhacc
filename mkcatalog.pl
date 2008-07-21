@@ -23,7 +23,7 @@ my $doc;
   $doc->manakai_is_html (1);
 }
 
-my $target_lang = 'en';
+my $target_lang = shift || 'en';
 my @node = (@{$doc->child_nodes});
 while (@node) {
   my $node = shift @node;
@@ -56,8 +56,27 @@ while (@node) {
         s/\s+/ /g for @$entry;
         print join ';', @$entry;
         print "\n";
-      } elsif ($node->manakai_local_name eq 'catalog') {
-        print $node->text_content, "\n";
+      } elsif ($node->manakai_local_name eq 'cat') {
+        my $name = $node->get_attribute_ns (undef, 'name');
+        my $text;
+        for my $el (@{$node->child_nodes}) {
+          next unless $el->node_type == $el->ELEMENT_NODE;
+          next unless $el->manakai_local_name eq 'text';
+          my $ns = $el->namespace_uri;
+          next unless defined $ns and $ns eq $SRC_NS;
+          
+          my $lang = $el->get_attribute_ns ($XML_NS, 'lang');
+          $text = $el->inner_html;
+          if ($lang eq $target_lang) {
+            last;
+          }          
+        }
+        if (defined $text) {
+          my $entry = [$name, undef, $text];
+          s/\s+/ /g for @$entry;
+          print join ';', @$entry;
+          print "\n";
+        }
       } else {
         warn "$0: ", $node->manakai_local_name, " is not supported\n";
       }

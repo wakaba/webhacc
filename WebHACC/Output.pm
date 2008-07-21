@@ -95,7 +95,8 @@ sub start_section ($%) {
   if (defined $opt{role}) {
     if ($opt{role} eq 'parse-errors') {
       $opt{id} ||= 'parse-errors';
-      $opt{title} ||= 'Parse Errors';
+      $opt{title} ||= 'Parse Errors Section';
+      $opt{short_title} ||= 'Parse Errors';
       delete $opt{role};
     } elsif ($opt{role} eq 'structure-errors') {
       $opt{id} ||= 'document-errors';
@@ -125,14 +126,15 @@ sub start_section ($%) {
   if (defined $opt{id}) {
     my $id = $self->input->id_prefix . $opt{id};
     $self->html (' id="' . $htescape->($id) . '"');
-    push @{$self->{nav}}, [$id => $opt{short_title} || $opt{title}] 
+    push @{$self->{nav}},
+        [$id => $opt{short_title} || $opt{title} => $opt{text}] 
         if $self->{section_rank} == 2;
   }
   my $section_rank = $self->{section_rank};
   $section_rank = 6 if $section_rank > 6;
-  $self->html ('><h' . $section_rank . '>' .
-               $htescape->($opt{title}) .
-               '</h' . $section_rank . '>');
+  $self->html ('><h' . $section_rank . '>');
+  $self->nl_text ($opt{title}, text => $opt{text});
+  $self->html ('</h' . $section_rank . '>');
 } # start_section
 
 sub end_section ($) {
@@ -213,7 +215,7 @@ sub script ($$;%) {
 sub dt ($$;%) {
   my ($self, $content, %opt) = @_;
   $self->start_tag ('dt', %opt);
-  $self->text ($content);
+  $self->nl_text ($content, text => $opt{text});
 } # dt
 
 sub link ($$%) {
@@ -226,7 +228,7 @@ sub link ($$%) {
 sub xref ($$%) {
   my ($self, $content, %opt) = @_;
   $self->html ('<a href="#' . $htescape->($self->input->id_prefix . $opt{target}) . '">');
-  $self->text ($content);
+  $self->nl_text ($content, text => $opt{text});
   $self->html ('</a>');
 } # xref
 
@@ -235,7 +237,6 @@ sub link_to_webhacc ($$%) {
   $opt{url} = './?uri=' . $self->encode_url_component ($opt{url});
   $self->link ($content, %opt);
 } # link_to_webhacc
-
 
 my $get_node_path = sub ($) {
   my $node = shift;
@@ -269,11 +270,78 @@ sub node_link ($$) {
   $self->xref ($get_node_path->($node), target => 'node-' . refaddr $node);
 } # node_link
 
+{
+  my $Msg = {};
+
+sub load_text_catalog ($$) {
+  my $self = shift;
+
+  my $lang = shift; # MUST be a canonical lang name
+  my $file_name = qq[cc-msg.$lang.txt];
+  $lang = 'en' unless -f $file_name;
+  $self->{primary_language} = $lang;
+  
+  open my $file, '<:utf8', $file_name or die "$0: $file_name: $!";
+  while (<$file>) {
+    if (s/^([^;]+);([^;]*);//) {
+      my ($type, $cls, $msg) = ($1, $2, $_);
+      $msg =~ tr/\x0D\x0A//d;
+      $Msg->{$type} = [$cls, $msg];
+    }
+  }
+} # load_text_catalog
+
+sub nl_text ($$;%) {
+  my ($self, $type, %opt) = @_;
+  my $node = $opt{node};
+
+  my @arg;
+  {
+    if (defined $Msg->{$type}) {
+      my $msg = $Msg->{$type}->[1];
+      if ($msg =~ /<var>/) {
+        $msg =~ s{<var>\$([0-9]+)</var>}{
+          defined $arg[$1] ? $htescape->($arg[$1]) : '(undef)';
+        }ge;
+        $msg =~ s{<var>{\@([A-Za-z0-9:_.-]+)}</var>}{
+          UNIVERSAL::can ($node, 'get_attribute_ns')
+              ? $htescape->($node->get_attribute_ns (undef, $1)) : ''
+        }ge;
+        $msg =~ s{<var>{\@}</var>}{
+          UNIVERSAL::can ($node, 'value') ? $htescape->($node->value) : ''
+        }ge;
+        $msg =~ s{<var>{text}</var>}{
+          defined $opt{text} ? $htescape->($opt{text}) : ''
+        }ge;
+        $msg =~ s{<var>{local-name}</var>}{
+          UNIVERSAL::can ($node, 'manakai_local_name')
+            ? $htescape->($node->manakai_local_name) : ''
+        }ge;
+        $msg =~ s{<var>{element-local-name}</var>}{
+          (UNIVERSAL::can ($node, 'owner_element') and
+           $node->owner_element)
+            ? $htescape->($node->owner_element->manakai_local_name) : ''
+        }ge;
+      }
+      $self->html ($msg);
+      return;
+    } elsif ($type =~ s/:([^:]*)$//) {
+      unshift @arg, $1;
+      redo;
+    }
+  }
+  $self->text ($type);
+} # nl_text
+
+}
+
 sub nav_list ($) {
   my $self = shift;
   $self->html (q[<ul class="navigation" id="nav-items">]);
   for (@{$self->{nav}}) {
-    $self->html (qq[<li><a href="#@{[$htescape->($_->[0])]}">@{[$htescape->($_->[1])]}</a>]);
+    $self->html (qq[<li><a href="#@{[$htescape->($_->[0])]}">]);
+    $self->nl_text ($_->[1], text => $_->[2]);
+    $self->html ('</a>');
   }
   $self->html ('</ul>');
 } # nav_list
@@ -293,15 +361,17 @@ sub http_error ($$) {
 
 sub html_header ($) {
   my $self = shift;
-  $self->html (q[<!DOCTYPE html>
-<html lang="en">
-<head>
-<title>WebHACC (BETA) Result</title>
+  $self->html (q[<!DOCTYPE html>]);
+  $self->start_tag ('html', lang => $self->{primary_language});
+  $self->html (q[<head><title>]);
+  $self->nl_text (q[WebHACC:Title]);
+  $self->html (q[</title>
 <link rel="stylesheet" href="../cc-style.css" type="text/css">
 </head>
 <body>
-<h1><a href="../cc-interface"><abbr title="Web Hypertext Application Conformance Checker (BETA)"><img src="../icons/title" alt="WebHACC"></abbr></a></h1>
-]);
+<h1>]);
+  $self->nl_text (q[WebHACC:Heading]);
+  $self->html ('</h1>');
 } # html_header
 
 sub encode_url_component ($$) {

@@ -20,9 +20,14 @@ use CGI::Carp qw[fatalsToBrowser];
     $out->http_error (404);
     exit;
   }
-  
-  load_text_catalog ('en'); ## TODO: conneg
 
+  ## TODO: We need real conneg support...
+  my $primary_language = 'en';
+  if ($ENV{HTTP_ACCEPT_LANGUAGE} =~ /ja/) {
+    $primary_language = 'ja';
+  }
+  $out->load_text_catalog ($primary_language);
+  
   $out->set_flush;
   $out->http_header;
   $out->html_header;
@@ -117,65 +122,6 @@ sub check_and_print ($$$) {
 
   $out->input ($original_input);
 } # check_and_print
-
-
-{
-  my $Msg = {};
-
-sub load_text_catalog ($) {
-#  my $self = shift;
-  my $lang = shift; # MUST be a canonical lang name
-  open my $file, '<:utf8', "cc-msg.$lang.txt"
-      or die "$0: cc-msg.$lang.txt: $!";
-  while (<$file>) {
-    if (s/^([^;]+);([^;]*);//) {
-      my ($type, $cls, $msg) = ($1, $2, $_);
-      $msg =~ tr/\x0D\x0A//d;
-      $Msg->{$type} = [$cls, $msg];
-    }
-  }
-} # load_text_catalog
-
-sub get_text ($;$$) {
-#  my $self = shift;
-  my ($type, $level, $node) = @_;
-  $type = $level . ':' . $type if defined $level;
-  $level = 'm' unless defined $level;
-  my @arg;
-  {
-    if (defined $Msg->{$type}) {
-      my $msg = $Msg->{$type}->[1];
-      $msg =~ s{<var>\$([0-9]+)</var>}{
-        defined $arg[$1] ? ($arg[$1]) : '(undef)';
-      }ge;                 ##BUG: ^ must be escaped
-      $msg =~ s{<var>{\@([A-Za-z0-9:_.-]+)}</var>}{
-        UNIVERSAL::can ($node, 'get_attribute_ns')
-            ?  ($node->get_attribute_ns (undef, $1)) : ''
-      }ge; ## BUG: ^ must be escaped
-      $msg =~ s{<var>{\@}</var>}{        ## BUG: v must be escaped
-        UNIVERSAL::can ($node, 'value') ? ($node->value) : ''
-      }ge;
-      $msg =~ s{<var>{local-name}</var>}{
-        UNIVERSAL::can ($node, 'manakai_local_name')
-          ? ($node->manakai_local_name) : ''
-      }ge;  ## BUG: ^ must be escaped
-      $msg =~ s{<var>{element-local-name}</var>}{
-        (UNIVERSAL::can ($node, 'owner_element') and
-         $node->owner_element)
-          ?  ($node->owner_element->manakai_local_name)
-          : '' ## BUG: ^ must be escaped
-      }ge;
-      return ($type, 'level-' . $level . ' ' . $Msg->{$type}->[0], $msg);
-    } elsif ($type =~ s/:([^:]*)$//) {
-      unshift @arg, $1;
-      redo;
-    }
-  }
-  return ($type, 'level-'.$level, ($_[0]));
-                                 ## BUG: ^ must be escaped
-} # get_text
-
-}
 
 sub get_input_document ($) {
   my $http = shift;
@@ -375,4 +321,4 @@ and/or modify it under the same terms as Perl itself.
 
 =cut
 
-## $Date: 2008/07/21 09:40:59 $
+## $Date: 2008/07/21 12:56:33 $
