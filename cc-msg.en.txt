@@ -102,15 +102,15 @@ manakaiCompatMode:quirks;;Quirks Mode
 manakaiCompatMode:limited quirks;;Limited Quirks Mode
 manakaiCompatMode:no quirks;;No Quirks Mode
 manakaiIsHTML:1;;HTML Document
-manakaiIsXML:1;;XML Document
+manakaiIsHTML:0;;XML Document
 manakaiCharset;;<code>charset</code> parameter
 inputEncoding;;Input character encoding
 xmlVersion;;XML <code>version</code>
 xmlEncoding;;XML <code>encoding</code>
 xmlStandalone;;XML <code>standalone</code>
 ... with BOM;; (with <code class="charname"><abbr title="BYTE ORDER MARK">BOM</abbr></code>)
-Request URL;;Request URL
-Document URL;;Document URL
+URL;;<abbr title="Uniform Resource Locator">URL</abbr>
+URLs;;<abbr title="Uniform Resource Locators">URLs</abbr>
 Container Node;;Container Node
 Table Element;;Table Element
 Base URL;;Base URL

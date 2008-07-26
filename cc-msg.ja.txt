@@ -102,15 +102,15 @@ manakaiCompatMode:quirks;;奇癖モード
 manakaiCompatMode:limited quirks;;限定奇癖モード
 manakaiCompatMode:no quirks;;無奇癖モード
 manakaiIsHTML:1;;HTML 文書
-manakaiIsXML:1;;XML 文書
+manakaiIsHTML:0;;XML 文書
 manakaiCharset;;<code lang="en">charset</code> 引数
 inputEncoding;;入力に用いた文字符号化
 xmlVersion;;XML <code lang="en">version</code>
 xmlEncoding;;XML <code lang="en">encoding</code>
 xmlStandalone;;XML <code lang="en">standalone</code>
 ... with BOM;; (<code class="charname" lang="en"><abbr title="BYTE ORDER MARK">BOM</abbr></code> つき)
-Request URL;;要求 URL
-Document URL;;文書 URL
+URL;;<abbr title="統一資源所在子">URL</abbr>
+URLs;;<abbr title="統一資源所在子">URL</abbr>
 Container Node;;この文書を含む節点
 Table Element;;表要素
 Base URL;;基底 URL
@@ -119,7 +119,7 @@ Character Encoding;;文字符号化
 Byte Length;;バイト長
 Character Length;;文字長
 ... overridden;; (<i>上書き</i>)
-... overridden, official type is #;; (<i>上書き</i>, 公\xE5\xBC\x8F型は <code class="MIME" lang="en"><var>{text}</var></code>)
+... overridden, official type is #;; (<i>上書き</i>, 公式型は <code class="MIME" lang="en"><var>{text}</var></code>)
 ... sniffed;; (<i>探知結果</i>)
 byte;;バイト
 bytes;;バイト

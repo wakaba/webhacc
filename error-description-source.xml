@@ -1760,14 +1760,14 @@ p {
   <d:text xml:lang="ja"> (<code class="charname" lang="en"><abbr title="BYTE ORDER MARK">BOM</abbr></code> つき)</d:text>
 </d:cat>
 
-<d:cat name="Request URL">
-  <d:text xml:lang="en">Request URL</d:text>
-  <d:text xml:lang="ja">要求 URL</d:text>
+<d:cat name="URL">
+  <d:text xml:lang="en"><abbr title="Uniform Resource Locator">URL</abbr></d:text>
+  <d:text xml:lang="ja"><abbr title="統一資源所在子">URL</abbr></d:text>
 </d:cat>
 
-<d:cat name="Document URL">
-  <d:text xml:lang="en">Document URL</d:text>
-  <d:text xml:lang="ja">文書 URL</d:text>
+<d:cat name="URLs">
+  <d:text xml:lang="en"><abbr title="Uniform Resource Locators">URLs</abbr></d:text>
+  <d:text xml:lang="ja"><abbr title="統一資源所在子">URL</abbr></d:text>
 </d:cat>
 
 <d:cat name="Container Node">
@@ -1934,6 +1934,6 @@ is used in the document.</td>
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2008/07/21 12:56:34 $ -->
+<!-- $Date: 2008/07/26 11:27:25 $ -->
 </body>
 </html>

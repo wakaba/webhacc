@@ -367,6 +367,7 @@ sub html_header ($) {
   $self->nl_text (q[WebHACC:Title]);
   $self->html (q[</title>
 <link rel="stylesheet" href="../cc-style.css" type="text/css">
+<script src="../cc-script.js"></script>
 </head>
 <body>
 <h1>]);

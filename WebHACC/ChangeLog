@@ -1,3 +1,14 @@
+2008-07-26  Wakaba  <wakaba@suika.fam.cx>
+
+	* Input.pod: New.
+
+	* Input.pm (urls, url, add_url): New.  Originally handled
+	as |$input->{uri}| and |$input->{request_uri}|.
+	(get_document and related methods/classes): New.  Originally
+	part of |cc.cgi|.
+
+	* Output.pm (html_header): Link to |cc-script.js|.
+
 2008-07-21  Wakaba  <wakaba@suika.fam.cx>
 
 	* Input.pm: Most human-readable texts are now handled by

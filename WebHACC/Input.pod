@@ -1,0 +1,27 @@
+
+...
+
+=over 4
+
+=item $url = $input->url
+
+Return the URL of the input document, if it is known, or C<undef>
+otherwise.  If the request has been redirected, then the URL
+of the final document is returned.  What being returned by this
+attribute is a string.
+
+=item $input->add_url ($url)
+
+Add the URL specified as a string I<$url> to the end of the list of URLs
+for the input.  If there exists other URLs in the list of URLs for the
+input, then it represents that the request to obtain the resource for
+the last URL has been redirected to the URL I<$url>.
+
+=item $urls = $input->urls
+
+Return a reference to an array that contains the URLs in the list of URLs,
+preserving order of them.  The array may be empty.
+
+=back
+
+...
