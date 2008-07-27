@@ -1,3 +1,7 @@
+2008-07-27  Wakaba  <wakaba@suika.fam.cx>
+
+	* CSS.pm (generate_structure_dump_section): Role name was wrong.
+
 2008-07-21  Wakaba  <wakaba@suika.fam.cx>
 
 	* Base.pm, Default.pm: Updated to use newer way to construct a section.

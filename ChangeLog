@@ -1,3 +1,18 @@
+2008-07-27  Wakaba  <wakaba@suika.fam.cx>
+
+	* .htaccess: Files gone.
+
+	* cc-interface.en.html, cc-todo.txt: Removed.
+
+	* cc-about.en.html: New document.
+
+	* cc.cgi: Insert document input section before anything.
+	No check performed if no URL is specified and the
+	input is empty.
+
+	* error-description-source.xml (WebHACC:Heading): Link
+	to cc-about in place of cc-interface.
+
 2008-07-26  Wakaba  <wakaba@suika.fam.cx>
 
 	* cc.cgi: get_input_document function is now handled

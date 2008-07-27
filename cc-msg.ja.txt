@@ -80,7 +80,7 @@ unsupported:media query;unsupported;Conformance checking for media query is not 
 unsupported:script;unsupported;Conformance checking for script language <code><var>$0</var></code> is not supported; <em>it might or might not be conforming.</em>
 unsupported:style;unsupported;Conformance checking for style language <code><var>$0</var></code> is not supported; <em>it might or might not be conforming.</em>
 WebHACC:Title;;WebHACC (β)
-WebHACC:Heading;; <a href="../cc-interface"><abbr title="Web ハイパーテキスト応用適合性検査器 (β)"><img alt="WebHACC" src="../icons/title"></abbr></a> 
+WebHACC:Heading;; <a href="../cc-about"><abbr title="Web ハイパーテキスト応用適合性検査器 (β)"><img alt="WebHACC" src="../icons/title"></abbr></a> 
 Information;;情報
 HTTP Header;;<abbr lang="en" title="Hypertext Transfer Protocol">HTTP</abbr> 頭部
 Parse Errors Section;;構文誤り

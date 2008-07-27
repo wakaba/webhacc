@@ -33,6 +33,15 @@ use CGI::Carp qw[fatalsToBrowser];
   $out->html_header;
   $out->unset_flush;
 
+  $out->generate_input_section ($http);
+
+  my $u = $http->get_parameter ('uri');
+  my $s = $http->get_parameter ('s');
+  if ((not defined $u or not length $u) and
+      (not defined $s or not length $s)) {
+    exit;
+  }
+
   require WebHACC::Result;
   my $result = WebHACC::Result->new;
   $result->{conforming_min} = 1;
@@ -134,4 +143,4 @@ and/or modify it under the same terms as Perl itself.
 
 =cut
 
-## $Date: 2008/07/26 11:27:25 $
+## $Date: 2008/07/27 10:33:45 $

@@ -1,3 +1,12 @@
+2008-07-27  Wakaba  <wakaba@suika.fam.cx>
+
+	* Output.pm (new, input): |input| attribute should always have an input
+	object, even though it might be an empty one.
+	(add_source_to_parse_error_list): s/shift/shift ()/ to remove
+	ambigiousness warning.
+	(select): New method.
+	(generate_input_section): New method.
+
 2008-07-26  Wakaba  <wakaba@suika.fam.cx>
 
 	* Input.pod: New.

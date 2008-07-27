@@ -2,3 +2,10 @@ Options +ExecCGI +MultiViews
 AddHandler cgi-script .cgi
 
 AddCharset utf-8 .xml
+
+Redirect permanent /gate/2007/html/cc-interface.en.html http://suika.fam.cx/gate/2007/html/cc/
+Redirect permanent /gate/2007/html/cc-interface.en http://suika.fam.cx/gate/2007/html/cc/
+Redirect permanent /gate/2007/html/cc-interface http://suika.fam.cx/gate/2007/html/cc/
+
+Redirect gone /gate/2007/html/cc-todo.txt
+Redirect gone /gate/2007/html/cc-todo

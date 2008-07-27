@@ -1611,10 +1611,10 @@ p {
 
 <d:cat name="WebHACC:Heading">
   <d:text xml:lang="en">
-    <a href="../cc-interface"><abbr title="Web Hypertext Application Conformance Checker (β)"><img src="../icons/title" alt="WebHACC"/></abbr></a>
+    <a href="../cc-about"><abbr title="Web Hypertext Application Conformance Checker (β)"><img src="../icons/title" alt="WebHACC"/></abbr></a>
   </d:text>
   <d:text xml:lang="ja">
-    <a href="../cc-interface"><abbr title="Web ハイパーテキスト応用適合性検査器 (β)"><img src="../icons/title" alt="WebHACC"/></abbr></a>
+    <a href="../cc-about"><abbr title="Web ハイパーテキスト応用適合性検査器 (β)"><img src="../icons/title" alt="WebHACC"/></abbr></a>
   </d:text>
 </d:cat>
 
@@ -1934,6 +1934,6 @@ is used in the document.</td>
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2008/07/26 11:27:25 $ -->
+<!-- $Date: 2008/07/27 10:33:45 $ -->
 </body>
 </html>

@@ -17,7 +17,9 @@ my $htescape = sub ($) {
 };
 
 sub new ($) {
-  return bless {nav => [], section_rank => 1}, shift;
+  require WebHACC::Input;
+  return bless {nav => [], section_rank => 1,
+                input => WebHACC::Input->new}, shift;
 } # new
 
 sub input ($;$) {
@@ -25,7 +27,7 @@ sub input ($;$) {
     if (defined $_[1]) {
       $_[0]->{input} = $_[1];
     } else {
-      delete $_[0]->{input};
+      $_[0]->{input} = WebHACC::Input->new;
     }
   }
   
@@ -187,7 +189,7 @@ sub add_source_to_parse_error_list ($$) {
   my $self = shift;
 
   $self->script (q[addSourceToParseErrorList ('] . $self->input->id_prefix .
-                 q[', '] . shift . q[')]);
+                 q[', '] . shift () . q[')]);
 } # add_source_to_parse_error_list
 
 sub start_code_block ($) {
@@ -217,6 +219,35 @@ sub dt ($$;%) {
   $self->start_tag ('dt', %opt);
   $self->nl_text ($content, text => $opt{text});
 } # dt
+
+sub select ($$%) {
+  my ($self, $options, %opt) = @_;
+
+  my $selected = $opt{selected};
+  delete $opt{selected};
+
+  $self->start_tag ('select', %opt);
+  
+  my @options = @$options;
+  while (@options) {
+    my $opt = shift @options;
+    if ($opt->{options}) {
+      $self->html ('<optgroup label="');
+      $self->nl_text ($opt->{label});
+      $self->html ('">');
+      unshift @options, @{$opt->{options}}, {end_options => 1};
+    } elsif ($opt->{end_options}) {
+      $self->end_tag ('optgroup');
+    } else {
+      $self->start_tag ('option', value => $opt->{value},
+                        ((defined $selected and $opt->{value} eq $selected)
+                             ? (selected => '') : ()));
+      $self->nl_text (defined $opt->{label} ? $opt->{label} : $opt->{value});
+    }
+  }
+
+  $self->end_tag ('select');
+} # select
 
 sub link ($$%) {
   my ($self, $content, %opt) = @_;
@@ -374,6 +405,150 @@ sub html_header ($) {
   $self->nl_text (q[WebHACC:Heading]);
   $self->html ('</h1>');
 } # html_header
+
+sub generate_input_section ($$) {
+  my ($out, $cgi) = @_;
+
+  my $options = sub ($) {
+    my $context = shift;
+
+    $out->html (q[<div class=details><p class=legend onclick="nextSibling.style.display = nextSibling.style.display == 'none' ? 'block' : 'none'">]);
+    $out->nl_text (q[Options]);
+    $out->start_tag ('div');
+
+    if ($context eq 'url') {
+      $out->start_tag ('p');
+      $out->start_tag ('label');
+      $out->start_tag ('input', type => 'checkbox', name => 'error-page',
+                       value => 1,
+                       ($cgi->get_parameter ('error-page')
+                            ? (checked => '') : ()));
+      $out->nl_text ('Check error page');
+      $out->end_tag ('label');
+    }
+ 
+    $out->start_tag ('p');
+    $out->start_tag ('label');
+    $out->nl_text (q[Content type]);
+    $out->text (': ');
+    $out->select ([
+      {value => '', label => 'As specified'},
+      {value => 'application/atom+xml'},
+      {value => 'application/xhtml+xml'},
+      {value => 'application/xml'},
+      {value => 'text/html'},
+      {value => 'text/xml'},
+      {value => 'text/css'},
+      {value => 'text/cache-manifest'},
+      {value => 'text/x-webidl'},
+    ], name => 'i', selected => scalar $cgi->get_parameter ('i'));
+    $out->end_tag ('label');
+
+    if ($context ne 'text') {
+      $out->start_tag ('p');
+      $out->start_tag ('label');
+      $out->nl_text (q[Charset]);
+      $out->text (q[: ]);
+      $out->select ([
+        {value => '', label => 'As specified'},
+        {label => 'Japanese charsets', options => [
+          {value => 'Windows-31J'},
+          {value => 'Shift_JIS'},
+          {value => 'EUC-JP'},
+          {value => 'ISO-2022-JP'},
+        ]},
+        {label => 'European charsets', options => [
+          {value => 'Windows-1252'},
+          {value => 'ISO-8859-1'},
+          {value => 'US-ASCII'},
+        ]},
+        {label => 'Asian charsets', options => [
+          {value => 'Windows-874'},
+          {value => 'ISO-8859-11'},
+          {value => 'TIS-620'},
+        ]},
+        {label => 'Unicode charsets', options => [
+          {value => 'UTF-8'},
+          {value => 'UTF-8n'},
+        ]},
+      ], name => 'charset',
+      selected => scalar $cgi->get_parameter ('charset'));
+      $out->end_tag ('label');
+    }
+
+    if ($context eq 'text') {
+      $out->start_tag ('p');
+      $out->start_tag ('label');
+      $out->nl_text ('Setting innerHTML');
+      $out->text (': ');
+      $out->start_tag ('input', name => 'e',
+                       value => scalar $cgi->get_parameter ('e'));
+      $out->end_tag ('label');
+    }
+
+    $out->html (q[</div></div>]);
+  }; # $options
+
+  $out->start_section (id => 'input', title => 'Input');
+
+  $out->start_section (id => 'input-url', title => 'By URL');
+  $out->start_tag ('form', action => './', 'accept-charset' => 'utf-8',
+                   method => 'get');
+  $out->start_tag ('input', type => 'hidden', name => '_charset_');
+
+  $out->start_tag ('p');
+  $out->start_tag ('label');
+  $out->nl_text ('URL');
+  $out->text (': ');
+  $out->start_tag ('input',
+                   name => 'uri',
+                   type => 'url',
+                   value => $cgi->get_parameter ('uri'));
+  $out->end_tag ('label');
+
+  $options->('url');
+
+  $out->start_tag ('p');
+  $out->start_tag ('button', type => 'submit');
+  $out->nl_text ('Check');
+
+  $out->end_tag ('form');
+  $out->end_section;
+
+  $out->end_tag ('fieldset');
+
+  ## TODO: File upload
+
+  $out->start_section (id => 'input-text', title => 'By direct input');
+  $out->start_tag ('form', action => './', 'accept-charset' => 'utf-8',
+                   method => 'post');
+  $out->start_tag ('input', type => 'hidden', name => '_charset_');
+
+  $out->start_tag ('p');
+  $out->start_tag ('label');
+  $out->nl_text ('Document source to check');
+  $out->text (': ');
+  $out->start_tag ('br');
+  $out->start_tag ('textarea',
+                   name => 's');
+  my $s = $cgi->get_parameter ('s');
+  $out->text ($s) if defined $s;
+  $out->end_tag ('textarea');
+  $out->end_tag ('label');
+
+  $options->('text');
+
+  $out->start_tag ('p');
+  $out->start_tag ('button', type => 'submit', 
+                   onclick => 'form.method = form.s.value.length > 512 ? "post" : "get"');
+  $out->nl_text ('Check');
+  $out->end_tag ('button');
+
+  $out->end_tag ('form');
+  $out->end_section;
+
+  $out->end_section;
+} # generate_input_section
 
 sub encode_url_component ($$) {
   shift;

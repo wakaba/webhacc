@@ -67,7 +67,7 @@ sub generate_structure_dump_section ($) {
 
   my $out = $self->output;
 
-  $out->start_section (role => 'reserialized');
+  $out->start_section (role => 'reformatted');
 
   $out->start_code_block;
   $out->text ($self->{structure}->css_text);
