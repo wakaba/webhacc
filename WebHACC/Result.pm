@@ -62,7 +62,7 @@ sub add_error ($%) {
     $line = $opt{node}->get_user_data ('manakai_source_line');
     if (defined $line) {
       $column = $opt{node}->get_user_data ('manakai_source_column');
-    } else {
+    } elsif ($opt{node}->isa ('Message::IF::Node')) {
       if ($opt{node}->node_type == $opt{node}->ATTRIBUTE_NODE) {
         my $owner = $opt{node}->owner_element;
         if ($owner) {

@@ -46,4 +46,20 @@ sub generate_structure_dump_section ($) {
   $out->end_section
 } # generate_structure_dump_section
 
+sub generate_structure_error_section ($) {
+  my $self = shift;
+
+  my $out = $self->output;
+  
+  $out->start_section (role => 'structure-errors');
+  $out->start_error_list (role => 'structure-errors');
+
+  $self->{structure}->check (sub {
+    $self->result->add_error (@_, layer => 'structure');
+  });
+  
+  $out->end_error_list (role => 'structure-errors');
+  $out->end_section;
+} # generate_structure_error_section
+
 1;

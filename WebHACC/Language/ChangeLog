@@ -1,3 +1,7 @@
+2008-08-02  Wakaba  <wakaba@suika.fam.cx>
+
+	* WebIDL.pm (generate_structure_error_section): New method.
+
 2008-07-27  Wakaba  <wakaba@suika.fam.cx>
 
 	* CSS.pm (generate_structure_dump_section): Role name was wrong.

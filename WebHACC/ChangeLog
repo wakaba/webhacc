@@ -1,3 +1,17 @@
+2008-08-02  Wakaba  <wakaba@suika.fam.cx>
+
+	* Output.pm ($htescape_value): New code.  Some methods should
+	invoke this code instead of original $htescape, since that
+	code will convert invisible characters into HTML tags
+	such that that code is not suitable for attribute values
+	and CDATA/PCDATA element contents.
+	($get_object_path): New.  Future revision of this code should
+	support real "path" to the node object.  The current version
+	only dumps the type and the name of the node itself.
+	(node_link): Support for non-DOM nodes.
+
+	* Result.pm (add_error): Support for non-DOM nodes.
+
 2008-07-27  Wakaba  <wakaba@suika.fam.cx>
 
 	* Output.pm (new, input): |input| attribute should always have an input

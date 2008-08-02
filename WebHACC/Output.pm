@@ -16,6 +16,15 @@ my $htescape = sub ($) {
   return $s;
 };
 
+my $htescape_value = sub ($) {
+  my $s = $_[0];
+  $s =~ s/&/&amp;/g;
+  $s =~ s/</&lt;/g;
+  $s =~ s/>/&gt;/g;
+  $s =~ s/"/&quot;/g;
+  return $s;
+};
+
 sub new ($) {
   require WebHACC::Input;
   return bless {nav => [], section_rank => 1,
@@ -75,20 +84,21 @@ sub url ($$%) {
 
 sub start_tag ($$%) {
   my ($self, $tag_name, %opt) = @_;
-  $self->html ('<' . $htescape->($tag_name)); # escape for safety
+  $self->html ('<' . $htescape_value->($tag_name)); # escape for safety
   if (exists $opt{id}) {
     my $id = $self->input->id_prefix . $opt{id};
-    $self->html (' id="' . $htescape->($id) . '"');
+    $self->html (' id="' . $htescape_value->($id) . '"');
     delete $opt{id};
   }
   for (keys %opt) {    # for safety
-    $self->html (' ' . $htescape->($_) . '="' . $htescape->($opt{$_}) . '"');
+    $self->html (' ' . $htescape_value->($_) . '="' .
+                 $htescape_value->($opt{$_}) . '"');
   }
   $self->html ('>');
 } # start_tag
 
 sub end_tag ($$) {
-  shift->html ('</' . $htescape->(shift) . '>');
+  shift->html ('</' . $htescape_value->(shift) . '>');
 } # end_tag
 
 sub start_section ($%) {
@@ -296,9 +306,30 @@ my $get_node_path = sub ($) {
   return join '/', @r;
 }; # $get_node_path
 
+my $get_object_path = sub ($) {
+  my $node = shift;
+  my @r;
+  while (defined $node) {
+    my $ref = ref $node;
+    $ref =~ /([^:]+)$/;
+    my $rs = $1;
+    my $node_name = $node->node_name;
+    if (defined $node_name) {
+      $rs .= ' <code>' . $htescape->($node_name) . '</code>';
+    }
+    $node = undef;
+    unshift @r, $rs;
+  }
+  return join '/', @r;
+}; # $get_object_path
+
 sub node_link ($$) {
   my ($self, $node) = @_;
-  $self->xref ($get_node_path->($node), target => 'node-' . refaddr $node);
+  if ($node->isa ('Message::IF::Node')) {
+    $self->xref ($get_node_path->($node), target => 'node-' . refaddr $node);
+  } else {
+    $self->html ($get_object_path->($node));
+  }
 } # node_link
 
 {
@@ -492,7 +523,8 @@ sub generate_input_section ($$) {
   $out->start_section (id => 'input', title => 'Input');
 
   $out->start_section (id => 'input-url', title => 'By URL');
-  $out->start_tag ('form', action => './', 'accept-charset' => 'utf-8',
+  $out->start_tag ('form', action => './#result-summary',
+                   'accept-charset' => 'utf-8',
                    method => 'get');
   $out->start_tag ('input', type => 'hidden', name => '_charset_');
 
@@ -520,7 +552,8 @@ sub generate_input_section ($$) {
   ## TODO: File upload
 
   $out->start_section (id => 'input-text', title => 'By direct input');
-  $out->start_tag ('form', action => './', 'accept-charset' => 'utf-8',
+  $out->start_tag ('form', action => './#result-summary',
+                   'accept-charset' => 'utf-8',
                    method => 'post');
   $out->start_tag ('input', type => 'hidden', name => '_charset_');
 
@@ -532,7 +565,7 @@ sub generate_input_section ($$) {
   $out->start_tag ('textarea',
                    name => 's');
   my $s = $cgi->get_parameter ('s');
-  $out->text ($s) if defined $s;
+  $out->html ($htescape_value->($s)) if defined $s;
   $out->end_tag ('textarea');
   $out->end_tag ('label');
 
