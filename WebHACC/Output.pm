@@ -137,14 +137,25 @@ sub start_section ($%) {
   $self->html ('<div class=section');
   if (defined $opt{id}) {
     my $id = $self->input->id_prefix . $opt{id};
-    $self->html (' id="' . $htescape->($id) . '"');
-    push @{$self->{nav}},
-        [$id => $opt{short_title} || $opt{title} => $opt{text}] 
-        if $self->{section_rank} == 2;
+    $self->html (' id="' . $htescape->($id) . '">');
+    if ($self->{section_rank} == 2) {
+      my $st = $opt{short_title} || $opt{title};
+      push @{$self->{nav}},
+          [$id => $st => $opt{text}];
+      
+      $self->start_tag ('script');
+      $self->html (qq[ addSectionLink ('] . $self->input->id_prefix .
+                     qq[$id', ']);
+      $self->nl_text ($st, text => $opt{text});
+      $self->html (q[') ]);
+      $self->end_tag ('script');
+    }
+  } else {
+    $self->html ('>');
   }
   my $section_rank = $self->{section_rank};
   $section_rank = 6 if $section_rank > 6;
-  $self->html ('><h' . $section_rank . '>');
+  $self->html ('<h' . $section_rank . '>');
   $self->nl_text ($opt{title}, text => $opt{text});
   $self->html ('</h' . $section_rank . '>');
 } # start_section
@@ -431,10 +442,10 @@ sub html_header ($) {
 <link rel="stylesheet" href="../cc-style.css" type="text/css">
 <script src="../cc-script.js"></script>
 </head>
-<body>
+<body onclick=" return onbodyclick (event) " onload=" onbodyload () ">
 <h1>]);
   $self->nl_text (q[WebHACC:Heading]);
-  $self->html ('</h1>');
+  $self->html (q[</h1><script> insertNavSections () </script>]);
 } # html_header
 
 sub generate_input_section ($$) {

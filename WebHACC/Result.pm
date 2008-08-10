@@ -280,7 +280,7 @@ Errors</a></th>
   my $score_base = 20;
   my $score_unit = $score_base / 100;
   for (
-    [Transfer => 'transfer', ''],
+    [Transfer => 'transfer', '#transfer-errors'],
     [Character => 'char', ''],
     [Syntax => 'syntax', '#parse-errors'],
     [Structure => 'structure', '#document-errors'],

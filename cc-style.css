@@ -258,6 +258,10 @@ q:before, q:after {
   text-decoration: none;
 }
 
+body[data-scripted] #nav-items {
+  display: none;
+}
+
 img {
   border-style: none;
 }
@@ -425,6 +429,59 @@ mark {
   background-color: #ffff4d;
 }
 
+/* Tab navigation */
+
+h1 {
+  float: left;
+  font-size: 100%;
+  padding: 0 1em;
+}
+
+nav {
+  display: block;
+}
+
+nav ul {
+  margin: 0;
+  padding: 1em 0 0 0;
+}
+
+nav ul li {
+  display: inline;
+  margin: 0;
+  padding: 0 0.3em 0 0;
+  line-height: 2;
+}
+
+nav a {
+  display: inline;
+  padding: 0.1em 0.3em;
+  text-decoration: none;
+  color: inherit;
+  border: thin outset gray;
+  -moz-border-radius: 0.2em;
+  min-width: 4em;
+  text-align: center;
+}
+
+nav [data-active] a {
+  border-style: inset;
+  background-color: #C0C0C0;
+}
+
+.section {
+  clear: both;
+}
+
+body[data-scripted] > .section {
+  position: absolute;
+  top: 120px; /* h1 > img's height is 90px */
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: auto;
+}
+
 /*
 
 Copyright 2007-2008 Wakaba <w@suika.fam.cx>.
@@ -432,6 +489,6 @@ Copyright 2007-2008 Wakaba <w@suika.fam.cx>.
 This library is free software; you can redistribute it
 and/or modify it under the same terms as Perl itself.
 
-$Date: 2008/05/18 07:24:04 $
+$Date: 2008/08/10 11:49:43 $
 
 */

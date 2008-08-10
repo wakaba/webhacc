@@ -84,4 +84,92 @@ function addSourceToParseErrorList (idPrefix, dlId) {
   }
 } // addSourceToParseErrorList
 
-// $Date: 2008/07/21 12:56:33 $
+function insertNavSections () {
+  var el = document.createElement ('nav');
+  el.id = 'nav-sections';
+  el.innerHTML = '<ul></ul>';
+  document.body.appendChild (el);
+  document.webhaccSections = {};
+  document.body.setAttribute ('data-scripted', '');
+} // insertNavSections
+
+function addSectionLink (id, label) {
+  var el = document.createElement ('li');
+  el.innerHTML = '<a></a>';
+  el.firstChild.href = '#' + id;
+  el.firstChild.innerHTML = label;
+  document.getElementById ('nav-sections').firstChild.appendChild (el);
+  document.webhaccSections[id] = document.getElementById (id);
+  document.webhaccSections[id].tabElement = el;
+  if (id == 'input') {
+    //
+  } else if (id == 'document-info' && !document.webhaccNavigated) {
+    showTab ('document-info');
+    document.webhaccNavigated = false;
+  } else {
+    document.webhaccSections[id].style.display = 'none';
+  }
+} // addSectionLink
+
+function showTab (id) {
+  var m;
+  if (id.match (/^line-/)) {
+    id = 'source-string';
+  } else if (id.match (/^node-/)) {
+    id = 'document-tree';
+  } else if (m = id.match (/^(subdoc-\d+-)/)) {
+    id = m[1];
+  }
+
+  if (document.webhaccSections[id]) {
+    for (var i in document.webhaccSections) {
+      document.webhaccSections[i].style.display = 'none';
+      document.webhaccSections[i].tabElement.removeAttribute ('data-active');
+    }
+    document.webhaccSections[id].style.display = 'block';
+    document.webhaccSections[id].tabElement.setAttribute ('data-active', '');
+
+    document.webhaccNavigated = true;
+  }
+
+} // showTab
+
+function getAncestorAnchorElement (e) {
+  do {
+    if (e.nodeName == 'A') {
+      return e;
+    }
+    e = e.parentNode;
+  } while (e);
+} // getAncestorAnchorElement
+
+function onbodyclick (ev) {
+  var a = getAncestorAnchorElement (ev.target || ev.srcElement);
+  if (a) {
+    var href = a.getAttribute ('href');
+    if (href && href.match (/^#/)) {
+      var id = decodeURIComponent (href.substring (1));
+      showTab (id);
+      return true;
+    }
+  }
+  return true;
+} // onbodyclick
+
+function onbodyload () {
+  // This block should be executed at the end of initialization process,
+  // since |decodeURIComponent| might throw.
+  if (!document.webhaccNavigated) {
+    var fragment = location.hash;
+    if (fragment) {
+      var id = decodeURIComponent (fragment.substring (1));
+      showTab (id);
+    } else if (document.webhaccSections['result-summary']) {
+      showTab ('result-summary');
+    } else {
+      showTab ('input');
+    }
+  }
+} // onbodyload
+
+// $Date: 2008/08/10 11:49:43 $
