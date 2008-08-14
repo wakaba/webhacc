@@ -74,6 +74,7 @@ sub generate_structure_error_section ($) {
   
   $out->start_section (role => 'structure-errors');
   $out->start_error_list (role => 'structure-errors');
+  $self->result->layer_applicable ('structure');
 
   $self->result->add_error (input => $self->input,
                             level => 'u',
@@ -83,6 +84,8 @@ sub generate_structure_error_section ($) {
 
   $out->end_error_list (role => 'structure-errors');
   $out->end_section;
+
+  $self->result->layer_uncertain ('semantics');
 } # generate_structure_error_section
 
 sub source_charset ($) {

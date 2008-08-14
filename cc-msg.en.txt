@@ -98,6 +98,8 @@ Reformatted Document Source;;Reformatted Document Source
 Reformatted;;Reformatted
 Structural Errors;;Structural Errors
 Struct. Errors;;Struct. Errors
+Transfer Errors;;Transfer Errors
+Trans. Errors;;Trans. Errors
 manakaiCompatMode:quirks;;Quirks Mode
 manakaiCompatMode:limited quirks;;Limited Quirks Mode
 manakaiCompatMode:no quirks;;No Quirks Mode
@@ -131,3 +133,25 @@ Index #;;Index <var>{text}</var>
 Table #;;Structure of Table #<var>{text}</var>
 Subdocument #;;Subdocument #<var>{text}</var>
 Sub #;;Sub #<var>{text}</var>
+...;;..
+Score;;Score
+Subtotal;;Subtotal
+Total;;Total
+Main document;;Main document
+Subdocuments;;Subdocuments
+Transfer;;<abbr title="Transfer protocol">Transfer</abbr>
+Encode;;<abbr title="Character encoding">Encoding</abbr>
+Charset;;<abbr title="Coded characters">Character</abbr>
+Syntax;;Syntax
+Semantics;;Semantics
+N/A;;N/A
+This checker is work in progress.;; <p><strong>Important</strong>: This conformance checking service is <em>under development</em>. The result above might be <em>wrong</em>.</p> 
+Conformance is conforming;;No conformance‐error is found in this document.
+Conformance is should-error;;This document is <strong>likely <em>non</em>-conforming</strong>, but in rare case it might be conforming. The checker cannot determine whether this document is in the rare case or not.
+Conformance is non-conforming;;This document is <strong><em>non</em>-conforming</strong>.
+Conformance is uncertain;;The conformance checker cannot decide whether the document is conforming or not, since the document contains one or more unsupported features. The document might or might not be conforming.
+Error level m;;<a href="../error-description#level-m"><em class="rfc2119">MUST</em>‐level error</a>
+Error level s;;<a href="../error-description#level-s"><em class="rfc2119">SHOULD</em>‐level error</a>
+Error level w;;<a href="../error-description#level-w">Warning</a>
+Error level i;;<a href="../error-description#level-i">Information</a>
+Error level u;;<a href="../error-description#level-u">Not supported</a>

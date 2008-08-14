@@ -98,6 +98,8 @@ Reformatted Document Source;;再整形した文書のソース
 Reformatted;;再整形
 Structural Errors;;構造的誤り
 Struct. Errors;;構造誤り
+Transfer Errors;;転送誤り
+Trans. Errors;;転送誤り
 manakaiCompatMode:quirks;;奇癖モード
 manakaiCompatMode:limited quirks;;限定奇癖モード
 manakaiCompatMode:no quirks;;無奇癖モード
@@ -131,3 +133,25 @@ Index #;;索引 #<var>{text}</var>
 Table #;;表 #<var>{text}</var> の構造
 Subdocument #;;部分文書 #<var>{text}</var>
 Sub #;;部分 #<var>{text}</var>
+...;;〜
+Score;;得点
+Subtotal;;小計
+Total;;合計
+Main document;;主文書
+Subdocuments;;部分文書
+Transfer;;<abbr title="転送プロトコル">転送</abbr>
+Encode;;<abbr title="文字符号化">符号</abbr>
+Charset;;<abbr title="符号化文字">文字</abbr>
+Syntax;;構文
+Semantics;;意味
+N/A;;−
+This checker is work in progress.;; <p><strong>重要</strong>: この適合性検査サービスは<em>開発中</em>です。 この結果は<em>間違い</em>かもしれません。</p> 
+Conformance is conforming;;この文書に適合性に関わる誤りは見つかりませんでした。
+Conformance is should-error;;この文書は<strong>おそらく<em>不</em>適合</strong>ですが、 稀に適合している場合もあります。適合性検査器はこの文書が稀な場合に該当するかどうか判定できません。
+Conformance is non-conforming;;この文書は<strong><em>不</em>適合</strong>です。
+Conformance is uncertain;;適合性検査器はこの文書が適合するかどうか判定できませんでした。 この文書は適合性検査器が対応していない機能を使っています。 この文書は適合しているかもしれませんし、していないかもしれません。
+Error level m;;<a href="../error-description#level-m"><em class="rfc2119" title="REQUIRED">必須</em>級の誤り</a>
+Error level s;;<a href="../error-description#level-s"><em class="rfc2119" title="RECOMMENDED">推奨</em>級の誤り</a>
+Error level w;;<a href="../error-description#level-w">警告</a>
+Error level i;;<a href="../error-description#level-i">情報</a>
+Error level u;;<a href="../error-description#level-u">未対応</a>

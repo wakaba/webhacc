@@ -118,6 +118,12 @@ sub start_section ($%) {
       $opt{short_title} ||= 'Struct. Errors';
       $class .= ' errors';
       delete $opt{role};
+    } elsif ($opt{role} eq 'transfer-errors') {
+      $opt{id} ||= 'transfer-errors';
+      $opt{title} ||= 'Transfer Errors';
+      $opt{short_title} ||= 'Trans. Errors';
+      $class .= ' errors';
+      delete $opt{role};
     } elsif ($opt{role} eq 'reformatted') {
       $opt{id} ||= 'document-tree';
       $opt{title} ||= 'Reformatted Document Source';
@@ -144,6 +150,11 @@ sub start_section ($%) {
       $opt{title} ||= 'Document Source';
       $opt{short_title} ||= 'Source';
       $class .= ' source';
+      delete $opt{role};
+    } elsif ($opt{role} eq 'result') {
+      $opt{id} ||= 'result-summary';
+      $opt{title} ||= 'Result';
+      $class .= ' result';
       delete $opt{role};
     }
   }

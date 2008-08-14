@@ -44,8 +44,6 @@ use CGI::Carp qw[fatalsToBrowser];
 
   require WebHACC::Result;
   my $result = WebHACC::Result->new;
-  $result->{conforming_min} = 1;
-  $result->{conforming_max} = 1;
   $result->output ($out);
 
   require WebHACC::Input;
@@ -53,8 +51,6 @@ use CGI::Carp qw[fatalsToBrowser];
 
   check_and_print ($input => $result => $out);
   
-  $result->generate_result_section;
-
   $out->nav_list;
 
   exit;
@@ -70,7 +66,9 @@ sub check_and_print ($$$) {
   $input->generate_transfer_sections ($result);
 
   unless (defined $input->{s}) {
-    $result->{conforming_min} = 0;
+    ## NOTE: This is an error of the implementation.
+    $result->layer_uncertain ('transfer');
+    $result->generate_result_section;
     return;
   }
 
@@ -122,10 +120,16 @@ sub check_and_print ($$$) {
         unless defined $subinput->{base_uri};
     $subinput->{parent_input} = $input;
 
-    $subinput->start_section ($result);
-    check_and_print ($subinput => $result => $out);
-    $subinput->end_section ($result);
+    my $subresult = WebHACC::Result->new;
+    $subresult->output ($out);
+    $subresult->parent_result ($result);
+
+    $subinput->start_section ($subresult);
+    check_and_print ($subinput => $subresult => $out);
+    $subinput->end_section ($subresult);
   }
+
+  $result->generate_result_section;
 
   $out->input ($original_input);
 } # check_and_print
@@ -143,4 +147,4 @@ and/or modify it under the same terms as Perl itself.
 
 =cut
 
-## $Date: 2008/07/27 10:33:45 $
+## $Date: 2008/08/14 15:50:42 $

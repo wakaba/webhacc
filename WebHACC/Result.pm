@@ -2,7 +2,11 @@ package WebHACC::Result;
 use strict;
 
 sub new ($) {
-  return bless {}, shift;
+  return bless {
+    global_status => 'conforming',
+        # or, 'should-error', 'non-conforming', 'uncertain'
+    subdoc_results => [],
+  }, shift;
 } # new
 
 sub output ($;$) {
@@ -16,6 +20,33 @@ sub output ($;$) {
 
   return $_[0]->{output};
 } # output
+
+sub parent_result ($;$) {
+  if (@_ > 1) {
+    if (defined $_[1]) {
+      $_[0]->{parent_result} = $_[1];
+    } else {
+      delete $_[0]->{parent_result};
+    }
+  }
+
+  return $_[0]->{parent_result};
+} # parent_result
+
+sub layer_applicable ($$) {
+  my $self = shift;
+  my $layer = shift;
+  $self->{layers}->{$layer}->{applicable} = 1;
+} # layer_applicable
+
+sub layer_uncertain ($$) {
+  my $self = shift;
+  my $layer = shift;
+  $self->{layers}->{$layer}->{uncertain} ||= 1;
+  $self->{layers}->{$layer}->{applicable} = 1;
+  $self->{global_status} = 'uncertain'
+      unless $self->{global_status} eq 'non-conforming';
+} # layer_uncertain
 
 sub add_error ($%) {
   my ($self, %opt) = @_;
@@ -169,28 +200,13 @@ sub add_error ($%) {
   $out->start_tag ('dd', class => $class);
 
   ## Error level
+  $out->nl_text ('Error level ' . $error_level);
+  $out->text (': ');
   
-  if ($error_level eq 'm') {
-    $out->html (qq[<strong><a href="../error-description#level-m"><em class=rfc2119>MUST</em>-level
-        error</a></strong>: ]);
-  } elsif ($error_level eq 's') {
-    $out->html (qq[<strong><a href="../error-description#level-s"><em class=rfc2119>SHOULD</em>-level
-        error</a></strong>: ]);
-  } elsif ($error_level eq 'w') {
-    $out->html (qq[<strong><a href="../error-description#level-w">Warning</a></strong>: ]);
-  } elsif ($error_level eq 'u') {
-    $out->html (qq[<strong><a href="../error-description#level-u">Not
-        supported</a></strong>: ]);
-  } elsif ($error_level eq 'i') {
-    $out->html (qq[<strong><a href="../error-description#level-i">Information</a></strong>: ]);
-  }
-
   ## Error message
-
   $out->nl_text ($error_type_text, node => $opt{node}, text => $opt{text});
 
   ## Additional error description
-
   if (defined $opt{text}) {
     $out->html (' (<q>');
     $out->text ($opt{text});
@@ -207,124 +223,222 @@ sub add_error ($%) {
               rel => 'help');
   $out->text (']');
 
-
-#    my ($type, $cls, $msg) = main::get_text ($opt{type}, $opt{level});
-#    $out->html (qq[<dt class="$cls">] . $result->get_error_label ($input, \%opt));
-
-  $error_layer = 'char'
-      if $error_layer eq 'charset' or $error_layer eq 'encode';
-  if ($error_level eq 's') {
-    $self->{$error_layer}->{should}++;
-    $self->{$error_layer}->{score_min} -= 2;
-    $self->{conforming_min} = 0;
+  if ($error_level eq 'm') {
+    $self->{layers}->{$error_layer}->{must}++;
+    $self->{global_status} = 'non-conforming';
+  } elsif ($error_level eq 's') {
+    $self->{layers}->{$error_layer}->{should}++;
+    $self->{global_status} = 'should-error'
+        unless {'non-conforming' => 1, 
+                uncertain => 1}->{$self->{global_status}};
   } elsif ($error_level eq 'w') {
-    $self->{$error_layer}->{warning}++;
+    $self->{layers}->{$error_layer}->{warning}++;
   } elsif ($error_level eq 'u') {
-    $self->{$error_layer}->{unsupported}++;
-    $self->{unsupported} = 1;
+    $self->{layers}->{$error_layer}->{uncertain}++;
+    $self->{global_status} = 'uncertain'
+        unless $self->{global_status} eq 'non-conforming';
   } elsif ($error_level eq 'i') {
-    #
-  } else {
-    $self->{$error_layer}->{must}++;
-    $self->{$error_layer}->{score_max} -= 2;
-    $self->{$error_layer}->{score_min} -= 2;
-    $self->{conforming_min} = 0;
-    $self->{conforming_max} = 0;
+    $self->{layers}->{$error_layer}->{info}++;
   }
 } # add_error
 
 sub generate_result_section ($) {
-  my $result = shift;
+  my $self = shift;
+
+  my $result = $self;
 
   my $out = $result->output;
 
-  $out->start_section (id => 'result-summary',
-                       title => 'Result');
+  $out->start_section (role => 'result');
 
-  if ($result->{unsupported} and $result->{conforming_max}) {  
-    $out->html (qq[<p class=uncertain id=result-para>The conformance
-        checker cannot decide whether the document is conforming or
-        not, since the document contains one or more unsupported
-        features.  The document might or might not be conforming.</p>]);
-  } elsif ($result->{conforming_min}) {
-    $out->html (qq[<p class=PASS id=result-para>No conformance-error is
-        found in this document.</p>]);
-  } elsif ($result->{conforming_max}) {
-    $out->html (qq[<p class=SEE-RESULT id=result-para>This document
-        is <strong>likely <em>non</em>-conforming</strong>, but in rare case
-        it might be conforming.</p>]);
-  } else {
-    $out->html (qq[<p class=FAIL id=result-para>This document is 
-        <strong><em>non</em>-conforming</strong>.</p>]);
-  }
+  my $para_class = {
+    'conforming' => 'result-para no-error',
+    'should-error' => 'result-para should-errors',
+    'non-conforming' => 'result-para must-errors',
+    'uncertain' => 'result-para uncertain',
+  }->{$self->{global_status}};
+  $out->start_tag ('p', class => $para_class);
+  $out->nl_text ('Conformance is ' . $self->{global_status});
+  $out->end_tag ('p');
 
   $out->html (qq[<table>
-<colgroup><col><colgroup><col><col><col><colgroup><col>
+<colgroup><col><col><colgroup><col><col><col><col><colgroup><col>
 <thead>
-<tr><th scope=col></th>
-<th scope=col><a href="../error-description#level-m"><em class=rfc2119>MUST</em>-level
-Errors</a></th>
-<th scope=col><a href="../error-description#level-s"><em class=rfc2119>SHOULD</em>-level
-Errors</a></th>
-<th scope=col><a href="../error-description#level-w">Warnings</a></th>
-<th scope=col>Score</th></tr></thead><tbody>]);
-
-  ## TODO: Introduce "N/A" value (e.g. Character layer is not applicable
-  ## to binary formats)
-
-  my $must_error = 0;
-  my $should_error = 0;
-  my $warning = 0;
-  my $score_min = 0;
-  my $score_max = 0;
-  my $score_base = 20;
-  my $score_unit = $score_base / 100;
-  for (
-    [Transfer => 'transfer', '#transfer-errors'],
-    [Character => 'char', ''],
-    [Syntax => 'syntax', '#parse-errors'],
-    [Structure => 'structure', '#document-errors'],
-  ) {
-    $must_error += ($result->{$_->[1]}->{must} += 0);
-    $should_error += ($result->{$_->[1]}->{should} += 0);
-    $warning += ($result->{$_->[1]}->{warning} += 0);
-    $score_min += (($result->{$_->[1]}->{score_min} *= $score_unit) += $score_base);
-    $score_max += (($result->{$_->[1]}->{score_max} *= $score_unit) += $score_base);
-
-    my $uncertain = $result->{$_->[1]}->{unsupported} ? '?' : '';
-    my $label = $_->[0];
-    if ($result->{$_->[1]}->{must} or
-        $result->{$_->[1]}->{should} or
-        $result->{$_->[1]}->{warning} or
-        $result->{$_->[1]}->{unsupported}) {
-      $label = qq[<a href="$_->[2]">$label</a>];
-    }
-
-    $out->html (qq[<tr class="@{[$uncertain ? 'uncertain' : '']}"><th scope=row>$label</th><td class="@{[$result->{$_->[1]}->{must} ? 'FAIL' : '']}">$result->{$_->[1]}->{must}$uncertain</td><td class="@{[$result->{$_->[1]}->{should} ? 'SEE-RESULT' : '']}">$result->{$_->[1]}->{should}$uncertain</td><td>$result->{$_->[1]}->{warning}$uncertain</td>]);
-    if ($uncertain) {
-      $out->html (qq[<td class="@{[$result->{$_->[1]}->{must} ? 'FAIL' : $result->{$_->[1]}->{should} ? 'SEE-RESULT' : '']}">&#x2212;&#x221E;..$result->{$_->[1]}->{score_max}]);
-    } elsif ($result->{$_->[1]}->{score_min} != $result->{$_->[1]}->{score_max}) {
-      $out->html (qq[<td class="@{[$result->{$_->[1]}->{must} ? 'FAIL' : 'SEE-RESULT']}">$result->{$_->[1]}->{score_min}..$result->{$_->[1]}->{score_max}]);
-    } else {
-      $out->html (qq[<td class="@{[$result->{$_->[1]}->{must} ? 'FAIL' : '']}">$result->{$_->[1]}->{score_min}]);
-    }
-    $out->html (qq[ / 20]);
+<tr><th scope=col colspan=2>]);
+  for ('Error level m', 'Error level s', 'Error level w',
+       'Error level i', 'Score') {
+    $out->start_tag ('th');
+    $out->nl_text ($_);
   }
 
-  $score_max += $score_base;
+  my $maindoc_status = {must => 0, should => 0, warning => 0, info => 0,
+                        uncertain => 0, applicable => 1};
+  my $subdocs_status = {must => 0, should => 0, warning => 0, info => 0,
+                        uncertain => 0, applicable => 1};
+  my $global_status = {must => 0, should => 0, warning => 0, info => 0,
+                       uncertain => 0, applicable => 1};
 
-  $out->html (qq[
-<tr class=uncertain><th scope=row>Semantics</th><td>0?</td><td>0?</td><td>0?</td><td>&#x2212;&#x221E;..$score_base / 20
-</tbody>
-<tfoot><tr class=uncertain><th scope=row>Total</th>
-<td class="@{[$must_error ? 'FAIL' : '']}">$must_error?</td>
-<td class="@{[$should_error ? 'SEE-RESULT' : '']}">$should_error?</td>
-<td>$warning?</td>
-<td class="@{[$must_error ? 'FAIL' : $should_error ? 'SEE-RESULT' : '']}"><strong>&#x2212;&#x221E;..$score_max</strong> / 100
-</table>
+  my $score_unit = 2;
 
-<p><strong>Important</strong>: This conformance checking service
-is <em>under development</em>.  The result above might be <em>wrong</em>.</p>]);
+  my @row = (
+    sub {
+      $out->start_tag ('tbody');
+      $out->start_tag ('tr');
+      $out->start_tag ('th', colspan => 7, scope => 'col');
+      $out->nl_text ('Main document');
+    },
+      {label => 'Transfer', status => $self->{layers}->{transfer},
+       target => 'transfer-errors', score_base => 20,
+       parent_status => $maindoc_status},
+      {label => 'Encode', status => $self->{layers}->{encode},
+       score_base => 10,
+       parent_status => $maindoc_status},
+      {label => 'Charset', status => $self->{layers}->{charset},
+       score_base => 10,
+       parent_status => $maindoc_status},
+      {label => 'Syntax', status => $self->{layers}->{syntax},
+       target => 'parse-errors', score_base => 20,
+       parent_status => $maindoc_status},
+      {label => 'Structure', status => $self->{layers}->{structure},
+       target => 'document-errors', score_base => 20,
+       parent_status => $maindoc_status},
+      {label => 'Semantics', status => $self->{layers}->{semantics},
+       score_base => 20,
+       parent_status => $maindoc_status},
+  );
+
+  if (@{$self->{subdoc_results}}) {
+    push @row, {label => 'Subtotal', status => $maindoc_status,
+                score_base => 100,
+                parent_status => $global_status, is_total => 1};
+    push @row, sub {
+      $out->start_tag ('tbody');
+      $out->start_tag ('tr');
+      $out->start_tag ('th', colspan => 7, scope => 'col');
+      $out->nl_text ('Subdocuments');
+    };
+    for (@{$self->{subdoc_results}}) {
+      push @row, {label => '#' . $_->{input}->full_subdocument_index,
+                  status => $_,
+                  target => $_->{input}->id_prefix . 'result-summary',
+                  score_base => 100, parent_status => $subdocs_status};
+    }
+    push @row, {label => 'Subtotal', status => $subdocs_status,
+                score_base => 100 * @{$self->{subdoc_results}},
+                parent_status => $global_status, is_total => 1};
+  } else {
+    $global_status = $maindoc_status;
+  }
+
+  push @row, sub {
+    $out->start_tag ('tfoot');
+  };
+  push @row, {label => 'Total', status => $global_status,
+              score_base => 100 * (@{$self->{subdoc_results}} + 1),
+              parent_status => {}, is_total => 1};
+
+  for my $x (@row) {
+    if (ref $x eq 'CODE') {
+      $x->();
+      next;
+    }
+
+    $x->{parent_status}->{$_} += $x->{status}->{$_}
+        for qw/must should warning info uncertain/;
+
+    my $row_class = $x->{status}->{uncertain} ? 'uncertain' : '';
+    $row_class .= ' total' if $x->{is_total};
+    $out->start_tag ('tr', class => $row_class);
+    my $uncertain = $x->{status}->{uncertain} ? '?' : '';
+
+    $out->start_tag ('td', class => 'subrow') unless $x->{is_total};
+
+    ## Layer name
+    $out->start_tag ('th', colspan => $x->{is_total} ? 2 : 1,
+                     scope => 'row');
+    if (defined $x->{target} and
+        ($x->{status}->{must} or $x->{status}->{should} or
+         $x->{status}->{warning} or $x->{status}->{info} or
+         $x->{status}->{uncertain})) {
+      $out->xref ($x->{label}, target => $x->{target});
+    } else {
+      $out->nl_text ($x->{label});
+    }
+
+    ## MUST-level errors
+    $out->start_tag ('td', class => $x->{status}->{must} ? 'must-errors' : '');
+    if ($x->{status}->{applicable}) {
+      $out->text (($x->{status}->{must} or 0) . $uncertain);
+    } else {
+      $out->nl_text ('N/A');
+    }
+
+    ## SHOULD-level errors
+    $out->start_tag ('td',
+                     class => $x->{status}->{should} ? 'should-errors' : '');
+    if ($x->{status}->{applicable}) {
+      $out->text (($x->{status}->{should} or 0) . $uncertain);
+    } else {
+      $out->nl_text ('N/A');
+    }
+
+    ## Warnings
+    $out->start_tag ('td', class => $x->{status}->{warning} ? 'warnings' : '');
+    if ($x->{status}->{applicable}) {
+      $out->text (($x->{status}->{warning} or 0) . $uncertain);
+    } else {
+      $out->nl_text ('N/A');
+    }
+
+    ## Informations
+    $out->start_tag ('td', class => $x->{status}->{info} ? 'infos' : '');
+    if ($x->{status}->{applicable}) {
+      $out->text (($x->{status}->{info} or 0) . $uncertain);
+    } else {
+      $out->nl_text ('N/A');
+    }
+
+    ## Score
+    $out->start_tag ('td',
+                     class => $x->{status}->{must} ? 'score must-errors' :
+                              $x->{status}->{should} ? 'score should-errors' :
+                              'score');
+    
+    my $max_score = $x->{score_base};
+    $max_score -= $x->{status}->{must} * $score_unit;
+    my $min_score = $max_score;
+    $min_score -= $x->{status}->{should} * $score_unit;
+
+    $out->start_tag ('strong');
+    if ($x->{status}->{uncertain}) {
+      $out->html ('&#x2212;&#x221E; '); # negative inifinity
+      $out->nl_text ('...');
+      $out->html ($max_score < 0 ?
+                  ' &#x2212;' . substr ($max_score, 1) : ' ' . $max_score);
+    } elsif ($min_score != $max_score) {
+      $out->html ($min_score < 0 ?
+                  '&#x2212;' . substr ($min_score, 1) . ' ': $min_score . ' ');
+      $out->nl_text ('...');
+      $out->html ($max_score < 0 ?
+                  ' &#x2212;' . substr ($max_score, 1) : ' ' . $max_score);
+    } else {
+      $out->html ($max_score < 0 ?
+                  '&#x2212;' . substr ($max_score, 1) : $max_score);
+    }
+    $out->end_tag ('strong');
+
+    $out->text (' / ' . $x->{score_base});
+  }
+  
+  $out->end_tag ('table');
+
+  my $parent = $self->parent_result;
+  if ($parent) {
+    $global_status->{input} = $out->input;
+    push @{$parent->{subdoc_results}}, $global_status;
+  }
+
+  $out->nl_text ('This checker is work in progress.');
   $out->end_section;
 } # generate_result_section
 

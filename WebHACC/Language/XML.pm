@@ -13,12 +13,16 @@ sub generate_syntax_error_section ($) {
   require Message::DOM::DOMImplementation;
   require Message::DOM::XMLParserTemp;
 
+  $self->result->layer_uncertain ('encode');
+  $self->result->layer_uncertain ('charset');
+
   my $out = $self->output;
   $out->start_section (role => 'parse-errors');
   $out->start_error_list (role => 'parse-errors');
 
   my $input = $self->input;
   my $result = $self->result;
+  $self->result->layer_applicable ('syntax');
 
   my $onerror = sub {
     my $err = shift;

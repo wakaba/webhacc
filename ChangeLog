@@ -1,5 +1,18 @@
 2008-08-14  Wakaba  <wakaba@suika.fam.cx>
 
+	* cc.cgi: Generate result summary sections for
+	each subdocument.
+
+	* error-description-source.xml: New entries to
+	support localization of result sections.
+
+2008-08-14  Wakaba  <wakaba@suika.fam.cx>
+
+	* cc-style.css: Support for revised version of result summary
+	section styling.
+
+2008-08-14  Wakaba  <wakaba@suika.fam.cx>
+
 	* cc-style.css: Revised such that subdocument check results
 	do not look stupid and that new class name rules
 	for level-* and layer-* is reflected by icons.

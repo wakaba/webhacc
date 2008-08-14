@@ -15,6 +15,7 @@ sub generate_syntax_error_section ($) {
 
   $out->start_section (role => 'parse-errors');
   $out->start_error_list (role => 'parse-errors');
+  $self->result->layer_applicable ('syntax');
 
   $self->result->add_error (input => $self->input,
                             level => 'u',
@@ -24,6 +25,9 @@ sub generate_syntax_error_section ($) {
 
   $out->end_error_list (role => 'parse-errors');
   $out->end_section;
+
+  $self->result->layer_uncertain ('structure');
+  $self->result->layer_uncertain ('semantics');
 } # generate_syntax_error_section
 
 sub generate_source_string_section ($) { }

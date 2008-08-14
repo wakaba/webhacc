@@ -30,7 +30,7 @@ h2, h3, h4, h5, h6, th {
 }
 
 h2, h3, h4, h5, h6 {
-  margin: 0 -1em;
+  margin: 0 0 0 -1em;
   padding: 0.3em 1em;
 }
 
@@ -505,103 +505,176 @@ dt.layer-semantics {
   background-repeat: no-repeat;
 }
 
+/* Result paragraph */
 
-
-
-
-
-#error-description h3, #result-para {
+.result-para {
   margin-left: 20px;
   padding-left: 40px;
   min-height: 32px;
-  background-image: url(large-stop);
+  background-color: none;
   background-position: center left;
   background-repeat: no-repeat;
-}
-#levels-table tbody th:first-child {
-  padding-left: 42px;
-  min-height: 32px;
-  background-image: url(large-stop);
-  background-position: 5px center;
-  background-repeat: no-repeat;
-  text-align: left;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  padding-right: 1em;
 }
 
-#error-description h3 {
-  margin-left: 1em;
-  margin-right: 1em;
-}
-
-
-.format-charset, .tokenizer-error, .parse-error {
-  background-image: url(icons/syntax-16);
-  background-position: left center;
-  background-repeat: no-repeat;
-  padding-left: 20px;  
-}
-
-.content-model-error, .attribute-error, .attribute-value-error, 
-.attribute-value-warning, .table-model-error {
-  background-image: url(icons/structure-16);
-  background-position: left center;
-  background-repeat: no-repeat;
-  padding-left: 20px;
-}
-
-#result-para.PASS {
+.result-para.no-error {
   background-image: url(ok);
+  background-color: #ddffdd;
+  color: black;
 }
-#result-summary table {
+
+.result-para.must-errors,
+.result-para.should-errors {
+  background-image: url(large-stop);
+  /* TODO: Use different image for should-errors */
+}
+
+/* See "Result summary table" for background color of
+   .must-errors and .should-errors */
+
+.result-para.uncertain {
+  background-color: #e1e1ff;
+  color: black;
+  background-image: none;
+}
+
+/* Result summary table */
+
+.result table {
   margin-left: auto;
   margin-right: auto;
-  border: 3px solid #800080;
+  border: 4px solid #800080;
   border-collapse: collapse;
 }
 
-#result-summary tbody, colgroup {
-  border: 3px solid #800080;
+.result tbody,
+.result colgroup {
+  border: 4px solid #800080;
 }
 
-#result-summary th {
+.result tbody > tr:first-child > th {
+  border-bottom-width: 2px;
+}
+
+.result tr.total > * {
+  border-top-width: 2px;
+}
+
+.result td.subrow {
+  border-right-width: 2px;
+}
+
+.result th,
+.result td.subrow,
+.result .uncertain td.subrow {
   background-color: #fff0f0;
   color: black;
 }
 
-#result-summary th, #result-summary td {
+.result th,
+.result td {
   border: 1px solid #800080;
   padding: 0.2em 0.5em;
   text-align: center;
   empty-cells: show;
 }
 
-.uncertain td, p.uncertain,
-#level-u, #level-u th {
+.result td.subrow {
+  border-top-style: hidden;
+}
+
+.result .uncertain td {
   background-color: #e1e1ff;
   color: black;
 }
 
-.FAIL, .uncertain td.FAIL, #level-m, #level-m th {
+.result .must-errors,
+.result .uncertain .must-errors {
   background-color: #ffcece;
   color: black;
 }
 
-.SEE-RESULT, .uncertain td.SEE-RESULT, #level-s, #level-s th {
+.result .should-errors,
+.result .uncertain .should-errors {
   background-color: #e1e1ff;
   color: black;
 }
 
-.PASS, #level-w, #level-w th,
-#level-i, #level-i th {
-  background-color: #ddffdd;
-  color: black;
+.result tfoot .total strong {
+  font-size: 150%;
 }
 
-#result-para {
-  padding-top: 0.2em;
-  padding-bottom: 0.2em;
-  padding-right: 1em;
+.result thead > tr > th:first-child + th {
+  background-image: url(error);
+  background-repeat: no-repeat;
+  background-position: 2px center;
+  padding-left: 20px; /* error.png's width is 16px */
 }
 
+.result thead > tr > th:first-child + th + th {
+  background-image: url(error); /* TODO: SHOULD image */
+  background-repeat: no-repeat;
+  background-position: 2px center;
+  padding-left: 20px; /* error.png's width is 16px */
+}
+
+.result thead > tr > th:first-child + th + th + th {
+  background-image: url(alert);
+  background-repeat: no-repeat;
+  background-position: 2px center;
+  padding-left: 20px; /* alert.png's width is 16px */
+}
+
+.result thead > tr > th:first-child + th + th + th + th {
+  background-image: url(info);
+  background-repeat: no-repeat;
+  background-position: 2px center;
+  padding-left: 20px; /* info.png's width is 16px */
+}
+
+.result thead + tbody > tr:first-child + tr > th {
+  background-image: url(icons/transfer-16);
+  background-repeat: no-repeat;
+  background-position: 2px center;
+  padding-left: 20px; /* background-image's width is 16px */
+}
+
+.result thead + tbody > tr:first-child + tr + tr > th {
+  background-image: url(icons/char-16); /* TODO: new image */
+  background-repeat: no-repeat;
+  background-position: 2px center;
+  padding-left: 20px; /* background-image's width is 16px */
+}
+
+.result thead + tbody > tr:first-child + tr + tr + tr > th {
+  background-image: url(icons/char-16);
+  background-repeat: no-repeat;
+  background-position: 2px center;
+  padding-left: 20px; /* background-image's width is 16px */
+}
+
+.result thead + tbody > tr:first-child + tr + tr + tr + tr > th {
+  background-image: url(icons/syntax-16);
+  background-repeat: no-repeat;
+  background-position: 2px center;
+  padding-left: 20px; /* background-image's width is 16px */
+}
+
+.result thead + tbody > tr:first-child + tr + tr + tr + tr + tr > th {
+  background-image: url(icons/structure-16);
+  background-repeat: no-repeat;
+  background-position: 2px center;
+  padding-left: 20px; /* background-image's width is 16px */
+}
+
+.result thead + tbody > tr:first-child + tr + tr + tr + tr + tr + tr > th {
+  background-image: url(icons/semantics-16);
+  background-repeat: no-repeat;
+  background-position: 2px center;
+  padding-left: 20px; /* background-image's width is 16px */
+}
 
 /*
 
@@ -610,6 +683,6 @@ Copyright 2007-2008 Wakaba <w@suika.fam.cx>.
 This library is free software; you can redistribute it
 and/or modify it under the same terms as Perl itself.
 
-$Date: 2008/08/14 11:58:32 $
+$Date: 2008/08/14 15:50:42 $
 
 */

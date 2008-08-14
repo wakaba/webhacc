@@ -1,5 +1,11 @@
 2008-08-14  Wakaba  <wakaba@suika.fam.cx>
 
+	* Base.pm, CSS.pm, CacheManifest.pm, DOM.pm, Default.pm, 
+	HTML.pm, WebIDL.pm, XML.pm: Set |layer_applicable|
+	or |layer_uncertain| flag appropriately.
+
+2008-08-14  Wakaba  <wakaba@suika.fam.cx>
+
 	* Base.pm: Use "role" for source code sections.
 
 2008-08-14  Wakaba  <wakaba@suika.fam.cx>

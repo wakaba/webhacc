@@ -1,5 +1,30 @@
 2008-08-14  Wakaba  <wakaba@suika.fam.cx>
 
+	* Input.pm: Methods |generate_transfer_sections|
+	and |generate_http_header_section| are moved to HTTP
+	subclass, since they are irrelevant to non-HTTP inputs.
+	(_get_document): Forbidden host error was not represented
+	by WebHACC::Input::Error subclass.
+	(WebHACC::Input::Error generate_transfer_sections): Use
+	role name for the section.
+	(WebHACC::Input::HTTPError generate_transfer_sections): New method
+	added, since the main superclass, i.e. WebHACC::Input::Error,
+	no longer dumps HTTP headers due to the change mentioned above.
+
+	* Output.pm (start_section): New roles "transfer-errors" and "result".
+
+	* Result.pm (parent_result): New attribute.
+	(layer_applicable, layer_uncertain): New methods to set flags.
+	(add_error): Natural language strings are now handled
+	by the catalog mechanism.  Use new scoring mechanism.
+	(generate_result_section): Use catalog for all natural
+	language strings.  Table generation is now much more sophiscated
+	that it was.  Support for subdoc result summary.  Support
+	for the column of the number of informational message.  Support
+	for "N/A" status.
+
+2008-08-14  Wakaba  <wakaba@suika.fam.cx>
+
 	* Output.pm (start_section): Roles set class="", too.  New "source"
 	role for source code sections.
 

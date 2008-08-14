@@ -1705,6 +1705,16 @@ p {
   <d:text xml:lang="ja">構造誤り</d:text>
 </d:cat>
 
+<d:cat name="Transfer Errors">
+  <d:text xml:lang="en">Transfer Errors</d:text>
+  <d:text xml:lang="ja">転送誤り</d:text>
+</d:cat>
+
+<d:cat name="Trans. Errors">
+  <d:text xml:lang="en">Trans. Errors</d:text>
+  <d:text xml:lang="ja">転送誤り</d:text>
+</d:cat>
+
 <d:cat name="manakaiCompatMode:quirks">
   <d:text xml:lang="en">Quirks Mode</d:text>
   <d:text xml:lang="ja">奇癖モード</d:text>
@@ -1872,6 +1882,138 @@ p {
   <d:text xml:lang="ja">部分 #<var>{text}</var></d:text>
 </d:cat>
 
+<d:cat name="...">
+  <d:text xml:lang="en">..</d:text><!-- TODO: figure hyphen? -->
+  <d:text xml:lang="ja">〜</d:text>
+</d:cat>
+
+<d:cat name="Score">
+  <d:text xml:lang="en">Score</d:text>
+  <d:text xml:lang="ja">得点</d:text>
+</d:cat>
+
+<d:cat name="Subtotal">
+  <d:text xml:lang="en">Subtotal</d:text>
+  <d:text xml:lang="ja">小計</d:text>
+</d:cat>
+
+<d:cat name="Total">
+  <d:text xml:lang="en">Total</d:text>
+  <d:text xml:lang="ja">合計</d:text>
+</d:cat>
+
+<d:cat name="Main document">
+  <d:text xml:lang="en">Main document</d:text>
+  <d:text xml:lang="ja">主文書</d:text>
+</d:cat>
+
+<d:cat name="Subdocuments">
+  <d:text xml:lang="en">Subdocuments</d:text>
+  <d:text xml:lang="ja">部分文書</d:text>
+</d:cat>
+
+<d:cat name="Transfer">
+  <d:text xml:lang="en"><abbr title="Transfer protocol">Transfer</abbr></d:text>
+  <d:text xml:lang="ja"><abbr title="転送プロトコル">転送</abbr></d:text>
+</d:cat>
+
+<d:cat name="Encode">
+  <d:text xml:lang="en"><abbr title="Character encoding">Encoding</abbr></d:text>
+  <d:text xml:lang="ja"><abbr title="文字符号化">符号</abbr></d:text>
+</d:cat>
+
+<d:cat name="Charset">
+  <d:text xml:lang="en"><abbr title="Coded characters">Character</abbr></d:text>
+  <d:text xml:lang="ja"><abbr title="符号化文字">文字</abbr></d:text>
+</d:cat>
+
+<d:cat name="Syntax">
+  <d:text xml:lang="en">Syntax</d:text>
+  <d:text xml:lang="ja">構文</d:text>
+</d:cat>
+
+<!-- Structure -->
+
+<d:cat name="Semantics">
+  <d:text xml:lang="en">Semantics</d:text>
+  <d:text xml:lang="ja">意味</d:text>
+</d:cat>
+
+<d:cat name="N/A">
+  <d:text xml:lang="en">N/A</d:text>
+  <d:text xml:lang="ja">−</d:text>
+</d:cat>
+
+<d:cat name="This checker is work in progress.">
+  <d:text xml:lang="en">
+    <p><strong>Important</strong>: This conformance checking service
+    is <em>under development</em>.  The result above might be <em>wrong</em>.</p>
+  </d:text>
+  <d:text xml:lang="ja">
+    <p><strong>重要</strong>: この適合性検査サービスは<em>開発中</em>です。
+    この結果は<em>間違い</em>かもしれません。</p>
+  </d:text>
+</d:cat>
+
+<d:cat name="Conformance is conforming">
+  <d:text xml:lang="en">No conformance‐error is
+      found in this document.</d:text>
+  <d:text xml:lang="ja">この文書に適合性に関わる誤りは見つかりませんでした。</d:text>
+</d:cat>
+
+<d:cat name="Conformance is should-error">
+  <d:text xml:lang="en">This document
+        is <strong>likely <em>non</em>-conforming</strong>, but in rare case
+        it might be conforming.  The checker cannot determine whether
+        this document is in the rare case or not.</d:text>
+  <d:text xml:lang="ja">この文書は<strong>おそらく<em>不</em>適合</strong>ですが、
+      稀に適合している場合もあります。適合性検査器はこの文書が稀な場合に該当するかどうか判定できません。</d:text>
+</d:cat>
+
+<d:cat name="Conformance is non-conforming">
+  <d:text xml:lang="en">This document is
+        <strong><em>non</em>-conforming</strong>.</d:text>
+  <d:text xml:lang="ja">この文書は<strong><em>不</em>適合</strong>です。</d:text>
+</d:cat>
+
+<d:cat name="Conformance is uncertain">
+  <d:text xml:lang="en">The conformance
+        checker cannot decide whether the document is conforming or
+        not, since the document contains one or more unsupported
+        features.  The document might or might not be conforming.</d:text>
+  <d:text xml:lang="ja">適合性検査器はこの文書が適合するかどうか判定できませんでした。
+      この文書は適合性検査器が対応していない機能を使っています。
+      この文書は適合しているかもしれませんし、していないかもしれません。</d:text>
+</d:cat>
+
+<d:cat name="Error level m">
+  <d:text xml:lang="en"><a href="../error-description#level-m"><em class="rfc2119">MUST</em>‐level
+        error</a></d:text>
+  <d:text xml:lang="ja"><a href="../error-description#level-m"><em class="rfc2119" title="REQUIRED">必須</em>級の誤り</a></d:text>
+</d:cat>
+
+<d:cat name="Error level s">
+  <d:text xml:lang="en"><a href="../error-description#level-s"><em class="rfc2119">SHOULD</em>‐level
+        error</a></d:text>
+  <d:text xml:lang="ja"><a href="../error-description#level-s"><em class="rfc2119" title="RECOMMENDED">推奨</em>級の誤り</a></d:text>
+</d:cat>
+
+<d:cat name="Error level w">
+  <d:text xml:lang="en"><a href="../error-description#level-w">Warning</a></d:text>
+  <d:text xml:lang="ja"><a href="../error-description#level-w">警告</a></d:text>
+</d:cat>
+
+<d:cat name="Error level i">
+  <d:text xml:lang="en"><a href="../error-description#level-i">Information</a></d:text>
+  <d:text xml:lang="ja"><a href="../error-description#level-i">情報</a></d:text>
+</d:cat>
+
+<d:cat name="Error level u">
+  <d:text xml:lang="en"><a href="../error-description#level-u">Not
+      supported</a></d:text>
+  <d:text xml:lang="ja"><a href="../error-description#level-u">未対応</a></d:text>
+</d:cat>
+
 <section id="levels">
 <h2>Error Levels</h2>
 
@@ -1934,6 +2076,6 @@ is used in the document.</td>
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2008/07/27 10:33:45 $ -->
+<!-- $Date: 2008/08/14 15:50:42 $ -->
 </body>
 </html>

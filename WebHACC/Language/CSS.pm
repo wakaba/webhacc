@@ -13,8 +13,12 @@ sub generate_syntax_error_section ($) {
   
   my $out = $self->output;
   
+  $self->result->layer_uncertain ('encode');
+  $self->result->layer_uncertain ('charset');
+
   $out->start_section (role => 'parse-errors');
   $out->start_error_list (role => 'parse-errors');
+  $self->result->layer_applicable ('syntax');
 
   my $input = $self->input;
   my $result = $self->result;
@@ -83,6 +87,7 @@ sub generate_structure_error_section ($) {
 
   $out->start_section (role => 'structure-errors');
   $out->start_error_list (role => 'structure-errors');
+  $self->result->layer_applicable ('structure');
 
   $self->result->add_error (level => 'u',
                             layer => 'structure',
