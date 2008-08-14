@@ -1,7 +1,7 @@
 package WebHACC::Language::CacheManifest;
 use strict;
 require WebHACC::Language::Base;
-push our @ISA, 'WebHACC::Langauge::Base';
+push our @ISA, 'WebHACC::Language::Base';
 
 sub new ($) {
   my $self = bless {}, shift;
@@ -35,9 +35,11 @@ sub generate_structure_dump_section ($) {
   my $self = shift;
   my $manifest = $self->{structure};
 
-  $self->start_section (role => 'structure');
+  my $out = $self->output;
 
-  $self->html (qq[<dl><dt>Explicit entries</dt>]);
+  $out->start_section (role => 'structure');
+
+  $out->html (qq[<dl><dt>Explicit entries</dt>]);
   my $i = 0;
   for my $uri (@{$manifest->[0]}) {
     $out->start_tag ('dd', id => 'index-' . $i++);
@@ -74,7 +76,7 @@ sub generate_structure_error_section ($) {
   $out->start_section (role => 'structure-errors');
   $out->start_error_list (role => 'structure-errors');
 
-  my $result = $out->result;
+  my $result = $self->result;
 
   Whatpm::CacheManifest->check_manifest ($self->{structure}, sub {
     $result->add_error (@_, layer => 'structure');

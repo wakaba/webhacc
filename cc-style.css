@@ -431,19 +431,35 @@ mark {
 
 /* Tab navigation */
 
-h1 {
+body[data-scripted] > h1,
+body[data-scripted] > #input > h2 {
   float: left;
   font-size: 100%;
+  margin: 0;
   padding: 0 1em;
+}
+
+body[data-scripted] > #input > h2 {
+  margin-right: 1em;
+  padding: 0.3em 0;
+  border: thin hidden;
 }
 
 nav {
   display: block;
 }
 
+.section nav {
+  margin-left: 1em;
+}
+
 nav ul {
   margin: 0;
   padding: 1em 0 0 0;
+}
+
+#input nav ul {
+  padding-top: 0;
 }
 
 nav ul li {
@@ -473,13 +489,55 @@ nav [data-active] a {
   clear: both;
 }
 
-body[data-scripted] > .section {
+body[data-scripted] > .section,
+body[data-scripted] > #input > .section {
   position: absolute;
-  top: 120px; /* h1 > img's height is 90px */
+  top: 100px; /* h1 > img's height is 90px */
   bottom: 0;
   left: 0;
   right: 0;
+  min-height: 10em;
   overflow: auto;
+}
+
+body[data-scripted] > #input > .section {
+  top: 2em;
+}
+
+/* details widgets */
+
+.details .legend {
+  font-weight: bolder;
+}
+
+.details .legend:after {
+  content: "...";
+}
+
+.details.open .legend:after,
+body:not([data-scripted]) .details.default .legend:after {
+  content: ":";
+}
+
+body[data-scripted] .details .legend {
+  cursor: pointer;
+}
+
+body[data-scripted] .details > div {
+  display: none;
+}
+
+/* Data input forms */
+
+input[type=url] {
+  width: 90%;
+  min-width: 30em;
+}
+
+textarea {
+  width: 95%;
+  min-width: 30em;
+  height: 20em;
 }
 
 /*
@@ -489,6 +547,6 @@ Copyright 2007-2008 Wakaba <w@suika.fam.cx>.
 This library is free software; you can redistribute it
 and/or modify it under the same terms as Perl itself.
 
-$Date: 2008/08/10 11:49:43 $
+$Date: 2008/08/14 07:19:44 $
 
 */

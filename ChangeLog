@@ -1,3 +1,9 @@
+2008-08-14  Wakaba  <wakaba@suika.fam.cx>
+
+	* cc-script.js, cc-style.js: Support for tab styling
+	of the "input" subsections.  Support for the "details"
+	widget.
+
 2008-08-10  Wakaba  <wakaba@suika.fam.cx>
 
 	* cc-script.js: Functions for tabbing are added.

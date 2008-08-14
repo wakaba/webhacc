@@ -138,7 +138,7 @@ sub start_section ($%) {
   if (defined $opt{id}) {
     my $id = $self->input->id_prefix . $opt{id};
     $self->html (' id="' . $htescape->($id) . '">');
-    if ($self->{section_rank} == 2) {
+    if ($self->{section_rank} == 2 or defined $opt{parent_id}) {
       my $st = $opt{short_title} || $opt{title};
       push @{$self->{nav}},
           [$id => $st => $opt{text}];
@@ -147,6 +147,9 @@ sub start_section ($%) {
       $self->html (qq[ addSectionLink ('] . $self->input->id_prefix .
                      qq[$id', ']);
       $self->nl_text ($st, text => $opt{text});
+      if (defined $opt{parent_id}) {
+        $self->html (q[', '] . $opt{parent_id});
+      }
       $self->html (q[') ]);
       $self->end_tag ('script');
     }
@@ -454,7 +457,7 @@ sub generate_input_section ($$) {
   my $options = sub ($) {
     my $context = shift;
 
-    $out->html (q[<div class=details><p class=legend onclick="nextSibling.style.display = nextSibling.style.display == 'none' ? 'block' : 'none'">]);
+    $out->html (q[<div class="details default"><p class=legend onclick="nextSibling.style.display = nextSibling.style.display == 'block' ? 'none' : 'block'; parentNode.className = nextSibling.style.display == 'none' ? 'details' : 'details open'">]);
     $out->nl_text (q[Options]);
     $out->start_tag ('div');
 
@@ -532,8 +535,10 @@ sub generate_input_section ($$) {
   }; # $options
 
   $out->start_section (id => 'input', title => 'Input');
+  $out->html (q[<script> insertNavSections ('input') </script>]);
 
-  $out->start_section (id => 'input-url', title => 'By URL');
+  $out->start_section (id => 'input-url', title => 'By URL',
+                       parent_id => 'input');
   $out->start_tag ('form', action => './#result-summary',
                    'accept-charset' => 'utf-8',
                    method => 'get');
@@ -549,11 +554,12 @@ sub generate_input_section ($$) {
                    value => $cgi->get_parameter ('uri'));
   $out->end_tag ('label');
 
-  $options->('url');
-
   $out->start_tag ('p');
   $out->start_tag ('button', type => 'submit');
   $out->nl_text ('Check');
+  $out->end_tag ('button');
+
+  $options->('url');
 
   $out->end_tag ('form');
   $out->end_section;
@@ -562,7 +568,8 @@ sub generate_input_section ($$) {
 
   ## TODO: File upload
 
-  $out->start_section (id => 'input-text', title => 'By direct input');
+  $out->start_section (id => 'input-text', title => 'By direct input',
+                       parent_id => 'input');
   $out->start_tag ('form', action => './#result-summary',
                    'accept-charset' => 'utf-8',
                    method => 'post');
@@ -580,16 +587,24 @@ sub generate_input_section ($$) {
   $out->end_tag ('textarea');
   $out->end_tag ('label');
 
-  $options->('text');
-
   $out->start_tag ('p');
   $out->start_tag ('button', type => 'submit', 
                    onclick => 'form.method = form.s.value.length > 512 ? "post" : "get"');
   $out->nl_text ('Check');
   $out->end_tag ('button');
 
+  $options->('text');
+
   $out->end_tag ('form');
   $out->end_section;
+
+  $out->script (q[
+    if (!document.webhaccNavigated &&
+        document.getElementsByTagName ('textarea')[0].value.length > 0) {
+      showTab ('input-text');
+      document.webhaccNavigated = false;
+    }
+  ]);
 
   $out->end_section;
 } # generate_input_section

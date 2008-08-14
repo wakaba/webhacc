@@ -1,3 +1,7 @@
+2008-08-14  Wakaba  <wakaba@suika.fam.cx>
+
+	* CacheManifest.pm: Compile errors fixed.
+
 2008-08-02  Wakaba  <wakaba@suika.fam.cx>
 
 	* WebIDL.pm (generate_structure_error_section): New method.

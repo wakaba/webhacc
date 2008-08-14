@@ -1,3 +1,8 @@
+2008-08-14  Wakaba  <wakaba@suika.fam.cx>
+
+	* Output.pm: Support for inner tabs for "input" subsections.
+	Improved support for "details" widget.
+
 2008-08-10  Wakaba  <wakaba@suika.fam.cx>
 
 	* Output.pm (html_header, start_section): Generate 
