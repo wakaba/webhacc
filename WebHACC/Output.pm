@@ -104,6 +104,7 @@ sub end_tag ($$) {
 sub start_section ($%) {
   my ($self, %opt) = @_;
 
+  my $class = 'section';
   if (defined $opt{role}) {
     if ($opt{role} eq 'parse-errors') {
       $opt{id} ||= 'parse-errors';
@@ -130,22 +131,26 @@ sub start_section ($%) {
       $opt{title} ||= 'Document Structure';
       $opt{short_title} ||= 'Structure';
       delete $opt{role};
+    } elsif ($opt{role} eq 'subdoc') {
+      $class .= ' subdoc';
+      delete $opt{role};
     }
   }
 
   $self->{section_rank}++;
-  $self->html ('<div class=section');
+  $self->html (qq[<div class="$class"]);
   if (defined $opt{id}) {
-    my $id = $self->input->id_prefix . $opt{id};
+    my $prefix = $self->input->id_prefix;
+    $opt{parent_id} ||= $prefix;
+    my $id = $prefix . $opt{id};
     $self->html (' id="' . $htescape->($id) . '">');
-    if ($self->{section_rank} == 2 or defined $opt{parent_id}) {
+    if ($self->{section_rank} == 2 or length $opt{parent_id}) {
       my $st = $opt{short_title} || $opt{title};
       push @{$self->{nav}},
           [$id => $st => $opt{text}];
       
       $self->start_tag ('script');
-      $self->html (qq[ addSectionLink ('] . $self->input->id_prefix .
-                     qq[$id', ']);
+      $self->html (qq[ addSectionLink ('$id', ']);
       $self->nl_text ($st, text => $opt{text});
       if (defined $opt{parent_id}) {
         $self->html (q[', '] . $opt{parent_id});

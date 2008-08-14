@@ -1,5 +1,13 @@
 2008-08-14  Wakaba  <wakaba@suika.fam.cx>
 
+	* cc-script.js, cc-style.css: Support for tab styling
+	of subdoc sections.
+
+	* cc-script.js (onbodyload): Scroll to the pointed
+	element, if possible.
+
+2008-08-14  Wakaba  <wakaba@suika.fam.cx>
+
 	* cc-script.js, cc-style.js: Support for tab styling
 	of the "input" subsections.  Support for the "details"
 	widget.

@@ -349,7 +349,9 @@ sub new ($$) {
 } # new
 
 sub id_prefix ($) {
-  return 'subdoc-' . shift->full_subdocument_index . '-';
+  my $self = shift;
+  return $self->{parent_input}->id_prefix .
+      'subdoc-' . $self->{subdocument_index} . '-';
 } # id_prefix
 
 sub nested ($) { 1 }
@@ -374,11 +376,13 @@ sub start_section ($$) {
   my $result = shift;
   my $out = $result->output;
 
-  my $index = $self->full_subdocument_index;
-  $out->start_section (id => $self->id_prefix,
+  my $index = $self->subdocument_index;
+  $out->start_section (id => my $id = 'subdoc-' . $index . '-',
                        title => qq[Subdocument #],
                        short_title => 'Sub #',
-                       text => $index);
+                       role => 'subdoc',
+                       text => $self->full_subdocument_index);
+  $out->script (q[ insertNavSections ('] . $out->input->id_prefix . $id . q[') ]);
 } # start_section
 
 sub end_section ($$) {

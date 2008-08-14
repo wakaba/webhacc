@@ -112,7 +112,9 @@ function addSectionLink (id, label, parentId) {
       .firstChild.appendChild (el);
 
   var sections = document.webhaccSections;
-  if (parentId != '') sections = sections[parentId].webhaccSections;
+  if (parentId != '') {
+    sections = document.getElementById (parentId).webhaccSections;
+  }
   sections[id] = document.getElementById (id);
   sections[id].tabElement = el;
 
@@ -122,26 +124,52 @@ function addSectionLink (id, label, parentId) {
   } else if (id == 'document-info' && !document.webhaccNavigated) {
     showTab (id);
     document.webhaccNavigated = false;
+  } else if (id.match (/-document-info$/)) {
+    sections[id].tabElement.setAttribute ('data-active', '');
   } else {
     sections[id].style.display = 'none';
   }
 } // addSectionLink
 
 function showTab (id) {
-  var m;
+  var ids = [];
   if (id.match (/^line-/)) {
-    id = 'source-string';
+    ids = ['source-string'];
   } else if (id.match (/^node-/)) {
-    id = 'document-tree';
-  } else if (m = id.match (/^(subdoc-\d+-)/)) {
-    id = m[1];
+    ids = ['document-tree'];
+  } else if (id.match (/^subdoc-[^-]+-/)) {
+    var m;
+    ids = [''];
+    while (true) {
+      if (m = id.match (/^subdoc-[^-]+-/)) {
+        ids.push (ids[ids.length - 1] + m[0]);
+        id = id.substring (m[0].length);
+      } else {
+        break;
+      }
+    }
+    if (id.length > 0) {
+      if (id.match (/^line-/)) {
+        ids.push (ids[ids.length - 1] + 'source-string');
+      } else if (id.match (/^node-/)) {
+        ids.push (ids[ids.length - 1] + 'document-tree');
+      } else {
+        ids.push (ids[ids.length - 1] + id);
+      }
+    }
+    ids.shift (); // ''
+  } else if (id.match (/^input-/)) {
+    ids = ['input', id];
+  } else {
+    ids = [id];
   }
 
-  if (id.match (/^input-/)) {
-    _showTab (document.webhaccSections.input.webhaccSections, id);
-    _showTab (document.webhaccSections, 'input');
-  } else {
-    _showTab (document.webhaccSections, id);
+  var sections = document.webhaccSections;
+  while (ids.length > 0) {
+    var myid = ids.shift ();
+    _showTab (sections, myid);
+    sections = sections[myid].webhaccSections;
+    if (!sections) break;
   }
 } // showTab
 
@@ -160,7 +188,7 @@ function _showTab (sections, id) {
 
 function getAncestorAnchorElement (e) {
   do {
-    if (e.nodeName == 'A') {
+    if (e.nodeName == 'A' || e.nodeName == 'AREA') {
       return e;
     }
     e = e.parentNode;
@@ -188,6 +216,8 @@ function onbodyload () {
     if (fragment) {
       var id = decodeURIComponent (fragment.substring (1));
       showTab (id);
+      var el = document.getElementById (id);
+      if (el) el.scrollIntoView ();
     } else if (document.webhaccSections['result-summary']) {
       showTab ('result-summary');
     } else {
@@ -196,4 +226,4 @@ function onbodyload () {
   }
 } // onbodyload
 
-// $Date: 2008/08/14 07:19:44 $
+// $Date: 2008/08/14 09:16:52 $
