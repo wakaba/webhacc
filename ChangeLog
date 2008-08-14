@@ -1,5 +1,11 @@
 2008-08-14  Wakaba  <wakaba@suika.fam.cx>
 
+	* cc-style.css: Revised such that subdocument check results
+	do not look stupid and that new class name rules
+	for level-* and layer-* is reflected by icons.
+
+2008-08-14  Wakaba  <wakaba@suika.fam.cx>
+
 	* cc-script.js, cc-style.css: Support for tab styling
 	of subdoc sections.
 

@@ -124,8 +124,7 @@ sub generate_source_string_section ($) {
 
   my $out = $self->output;
   my $i = 1;
-  $out->start_section (id => 'source-string', title => 'Document Source',
-                       short_title => 'Source');
+  $out->start_section (role => 'source');
   $out->start_tag ('ol', lang => '');
 
   if (length $$s) {
@@ -143,7 +142,7 @@ sub generate_source_string_section ($) {
   }
   $out->end_tag ('ol');
   $out->add_source_to_parse_error_list ('parse-errors-list');
-  $out->end_section
+  $out->end_section;
 } # generate_source_string_section
 
 sub generate_additional_sections ($) {

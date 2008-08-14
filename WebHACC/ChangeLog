@@ -1,5 +1,10 @@
 2008-08-14  Wakaba  <wakaba@suika.fam.cx>
 
+	* Output.pm (start_section): Roles set class="", too.  New "source"
+	role for source code sections.
+
+2008-08-14  Wakaba  <wakaba@suika.fam.cx>
+
 	* Input.pm (id_prefix): Use the parent subdoc's id_prefix
 	as the prefix of the subdoc id_prefix (e.g. subdoc-1-subdoc-1-
 	for subdoc #1.1).

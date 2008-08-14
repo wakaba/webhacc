@@ -1,5 +1,9 @@
 2008-08-14  Wakaba  <wakaba@suika.fam.cx>
 
+	* Base.pm: Use "role" for source code sections.
+
+2008-08-14  Wakaba  <wakaba@suika.fam.cx>
+
 	* CacheManifest.pm: Compile errors fixed.
 
 2008-08-02  Wakaba  <wakaba@suika.fam.cx>

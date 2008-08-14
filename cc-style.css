@@ -21,16 +21,7 @@ h1 {
   font-size: 180%;
 }
 
-h2 {
-  margin: 0;
-  border-style: none;
-  padding: 0;
-  font-weight: bolder;
-  font-family: sans-serif;
-  font-size: 150%;
-}
-
-h3, th {
+h2, h3, h4, h5, h6, th {
   font-weight: bolder;
   font-family: sans-serif;
   font-size: 100%;
@@ -38,20 +29,13 @@ h3, th {
   color: black;
 }
 
+h2, h3, h4, h5, h6 {
+  margin: 0 -1em;
+  padding: 0.3em 1em;
+}
+
 .tree-text q, .tree-cdata q, .tree-comment q {
   display: block;
-}
-
-q, #source-string li {
-  white-space: pre;
-  white-space: -moz-pre-wrap;
-  white-space: pre-wrap;
-}
-
-q, #source-string ol {
-  background-color: #f0f0ff;
-  color: black;
-  line-height: 1.5;
 }
 
 q:before, q:after {
@@ -66,41 +50,6 @@ q:before, q:after {
 #document-errors dl:empty:before {
   content: "This document has no document error.";
   font-style: italic;
-}
-
-#document-tree > ol {
-  margin-left: 0;
-  padding-left: 0;
-}
-#document-tree > ol > li {
-/*  display: block;
-  list-style: none;
-  margin-left: 0;
-  padding-left: 0; */
-}
-
-#document-tree ol /*ol*/ {
-  margin-left: 1em;
-  padding-left: 0;
-}
-
-#document-tree ol /*ol*/ li {
-  margin-left: 0;
-  padding-left: 0.4em;
-}
-
-#document-tree ul.attributes {
-  margin-left: 3em;
-  padding: 0;
-}
-
-#document-tree ul.attributes li {
-  display: inline;
-  list-style: none;
-  margin: 0 2em 0 0;
-  padding: 0;
-  text-indent: 0;
-  font-size: 90%;
 }
 
 #dump-manifest tbody:empty {
@@ -127,106 +76,8 @@ q:before, q:after {
   content: "This cache manifest has an empty online whitelist.";
 }
 
-#parse-errors dd, #document-errors dd, #error-description h3,
-#result-para {
-  margin-left: 20px;
-  padding-left: 40px;
-  min-height: 32px;
-  background-image: url(large-stop);
-  background-position: center left;
-  background-repeat: no-repeat;
-}
 
-#levels-table tbody th:first-child {
-  padding-left: 42px;
-  min-height: 32px;
-  background-image: url(large-stop);
-  background-position: 5px center;
-  background-repeat: no-repeat;
-  text-align: left;
-}
 
-#identifiers dd, #terms dd {
-  margin-left: 20px;
-  padding-left: 20px;
-  min-height: 20px;
-}
-
-#identifiers dd + dd
-/* , #terms dd + dd */ /* Now allowed - HTML5 revision 1467 */
-{
-  background-image: url(error);
-  background-position: center left;
-  background-repeat: no-repeat;
-}
-
-#error-description h3 {
-  margin-left: 1em;
-  margin-right: 1em;
-}
-
-#parse-errors dd.level-s, #document-errors dd.level-s,
-#parse-errors dd.should,
-#document-errors dd.should, #error-description .should h3,
-#result-para.SEE-RESULT, #levels-table #level-s th {
-  background-image: url(large-stop);
-}
-
-#parse-errors dd.level-w, #document-errors dd.level-w,
-#parse-errors dd.warning,
-#document-errors dd.warning, #error-description .warning h3,
-#levels-table #level-w th {
-  background-image: url(large-alert);
-}
-
-#parse-errors dd.level-i, #document-errors dd.level-i,
-#error-description .level-i h3,
-#levels-table #level-i th {
-  background-image: url(large-info);
-}
-
-#parse-errors dd.level-u, #document-errors dd.level-u,
-#parse-errors dd.level-unsupported, #document-errors dd.level-unsupported,
-#parse-errors dd.unsupported,
-#document-errors dd.unsupported {
-  margin-left: 60px;
-  border: red 0.2em solid;
-  padding: 0.5em;
-}
-
-#parse-errors dd.unsupported,
-#document-errors dd.unsupported, #error-description .unsupported h3,
-#result-para.uncertain, 
-#parse-errors dd.level-u, #document-errors dd.level-u,
-#levels-table #level-u th {
-  background-image: none;
-}
-
-.error-category-charset {
-  background-image: url(icons/char-16);
-  background-position: left center;
-  background-repeat: no-repeat;
-  padding-left: 20px;
-}
-
-.format-charset, .tokenizer-error, .parse-error {
-  background-image: url(icons/syntax-16);
-  background-position: left center;
-  background-repeat: no-repeat;
-  padding-left: 20px;  
-}
-
-.content-model-error, .attribute-error, .attribute-value-error, 
-.attribute-value-warning, .table-model-error {
-  background-image: url(icons/structure-16);
-  background-position: left center;
-  background-repeat: no-repeat;
-  padding-left: 20px;
-}
-
-#result-para.PASS {
-  background-image: url(ok);
-}
 
 #nav-items {
   display: block;
@@ -347,56 +198,6 @@ pre.example.bad.manifest::before {
   font-family: sans-serif;
 }
 
-#result-summary table {
-  margin-left: auto;
-  margin-right: auto;
-  border: 3px solid #800080;
-  border-collapse: collapse;
-}
-
-#result-summary tbody, colgroup {
-  border: 3px solid #800080;
-}
-
-#result-summary th {
-  background-color: #fff0f0;
-  color: black;
-}
-
-#result-summary th, #result-summary td {
-  border: 1px solid #800080;
-  padding: 0.2em 0.5em;
-  text-align: center;
-  empty-cells: show;
-}
-
-.uncertain td, p.uncertain,
-#level-u, #level-u th {
-  background-color: #e1e1ff;
-  color: black;
-}
-
-.FAIL, .uncertain td.FAIL, #level-m, #level-m th {
-  background-color: #ffcece;
-  color: black;
-}
-
-.SEE-RESULT, .uncertain td.SEE-RESULT, #level-s, #level-s th {
-  background-color: #e1e1ff;
-  color: black;
-}
-
-.PASS, #level-w, #level-w th,
-#level-i, #level-i th {
-  background-color: #ddffdd;
-  color: black;
-}
-
-#result-para {
-  padding-top: 0.2em;
-  padding-bottom: 0.2em;
-  padding-right: 1em;
-}
 
 /* dl.switch from WHATWG specification style sheet */
 
@@ -450,11 +251,11 @@ body[data-scripted] .section.subdoc > h3,
 body[data-scripted] .section.subdoc > h4,
 body[data-scripted] .section.subdoc > h5,
 body[data-scripted] .section.subdoc > h6 {
-  margin-right: 1em;
-  padding: 0.3em 0;
+  margin: 0 1em 0 -1em;
+  padding: 0.3em 1em;
   border: thin hidden;
-  background-color: transparent;
-  color: inherit;
+  background-color: #fff0f0;
+  color: black;
 }
 
 nav {
@@ -556,6 +357,252 @@ textarea {
   height: 20em;
 }
 
+/* Source codes taken from the input document */
+
+/* q, */ .source li {
+  white-space: pre;
+  white-space: -moz-pre-wrap;
+  white-space: pre-wrap;
+}
+
+q, .source ol {
+  background-color: #f0f0ff;
+  color: black;
+  line-height: 1.5;
+}
+
+/* Document dumps */
+
+.dump > ol {
+  margin-left: 0;
+  padding-left: 0;
+}
+
+.dump > ol > li {
+/*  display: block;
+  list-style: none;
+  margin-left: 0;
+  padding-left: 0; */
+}
+
+.dump > ol /* ol */ {
+  margin-left: 1em;
+  padding-left: 0;
+}
+
+.dump ol /*ol*/ li {
+  margin-left: 0;
+  padding-left: 0.4em;
+}
+
+.dump ul.attributes {
+  margin-left: 3em;
+  padding: 0;
+}
+
+.dump ul.attributes li {
+  display: inline;
+  list-style: none;
+  margin: 0 2em 0 0;
+  padding: 0;
+  text-indent: 0;
+  font-size: 90%;
+}
+
+q:after {
+  content: " "; /* Make white-space-only quotations visible */
+  white-space: pre;
+}
+
+/* Errors */
+
+.errors dt {
+  background-image: none;
+  background-position: left center;
+  background-repeat: no-repeat;
+  padding-left: 20px; /* icons/*-16.png */
+  min-height: 16px;
+}
+
+.errors dd {
+  margin-left: 0;
+  padding-left: 60px;
+  min-height: 32px; /* large-*.png files' height */
+  background-position: 20px center;
+  background-repeat: no-repeat;
+}
+
+.level-m, .level-s {
+  background-image: url(large-stop);
+/* TODO: we need an image for SHOULD-level errors */
+}
+
+.level-w {
+  background-image: url(large-alert);
+}
+
+.level-i {
+  background-image: url(large-info);
+}
+
+.level-u {
+  background-image: none;
+}
+
+dt.level-u {
+  margin: 0.2em 0 0 0;
+  border: red 0.2em solid;
+  border-bottom-style: none;
+  padding-top: 0.2em;
+  padding-right: 0.2em;
+  padding-bottom: 0;
+}
+
+dd.level-u {
+  margin: 0 0 0.2em;
+  border: red 0.2em solid;
+  border-top-style: none;
+  padding-right: 0.2em;
+  padding-bottom: 0.2em;
+  padding-top: 0;
+}
+
+dt.layer-transfer {
+  background-image: url(icons/transfer-16);
+}
+
+dt.layer-encode,
+dt.layer-charset {
+  background-image: url(icons/char-16);
+/* TODO: We need different images for these layers */
+}
+
+dt.layer-syntax {
+  background-image: url(icons/syntax-16);
+}
+
+dt.layer-structure {
+  background-image: url(icons/structure-16);
+}
+
+dt.layer-semantics {
+  background-image: url(icons/semantics-16);
+}
+
+/* List of IDs */
+
+#identifiers dd,
+[id$="-identifiers"] dd {
+  margin-left: 20px;
+  padding-left: 20px;
+  min-height: 20px;
+}
+
+#identifiers dd + dd,
+[id$="-identifiers"] dd + dd {
+  background-image: url(error);
+  background-position: center left;
+  background-repeat: no-repeat;
+}
+
+
+
+
+
+
+#error-description h3, #result-para {
+  margin-left: 20px;
+  padding-left: 40px;
+  min-height: 32px;
+  background-image: url(large-stop);
+  background-position: center left;
+  background-repeat: no-repeat;
+}
+#levels-table tbody th:first-child {
+  padding-left: 42px;
+  min-height: 32px;
+  background-image: url(large-stop);
+  background-position: 5px center;
+  background-repeat: no-repeat;
+  text-align: left;
+}
+
+#error-description h3 {
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
+
+.format-charset, .tokenizer-error, .parse-error {
+  background-image: url(icons/syntax-16);
+  background-position: left center;
+  background-repeat: no-repeat;
+  padding-left: 20px;  
+}
+
+.content-model-error, .attribute-error, .attribute-value-error, 
+.attribute-value-warning, .table-model-error {
+  background-image: url(icons/structure-16);
+  background-position: left center;
+  background-repeat: no-repeat;
+  padding-left: 20px;
+}
+
+#result-para.PASS {
+  background-image: url(ok);
+}
+#result-summary table {
+  margin-left: auto;
+  margin-right: auto;
+  border: 3px solid #800080;
+  border-collapse: collapse;
+}
+
+#result-summary tbody, colgroup {
+  border: 3px solid #800080;
+}
+
+#result-summary th {
+  background-color: #fff0f0;
+  color: black;
+}
+
+#result-summary th, #result-summary td {
+  border: 1px solid #800080;
+  padding: 0.2em 0.5em;
+  text-align: center;
+  empty-cells: show;
+}
+
+.uncertain td, p.uncertain,
+#level-u, #level-u th {
+  background-color: #e1e1ff;
+  color: black;
+}
+
+.FAIL, .uncertain td.FAIL, #level-m, #level-m th {
+  background-color: #ffcece;
+  color: black;
+}
+
+.SEE-RESULT, .uncertain td.SEE-RESULT, #level-s, #level-s th {
+  background-color: #e1e1ff;
+  color: black;
+}
+
+.PASS, #level-w, #level-w th,
+#level-i, #level-i th {
+  background-color: #ddffdd;
+  color: black;
+}
+
+#result-para {
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  padding-right: 1em;
+}
+
+
 /*
 
 Copyright 2007-2008 Wakaba <w@suika.fam.cx>.
@@ -563,6 +610,6 @@ Copyright 2007-2008 Wakaba <w@suika.fam.cx>.
 This library is free software; you can redistribute it
 and/or modify it under the same terms as Perl itself.
 
-$Date: 2008/08/14 09:16:52 $
+$Date: 2008/08/14 11:58:32 $
 
 */

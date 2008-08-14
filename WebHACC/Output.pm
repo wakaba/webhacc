@@ -110,29 +110,40 @@ sub start_section ($%) {
       $opt{id} ||= 'parse-errors';
       $opt{title} ||= 'Parse Errors Section';
       $opt{short_title} ||= 'Parse Errors';
+      $class .= ' errors';
       delete $opt{role};
     } elsif ($opt{role} eq 'structure-errors') {
       $opt{id} ||= 'document-errors';
       $opt{title} ||= 'Structural Errors';
       $opt{short_title} ||= 'Struct. Errors';
+      $class .= ' errors';
       delete $opt{role};
     } elsif ($opt{role} eq 'reformatted') {
       $opt{id} ||= 'document-tree';
       $opt{title} ||= 'Reformatted Document Source';
       $opt{short_title} ||= 'Reformatted';
+      $class .= ' dump';
       delete $opt{role}
     } elsif ($opt{role} eq 'tree') {
       $opt{id} ||= 'document-tree';
       $opt{title} ||= 'Document Tree';
       $opt{short_title} ||= 'Tree';
+      $class .= ' dump';
       delete $opt{role};
     } elsif ($opt{role} eq 'structure') {
       $opt{id} ||= 'document-structure';
       $opt{title} ||= 'Document Structure';
       $opt{short_title} ||= 'Structure';
+      $class .= ' dump';
       delete $opt{role};
     } elsif ($opt{role} eq 'subdoc') {
       $class .= ' subdoc';
+      delete $opt{role};
+    } elsif ($opt{role} eq 'source') {
+      $opt{id} ||= 'source-string';
+      $opt{title} ||= 'Document Source';
+      $opt{short_title} ||= 'Source';
+      $class .= ' source';
       delete $opt{role};
     }
   }
