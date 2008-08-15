@@ -96,10 +96,15 @@ basehref after URL attribute;;The <code>base</code> element with the <code>href<
 basetarget after hyperlink;;The <code>base</code> element with the <code>target</code> attribute specified cannot be placed after any element that defines a hyperlink.
 character not allowed;;Data character is not allowed in this context.
 character not allowed:empty;;Non‐white‐space characters are not allowed in an empty element.
-child element missing;;There must be a <code><var>{text}</var></code> element as a child of this element.
+character not allowed:atom|PersonConstruct;;Non‐white‐space characters are not allowed in Person construct.
+character not allowed:atom|TextConstruct;;Non‐white‐space characters are not allowed in Text construct.
+child element missing;;There must be an element <code><var>{text}</var></code> as a child of this element.
 child element missing:td|th;content-model-error;There must be a <code>td</code> or <code>th</code> element as a child of this element.
+child element missing:atom;;There must be an element <code><var>{text}</var></code> in the Atom namespace as a child of this element.
+child element missing:atom:link:alternate;;There must be an Atom <code>link</code> element whose <code>rel</code> attribute is set to <code>alternate</code> as a child of this element.
+child element missing:atom:link:self;;There should be an Atom <code>link</code> element whose <code>rel</code> attribute is set to <code>self</code> as a child of this element.
 element missing:hn;;There must be at least one <code>h<var>n</var></code> element descendant.
-element not allowed;content-model-error;This element is not allowed in this context.
+element not allowed;;This element is not allowed in this context.
 element not allowed:area;;An <code>area</code> element cannot be used outside of a <code>map</code> element.
 element not allowed:base;;There is another <code>base</code> element.
 element not allowed:datatemplate;;In a <code>datatemplate</code> element, only <code>rule</code> elements are allowed.
@@ -119,6 +124,9 @@ element not allowed:root;;This element is not allowed as the root element of a d
 element not allowed:root:xml;;This element is not allowed as the root element of an XML document.
 element not allowed:ruby base;;This element is not allowed in the <code>ruby</code> element.
 element not allowed:text;;This element is not allowed in this context.
+element not allowed:atom|content;;This element is not allowed in an Atom <code>content</code> element.
+element not allowed:atom|PersonConstruct;;This element is not allowed in Person construct.
+element not allowed:atom|TextConstruct;;This element is not allowed in Text construct.
 element not defined;;This element is not defined.
 no significant content;;No significant content is contained in this element.
 no significant content before;;There is no significant content before this element.
@@ -188,6 +196,7 @@ nninteger:out of range;;The specified value is out of range.
 nninteger:syntax error;;The attribute value is not a non‐negative integer.
 no referenced map;;The <code>usemap</code> attribute references no image map.
 no referenced menu;;The <code>contextmenu</code> attribute references no menu.
+no referenced header cell;;There is no table header cell whose <code>id</code> is <code><var>{value}</var></code> in the same table.
 refresh:syntax error;;the specified value is not a valid as part of a <code>Refresh</code> pragma.
 repeat:syntax error;;The attribute value is not an integer or a string <code>template</code>.
 reserved browsing context name;attribute-value-error;Browsing context name <code><var>{@}</var></code> is reserved.
@@ -200,13 +209,20 @@ template:not template;;The node referenced by the <code>template</code> attribut
 window name:empty;;Browsing context name must not be empty.
 window name:reserved;;Browsing context name <code><var>{value}</var></code> is reserved.
 word not allowed;;The word <code><var>{value}</var></code> is not allowed in this attribute.
-table:colspan creates column with no anchored cell;table-model-error;This <code>colspan</code> attribute results in creating a table column that does not contain any cell anchored to it.
+XML 1.0 NCName:syntax error;;The specified value is not a legal XML Namespaces 1.0 <code>NCName</code>.
+cell overlapping;;Cell slot (<var>{text}</var>) is filled by multiple cells.
+colspan creates column with no anchored cell;;This <code>colspan</code> attribute results in creating a table column that does not contain any cell anchored to it.
+column with no anchored cell;;This column has no anchored cell.
 table:no cell in last row;table-model-error;The table has no cell (<code>td</code> or <code>th</code>) in the last row.
 table:rowspan extends table;table-model-error;This <code>rowspan</code> attribute results in creating a table row that does not contain any cell anchored to it.
+row with no anchored cell;;This row has no anchored cell.
+rowspan creates row with no anchored cell;;This <code>rowspan</code> attribute results in creating a table row that does not contain any cell anchored to it.
+IMT:composite;;The specified media type is a composite type, which is not allowed in this context.
 IMT:syntax error;;The specified value is not an Internet Media Type.
 s:IMT:obsolete subtype;should;<code><var>{@}</var></code>: An <em>obsolete</em> subtype is used.
 s:IMT:private subtype;should;<code><var>{@}</var></code>: A private (<code>x-</code> or <code>x.</code>) subtype is used.
 s:IMT:unregistered subtype;should;<code><var>{@}</var></code>: The subtype is not registered to IANA.
+not IMT;;A value that is not an Internet Media Type is not allowed here.
 m:URI::syntax error;must;The specified value is syntactically not an IRI reference.
 s:URI::dot-segment;should;A dot-segment (<code>.</code> or <code>..</code>) occurs in an absolute reference.
 s:URI::empty path;should;This IRI does not end with a <code>/</code>.
@@ -224,13 +240,22 @@ status:cr:attr;;This attribute is in the <strong>call for implementation</strong
 status:lc:attr;;This attribute is in the <strong>last call for comments</strong> stage.
 status:wd:attr;;This attribute is documented in a <strong>working draft</strong>.
 status:non-standard:attr;;This attribute is <strong>not part of any standard</strong> the conformance checker knows.
+bad rdf namespace;;The namespace URI of an element that represents an RDF concept must be <code>http://www.w3.org/1999/02/22-rdf-syntax-ns#</code>.
+duplicate rdf id;;The specified value is already used as an ID.
+duplicate unqualified attr;;Both unqualified attribute and namespace‐qualified RDF attribute are specified, which is not allowed.
+parse type other;;An invalid value is specified to the <code>parseType</code> attribute.
+second node element;;There is another element, such that this element is not allowed.
+unqualified attr;;Unqualified attribute is not allowed.
+unqualified rdf attr;;RDF attribute should be namespace‐qualified.
 unknown element;;Conformance checking for element <code><var>{local-name}</var></code> is not supported; <em>it might or might not be conforming</em>.
 unknown attribute;;Conformance checking for attribute <code><var>{local-name}</var></code> of element <code><var>{element-local-name}</var></code> is not supported; <em>it might or might not be conforming</em>.
 unknown link type;;Link type <code><var>{value}</var></code> is not standardized or registered at the time of the release of the conformance checker; <em>it is non-conforming unless it now has been registered</em>.
 event handler;;Conformance checking for event handler attribute is not supported; <em>it might or might not be conforming.</em>
 media query;;Conformance checking for media query is not supported; <em>it might or might not be conforming.</em>
+addr-spec not supported;;Conformance checking for an <code>addr-spec</code> is not supported; <em>it might or might not be conforming.</em>
 XML script lang;;Conformance checking for script language <code><var>{text}</var></code> is not supported; <em>it might or might not be conforming.</em>
 XML style lang;;Conformance checking for style language <code><var>{text}</var></code> is not supported; <em>it might or might not be conforming.</em>
+atom|content not supported;;Conformance checking for an Atom <code>content</code> element with <code>type</code> <code><var>{text}</var></code> is not supported.
 WebHACC:Title;;WebHACC (β)
 WebHACC:Heading;; <a href="../cc-about"><abbr title="Web Hypertext Application Conformance Checker (β)"><img alt="WebHACC" src="../icons/title"></abbr></a> 
 Input;;Input
@@ -263,6 +288,8 @@ Document Structure;;Document Structure
 Structure;;Structure
 Reformatted Document Source;;Reformatted Document Source
 Reformatted;;Reformatted
+RDF Triples;;<abbr>RDF</abbr> Triples
+RDF;;<abbr>RDF</abbr>
 Structural Errors;;Structural Errors
 Struct. Errors;;Struct. Errors
 Transfer Errors;;Transfer Errors
@@ -293,6 +320,9 @@ Character Length;;Character Length
 ... sniffed;; (<i>sniffed</i>)
 byte;;byte
 bytes;;bytes
+Subject;;Subject
+Predicate;;Predicate
+Object;;Object
 character;;character
 characters;;characters
 Line #;;Line <var>{text}</var>

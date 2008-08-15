@@ -376,13 +376,16 @@ sub generate_rdf_section ($) {
       $out->start_tag ('dt');
       $out->node_link ($triple->[0]);
       $out->start_tag ('dd');
-      $out->text ('Subject: ');
+      $out->nl_text ('Subject');
+      $out->text (': ');
       $generate_rdf_resource_html->($triple->[1] => $out);
       $out->start_tag ('dd');
-      $out->text ('Predicate: ');
+      $out->nl_text ('Predicate');
+      $out->text (': ');
       $generate_rdf_resource_html->($triple->[2] => $out);
       $out->start_tag ('dd');
-      $out->text ('Object: ');
+      $out->nl_text ('Object');
+      $out->text (': ');
       $generate_rdf_resource_html->($triple->[3] => $out);
     }
     $out->end_tag ('dl');

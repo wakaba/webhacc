@@ -1201,7 +1201,7 @@ p {
 </d:item>
 
 <d:item name="character not allowed"
-    modules="ContentChecker::HTML">
+    modules="ContentChecker::HTML RDFXML">
   <d:message xml:lang="en">Data character is not allowed in this
   context.</d:message>
   <d:desc xml:lang="en">
@@ -1289,14 +1289,14 @@ p {
     modules="ContentChecker::HTML">
   <d:message xml:lang="en">There must be an Atom <code>link</code> element
   whose <code>rel</code> attribute is set to <code>alternate</code> as a
-  child of this element.</d:messag>
+  child of this element.</d:message>
 </d:item>
 
 <d:item name="child element missing:atom:link:self"
     modules="ContentChecker::HTML">
   <d:message xml:lang="en">There should be an Atom <code>link</code> element
   whose <code>rel</code> attribute is set to <code>self</code> as a
-  child of this element.</d:messag>
+  child of this element.</d:message>
 </d:item>
 
 <d:item name="element missing:hn"
@@ -1306,7 +1306,7 @@ p {
 </d:item>
 
 <d:item name="element not allowed"
-    class="content-model-error">
+    modules="ContentChecker::HTML ContentChecker::Atom RDFXML">
   <d:message xml:lang="en">This element is not allowed in this 
   context.</d:message>
   <d:desc xml:lang="en">
@@ -1633,7 +1633,7 @@ p {
 </d:item>
 
 <d:item name="attribute not allowed"
-    modules="ContentChecker::HTML">
+    modules="ContentChecker::HTML RDFXML">
   <d:message xml:lang="en">Attribute
   <code><var>{local-name}</var></code> is not allowed for
   <code><var>{element-local-name}</var></code> element.</d:message>
@@ -2018,7 +2018,7 @@ p {
 </d:item>
 
 <d:item name="duplicate token"
-    modules="ContentChecker::HTML">
+    modules="ContentChecker::HTML HTML::Table">
   <d:message xml:lang="en">The token <code><var>{value}</var></code>
   appears in the attribute value twice.</d:message>
 </d:item>
@@ -2177,6 +2177,12 @@ p {
   no menu.</d:message>
 </d:item>
 
+<d:item name="no referenced header cell"
+    modules="ContentChecker">
+  <d:message xml:lang="en">There is no table header cell whose <code>id</code>
+  is <code><var>{value}</var></code> in the same table.</d:message>
+</d:item>
+
 <d:item name="refresh:syntax error"
     modules="ContentChecker::HTML">
   <d:message xml:lang="en">the specified value is not a valid as part
@@ -2274,16 +2280,33 @@ p {
   allowed in this attribute.</d:message>
 </d:item>
 
+<d:item name="XML 1.0 NCName:syntax error"
+    modules="RDFXML">
+  <d:message xml:lang="en">The specified value is not a legal XML Namespaces
+  1.0 <code>NCName</code>.</d:message>
+</d:item>
+
 </section>
 
 <section id="table-model-errors">
 <h2>Table Model Errors</h2>
 
-<d:item name="table:colspan creates column with no anchored cell"
-    class="table-model-error">
+<d:item name="cell overlapping"
+    modules="HTML::Table">
+  <d:message xml:lang="en">Cell slot (<var>{text}</var>) is filled by
+  multiple cells.</d:message>
+</d:item>
+
+<d:item name="colspan creates column with no anchored cell"
+    modules="HTML::Table">
   <d:message xml:lang="en">This <code>colspan</code> attribute
   results in creating a table column that does not contain
   any cell anchored to it.</d:message>
+</d:item>
+
+<d:item name="column with no anchored cell"
+    modules="HTML::Table">
+  <d:message xml:lang="en">This column has no anchored cell.</d:message>
 </d:item>
 
 <d:item name="table:no cell in last row"
@@ -2313,6 +2336,19 @@ p {
     a cell that spans between first and second rows.</p>
   </d:desc>
 </d:item>
+
+<d:item name="row with no anchored cell"
+    modules="HTML::Table">
+  <d:message xml:lang="en">This row has no anchored cell.</d:message>
+</d:item>
+
+<d:item name="rowspan creates row with no anchored cell"
+    modules="HTML::Table">
+  <d:message xml:lang="en">This <code>rowspan</code> attribute
+  results in creating a table row that does not contain
+  any cell anchored to it.</d:message>
+</d:item>
+
 
 </section>
 
@@ -2630,6 +2666,53 @@ p {
 </d:item>
 </section>
 
+<section id="rdfxml-errors">
+<h2>RDF/XML Errors</h2>
+
+<d:item name="bad rdf namespace"
+    modules="RDFXML">
+  <d:message xml:lang="en">The namespace URI of an element that
+  represents an RDF concept must be 
+  <code>http://www.w3.org/1999/02/22-rdf-syntax-ns#</code>.</d:message>
+</d:item>
+
+<d:item name="duplicate rdf id"
+    modules="RDFXML">
+  <d:message xml:lang="en">The specified value is already used as an
+  ID.</d:message>
+</d:item>
+
+<d:item name="duplicate unqualified attr"
+    modules="RDFXML">
+  <d:message xml:lang="en">Both unqualified attribute and namespace‐qualified
+  RDF attribute are specified, which is not allowed.</d:message>
+</d:item>
+
+<d:item name="parse type other"
+    modules="RDFXML">
+  <d:message xml:lang="en">An invalid value is specified to 
+  the <code>parseType</code> attribute.</d:message>
+</d:item>
+
+<d:item name="second node element" 
+    modules="RDFXML">
+  <d:message xml:lang="en">There is another element, such that
+  this element is not allowed.</d:message>
+</d:item>
+
+<d:item name="unqualified attr"
+    modules="RDFXML">
+  <d:message xml:lang="en">Unqualified attribute is not allowed.</d:message>
+</d:item>
+
+<d:item name="unqualified rdf attr"
+    modules="RDFXML">
+  <d:message xml:lang="en">RDF attribute should be
+  namespace‐qualified.</d:message>
+</d:item>
+
+</section>
+
 <section id="unsupported-messages">
 <h2><i>Unsupported</i> Messages</h2>
 
@@ -2888,6 +2971,16 @@ p {
   <d:text xml:lang="ja">再整形</d:text>
 </d:cat>
 
+<d:cat name="RDF Triples">
+  <d:text xml:lang="en"><abbr>RDF</abbr> Triples</d:text>
+  <d:text xml:lang="ja"><abbr lang="en">RDF</abbr> 三項組</d:text>
+</d:cat>
+
+<d:cat name="RDF">
+  <d:text xml:lang="en"><abbr>RDF</abbr></d:text>
+  <d:text xml:lang="ja"><abbr lang="en">RDF</abbr></d:text>
+</d:cat>
+
 <d:cat name="Structural Errors">
   <d:text xml:lang="en">Structural Errors</d:text>
   <d:text xml:lang="ja">構造的誤り</d:text>
@@ -3038,6 +3131,21 @@ p {
 <d:cat name="bytes">
   <d:text xml:lang="en">bytes</d:text>
   <d:text xml:lang="ja">バイト</d:text>
+</d:cat>
+
+<d:cat name="Subject">
+  <d:text xml:lang="en">Subject</d:text>
+  <d:text xml:lang="ja">主語</d:text>
+</d:cat>
+
+<d:cat name="Predicate">
+  <d:text xml:lang="en">Predicate</d:text>
+  <d:text xml:lang="ja">述語</d:text>
+</d:cat>
+
+<d:cat name="Object">
+  <d:text xml:lang="en">Object</d:text>
+  <d:text xml:lang="ja">目的語</d:text>
 </d:cat>
 
 <d:cat name="character">
@@ -3302,6 +3410,6 @@ is used in the document.</td>
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2008/08/15 12:47:21 $ -->
+<!-- $Date: 2008/08/15 14:11:13 $ -->
 </body>
 </html>

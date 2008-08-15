@@ -1,5 +1,11 @@
 2008-08-15  Wakaba  <wakaba@suika.fam.cx>
 
+	* Output.pm (xref_text): New method.
+	(node_link): Don't make node path consumed by catalog
+	engine.
+
+2008-08-15  Wakaba  <wakaba@suika.fam.cx>
+
 	* Output.pm (nl_text): New rule, <var>{value}</var>,
 	is implemented.
 

@@ -843,8 +843,14 @@ p {
 <div class="section " id="character-not-allowed:empty"><h3>Non‐white‐space characters are not allowed in
   an empty element.</h3></div>
 
-<div class="section " id="child-element-missing"><h3>There must be a <code><var>{text}</var></code>
-  element as a child of this element.</h3>
+<div class="section " id="character-not-allowed:atom|PersonConstruct"><h3>Non‐white‐space characters are not allowed in
+  Person construct.</h3></div>
+
+<div class="section " id="character-not-allowed:atom|TextConstruct"><h3>Non‐white‐space characters are not allowed in
+  Text construct.</h3></div>
+
+<div class="section " id="child-element-missing"><h3>There must be an element
+  <code><var>{text}</var></code> as a child of this element.</h3>
     <p>The content model of the element is so defined that it
     must contain a <code><var>$0</var></code> child element.
     The document is non-conforming.</p>
@@ -868,10 +874,22 @@ p {
     is non-conforming.</p>
   </div>
 
+<div class="section " id="child-element-missing:atom"><h3>There must be an element
+  <code><var>{text}</var></code> in the Atom namespace as a child of this
+  element.</h3></div>
+
+<div class="section " id="child-element-missing:atom:link:alternate"><h3>There must be an Atom <code>link</code> element
+  whose <code>rel</code> attribute is set to <code>alternate</code> as a
+  child of this element.</h3></div>
+
+<div class="section " id="child-element-missing:atom:link:self"><h3>There should be an Atom <code>link</code> element
+  whose <code>rel</code> attribute is set to <code>self</code> as a
+  child of this element.</h3></div>
+
 <div class="section " id="element-missing:hn"><h3>There must be at least one 
   <code>h<var>n</var></code> element descendant.</h3></div>
 
-<div class="section content-model-error" id="element-not-allowed"><h3>This element is not allowed in this 
+<div class="section " id="element-not-allowed"><h3>This element is not allowed in this 
   context.</h3>
     <p>An element appears where it is not allowed.  The document
     is non-conforming.</p>
@@ -1020,6 +1038,15 @@ p {
 
 <div class="section " id="element-not-allowed:text"><h3>This element is not allowed in this
   context.</h3></div>
+
+<div class="section " id="element-not-allowed:atom|content"><h3>This element is not allowed in an Atom
+  <code>content</code> element.</h3></div>
+
+<div class="section " id="element-not-allowed:atom|PersonConstruct"><h3>This element is not allowed in Person
+  construct.</h3></div>
+
+<div class="section " id="element-not-allowed:atom|TextConstruct"><h3>This element is not allowed in Text
+  construct.</h3></div>
 
 <div class="section " id="element-not-defined"><h3>This element is not defined.</h3></div>
 
@@ -1443,6 +1470,9 @@ p {
 <div class="section " id="no-referenced-menu"><h3>The <code>contextmenu</code> attribute references
   no menu.</h3></div>
 
+<div class="section " id="no-referenced-header-cell"><h3>There is no table header cell whose <code>id</code>
+  is <code><var>{value}</var></code> in the same table.</h3></div>
+
 <div class="section " id="refresh:syntax-error"><h3>the specified value is not a valid as part
   of a <code>Refresh</code> pragma.</h3></div>
 
@@ -1502,14 +1532,22 @@ p {
 <div class="section " id="word-not-allowed"><h3>The word <code><var>{value}</var></code> is not
   allowed in this attribute.</h3></div>
 
+<div class="section " id="XML-1.0-NCName:syntax-error"><h3>The specified value is not a legal XML Namespaces
+  1.0 <code>NCName</code>.</h3></div>
+
 </section>
 
 <section id="table-model-errors">
 <h2>Table Model Errors</h2>
 
-<div class="section table-model-error" id="table:colspan-creates-column-with-no-anchored-cell"><h3>This <code>colspan</code> attribute
+<div class="section " id="cell-overlapping"><h3>Cell slot (<var>{text}</var>) is filled by
+  multiple cells.</h3></div>
+
+<div class="section " id="colspan-creates-column-with-no-anchored-cell"><h3>This <code>colspan</code> attribute
   results in creating a table column that does not contain
   any cell anchored to it.</h3></div>
+
+<div class="section " id="column-with-no-anchored-cell"><h3>This column has no anchored cell.</h3></div>
 
 <div class="section table-model-error" id="table:no-cell-in-last-row"><h3>The table has no cell (<code>td</code> or
   <code>th</code>) in the last row.</h3></div>
@@ -1533,10 +1571,20 @@ p {
     a cell that spans between first and second rows.</p>
   </div>
 
+<div class="section " id="row-with-no-anchored-cell"><h3>This row has no anchored cell.</h3></div>
+
+<div class="section " id="rowspan-creates-row-with-no-anchored-cell"><h3>This <code>rowspan</code> attribute
+  results in creating a table row that does not contain
+  any cell anchored to it.</h3></div>
+
+
 </section>
 
 <section id="imt-warnings">
 <h2>Internet Media Type Errors</h2>
+
+<div class="section " id="IMT:composite"><h3>The specified media type is a composite
+  type, which is not allowed in this context.</h3></div>
 
 <div class="section " id="IMT:syntax-error"><h3>The specified value is not an Internet Media
   Type.</h3></div>
@@ -1549,6 +1597,9 @@ p {
 
 <div class="section should" id="s:IMT:unregistered-subtype"><h3><code><var>{@}</var></code>: The subtype is
   not registered to IANA.</h3></div>
+
+<div class="section " id="not-IMT"><h3>A value that is not an Internet Media Type
+  is not allowed here.</h3></div>
 
 </section>
 
@@ -1735,6 +1786,32 @@ p {
   </div>
 </section>
 
+<section id="rdfxml-errors">
+<h2>RDF/XML Errors</h2>
+
+<div class="section " id="bad-rdf-namespace"><h3>The namespace URI of an element that
+  represents an RDF concept must be 
+  <code>http://www.w3.org/1999/02/22-rdf-syntax-ns#</code>.</h3></div>
+
+<div class="section " id="duplicate-rdf-id"><h3>The specified value is already used as an
+  ID.</h3></div>
+
+<div class="section " id="duplicate-unqualified-attr"><h3>Both unqualified attribute and namespace‐qualified
+  RDF attribute are specified, which is not allowed.</h3></div>
+
+<div class="section " id="parse-type-other"><h3>An invalid value is specified to 
+  the <code>parseType</code> attribute.</h3></div>
+
+<div class="section " id="second-node-element"><h3>There is another element, such that
+  this element is not allowed.</h3></div>
+
+<div class="section " id="unqualified-attr"><h3>Unqualified attribute is not allowed.</h3></div>
+
+<div class="section " id="unqualified-rdf-attr"><h3>RDF attribute should be
+  namespace‐qualified.</h3></div>
+
+</section>
+
 <section id="unsupported-messages">
 <h2><i>Unsupported</i> Messages</h2>
 
@@ -1781,6 +1858,9 @@ p {
 <div class="section " id="media-query"><h3>Conformance checking for media query
   is not supported; <em>it might or might not be conforming.</em></h3></div>
 
+<div class="section " id="addr-spec-not-supported"><h3>Conformance checking for an <code>addr-spec</code>
+  is not supported; <em>it might or might not be conforming.</em></h3></div>
+
 <div class="section " id="XML-script-lang"><h3>Conformance checking for script
   language <code><var>{text}</var></code> is not supported;
   <em>it might or might not be conforming.</em></h3></div>
@@ -1789,7 +1869,21 @@ p {
   language <code><var>{text}</var></code> is not supported;
   <em>it might or might not be conforming.</em></h3></div>
 
+<div class="section " id="atom|content-not-supported"><h3>Conformance checking for an Atom
+  <code>content</code> element with <code>type</code>
+  <code><var>{text}</var></code> is not supported.</h3></div>
+
 </section>
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2049,6 +2143,6 @@ is used in the document.</td>
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2008/08/15 12:11:56 $ -->
+<!-- $Date: 2008/08/15 14:11:13 $ -->
 </body>
 </html>

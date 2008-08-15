@@ -341,6 +341,13 @@ sub xref ($$%) {
   $self->html ('</a>');
 } # xref
 
+sub xref_text ($$%) {
+  my ($self, $content, %opt) = @_;
+  $self->html ('<a href="#' . $htescape->($self->input->id_prefix . $opt{target}) . '">');
+  $self->text ($content);
+  $self->html ('</a>');
+} # xref
+
 sub link_to_webhacc ($$%) {
   my ($self, $content, %opt) = @_;
   $opt{url} = './?uri=' . $self->encode_url_component ($opt{url});
@@ -394,7 +401,8 @@ my $get_object_path = sub ($) {
 sub node_link ($$) {
   my ($self, $node) = @_;
   if ($node->isa ('Message::IF::Node')) {
-    $self->xref ($get_node_path->($node), target => 'node-' . refaddr $node);
+    $self->xref_text ($get_node_path->($node),
+                      target => 'node-' . refaddr $node);
   } else {
     $self->html ($get_object_path->($node));
   }

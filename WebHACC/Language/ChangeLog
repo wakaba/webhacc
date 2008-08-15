@@ -1,5 +1,9 @@
 2008-08-15  Wakaba  <wakaba@suika.fam.cx>
 
+	* DOM.pm: Enable localization of RDF section.
+
+2008-08-15  Wakaba  <wakaba@suika.fam.cx>
+
 	* DOM.pm: Use error's own "layer" parameter, if any.
 
 2008-08-15  Wakaba  <wakaba@suika.fam.cx>

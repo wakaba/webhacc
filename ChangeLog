@@ -1,5 +1,11 @@
 2008-08-15  Wakaba  <wakaba@suika.fam.cx>
 
+	* error-description-source.xml: Error entries
+	for Whatpm::RDFXML errors are addded.  Missing entries
+	for Whatpm::HTMLTable errors are added.
+
+2008-08-15  Wakaba  <wakaba@suika.fam.cx>
+
 	* error-description-source.xml: Missing entries for 
 	Whatpm::ContentChecker::Atom errors are added.
 
