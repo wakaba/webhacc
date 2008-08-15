@@ -1,5 +1,16 @@
 2008-08-16  Wakaba  <wakaba@suika.fam.cx>
 
+	* cc-script.js (_showTab): Show the tab button of the selected
+	tab.
+
+	* cc-script.css (nav): Show scrollbar if there are too many
+	tabs.
+
+	* cc.cgi: Reset |$output->input| even if |$input->{s}| is undef (i.e.
+	imlementation error case).
+
+2008-08-16  Wakaba  <wakaba@suika.fam.cx>
+
 	* error-description-source.xml: Error entries for
 	Whatpm::URIChecker and Whatpm::LangTag error types
 	are added.

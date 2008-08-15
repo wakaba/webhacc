@@ -69,6 +69,8 @@ sub check_and_print ($$$) {
     ## NOTE: This is an error of the implementation.
     $result->layer_uncertain ('transfer');
     $result->generate_result_section;
+ 
+    $out->input ($original_input);
     return;
   }
 
@@ -147,4 +149,4 @@ and/or modify it under the same terms as Perl itself.
 
 =cut
 
-## $Date: 2008/08/14 15:50:42 $
+## $Date: 2008/08/15 16:44:03 $

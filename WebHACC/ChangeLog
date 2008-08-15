@@ -1,5 +1,10 @@
 2008-08-16  Wakaba  <wakaba@suika.fam.cx>
 
+	* Output.pm (start_section): Don't add item to the non-tab
+	navigation menu if the item's rank is higher than 2.
+
+2008-08-16  Wakaba  <wakaba@suika.fam.cx>
+
 	* Result.pm (add_error): Pass |value| argument, if any,
 	to the |nl_text| for error type texts.
 

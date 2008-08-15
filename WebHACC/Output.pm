@@ -181,7 +181,7 @@ sub start_section ($%) {
     if ($self->{section_rank} == 2 or length $opt{parent_id}) {
       my $st = $opt{short_title} || $opt{title};
       push @{$self->{nav}},
-          [$id => $st => $opt{text}];
+          [$id => $st => $opt{text}] if $self->{section_rank} == 2;
       
       $self->start_tag ('script');
       $self->html (qq[ addSectionLink ('$id', ']);

@@ -181,6 +181,7 @@ function _showTab (sections, id) {
     }
     sections[id].style.display = 'block';
     sections[id].tabElement.setAttribute ('data-active', '');
+    sections[id].tabElement.scrollIntoView ();
 
     document.webhaccNavigated = true;
   }
@@ -226,4 +227,4 @@ function onbodyload () {
   }
 } // onbodyload
 
-// $Date: 2008/08/14 09:16:52 $
+// $Date: 2008/08/15 16:44:03 $
