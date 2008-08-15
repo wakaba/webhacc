@@ -1,5 +1,10 @@
 2008-08-15  Wakaba  <wakaba@suika.fam.cx>
 
+	* Output.pm (nl_text): New rule, <var>{value}</var>,
+	is implemented.
+
+2008-08-15  Wakaba  <wakaba@suika.fam.cx>
+
 	* Output.pm: |fieldset| end tag no longer necessary.
 
 	* Result.pm: Link to "#parse-errors" if there are

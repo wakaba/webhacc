@@ -443,6 +443,9 @@ sub nl_text ($$;%) {
         $msg =~ s{<var>{text}</var>}{
           defined $opt{text} ? $htescape->($opt{text}) : ''
         }ge;
+        $msg =~ s{<var>{value}</var>}{
+          defined $opt{value} ? $htescape->($opt{value}) : ''
+        }ge;
         $msg =~ s{<var>{local-name}</var>}{
           UNIVERSAL::can ($node, 'manakai_local_name')
             ? $htescape->($node->manakai_local_name) : ''

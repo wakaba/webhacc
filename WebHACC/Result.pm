@@ -207,7 +207,7 @@ sub add_error ($%) {
   $out->nl_text ($error_type_text, node => $opt{node}, text => $opt{text});
 
   ## Additional error description
-  if (defined $opt{text}) {
+  if (defined $opt{text}) { ## TODO: Remove this block once all errors are put into the catalog.
     $out->html (' (<q>');
     $out->text ($opt{text});
     $out->html ('</q>)');

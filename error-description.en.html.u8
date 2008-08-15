@@ -17,26 +17,27 @@ Web Document Conformance Checker (BETA)</title>
 <section id="html5-character-encoding">
 <h2>HTML5 Character Encoding Errors</h2>
 
-<div class="section format-charset must" id="m:character-encoding"><h3>Character encoding <code><var>$0</var></code>
+<div class="section " id="disallowed-character-encoding"><h3>Character encoding <code><var>{text}</var></code>
   is not allowed for <abbr>HTML</abbr> document.</h3>
     <p>The character encoding used for the document is not allowed
     for <abbr>HTML</abbr> document.  The document is non‐conforming.</p>
   </div>
 
-<div class="section format-charset should" id="s:character-encoding"><h3>Character encoding <code><var>$0</var></code>
+<div class="section " id="bad-character-encoding"><h3>Character encoding <code><var>{text}</var></code>
   should not be used for <abbr>HTML</abbr> document.</h3>
     <p>The character encoding used for the document is not recommended
     for <abbr>HTML</abbr> document.  The document is non‐conforming
     unless there is any good reason to use that encoding.</p>
   </div>
 
-<div class="section format-charset warning" id="w:character-encoding"><h3>Use of UTF-8 is encouraged.</h3>
+<div class="section " id="non-utf-8-character-encoding"><h3>Use of UTF-8 is encouraged (this document
+  is encoded in <code><var>{text}</var></code>).</h3>
     <p>Use of UTF-8 as the character encoding of the document is encouraged,
     though the use of another character encoding is still conforming.</p>
   </div>
 
-<div class="section format-charset unsupported" id="unsupported:character-encoding"><h3>Conformance for character encoding requirements
-  cannot be checked.</h3>
+<div class="section " id="character-encoding-unchecked"><h3>Conformance for character encoding requirements
+  cannot be checked, since the input is not a byte stream.</h3>
     <p>The conformance checker cannot detect whether the input document
     met the requirements on character encoding, since the document
     is not inputed as a serialized byte sequence.  The document is
@@ -44,7 +45,7 @@ Web Document Conformance Checker (BETA)</title>
     encoding with appropriate labeling.</p>
   </div>
 
-<div class="section format-charset error" id="m:no-character-encoding-declaration"><h3>There is no character encoding
+<div class="section " id="no-character-encoding-declaration"><h3>There is no character encoding
   declaration.</h3>
     <p>The document does not contain a character encoding 
     declaration.  Unless the character encoding is explicitly 
@@ -62,9 +63,9 @@ Web Document Conformance Checker (BETA)</title>
     declaration has no effect for <abbr>HTML</abbr> document.</p>
   </div>
 
-<div class="section format-charset error" id="m:non-ascii-superset"><h3>No character encoding metadata is found
+<div class="section " id="non-ascii-superset"><h3>No character encoding metadata is found
   in lower‐level protocol nor is there <abbr>BOM</abbr>, while
-  character encoding <code><var>$0</var></code>
+  character encoding <code><var>{text}</var></code>
   is not a superset of <abbr>ASCII</abbr>.</h3>
     <p>The document is not labeled with character encoding name
     in lower‐level protocol, e.g. in <abbr>HTTP</abbr>, and
@@ -808,7 +809,15 @@ p {
 <section id="element-content-model-errors">
 <h2>Element Content Model Errors</h2>
 
-<div class="section content-model-error" id="character-not-allowed"><h3>Data character is not allowed in this
+<div class="section " id="basehref-after-URL-attribute"><h3>The <code>base</code> element with the 
+  <code>href</code> attribute specified cannot be placed after
+  any attribute with a URL.</h3></div>
+
+<div class="section " id="basetarget-after-hyperlink"><h3>The <code>base</code> element with the
+  <code>target</code> attribute specified cannot be placed after
+  any element that defines a hyperlink.</h3></div>
+
+<div class="section " id="character-not-allowed"><h3>Data character is not allowed in this
   context.</h3>
     <p>A data character appears where it is not allowed in this
     context.  The document is non-conforming.</p>
@@ -831,7 +840,10 @@ p {
     </p>
   </div>
 
-<div class="section content-model-error" id="child-element-missing"><h3>There must be a <code><var>$0</var></code>
+<div class="section " id="character-not-allowed:empty"><h3>Non‐white‐space characters are not allowed in
+  an empty element.</h3></div>
+
+<div class="section " id="child-element-missing"><h3>There must be a <code><var>{text}</var></code>
   element as a child of this element.</h3>
     <p>The content model of the element is so defined that it
     must contain a <code><var>$0</var></code> child element.
@@ -855,6 +867,9 @@ p {
     <code>td</code> or <code>th</code> child element.  The document
     is non-conforming.</p>
   </div>
+
+<div class="section " id="element-missing:hn"><h3>There must be at least one 
+  <code>h<var>n</var></code> element descendant.</h3></div>
 
 <div class="section content-model-error" id="element-not-allowed"><h3>This element is not allowed in this 
   context.</h3>
@@ -921,8 +936,56 @@ p {
     </p>
   </div>
 
-<div class="section content-model-error" id="element-not-allowed:root"><h3>This element is not allowed as a root
-  element.</h3>
+<div class="section " id="element-not-allowed:area"><h3>An <code>area</code> element cannot be used
+  outside of a <code>map</code> element.</h3></div>
+
+<div class="section " id="element-not-allowed:base"><h3>There is another <code>base</code>
+  element.</h3></div>
+
+<div class="section " id="element-not-allowed:datatemplate"><h3>In a <code>datatemplate</code> element, only
+  <code>rule</code> elements are allowed.</h3></div>
+
+<div class="section " id="element-not-allowed:details-legend"><h3>In a <code>details</code> element, only at the
+  beginning of the element a <code>lengend</code> element
+  may be used.</h3></div>
+
+<div class="section " id="element-not-allowed:empty"><h3>Elements are not allowed in an empty
+  element.</h3></div>
+
+<div class="section " id="element-not-allowed:figure-legend"><h3>In a <code>figure</code> element, only at the
+  beginning or only at the end of the element a <code>lengend</code> element
+  may be used.</h3></div>
+
+<div class="section " id="element-not-allowed:flow"><h3>This element is not allowed where flow
+  content is expected.</h3></div>
+
+<div class="section " id="element-not-allowed:flow-style"><h3>A <code>style</code> element without
+  <code>scoped</code> attribute is not allowed in this context.</h3></div>
+
+<div class="section " id="element-not-allowed:head-noscript"><h3>This element is not allowed in a
+  <code>noscript</code> element in the <code>head</code> element.</h3></div>
+
+<div class="section " id="element-not-allowed:head-style"><h3>A <code>style</code> element with
+  <code>scoped</code> attribute is not allowed in the <code>head</code>
+  element.</h3></div>
+
+<div class="section " id="element-not-allowed:head-title"><h3>There is another <code>title</code>
+  element.</h3></div>
+
+<div class="section " id="element-not-allowed:minus"><h3>This element is not allowed in this
+  context.</h3></div>
+
+<div class="section " id="element-not-allowed:meta-charset"><h3>The character encoding declaration must be the
+  first element in the <code>head</code> element.</h3></div>
+
+<div class="section " id="element-not-allowed:metadata"><h3>This element is not allowed where metadata
+  content is expected.</h3></div>
+
+<div class="section " id="element-not-allowed:phrasing"><h3>This element is not allowed where phrasing
+  content is expected.</h3></div>
+
+<div class="section " id="element-not-allowed:root"><h3>This element is not allowed as the root
+  element of a document.</h3>
     <p>An element that is not allowed as the root element
     is used as the root element of the document.  The document is
     non-conforming, as far as the conformance checker can tell.</p>
@@ -949,7 +1012,27 @@ p {
     </dl>
   </div>
 
-<div class="section content-model-error" id="ps-element-missing"><h3>There is no <code><var>$0</var></code>
+<div class="section " id="element-not-allowed:root:xml"><h3>This element is not allowed as the root element
+  of an XML document.</h3></div>
+
+<div class="section " id="element-not-allowed:ruby-base"><h3>This element is not allowed in the <code>ruby</code>
+  element.</h3></div>
+
+<div class="section " id="element-not-allowed:text"><h3>This element is not allowed in this
+  context.</h3></div>
+
+<div class="section " id="element-not-defined"><h3>This element is not defined.</h3></div>
+
+<div class="section " id="no-significant-content"><h3>No significant content is contained
+  in this element.</h3></div>
+
+<div class="section " id="no-significant-content-before"><h3>There is no significant content
+  before this element.</h3></div>
+
+<div class="section " id="no-significant-content-at-the-end"><h3>No significant content is contained
+  at the end of this element.</h3></div>
+
+<div class="section " id="ps-element-missing"><h3>There is no <code><var>{text}</var></code>
   element before this element.</h3>
     <p>There must be an element before another element, but there
     is not.  The document is non-conforming.</p>
@@ -958,12 +1041,15 @@ p {
     before any <code>dd</code> element.</p>
   </div>
 
+<div class="section " id="rp:syntax-error"><h3>The content of a <code>rp</code> element must
+  be a parenthesis.</h3></div>
+
 </section>
 
 <section id="attribute-errors">
 <h2>Attribute Errors</h2>
 
-<div class="section attribute-error" id="attribute-missing"><h3>Required attribute <code><var>$0</var></code>
+<div class="section " id="attribute-missing"><h3>Required attribute <code><var>{text}</var></code>
   is not specified.</h3>
     <p>A required attribute is not specified.  The document
     is non-conforming.</p>
@@ -983,7 +1069,24 @@ p {
     </dl>
   </div>
 
-<div class="section attribute-error" id="attribute-not-allowed"><h3>Attribute
+<div class="section " id="attribute-missing:data|type"><h3>For an <code>object</code> at least one of
+  <code>data</code> and <code>type</code> attributes must be 
+  specified.</h3></div>
+
+<div class="section " id="attribute-missing:href|target"><h3>For a <code>base</code> element, at least one of
+  <code>href</code> and <code>target</code> attributes must be
+  specified.</h3></div>
+
+<div class="section " id="attribute-missing:name|http-equiv"><h3>For a <code>meta</code> element with the
+  <code>content</code> attribute specified, exactly one of
+  <code>name</code> and <code>http-equiv</code> attributes must be
+  specified.</h3></div>
+
+<div class="section " id="attribute-missing:name|http-equiv|charset"><h3>For a <code>meta</code> element, exactly one of
+  <code>name</code>, <code>http-equiv</code>, and <code>charset</code>
+  attributes must be specified.</h3></div>
+
+<div class="section " id="attribute-not-allowed"><h3>Attribute
   <code><var>{local-name}</var></code> is not allowed for
   <code><var>{element-local-name}</var></code> element.</h3>
     <p>An attribute is specified where it is not allowed.
@@ -996,6 +1099,11 @@ p {
         attribute is allowed.</dd>
     </dl>
   </div>
+
+<div class="section " id="attribute-not-allowed:ismap"><h3>The <code>ismap</code> attribute may only be
+  used for the image contained in an <code>a</code> element.</h3></div>
+
+<div class="section " id="attribute-not-defined"><h3>This attribute is not defined.</h3></div>
 
 <div class="section attribute-error" id="in-HTML:xml:lang"><h3>The <code>xml:lang</code> attribute is not 
   allowed in HTML document.</h3>
@@ -1018,7 +1126,7 @@ p {
          from an HTML document? -->
   </div>
 
-<div class="section attribute-error" id="in-XML:charset"><h3>The <code>charset</code> attribute is not 
+<div class="section " id="in-XML:charset"><h3>The <code>charset</code> attribute is not 
   allowed in XML document.</h3>
     <p>The <code>charset</code> attribute of a
     <code>meta</code> element is not allowed in XML document.
@@ -1031,7 +1139,7 @@ p {
     </p>
   </div>
 
-<div class="section attribute-error" id="in-XML:lang"><h3>The <code>lang</code> attribute is not 
+<div class="section " id="in-XML:lang"><h3>The <code>lang</code> attribute is not 
   allowed in XML document.</h3>
     <p>The HTML <code>lang</code> attribute is not allowed in
     XML document.  The document is non-conforming.</p>
@@ -1044,7 +1152,10 @@ p {
     use <code>xml:lang</code> attribute instead.</p>
   </div>
 
-<div class="section attribute-error" id="in-XML:xmlns"><h3>The <code>xmlns</code> attribute 
+<div class="section " id="in-XML:noscript"><h3>A <code>noscript</code> element cannot be 
+  used in XML document.</h3></div>
+
+<div class="section " id="in-XML:xmlns"><h3>The <code>xmlns</code> attribute 
   in the <code>null</code> namespace is not allowed in
   XHTML document.  The document is non-conforming.</h3>
     <p>The <code>xmlns</code> attribute in the <code>null</code>
@@ -1059,8 +1170,22 @@ p {
 <section id="attribute-value-errors">
 <h2>Attribute Value Errors</h2>
 
-<div class="section attribute-value-warning warning" id="w:charset:not-registered"><h3>Character encoding name <code><var>$0</var></code>
-  is not registered.</h3>
+<div class="section " id="boolean:invalid"><h3>Attribute value <code><var>{@}</var></code>
+  is not allowed.  It must be an empty string or a string
+  <code><var>{local-name}</var></code>.</h3></div>
+
+<div class="section " id="char:syntax-error"><h3>The attribute value must be exactly one
+  character.</h3></div>
+
+<div class="section " id="charref-in-charset"><h3>A character reference cannot be used to
+  represent a character encoding name.</h3></div>
+
+<div class="section " id="charset:not-preferred"><h3>Character encoding name
+  <code><var>{value}</var></code> is not the preferred name of that
+  character encoding.</h3></div>
+
+<div class="section " id="charset:not-registered"><h3>Character encoding name
+  <code><var>{value}</var></code> is not a registered name.</h3>
     <p>The specified character encoding name is not registered to
     <abbr>IANA</abbr>.  Use of registered character encoding name
     is a good practice to facilitate interoperability.</p>
@@ -1101,8 +1226,8 @@ p {
     name database of the conformance checker is not complete yet.</p>
   </div>
 
-<div class="section attribute-value-warning warning" id="w:charset:private"><h3><code><var>$0</var></code> is a private
-  character encoding name.</h3>
+<div class="section " id="charset:private"><h3>Character encoding name
+  <code><var>{value}</var></code> is a private name.</h3>
     <p>The specified character encoding name is a private name and
     not registered to <abbr>IANA</abbr>.  Use of registered character
     encoding name is a good practice to facilitate interoperability.</p>
@@ -1119,8 +1244,8 @@ p {
     </dl>
   </div>
 
-<div class="section attribute-value-error" id="m:charset:syntax-error"><h3>The specified value is syntactically not a
-  character encoding name.</h3>
+<div class="section " id="charset:syntax-error"><h3>The specified value <code><var>{value}</var></code>
+  is syntactically not a character encoding name.</h3>
     <p>The attribute value must be a character encoding name.  However,
     the specified value is not a character encoding name syntactically.
     The document is non‐conforming.</p>
@@ -1128,7 +1253,54 @@ p {
     printable characters, up to 40 characters.</p>
   </div>
 
-<div class="section attribute-value-error" id="enumerated:invalid"><h3>This attribute only allow a limited set of 
+<div class="section " id="color:syntax-error"><h3>The specified value is not a color
+  name or hexadecimal color number.</h3></div>
+
+<div class="section " id="coords:number-not-3"><h3>The <code>coords</code> attribute have to
+  contain three (3) numbers (specified:
+  <code><var>{text}</var></code>).</h3></div>
+
+<div class="section " id="coords:number-not-4"><h3>The <code>coords</code> attribute have to
+  contain four (4) numbers (specified:
+  <code><var>{text}</var></code>).</h3></div>
+
+<div class="section " id="coords:number-lt-6"><h3>The <code>coords</code> attribute have to
+  contain more than or equal to six (6) numbers (specified:
+  <code><var>{text}</var></code>).</h3></div>
+
+<div class="section " id="coords:number-not-even"><h3>The <code>coords</code> attribute have to
+  contain even number of numbers (specified:
+  <code><var>{text}</var></code>).</h3></div>
+
+<div class="section " id="coords:out-of-range"><h3>The specified value <code><var>{value}</var></code>
+  is out of range.</h3></div>
+
+<div class="section " id="coords:syntax-error"><h3>The specified value is not valid.</h3></div>
+
+<div class="section " id="datetime:bad-year"><h3>Year number is out of range.</h3></div>
+
+<div class="section " id="datetime:bad-month"><h3>Month number is out of range.</h3></div>
+
+<div class="section " id="datetime:bad-day"><h3>Day number is out of range.</h3></div>
+
+<div class="section " id="datetime:bad-hour"><h3>Hour number is out of range.</h3></div>
+
+<div class="section " id="datetime:bad-minute"><h3>Minute number is out of range.</h3></div>
+
+<div class="section " id="datetime:bad-second"><h3>Second number is out of range.</h3></div>
+
+<div class="section " id="datetime:bad-timezone-hour"><h3>Hour number of the timezone component is out of
+  range.</h3></div>
+
+<div class="section " id="datetime:bad-timezone-minute"><h3>Minute number of the timezone component is out of
+  range.</h3></div>
+
+<div class="section " id="datetime:syntax-error"><h3>The attribute value is not a datetime.</h3></div>
+
+<div class="section " id="dateortime:syntax-error"><h3>The attribute value is not a date or
+  time.</h3></div>
+
+<div class="section " id="enumerated:invalid"><h3>This attribute only allow a limited set of 
   values and the specified value <code><var>{@}</var></code> is not one 
   of them.</h3>
     <p>For this attribute only several values are allowed and the
@@ -1169,10 +1341,40 @@ p {
     </p>
   </div>
 
+<div class="section " id="enumerated:non-conforming"><h3>Attribute value <code><var>{@}</var></code>
+  is not allowed.</h3></div>
+
+<div class="section " id="duplicate-http-equiv"><h3>There is another pragma
+  <code><var>{value}</var></code>.</h3></div>
+
 <div class="section attribute-value-error" id="duplicate-ID"><h3>This identifier has already been
   assigned to another element.</h3></div>
 
-<div class="section attribute-value-error" id="link-type:bad-context"><h3>The link type <code><var>$0</var></code>
+<div class="section " id="duplicate-token"><h3>The token <code><var>{value}</var></code>
+  appears in the attribute value twice.</h3></div>
+
+<div class="section " id="empty-attribute-value"><h3>The attribute value must not be empty.</h3></div>
+
+<div class="section " id="float:out-of-range"><h3>The specified value is out of range.</h3></div>
+
+<div class="section " id="float:syntax-error"><h3>The attribute value is not a real
+  number.</h3></div>
+
+<div class="section " id="fragment-points-itself"><h3>A fragment identifier references the element
+  itself.</h3></div>
+
+<div class="section " id="fragment-points-nothing"><h3>A fragment identifier references no
+  node.</h3></div>
+
+<div class="section " id="hashref:syntax-error"><h3>A hash−name reference must start with a
+  <code>#</code> character.</h3></div>
+
+<div class="section " id="id-ne-name"><h3>The <code>id</code> attribute value is 
+  different from the <code>name</code> attribute value.</h3></div>
+
+<div class="section " id="integer:syntax-error"><h3>The attribute value is not an integer.</h3></div>
+
+<div class="section " id="link-type:bad-context"><h3>The link type <code><var>{value}</var></code>
   cannot be specified for this element.</h3>
     <p>The specified link type cannot be used for the element.
     The document is non-conforming.</p>
@@ -1185,7 +1387,13 @@ p {
     while it cannot be used with <code>link</code> element.</p>
   </div>
 
-<div class="section attribute-value-error" id="link-type:non-conforming"><h3>The link type <code><var>$0</var></code>
+<div class="section attribute-value-error" id="invalid-attribute-value"><h3>Attribute value <code><var>{@}</var></code>
+  is not an allowed value.</h3></div>
+
+<div class="section " id="length:syntax-error"><h3>The attribute value is not a length
+  value.</h3></div>
+
+<div class="section " id="link-type:non-conforming"><h3>The link type <code><var>{value}</var></code>
   is non-conforming.</h3>
     <p>The specified link type is non-conforming, and therefore
     the document is non-conforming.</p>
@@ -1206,13 +1414,40 @@ p {
     </dl>
   </div>
 
-<div class="section attribute-value-error" id="m:mismatched-charset-name"><h3>Character encoding name <code><var>$1</var></code>
-  is different from document character encoding
-  <code><var>$0</var></code>.</h3>
+<div class="section " id="meta-content-type-syntax-error"><h3>The specified value is not a valid as a long
+  character encoding declaration.</h3></div>
+
+<div class="section " id="mismatched-charset-name"><h3>The specified character encoding name
+  <code><var>{value}</var></code> is different from the actual document
+  character encoding <code><var>{text}</var></code>.</h3>
     <p>The specified character encoding name is different from
     the character encoding of the document.  The document
     is non‐conforming.</p>
   </div> 
+
+<div class="section " id="mismatched-charset-name-not-checked"><h3>Whether the specified character encoding name
+  <code><var>{value}</var></code> matches to the actual character encoding
+  name cannot be checked since the input is not a byte stream.</h3></div>
+
+<div class="section " id="mode:syntax-error"><h3>The attribute value is not a valid mode
+  name.</h3></div>
+
+<div class="section " id="nninteger:out-of-range"><h3>The specified value is out of range.</h3></div>
+
+<div class="section " id="nninteger:syntax-error"><h3>The attribute value is not a non‐negative
+  integer.</h3></div>
+
+<div class="section " id="no-referenced-map"><h3>The <code>usemap</code> attribute references
+  no image map.</h3></div>
+
+<div class="section " id="no-referenced-menu"><h3>The <code>contextmenu</code> attribute references
+  no menu.</h3></div>
+
+<div class="section " id="refresh:syntax-error"><h3>the specified value is not a valid as part
+  of a <code>Refresh</code> pragma.</h3></div>
+
+<div class="section " id="repeat:syntax-error"><h3>The attribute value is not an integer or 
+  a string <code>template</code>.</h3></div>
 
 <div class="section attribute-value-error" id="reserved-browsing-context-name"><h3>Browsing context name 
   <code><var>{@}</var></code> is reserved.</h3>
@@ -1230,12 +1465,13 @@ p {
     However, they are <em>not</em> conforming attribute values.</p>
   </div>
 
-</section>
+<div class="section " id="Reserved-Prefixes-and-Namespace-Names:Name"><h3>Namespace name <code><var>{text}</var></code>
+  is reserved and cannot be used for an arbitrary prefix.</h3></div>
 
-<section id="attribute-value-warnings">
-<h2>Attribute Value Warnings</h2>
+<div class="section " id="Reserved-Prefixes-and-Namespace-Names:Prefix"><h3>Namespace prefix <code><var>{text}</var></code>
+  is reserved and cannot be used for an arbitrary namespace name.</h3></div>
 
-<div class="section attribute-value-warning should" id="s:link-type:proposed"><h3>Link type <code><var>$0</var></code>
+<div class="section " id="link-type:proposed"><h3>Link type <code><var>{value}</var></code>
   is proposed but not accepted yet; it <em>should not</em> be
   used until it has been accepted.</h3>
     <p>The link type is in the <i>proposed</i> status; it
@@ -1248,6 +1484,23 @@ p {
     conforming depending on the status.  See WHATWG Wiki
     for the latest information.</p>
   </div>
+
+<div class="section " id="sizes:syntax-error"><h3>The specified value <code><var>{value}</var></code>
+  is not a valid value.</h3></div>
+
+<div class="section " id="space-in-ID"><h3>White space characters are not allowed
+  in the <code>id</code> attribute.</h3></div>
+
+<div class="section " id="template:not-template"><h3>The node referenced by the <code>template</code>
+  attribute is not a template.</h3></div>
+
+<div class="section " id="window-name:empty"><h3>Browsing context name must not be empty.</h3></div>
+
+<div class="section " id="window-name:reserved"><h3>Browsing context name
+  <code><var>{value}</var></code> is reserved.</h3></div>
+
+<div class="section " id="word-not-allowed"><h3>The word <code><var>{value}</var></code> is not
+  allowed in this attribute.</h3></div>
 
 </section>
 
@@ -1283,7 +1536,10 @@ p {
 </section>
 
 <section id="imt-warnings">
-<h2>Internet Media Type Warnings</h2>
+<h2>Internet Media Type Errors</h2>
+
+<div class="section " id="IMT:syntax-error"><h3>The specified value is not an Internet Media
+  Type.</h3></div>
 
 <div class="section should" id="s:IMT:obsolete-subtype"><h3><code><var>{@}</var></code>: An <em>obsolete</em>
   subtype is used.</h3></div>
@@ -1386,7 +1642,11 @@ p {
 <section id="information">
 <h2>Stability Information</h2>
 
-<div class="section level-i" id="i:status:cr:element"><h3>This element is in the
+<div class="section " id="deprecated:attr"><h3>This attribute is deprecated.</h3></div>
+
+<div class="section " id="deprecated:element"><h3>This element is deprecated.</h3></div>
+
+<div class="section " id="status:cr:element"><h3>This element is in the
   <strong>call for implementation</strong> stage.</h3>
     <p>The element is in the call for implementation stage.</p>
     
@@ -1399,7 +1659,7 @@ p {
     (W3C Candidate Recommendation) belong to this class.</p>
   </div>
 
-<div class="section level-i" id="i:status:lc:element"><h3>This element is in the <strong>last
+<div class="section " id="status:lc:element"><h3>This element is in the <strong>last
   call for comments</strong> stage.</h3>
     <p>The element is in the last call for comments stage.</p>
     
@@ -1413,7 +1673,7 @@ p {
     defined by HTML5 belong to this class.</p>
   </div>
 
-<div class="section level-i" id="i:status:wd:element"><h3>This element is documented in a <strong>working
+<div class="section " id="status:wd:element"><h3>This element is documented in a <strong>working
   draft</strong>.</h3>
     <p>The element is documented in a working or editor's draft
     and not yet completed.</p>
@@ -1425,7 +1685,7 @@ p {
     <p>Most of new elements defined by HTML5 belong to this class.</p>
   </div>
 
-<div class="section level-i" id="i:status:non-standard:element"><h3>This element is <strong>not part of any
+<div class="section " id="status:non-standard:element"><h3>This element is <strong>not part of any
   standard</strong> the conformance checker knows.</h3>
     <p>The element is not part of any standard or draft the conformance
     checker is aware of.</p>
@@ -1433,19 +1693,59 @@ p {
     <p>The element should not be used for any practical purpose unless
     there is really a standard that defines the element.</p>
   </div>
+
+<div class="section " id="status:cr:attr"><h3>This attribute is in the
+  <strong>call for implementation</strong> stage.</h3>
+    <p>The attribute is in the call for implementation stage.</p>
+    
+    <p>Usually, using the attribute is safe.  However, it is a new feature
+    so that it might not be implemented correctly.  If it is found that
+    the feature is hard or impossible to implement, the feature
+    might be revised, or in some case it might be dropped.</p>
+  </div>
+
+<div class="section " id="status:lc:attr"><h3>This attribute is in the <strong>last
+  call for comments</strong> stage.</h3>
+    <p>The attribute is in the last call for comments stage.</p>
+    
+    <p>The attribute is relatively mature, though the standardization
+    is not done yet.  It may be used for experiments.  Since it is a new
+    feature, it might not be implemented correctly or at all.  If it is
+    found that the feature is hard or impossible to implement, the feature
+    might be revised or might be dropped.</p>
+  </div>
+
+<div class="section " id="status:wd:attr"><h3>This attribute is documented in a <strong>working
+  draft</strong>.</h3>
+    <p>The attribute is documented in a working or editor's draft
+    and not yet completed.</p>
+    
+    <p>The attribute should not be used for any practical purpose.
+    The feature might be drastically changed later or might be
+    entirely removed.</p>
+  </div>
+
+<div class="section " id="status:non-standard:attr"><h3>This attribute is <strong>not part of any
+  standard</strong> the conformance checker knows.</h3>
+    <p>The attribute is not part of any standard or draft the conformance
+    checker is aware of.</p>
+    
+    <p>The attribute should not be used for any practical purpose unless
+    there is really a standard that defines the attribute.</p>
+  </div>
 </section>
 
 <section id="unsupported-messages">
 <h2><i>Unsupported</i> Messages</h2>
 
-<div class="section unsupported" id="unsupported:element"><h3>Conformance checking for element
+<div class="section " id="unknown-element"><h3>Conformance checking for element
   <code><var>{local-name}</var></code> is not supported; <em>it might or
   might not be conforming</em>.</h3>
     <p>The conformant checker does not support the element.
     It cannot determine whether the document is conforming or not.</p>
   </div>
 
-<div class="section unsupported" id="unsupported:attribute"><h3>Conformance checking for attribute
+<div class="section " id="unknown-attribute"><h3>Conformance checking for attribute
   <code><var>{local-name}</var></code> of element 
   <code><var>{element-local-name}</var></code> is not supported;
   <em>it might or might not be conforming</em>.</h3>
@@ -1453,7 +1753,7 @@ p {
     It cannot determine whether the document is conforming or not.</p>
   </div>
 
-<div class="section unsupported" id="unsupported:link-type"><h3>Link type <code><var>$0</var></code> is not
+<div class="section " id="unknown-link-type"><h3>Link type <code><var>{value}</var></code> is not
   standardized or registered at the time of the release of the conformance
   checker; <em>it is non-conforming unless it now has been
   registered</em>.</h3>
@@ -1475,18 +1775,18 @@ p {
     </dl>
   </div>
 
-<div class="section unsupported" id="unsupported:event-handler"><h3>Conformance checking for event handler attribute
+<div class="section " id="event-handler"><h3>Conformance checking for event handler attribute
   is not supported; <em>it might or might not be conforming.</em></h3></div>
 
-<div class="section unsupported" id="unsupported:media-query"><h3>Conformance checking for media query
+<div class="section " id="media-query"><h3>Conformance checking for media query
   is not supported; <em>it might or might not be conforming.</em></h3></div>
 
-<div class="section unsupported" id="unsupported:script"><h3>Conformance checking for script
-  language <code><var>$0</var></code> is not supported;
+<div class="section " id="XML-script-lang"><h3>Conformance checking for script
+  language <code><var>{text}</var></code> is not supported;
   <em>it might or might not be conforming.</em></h3></div>
 
-<div class="section unsupported" id="unsupported:style"><h3>Conformance checking for style
-  language <code><var>$0</var></code> is not supported;
+<div class="section " id="XML-style-lang"><h3>Conformance checking for style
+  language <code><var>{text}</var></code> is not supported;
   <em>it might or might not be conforming.</em></h3></div>
 
 </section>
@@ -1749,6 +2049,6 @@ is used in the document.</td>
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2008/08/15 08:36:41 $ -->
+<!-- $Date: 2008/08/15 12:11:56 $ -->
 </body>
 </html>

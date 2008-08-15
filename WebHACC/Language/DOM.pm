@@ -188,7 +188,7 @@ sub generate_structure_error_section ($) {
 
   require Whatpm::ContentChecker;
   my $onerror = sub {
-    $result->add_error (@_, layer => 'structure');
+    $result->add_error (layer => 'structure', @_);
   };
 
   my $onsubdoc = $self->onsubdoc;

@@ -1,5 +1,9 @@
 2008-08-15  Wakaba  <wakaba@suika.fam.cx>
 
+	* DOM.pm: Use error's own "layer" parameter, if any.
+
+2008-08-15  Wakaba  <wakaba@suika.fam.cx>
+
 	* HTML.pm: Set flags for encoding layer errors appropriately.
 	Save link to the document root for the parsed document
 	for garbage collection safety.

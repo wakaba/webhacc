@@ -1,5 +1,12 @@
 2008-08-15  Wakaba  <wakaba@suika.fam.cx>
 
+	* error-description-source.xml: Missing entries for
+	Whatpm::ContentChecker and Whatpm::ContentChecker::HTML
+	error types are added.  Error entries used by these
+	modules are marked as such.
+
+2008-08-15  Wakaba  <wakaba@suika.fam.cx>
+
 	* error-description-source.xml: Missing entries for Whatpm::HTML
 	error types are added.  Error entries used by Whatpm::HTML
 	are marked as "HTML::Parser".

@@ -22,8 +22,9 @@ Web Document Conformance Checker (BETA)</title>
 <section id="html5-character-encoding">
 <h2>HTML5 Character Encoding Errors</h2>
 
-<d:item name="character encoding" class="format-charset must" level="m">
-  <d:message xml:lang="en">Character encoding <code><var>$0</var></code>
+<d:item name="disallowed character encoding"
+    modules="ContentChecker">
+  <d:message xml:lang="en">Character encoding <code><var>{text}</var></code>
   is not allowed for <abbr>HTML</abbr> document.</d:message>
   <d:desc xml:lang="en">
     <p>The character encoding used for the document is not allowed
@@ -31,9 +32,9 @@ Web Document Conformance Checker (BETA)</title>
   </d:desc>
 </d:item>
 
-<d:item name="character encoding" class="format-charset should"
-    level="s">
-  <d:message xml:lang="en">Character encoding <code><var>$0</var></code>
+<d:item name="bad character encoding"
+    modules="ContentChecker">
+  <d:message xml:lang="en">Character encoding <code><var>{text}</var></code>
   should not be used for <abbr>HTML</abbr> document.</d:message>
   <d:desc xml:lang="en">
     <p>The character encoding used for the document is not recommended
@@ -42,19 +43,20 @@ Web Document Conformance Checker (BETA)</title>
   </d:desc>
 </d:item>
 
-<d:item name="character encoding" class="format-charset warning"
-    level="w">
-  <d:message xml:lang="en">Use of UTF-8 is encouraged.</d:message>
+<d:item name="non-utf-8 character encoding"
+    modules="ContentChecker">
+  <d:message xml:lang="en">Use of UTF-8 is encouraged (this document
+  is encoded in <code><var>{text}</var></code>).</d:message>
   <d:desc xml:lang="en">
     <p>Use of UTF-8 as the character encoding of the document is encouraged,
     though the use of another character encoding is still conforming.</p>
   </d:desc>
 </d:item>
 
-<d:item name="character encoding" class="format-charset unsupported"
-    level="unsupported">
+<d:item name="character encoding unchecked"
+    modules="ContentChecker">
   <d:message xml:lang="en">Conformance for character encoding requirements
-  cannot be checked.</d:message>
+  cannot be checked, since the input is not a byte stream.</d:message>
   <d:desc xml:lang="en">
     <p>The conformance checker cannot detect whether the input document
     met the requirements on character encoding, since the document
@@ -64,8 +66,8 @@ Web Document Conformance Checker (BETA)</title>
   </d:desc>
 </d:item>
 
-<d:item name="no character encoding declaration" class="format-charset error"
-    level="m">
+<d:item name="no character encoding declaration"
+    modules="ContentChecker">
   <d:message xml:lang="en">There is no character encoding
   declaration.</d:message>
   <d:desc xml:lang="en">
@@ -85,11 +87,11 @@ Web Document Conformance Checker (BETA)</title>
   </d:desc>
 </d:item>
 
-<d:item name="non ascii superset" class="format-charset error"
-    level="m">
+<d:item name="non ascii superset"
+    modules="ContentChecker">
   <d:message xml:lang="en">No character encoding metadata is found
   in lower‐level protocol nor is there <abbr>BOM</abbr>, while
-  character encoding <code><var>$0</var></code>
+  character encoding <code><var>{text}</var></code>
   is not a superset of <abbr>ASCII</abbr>.</d:message>
   <d:desc xml:lang="en">
     <p>The document is not labeled with character encoding name
@@ -1184,8 +1186,22 @@ p {
 <section id="element-content-model-errors">
 <h2>Element Content Model Errors</h2>
 
+<d:item name="basehref after URL attribute"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">The <code>base</code> element with the 
+  <code>href</code> attribute specified cannot be placed after
+  any attribute with a URL.</d:message>
+</d:item>
+
+<d:item name="basetarget after hyperlink"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">The <code>base</code> element with the
+  <code>target</code> attribute specified cannot be placed after
+  any element that defines a hyperlink.</d:message>
+</d:item>
+
 <d:item name="character not allowed"
-    class="content-model-error">
+    modules="ContentChecker::HTML">
   <d:message xml:lang="en">Data character is not allowed in this
   context.</d:message>
   <d:desc xml:lang="en">
@@ -1211,9 +1227,15 @@ p {
   </d:desc>
 </d:item>
 
+<d:item name="character not allowed:empty"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">Non‐white‐space characters are not allowed in
+  an empty element.</d:message>
+</d:item>
+
 <d:item name="child element missing"
-    class="content-model-error">
-  <d:message xml:lang="en">There must be a <code><var>$0</var></code>
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">There must be a <code><var>{text}</var></code>
   element as a child of this element.</d:message>
   <d:desc xml:lang="en">
     <p>The content model of the element is so defined that it
@@ -1242,6 +1264,12 @@ p {
     <code>td</code> or <code>th</code> child element.  The document
     is non-conforming.</p>
   </d:desc>
+</d:item>
+
+<d:item name="element missing:hn"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">There must be at least one 
+  <code>h<var>n</var></code> element descendant.</d:message>
 </d:item>
 
 <d:item name="element not allowed"
@@ -1312,10 +1340,103 @@ p {
   </d:desc>
 </d:item>
 
-<d:item name="element not allowed:root"
-    class="content-model-error">
-  <d:message xml:lang="en">This element is not allowed as a root
+<d:item name="element not allowed:area"
+    modules="ContentChecker ContentChecker::HTML">
+  <d:message xml:lang="en">An <code>area</code> element cannot be used
+  outside of a <code>map</code> element.</d:message>
+</d:item>
+
+<d:item name="element not allowed:base"
+    modules="ContentChecker ContentChecker::HTML">
+  <d:message xml:lang="en">There is another <code>base</code>
   element.</d:message>
+</d:item>
+
+<d:item name="element not allowed:datatemplate"
+    modules="ContentChecker ContentChecker::HTML">
+  <d:message xml:lang="en">In a <code>datatemplate</code> element, only
+  <code>rule</code> elements are allowed.</d:message>
+</d:item>
+
+<d:item name="element not allowed:details legend"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">In a <code>details</code> element, only at the
+  beginning of the element a <code>lengend</code> element
+  may be used.</d:message>
+</d:item>
+
+<d:item name="element not allowed:empty"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">Elements are not allowed in an empty
+  element.</d:message>
+</d:item>
+
+<d:item name="element not allowed:figure legend"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">In a <code>figure</code> element, only at the
+  beginning or only at the end of the element a <code>lengend</code> element
+  may be used.</d:message>
+</d:item>
+
+<d:item name="element not allowed:flow"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">This element is not allowed where flow
+  content is expected.</d:message>
+</d:item>
+
+<d:item name="element not allowed:flow style"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">A <code>style</code> element without
+  <code>scoped</code> attribute is not allowed in this context.</d:message>
+</d:item>
+
+<d:item name="element not allowed:head noscript"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">This element is not allowed in a
+  <code>noscript</code> element in the <code>head</code> element.</d:message>
+</d:item>
+
+<d:item name="element not allowed:head style"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">A <code>style</code> element with
+  <code>scoped</code> attribute is not allowed in the <code>head</code>
+  element.</d:message>
+</d:item>
+
+<d:item name="element not allowed:head title"
+    modules="ContentChecker ContentChecker::HTML">
+  <d:message xml:lang="en">There is another <code>title</code>
+  element.</d:message>
+</d:item>
+
+<d:item name="element not allowed:minus"
+    modules="ContentChecker ContentChecker::HTML">
+  <d:message xml:lang="en">This element is not allowed in this
+  context.</d:message>
+</d:item>
+
+<d:item name="element not allowed:meta charset"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">The character encoding declaration must be the
+  first element in the <code>head</code> element.</d:message>
+</d:item>
+
+<d:item name="element not allowed:metadata"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">This element is not allowed where metadata
+  content is expected.</d:message>
+</d:item>
+
+<d:item name="element not allowed:phrasing"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">This element is not allowed where phrasing
+  content is expected.</d:message>
+</d:item>
+
+<d:item name="element not allowed:root"
+    modules="ContentChecker">
+  <d:message xml:lang="en">This element is not allowed as the root
+  element of a document.</d:message>
   <d:desc xml:lang="en">
     <p>An element that is not allowed as the root element
     is used as the root element of the document.  The document is
@@ -1342,9 +1463,50 @@ p {
   </d:desc>
 </d:item>
 
+<d:item name="element not allowed:root:xml"
+    modules="ContentChecker">
+  <d:message xml:lang="en">This element is not allowed as the root element
+  of an XML document.</d:message>
+</d:item>
+
+<d:item name="element not allowed:ruby base"
+    modules="ContentChecker">
+  <d:message xml:lang="en">This element is not allowed in the <code>ruby</code>
+  element.</d:message>
+</d:item>
+
+<d:item name="element not allowed:text"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">This element is not allowed in this
+  context.</d:message>
+</d:item>
+
+<d:item name="element not defined"
+    modules="ContentChecker">
+  <d:message xml:lang="en">This element is not defined.</d:message>
+</d:item>
+
+<d:item name="no significant content"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">No significant content is contained
+  in this element.</d:message>
+</d:item>
+
+<d:item name="no significant content before"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">There is no significant content
+  before this element.</d:message>
+</d:item>
+
+<d:item name="no significant content at the end"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">No significant content is contained
+  at the end of this element.</d:message>
+</d:item>
+
 <d:item name="ps element missing"
-    class="content-model-error">
-  <d:message xml:lang="en">There is no <code><var>$0</var></code>
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">There is no <code><var>{text}</var></code>
   element before this element.</d:message>
   <d:desc xml:lang="en">
     <p>There must be an element before another element, but there
@@ -1355,14 +1517,20 @@ p {
   </d:desc>
 </d:item>
 
+<d:item name="rp:syntax error"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">The content of a <code>rp</code> element must
+  be a parenthesis.</d:message>
+</d:item>
+
 </section>
 
 <section id="attribute-errors">
 <h2>Attribute Errors</h2>
 
 <d:item name="attribute missing"
-    class="attribute-error">
-  <d:message xml:lang="en">Required attribute <code><var>$0</var></code>
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">Required attribute <code><var>{text}</var></code>
   is not specified.</d:message>
   <d:desc>
     <p>A required attribute is not specified.  The document
@@ -1384,7 +1552,37 @@ p {
   </d:desc>
 </d:item>
 
-<d:item name="attribute not allowed" class="attribute-error">
+<d:item name="attribute missing:data|type"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">For an <code>object</code> at least one of
+  <code>data</code> and <code>type</code> attributes must be 
+  specified.</d:message>
+</d:item>
+
+<d:item name="attribute missing:href|target"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">For a <code>base</code> element, at least one of
+  <code>href</code> and <code>target</code> attributes must be
+  specified.</d:message>
+</d:item>
+
+<d:item name="attribute missing:name|http-equiv"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">For a <code>meta</code> element with the
+  <code>content</code> attribute specified, exactly one of
+  <code>name</code> and <code>http-equiv</code> attributes must be
+  specified.</d:message>
+</d:item>
+
+<d:item name="attribute missing:name|http-equiv|charset"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">For a <code>meta</code> element, exactly one of
+  <code>name</code>, <code>http-equiv</code>, and <code>charset</code>
+  attributes must be specified.</d:message>
+</d:item>
+
+<d:item name="attribute not allowed"
+    modules="ContentChecker::HTML">
   <d:message xml:lang="en">Attribute
   <code><var>{local-name}</var></code> is not allowed for
   <code><var>{element-local-name}</var></code> element.</d:message>
@@ -1401,8 +1599,20 @@ p {
   </d:desc>
 </d:item>
 
+<d:item name="attribute not allowed:ismap"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">The <code>ismap</code> attribute may only be
+  used for the image contained in an <code>a</code> element.</d:message>
+</d:item>
+
+<d:item name="attribute not defined"
+    modules="ContentChecker">
+  <d:message xml:lang="en">This attribute is not defined.</d:message>
+</d:item>
+
 <d:item name="in HTML:xml:lang"
-    class="attribute-error">
+    class="attribute-error"
+    modules="ContentChecker::XML">
   <d:message xml:lang="en">The <code>xml:lang</code> attribute is not 
   allowed in HTML document.</d:message>
   <d:desc xml:lang="en">
@@ -1427,7 +1637,7 @@ p {
 </d:item>
 
 <d:item name="in XML:charset"
-    class="attribute-error">
+    modules="ContentChecker::HTML">
   <d:message xml:lang="en">The <code>charset</code> attribute is not 
   allowed in XML document.</d:message>
   <d:desc>
@@ -1443,7 +1653,7 @@ p {
 </d:item>
 
 <d:item name="in XML:lang"
-    class="attribute-error">
+    modules="ContentChecker::HTML">
   <d:message xml:lang="en">The <code>lang</code> attribute is not 
   allowed in XML document.</d:message>
   <d:desc>
@@ -1459,8 +1669,14 @@ p {
   </d:desc>
 </d:item>
 
+<d:item name="in XML:noscript"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">A <code>noscript</code> element cannot be 
+  used in XML document.</d:message>
+</d:item>
+
 <d:item name="in XML:xmlns"
-    class="attribute-error">
+    modules="ContentChecker::HTML">
   <d:message xml:lang="en">The <code>xmlns</code> attribute 
   in the <code>null</code> namespace is not allowed in
   XHTML document.  The document is non-conforming.</d:message>
@@ -1478,10 +1694,36 @@ p {
 <section id="attribute-value-errors">
 <h2>Attribute Value Errors</h2>
 
-<d:item name="charset:not registered" class="attribute-value-warning warning"
-    level="w">
-  <d:message xml:lang="en">Character encoding name <code><var>$0</var></code>
-  is not registered.</d:message>
+<d:item name="boolean:invalid"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">Attribute value <code><var>{@}</var></code>
+  is not allowed.  It must be an empty string or a string
+  <code><var>{local-name}</var></code>.</d:message>
+</d:item>
+
+<d:item name="char:syntax error"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">The attribute value must be exactly one
+  character.</d:message>
+</d:item>
+
+<d:item name="charref in charset"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">A character reference cannot be used to
+  represent a character encoding name.</d:message>
+</d:item>
+
+<d:item name="charset:not preferred"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">Character encoding name
+  <code><var>{value}</var></code> is not the preferred name of that
+  character encoding.</d:message>
+</d:item>
+
+<d:item name="charset:not registered"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">Character encoding name
+  <code><var>{value}</var></code> is not a registered name.</d:message>
   <d:desc xml:lang="en">
     <p>The specified character encoding name is not registered to
     <abbr>IANA</abbr>.  Use of registered character encoding name
@@ -1524,10 +1766,10 @@ p {
   </d:desc>
 </d:item>
 
-<d:item name="charset:private" class="attribute-value-warning warning"
-    level="w">
-  <d:message xml:lang="en"><code><var>$0</var></code> is a private
-  character encoding name.</d:message>
+<d:item name="charset:private"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">Character encoding name
+  <code><var>{value}</var></code> is a private name.</d:message>
   <d:desc xml:lang="en">
     <p>The specified character encoding name is a private name and
     not registered to <abbr>IANA</abbr>.  Use of registered character
@@ -1546,10 +1788,10 @@ p {
   </d:desc>
 </d:item>
 
-<d:item name="charset:syntax error" class="attribute-value-error"
-    level="m">
-  <d:message xml:lang="en">The specified value is syntactically not a
-  character encoding name.</d:message>
+<d:item name="charset:syntax error"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">The specified value <code><var>{value}</var></code>
+  is syntactically not a character encoding name.</d:message>
   <d:desc xml:lang="en">
     <p>The attribute value must be a character encoding name.  However,
     the specified value is not a character encoding name syntactically.
@@ -1559,8 +1801,106 @@ p {
   </d:desc>
 </d:item>
 
+<d:item name="color:syntax error"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">The specified value is not a color
+  name or hexadecimal color number.</d:message>
+</d:item>
+
+<d:item name="coords:number not 3"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">The <code>coords</code> attribute have to
+  contain three (3) numbers (specified:
+  <code><var>{text}</var></code>).</d:message>
+</d:item>
+
+<d:item name="coords:number not 4"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">The <code>coords</code> attribute have to
+  contain four (4) numbers (specified:
+  <code><var>{text}</var></code>).</d:message>
+</d:item>
+
+<d:item name="coords:number lt 6"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">The <code>coords</code> attribute have to
+  contain more than or equal to six (6) numbers (specified:
+  <code><var>{text}</var></code>).</d:message>
+</d:item>
+
+<d:item name="coords:number not even"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">The <code>coords</code> attribute have to
+  contain even number of numbers (specified:
+  <code><var>{text}</var></code>).</d:message>
+</d:item>
+
+<d:item name="coords:out of range"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">The specified value <code><var>{value}</var></code>
+  is out of range.</d:message>
+</d:item>
+
+<d:item name="coords:syntax error"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">The specified value is not valid.</d:message>
+</d:item>
+
+<d:item name="datetime:bad year"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">Year number is out of range.</d:message>
+</d:item>
+
+<d:item name="datetime:bad month"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">Month number is out of range.</d:message>
+</d:item>
+
+<d:item name="datetime:bad day"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">Day number is out of range.</d:message>
+</d:item>
+
+<d:item name="datetime:bad hour"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">Hour number is out of range.</d:message>
+</d:item>
+
+<d:item name="datetime:bad minute"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">Minute number is out of range.</d:message>
+</d:item>
+
+<d:item name="datetime:bad second"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">Second number is out of range.</d:message>
+</d:item>
+
+<d:item name="datetime:bad timezone hour"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">Hour number of the timezone component is out of
+  range.</d:message>
+</d:item>
+
+<d:item name="datetime:bad timezone minute"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">Minute number of the timezone component is out of
+  range.</d:message>
+</d:item>
+
+<d:item name="datetime:syntax error"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">The attribute value is not a datetime.</d:message>
+</d:item>
+
+<d:item name="dateortime:syntax error"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">The attribute value is not a date or
+  time.</d:message>
+</d:item>
+
 <d:item name="enumerated:invalid"
-    class="attribute-value-error">
+    modules="ContentChecker::HTML">
   <d:message xml:lang="en">This attribute only allow a limited set of 
   values and the specified value <code><var>{@}</var></code> is not one 
   of them.</d:message>
@@ -1606,16 +1946,80 @@ p {
   </d:desc>
 </d:item>
 
+<d:item name="enumerated:non-conforming"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">Attribute value <code><var>{@}</var></code>
+  is not allowed.</d:message>
+</d:item>
+
+<d:item name="duplicate http-equiv"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">There is another pragma
+  <code><var>{value}</var></code>.</d:message>
+</d:item>
+
 <d:item name="duplicate ID"
-    class="attribute-value-error">
+    class="attribute-value-error"
+    modules="ContentChecker::XML ContentChecker::HTML">
   <d:message xml:lang="en">This identifier has already been
   assigned to another element.</d:message>
   <!-- @@ <id=a xml:id=a>? -->
 </d:item>
 
+<d:item name="duplicate token"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">The token <code><var>{value}</var></code>
+  appears in the attribute value twice.</d:message>
+</d:item>
+
+<d:item name="empty attribute value"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">The attribute value must not be empty.</d:message>
+</d:item>
+
+<d:item name="float:out of range"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">The specified value is out of range.</d:message>
+</d:item>
+
+<d:item name="float:syntax error"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">The attribute value is not a real
+  number.</d:message>
+</d:item>
+
+<d:item name="fragment points itself"
+    modules="ContentChecker">
+  <d:message xml:lang="en">A fragment identifier references the element
+  itself.</d:message>
+</d:item>
+
+<d:item name="fragment points nothing"
+    modules="ContentChecker">
+  <d:message xml:lang="en">A fragment identifier references no
+  node.</d:message>
+</d:item>
+
+<d:item name="hashref:syntax error"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">A hash−name reference must start with a
+  <code>#</code> character.</d:message>
+</d:item>
+
+<d:item name="id ne name"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">The <code>id</code> attribute value is 
+  different from the <code>name</code> attribute value.</d:message>
+</d:item>
+
+<d:item name="integer:syntax error"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">The attribute value is not an integer.</d:message>
+</d:item>
+
 <d:item name="link type:bad context"
-    class="attribute-value-error">
-  <d:message xml:lang="en">The link type <code><var>$0</var></code>
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">The link type <code><var>{value}</var></code>
   cannot be specified for this element.</d:message>
   <d:desc xml:lang="en">
     <p>The specified link type cannot be used for the element.
@@ -1630,9 +2034,22 @@ p {
   </d:desc>
 </d:item>
 
+<d:item name="invalid attribute value"
+    class="attribute-value-error"
+    modules="ContentChecker::XML ContentChecker::HTML">
+  <d:message xml:lang="en">Attribute value <code><var>{@}</var></code>
+  is not an allowed value.</d:message>
+</d:item>
+
+<d:item name="length:syntax error"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">The attribute value is not a length
+  value.</d:message>
+</d:item>
+
 <d:item name="link type:non-conforming"
-    class="attribute-value-error">
-  <d:message xml:lang="en">The link type <code><var>$0</var></code>
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">The link type <code><var>{value}</var></code>
   is non-conforming.</d:message>
   <d:desc xml:lang="en">
     <p>The specified link type is non-conforming, and therefore
@@ -1655,17 +2072,71 @@ p {
   </d:desc>
 </d:item>
 
-<d:item name="mismatched charset name" class="attribute-value-error"
-    level="m">
-  <d:message xml:lang="en">Character encoding name <code><var>$1</var></code>
-  is different from document character encoding
-  <code><var>$0</var></code>.</d:message>
+<d:item name="meta content-type syntax error"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">The specified value is not a valid as a long
+  character encoding declaration.</d:message>
+</d:item>
+
+<d:item name="mismatched charset name"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">The specified character encoding name
+  <code><var>{value}</var></code> is different from the actual document
+  character encoding <code><var>{text}</var></code>.</d:message>
   <d:desc xml:lang="en">
     <p>The specified character encoding name is different from
     the character encoding of the document.  The document
     is non‐conforming.</p>
   </d:desc>
 </d:item> 
+
+<d:item name="mismatched charset name not checked"
+    mopdules="ContentChecker::HTML">
+  <d:message xml:lang="en">Whether the specified character encoding name
+  <code><var>{value}</var></code> matches to the actual character encoding
+  name cannot be checked since the input is not a byte stream.</d:message>
+</d:item>
+
+<d:item name="mode:syntax error"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">The attribute value is not a valid mode
+  name.</d:message>
+</d:item>
+
+<d:item name="nninteger:out of range"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">The specified value is out of range.</d:message>
+</d:item>
+
+<d:item name="nninteger:syntax error"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">The attribute value is not a non‐negative
+  integer.</d:message>
+</d:item>
+
+<d:item name="no referenced map"
+    modules="ContentChecker">
+  <d:message xml:lang="en">The <code>usemap</code> attribute references
+  no image map.</d:message>
+</d:item>
+
+<d:item name="no referenced menu"
+    modules="ContentChecker">
+  <d:message xml:lang="en">The <code>contextmenu</code> attribute references
+  no menu.</d:message>
+</d:item>
+
+<d:item name="refresh:syntax error"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">the specified value is not a valid as part
+  of a <code>Refresh</code> pragma.</d:message>
+</d:item>
+
+<d:item name="repeat:syntax error"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">The attribute value is not an integer or 
+  a string <code>template</code>.</d:message>
+</d:item>
 
 <d:item name="reserved browsing context name"
     class="attribute-value-error">
@@ -1687,14 +2158,21 @@ p {
   </d:desc>
 </d:item>
 
-</section>
+<d:item name="Reserved Prefixes and Namespace Names:Name"
+    modules="ContentChecker::XML">
+  <d:message xml:lang="en">Namespace name <code><var>{text}</var></code>
+  is reserved and cannot be used for an arbitrary prefix.</d:message>
+</d:item>
 
-<section id="attribute-value-warnings">
-<h2>Attribute Value Warnings</h2>
+<d:item name="Reserved Prefixes and Namespace Names:Prefix"
+    modules="ContentChecker::XML">
+  <d:message xml:lang="en">Namespace prefix <code><var>{text}</var></code>
+  is reserved and cannot be used for an arbitrary namespace name.</d:message>
+</d:item>
 
-<d:item name="link type:proposed" level="s"
-    class="attribute-value-warning should">
-  <d:message xml:lang="en">Link type <code><var>$0</var></code>
+<d:item name="link type:proposed"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">Link type <code><var>{value}</var></code>
   is proposed but not accepted yet; it <em>should not</em> be
   used until it has been accepted.</d:message>
   <d:desc>
@@ -1708,6 +2186,41 @@ p {
     conforming depending on the status.  See WHATWG Wiki
     for the latest information.</p>
   </d:desc>
+</d:item>
+
+<d:item name="sizes:syntax error"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">The specified value <code><var>{value}</var></code>
+  is not a valid value.</d:message>
+</d:item>
+
+<d:item name="space in ID"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">White space characters are not allowed
+  in the <code>id</code> attribute.</d:message>
+</d:item>
+
+<d:item name="template:not template"
+    modules="ContentChecker ContentChecker::HTML">
+  <d:message xml:lang="en">The node referenced by the <code>template</code>
+  attribute is not a template.</d:message>
+</d:item>
+
+<d:item name="window name:empty"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">Browsing context name must not be empty.</d:message>
+</d:item>
+
+<d:item name="window name:reserved"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">Browsing context name
+  <code><var>{value}</var></code> is reserved.</d:message>
+</d:item>
+
+<d:item name="word not allowed"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">The word <code><var>{value}</var></code> is not
+  allowed in this attribute.</d:message>
 </d:item>
 
 </section>
@@ -1753,7 +2266,13 @@ p {
 </section>
 
 <section id="imt-warnings">
-<h2>Internet Media Type Warnings</h2>
+<h2>Internet Media Type Errors</h2>
+
+<d:item name="IMT:syntax error"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">The specified value is not an Internet Media
+  Type.</d:message>
+</d:item>
 
 <d:item name="IMT:obsolete subtype"
     class="should" level="s">
@@ -1917,7 +2436,18 @@ p {
 <section id="information">
 <h2>Stability Information</h2>
 
-<d:item name="status:cr:element" class="level-i" level="i">
+<d:item name="deprecated:attr"
+    modules="ContentChecker">
+  <d:message xml:lang="en">This attribute is deprecated.</d:message>
+</d:item>
+
+<d:item name="deprecated:element"
+    modules="ContentChecker">
+  <d:message xml:lang="en">This element is deprecated.</d:message>
+</d:item>
+
+<d:item name="status:cr:element"
+    modules="ContentChecker">
   <d:message xml:lang="en">This element is in the
   <strong>call for implementation</strong> stage.</d:message>
   <d:desc xml:lang="en">
@@ -1933,7 +2463,8 @@ p {
   </d:desc>
 </d:item>
 
-<d:item name="status:lc:element" class="level-i" level="i">
+<d:item name="status:lc:element"
+    modules="ContentChecker">
   <d:message xml:lang="en">This element is in the <strong>last
   call for comments</strong> stage.</d:message>
   <d:desc xml:lang="en">
@@ -1950,7 +2481,8 @@ p {
   </d:desc>
 </d:item>
 
-<d:item name="status:wd:element" class="level-i" level="i">
+<d:item name="status:wd:element"
+    modules="ContentChecker">
   <d:message xml:lang="en">This element is documented in a <strong>working
   draft</strong>.</d:message>
   <d:desc xml:lang="en">
@@ -1965,7 +2497,8 @@ p {
   </d:desc>
 </d:item>
 
-<d:item name="status:non-standard:element" class="level-i" level="i">
+<d:item name="status:non-standard:element"
+    modules="ContentChecker">
   <d:message xml:lang="en">This element is <strong>not part of any
   standard</strong> the conformance checker knows.</d:message>
   <d:desc xml:lang="en">
@@ -1976,13 +2509,69 @@ p {
     there is really a standard that defines the element.</p>
   </d:desc>
 </d:item>
+
+<d:item name="status:cr:attr"
+    modules="ContentChecker">
+  <d:message xml:lang="en">This attribute is in the
+  <strong>call for implementation</strong> stage.</d:message>
+  <d:desc xml:lang="en">
+    <p>The attribute is in the call for implementation stage.</p>
+    
+    <p>Usually, using the attribute is safe.  However, it is a new feature
+    so that it might not be implemented correctly.  If it is found that
+    the feature is hard or impossible to implement, the feature
+    might be revised, or in some case it might be dropped.</p>
+  </d:desc>
+</d:item>
+
+<d:item name="status:lc:attr"
+    modules="ContentChecker">
+  <d:message xml:lang="en">This attribute is in the <strong>last
+  call for comments</strong> stage.</d:message>
+  <d:desc xml:lang="en">
+    <p>The attribute is in the last call for comments stage.</p>
+    
+    <p>The attribute is relatively mature, though the standardization
+    is not done yet.  It may be used for experiments.  Since it is a new
+    feature, it might not be implemented correctly or at all.  If it is
+    found that the feature is hard or impossible to implement, the feature
+    might be revised or might be dropped.</p>
+  </d:desc>
+</d:item>
+
+<d:item name="status:wd:attr"
+    modules="ContentChecker">
+  <d:message xml:lang="en">This attribute is documented in a <strong>working
+  draft</strong>.</d:message>
+  <d:desc xml:lang="en">
+    <p>The attribute is documented in a working or editor's draft
+    and not yet completed.</p>
+    
+    <p>The attribute should not be used for any practical purpose.
+    The feature might be drastically changed later or might be
+    entirely removed.</p>
+  </d:desc>
+</d:item>
+
+<d:item name="status:non-standard:attr"
+    modules="ContentChecker">
+  <d:message xml:lang="en">This attribute is <strong>not part of any
+  standard</strong> the conformance checker knows.</d:message>
+  <d:desc xml:lang="en">
+    <p>The attribute is not part of any standard or draft the conformance
+    checker is aware of.</p>
+    
+    <p>The attribute should not be used for any practical purpose unless
+    there is really a standard that defines the attribute.</p>
+  </d:desc>
+</d:item>
 </section>
 
 <section id="unsupported-messages">
 <h2><i>Unsupported</i> Messages</h2>
 
-<d:item name="element"
-    class="unsupported" level="unsupported">
+<d:item name="unknown element"
+    modules="ContentChecker">
   <d:message xml:lang="en">Conformance checking for element
   <code><var>{local-name}</var></code> is not supported; <em>it might or
   might not be conforming</em>.</d:message>
@@ -1992,8 +2581,8 @@ p {
   </d:desc>
 </d:item>
 
-<d:item name="attribute"
-    class="unsupported" level="unsupported">
+<d:item name="unknown attribute"
+    modules="ContentChecker ContentChecker::HTML">
   <d:message xml:lang="en">Conformance checking for attribute
   <code><var>{local-name}</var></code> of element 
   <code><var>{element-local-name}</var></code> is not supported;
@@ -2004,9 +2593,9 @@ p {
   </d:desc>
 </d:item>
 
-<d:item name="link type"
-    class="unsupported" level="unsupported">
-  <d:message xml:lang="en">Link type <code><var>$0</var></code> is not
+<d:item name="unknown link type"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">Link type <code><var>{value}</var></code> is not
   standardized or registered at the time of the release of the conformance
   checker; <em>it is non-conforming unless it now has been
   registered</em>.</d:message>
@@ -2031,28 +2620,28 @@ p {
 </d:item>
 
 <d:item name="event handler"
-    class="unsupported" level="unsupported">
+    modules="ContentChecker::HTML">
   <d:message xml:lang="en">Conformance checking for event handler attribute
   is not supported; <em>it might or might not be conforming.</em></d:message>
 </d:item>
 
 <d:item name="media query"
-    class="unsupported" level="unsupported">
+    modules="ContentChecker::HTML">
   <d:message xml:lang="en">Conformance checking for media query
   is not supported; <em>it might or might not be conforming.</em></d:message>
 </d:item>
 
-<d:item name="script"
-    class="unsupported" level="unsupported">
+<d:item name="XML script lang"
+    modules="ContentChecker::HTML">
   <d:message xml:lang="en">Conformance checking for script
-  language <code><var>$0</var></code> is not supported;
+  language <code><var>{text}</var></code> is not supported;
   <em>it might or might not be conforming.</em></d:message>
 </d:item>
 
-<d:item name="style"
-    class="unsupported" level="unsupported">
+<d:item name="XML style lang"
+    modules="ContentChecker::HTML">
   <d:message xml:lang="en">Conformance checking for style
-  language <code><var>$0</var></code> is not supported;
+  language <code><var>{text}</var></code> is not supported;
   <em>it might or might not be conforming.</em></d:message>
 </d:item>
 
@@ -2637,6 +3226,6 @@ is used in the document.</td>
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2008/08/15 08:36:41 $ -->
+<!-- $Date: 2008/08/15 12:11:56 $ -->
 </body>
 </html>

@@ -1,10 +1,10 @@
 m:illegal-octets-error;error-category-charset;An illegal octet in the input stream.
-m:character encoding;format-charset must;Character encoding <code><var>$0</var></code> is not allowed for <abbr>HTML</abbr> document.
-s:character encoding;format-charset should;Character encoding <code><var>$0</var></code> should not be used for <abbr>HTML</abbr> document.
-w:character encoding;format-charset warning;Use of UTF-8 is encouraged.
-unsupported:character encoding;format-charset unsupported;Conformance for character encoding requirements cannot be checked.
-m:no character encoding declaration;format-charset error;There is no character encoding declaration.
-m:non ascii superset;format-charset error;No character encoding metadata is found in lower‐level protocol nor is there <abbr>BOM</abbr>, while character encoding <code><var>$0</var></code> is not a superset of <abbr>ASCII</abbr>.
+disallowed character encoding;;Character encoding <code><var>{text}</var></code> is not allowed for <abbr>HTML</abbr> document.
+bad character encoding;;Character encoding <code><var>{text}</var></code> should not be used for <abbr>HTML</abbr> document.
+non-utf-8 character encoding;;Use of UTF-8 is encouraged (this document is encoded in <code><var>{text}</var></code>).
+character encoding unchecked;;Conformance for character encoding requirements cannot be checked, since the input is not a byte stream.
+no character encoding declaration;;There is no character encoding declaration.
+non ascii superset;;No character encoding metadata is found in lower‐level protocol nor is there <abbr>BOM</abbr>, while character encoding <code><var>{text}</var></code> is not a superset of <abbr>ASCII</abbr>.
 sniffing:chardet;;Character encoding of this document is sniffed as <code><var>{text}</var></code> (Sniffed because no explicit specification for the character encoding of this document is found in the transfer procotol headers).
 sniffing:default;;Character encoding of this document is defaulted to <code><var>{text}</var></code> because no explicit specification for the character encoding of this document is found in the transfer procotol headers.
 chardecode:fallback;;Since no decoder for the document character encoding is found, decoder for the character encoding <code><var>{text}</var></code> is used. Checking results might be <em>wrong</em>.
@@ -92,32 +92,118 @@ not first start tag;parse-error;This <code>&lt;html&gt;</code> tag is not the fi
 not HTML5;parse-error;This document is written in an old version of HTML.
 start tag not allowed;parse-error;Start tag <code>&lt;<var>{text}</var>&gt;</code> is not allowed here.
 unmatched end tag;parse-error;Element <code><var>{text}</var></code> is not opened.
-character not allowed;content-model-error;Data character is not allowed in this context.
-child element missing;content-model-error;There must be a <code><var>$0</var></code> element as a child of this element.
+basehref after URL attribute;;The <code>base</code> element with the <code>href</code> attribute specified cannot be placed after any attribute with a URL.
+basetarget after hyperlink;;The <code>base</code> element with the <code>target</code> attribute specified cannot be placed after any element that defines a hyperlink.
+character not allowed;;Data character is not allowed in this context.
+character not allowed:empty;;Non‐white‐space characters are not allowed in an empty element.
+child element missing;;There must be a <code><var>{text}</var></code> element as a child of this element.
 child element missing:td|th;content-model-error;There must be a <code>td</code> or <code>th</code> element as a child of this element.
+element missing:hn;;There must be at least one <code>h<var>n</var></code> element descendant.
 element not allowed;content-model-error;This element is not allowed in this context.
-element not allowed:root;content-model-error;This element is not allowed as a root element.
-ps element missing;content-model-error;There is no <code><var>$0</var></code> element before this element.
-attribute missing;attribute-error;Required attribute <code><var>$0</var></code> is not specified.
-attribute not allowed;attribute-error;Attribute <code><var>{local-name}</var></code> is not allowed for <code><var>{element-local-name}</var></code> element.
+element not allowed:area;;An <code>area</code> element cannot be used outside of a <code>map</code> element.
+element not allowed:base;;There is another <code>base</code> element.
+element not allowed:datatemplate;;In a <code>datatemplate</code> element, only <code>rule</code> elements are allowed.
+element not allowed:details legend;;In a <code>details</code> element, only at the beginning of the element a <code>lengend</code> element may be used.
+element not allowed:empty;;Elements are not allowed in an empty element.
+element not allowed:figure legend;;In a <code>figure</code> element, only at the beginning or only at the end of the element a <code>lengend</code> element may be used.
+element not allowed:flow;;This element is not allowed where flow content is expected.
+element not allowed:flow style;;A <code>style</code> element without <code>scoped</code> attribute is not allowed in this context.
+element not allowed:head noscript;;This element is not allowed in a <code>noscript</code> element in the <code>head</code> element.
+element not allowed:head style;;A <code>style</code> element with <code>scoped</code> attribute is not allowed in the <code>head</code> element.
+element not allowed:head title;;There is another <code>title</code> element.
+element not allowed:minus;;This element is not allowed in this context.
+element not allowed:meta charset;;The character encoding declaration must be the first element in the <code>head</code> element.
+element not allowed:metadata;;This element is not allowed where metadata content is expected.
+element not allowed:phrasing;;This element is not allowed where phrasing content is expected.
+element not allowed:root;;This element is not allowed as the root element of a document.
+element not allowed:root:xml;;This element is not allowed as the root element of an XML document.
+element not allowed:ruby base;;This element is not allowed in the <code>ruby</code> element.
+element not allowed:text;;This element is not allowed in this context.
+element not defined;;This element is not defined.
+no significant content;;No significant content is contained in this element.
+no significant content before;;There is no significant content before this element.
+no significant content at the end;;No significant content is contained at the end of this element.
+ps element missing;;There is no <code><var>{text}</var></code> element before this element.
+rp:syntax error;;The content of a <code>rp</code> element must be a parenthesis.
+attribute missing;;Required attribute <code><var>{text}</var></code> is not specified.
+attribute missing:data|type;;For an <code>object</code> at least one of <code>data</code> and <code>type</code> attributes must be specified.
+attribute missing:href|target;;For a <code>base</code> element, at least one of <code>href</code> and <code>target</code> attributes must be specified.
+attribute missing:name|http-equiv;;For a <code>meta</code> element with the <code>content</code> attribute specified, exactly one of <code>name</code> and <code>http-equiv</code> attributes must be specified.
+attribute missing:name|http-equiv|charset;;For a <code>meta</code> element, exactly one of <code>name</code>, <code>http-equiv</code>, and <code>charset</code> attributes must be specified.
+attribute not allowed;;Attribute <code><var>{local-name}</var></code> is not allowed for <code><var>{element-local-name}</var></code> element.
+attribute not allowed:ismap;;The <code>ismap</code> attribute may only be used for the image contained in an <code>a</code> element.
+attribute not defined;;This attribute is not defined.
 in HTML:xml:lang;attribute-error;The <code>xml:lang</code> attribute is not allowed in HTML document.
-in XML:charset;attribute-error;The <code>charset</code> attribute is not allowed in XML document.
-in XML:lang;attribute-error;The <code>lang</code> attribute is not allowed in XML document.
-in XML:xmlns;attribute-error;The <code>xmlns</code> attribute in the <code>null</code> namespace is not allowed in XHTML document. The document is non-conforming.
-w:charset:not registered;attribute-value-warning warning;Character encoding name <code><var>$0</var></code> is not registered.
-w:charset:private;attribute-value-warning warning;<code><var>$0</var></code> is a private character encoding name.
-m:charset:syntax error;attribute-value-error;The specified value is syntactically not a character encoding name.
-enumerated:invalid;attribute-value-error;This attribute only allow a limited set of values and the specified value <code><var>{@}</var></code> is not one of them.
+in XML:charset;;The <code>charset</code> attribute is not allowed in XML document.
+in XML:lang;;The <code>lang</code> attribute is not allowed in XML document.
+in XML:noscript;;A <code>noscript</code> element cannot be used in XML document.
+in XML:xmlns;;The <code>xmlns</code> attribute in the <code>null</code> namespace is not allowed in XHTML document. The document is non-conforming.
+boolean:invalid;;Attribute value <code><var>{@}</var></code> is not allowed. It must be an empty string or a string <code><var>{local-name}</var></code>.
+char:syntax error;;The attribute value must be exactly one character.
+charref in charset;;A character reference cannot be used to represent a character encoding name.
+charset:not preferred;;Character encoding name <code><var>{value}</var></code> is not the preferred name of that character encoding.
+charset:not registered;;Character encoding name <code><var>{value}</var></code> is not a registered name.
+charset:private;;Character encoding name <code><var>{value}</var></code> is a private name.
+charset:syntax error;;The specified value <code><var>{value}</var></code> is syntactically not a character encoding name.
+color:syntax error;;The specified value is not a color name or hexadecimal color number.
+coords:number not 3;;The <code>coords</code> attribute have to contain three (3) numbers (specified: <code><var>{text}</var></code>).
+coords:number not 4;;The <code>coords</code> attribute have to contain four (4) numbers (specified: <code><var>{text}</var></code>).
+coords:number lt 6;;The <code>coords</code> attribute have to contain more than or equal to six (6) numbers (specified: <code><var>{text}</var></code>).
+coords:number not even;;The <code>coords</code> attribute have to contain even number of numbers (specified: <code><var>{text}</var></code>).
+coords:out of range;;The specified value <code><var>{value}</var></code> is out of range.
+coords:syntax error;;The specified value is not valid.
+datetime:bad year;;Year number is out of range.
+datetime:bad month;;Month number is out of range.
+datetime:bad day;;Day number is out of range.
+datetime:bad hour;;Hour number is out of range.
+datetime:bad minute;;Minute number is out of range.
+datetime:bad second;;Second number is out of range.
+datetime:bad timezone hour;;Hour number of the timezone component is out of range.
+datetime:bad timezone minute;;Minute number of the timezone component is out of range.
+datetime:syntax error;;The attribute value is not a datetime.
+dateortime:syntax error;;The attribute value is not a date or time.
+enumerated:invalid;;This attribute only allow a limited set of values and the specified value <code><var>{@}</var></code> is not one of them.
 enumerated:invalid:http-equiv:content-type;attribute-value-error;Character encoding declaration syntax <code class="html bad example">&lt;meta http-equiv="Content-Type" content="text/html; charset=<var>charset-name</var>"&gt;</code> is obsolete.
+enumerated:non-conforming;;Attribute value <code><var>{@}</var></code> is not allowed.
+duplicate http-equiv;;There is another pragma <code><var>{value}</var></code>.
 duplicate ID;attribute-value-error;This identifier has already been assigned to another element.
-link type:bad context;attribute-value-error;The link type <code><var>$0</var></code> cannot be specified for this element.
-link type:non-conforming;attribute-value-error;The link type <code><var>$0</var></code> is non-conforming.
-m:mismatched charset name;attribute-value-error;Character encoding name <code><var>$1</var></code> is different from document character encoding <code><var>$0</var></code>.
+duplicate token;;The token <code><var>{value}</var></code> appears in the attribute value twice.
+empty attribute value;;The attribute value must not be empty.
+float:out of range;;The specified value is out of range.
+float:syntax error;;The attribute value is not a real number.
+fragment points itself;;A fragment identifier references the element itself.
+fragment points nothing;;A fragment identifier references no node.
+hashref:syntax error;;A hash−name reference must start with a <code>#</code> character.
+id ne name;;The <code>id</code> attribute value is different from the <code>name</code> attribute value.
+integer:syntax error;;The attribute value is not an integer.
+link type:bad context;;The link type <code><var>{value}</var></code> cannot be specified for this element.
+invalid attribute value;attribute-value-error;Attribute value <code><var>{@}</var></code> is not an allowed value.
+length:syntax error;;The attribute value is not a length value.
+link type:non-conforming;;The link type <code><var>{value}</var></code> is non-conforming.
+meta content-type syntax error;;The specified value is not a valid as a long character encoding declaration.
+mismatched charset name;;The specified character encoding name <code><var>{value}</var></code> is different from the actual document character encoding <code><var>{text}</var></code>.
+mismatched charset name not checked;;Whether the specified character encoding name <code><var>{value}</var></code> matches to the actual character encoding name cannot be checked since the input is not a byte stream.
+mode:syntax error;;The attribute value is not a valid mode name.
+nninteger:out of range;;The specified value is out of range.
+nninteger:syntax error;;The attribute value is not a non‐negative integer.
+no referenced map;;The <code>usemap</code> attribute references no image map.
+no referenced menu;;The <code>contextmenu</code> attribute references no menu.
+refresh:syntax error;;the specified value is not a valid as part of a <code>Refresh</code> pragma.
+repeat:syntax error;;The attribute value is not an integer or a string <code>template</code>.
 reserved browsing context name;attribute-value-error;Browsing context name <code><var>{@}</var></code> is reserved.
-s:link type:proposed;attribute-value-warning should;Link type <code><var>$0</var></code> is proposed but not accepted yet; it <em>should not</em> be used until it has been accepted.
+Reserved Prefixes and Namespace Names:Name;;Namespace name <code><var>{text}</var></code> is reserved and cannot be used for an arbitrary prefix.
+Reserved Prefixes and Namespace Names:Prefix;;Namespace prefix <code><var>{text}</var></code> is reserved and cannot be used for an arbitrary namespace name.
+link type:proposed;;Link type <code><var>{value}</var></code> is proposed but not accepted yet; it <em>should not</em> be used until it has been accepted.
+sizes:syntax error;;The specified value <code><var>{value}</var></code> is not a valid value.
+space in ID;;White space characters are not allowed in the <code>id</code> attribute.
+template:not template;;The node referenced by the <code>template</code> attribute is not a template.
+window name:empty;;Browsing context name must not be empty.
+window name:reserved;;Browsing context name <code><var>{value}</var></code> is reserved.
+word not allowed;;The word <code><var>{value}</var></code> is not allowed in this attribute.
 table:colspan creates column with no anchored cell;table-model-error;This <code>colspan</code> attribute results in creating a table column that does not contain any cell anchored to it.
 table:no cell in last row;table-model-error;The table has no cell (<code>td</code> or <code>th</code>) in the last row.
 table:rowspan extends table;table-model-error;This <code>rowspan</code> attribute results in creating a table row that does not contain any cell anchored to it.
+IMT:syntax error;;The specified value is not an Internet Media Type.
 s:IMT:obsolete subtype;should;<code><var>{@}</var></code>: An <em>obsolete</em> subtype is used.
 s:IMT:private subtype;should;<code><var>{@}</var></code>: A private (<code>x-</code> or <code>x.</code>) subtype is used.
 s:IMT:unregistered subtype;should;<code><var>{@}</var></code>: The subtype is not registered to IANA.
@@ -128,17 +214,23 @@ s:URI::lowercase hexadecimal digit;should;A lowercase hexadecimal digit is used 
 s:URI::percent-encoded unreserved;should;An unreserved character is percent-encoded.
 s:URI::uppercase scheme name;should;URI scheme name is in uppercase.
 m:not manifest;must;This document is not a cache manifest.
-i:status:cr:element;level-i;This element is in the <strong>call for implementation</strong> stage.
-i:status:lc:element;level-i;This element is in the <strong>last call for comments</strong> stage.
-i:status:wd:element;level-i;This element is documented in a <strong>working draft</strong>.
-i:status:non-standard:element;level-i;This element is <strong>not part of any standard</strong> the conformance checker knows.
-unsupported:element;unsupported;Conformance checking for element <code><var>{local-name}</var></code> is not supported; <em>it might or might not be conforming</em>.
-unsupported:attribute;unsupported;Conformance checking for attribute <code><var>{local-name}</var></code> of element <code><var>{element-local-name}</var></code> is not supported; <em>it might or might not be conforming</em>.
-unsupported:link type;unsupported;Link type <code><var>$0</var></code> is not standardized or registered at the time of the release of the conformance checker; <em>it is non-conforming unless it now has been registered</em>.
-unsupported:event handler;unsupported;Conformance checking for event handler attribute is not supported; <em>it might or might not be conforming.</em>
-unsupported:media query;unsupported;Conformance checking for media query is not supported; <em>it might or might not be conforming.</em>
-unsupported:script;unsupported;Conformance checking for script language <code><var>$0</var></code> is not supported; <em>it might or might not be conforming.</em>
-unsupported:style;unsupported;Conformance checking for style language <code><var>$0</var></code> is not supported; <em>it might or might not be conforming.</em>
+deprecated:attr;;This attribute is deprecated.
+deprecated:element;;This element is deprecated.
+status:cr:element;;This element is in the <strong>call for implementation</strong> stage.
+status:lc:element;;This element is in the <strong>last call for comments</strong> stage.
+status:wd:element;;This element is documented in a <strong>working draft</strong>.
+status:non-standard:element;;This element is <strong>not part of any standard</strong> the conformance checker knows.
+status:cr:attr;;This attribute is in the <strong>call for implementation</strong> stage.
+status:lc:attr;;This attribute is in the <strong>last call for comments</strong> stage.
+status:wd:attr;;This attribute is documented in a <strong>working draft</strong>.
+status:non-standard:attr;;This attribute is <strong>not part of any standard</strong> the conformance checker knows.
+unknown element;;Conformance checking for element <code><var>{local-name}</var></code> is not supported; <em>it might or might not be conforming</em>.
+unknown attribute;;Conformance checking for attribute <code><var>{local-name}</var></code> of element <code><var>{element-local-name}</var></code> is not supported; <em>it might or might not be conforming</em>.
+unknown link type;;Link type <code><var>{value}</var></code> is not standardized or registered at the time of the release of the conformance checker; <em>it is non-conforming unless it now has been registered</em>.
+event handler;;Conformance checking for event handler attribute is not supported; <em>it might or might not be conforming.</em>
+media query;;Conformance checking for media query is not supported; <em>it might or might not be conforming.</em>
+XML script lang;;Conformance checking for script language <code><var>{text}</var></code> is not supported; <em>it might or might not be conforming.</em>
+XML style lang;;Conformance checking for style language <code><var>{text}</var></code> is not supported; <em>it might or might not be conforming.</em>
 WebHACC:Title;;WebHACC (β)
 WebHACC:Heading;; <a href="../cc-about"><abbr title="Web Hypertext Application Conformance Checker (β)"><img alt="WebHACC" src="../icons/title"></abbr></a> 
 Input;;Input
