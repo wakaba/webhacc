@@ -258,6 +258,11 @@ mark {
 
 /* Tab navigation */
 
+body[data-scripted] {
+  min-width: 400px; /* body > nav's left is 300px */
+  /* min-height is set to .section */
+}
+
 body[data-scripted] > h1,
 body[data-scripted] > #input > h2,
 body[data-scripted] .section.subdoc > h2,
@@ -265,10 +270,9 @@ body[data-scripted] .section.subdoc > h3,
 body[data-scripted] .section.subdoc > h4,
 body[data-scripted] .section.subdoc > h5,
 body[data-scripted] .section.subdoc > h6 {
-  float: left;
   font-size: 100%;
   margin: 0;
-  padding: 0 1em;
+  padding: 0 17.5px; /* h1 > img's width is 265px */
 }
 
 body[data-scripted] > #input > h2,
@@ -277,7 +281,8 @@ body[data-scripted] .section.subdoc > h3,
 body[data-scripted] .section.subdoc > h4,
 body[data-scripted] .section.subdoc > h5,
 body[data-scripted] .section.subdoc > h6 {
-  margin: 0 1em 0 -1em;
+  float: left;
+  margin: 0 0.5em 0 -1em;
   padding: 0.3em 1em;
   border: thin hidden;
   background-color: #fff0f0;
@@ -286,8 +291,6 @@ body[data-scripted] .section.subdoc > h6 {
 
 nav {
   display: block;
-  max-height: 100px; /* h1 > img's height is 90px */
-  overflow: auto;
 }
 
 .section nav {
@@ -353,6 +356,29 @@ nav a[href$=document-errors] {
 
 .section {
   clear: both;
+}
+
+body > nav {
+  position: absolute;
+  top: 0;
+  height: 100px; /* h1 > img's height is 90px */
+  left: 300px; /* h1 > img's width is 265px */
+  right: 0;
+  min-width: 100px; /* body's min-width is 400px */
+  overflow: auto;
+}
+
+.section > nav {
+/*
+  height: 2em;
+  max-height: 2em; *//* hn's line + padding-top + padding-bottom = 1.6em */
+  overflow: auto;
+  min-width: 5em;
+
+  position: relative;
+  z-index: 1000; /* such that scrollbars are clickable */
+  white-space: nowrap; /* Firefox does not show vertical scrollbar,
+      because there is a floated hn element... */
 }
 
 body[data-scripted] > .section,
@@ -751,6 +777,6 @@ Copyright 2007-2008 Wakaba <w@suika.fam.cx>.
 This library is free software; you can redistribute it
 and/or modify it under the same terms as Perl itself.
 
-$Date: 2008/08/15 16:44:03 $
+$Date: 2008/08/15 17:51:03 $
 
 */

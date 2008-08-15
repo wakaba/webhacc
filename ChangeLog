@@ -1,5 +1,10 @@
 2008-08-16  Wakaba  <wakaba@suika.fam.cx>
 
+	* cc-style.css: Set min/max width/height such that tab content
+	is accessible even when stupid size of window is used.
+
+2008-08-16  Wakaba  <wakaba@suika.fam.cx>
+
 	* cc-script.js (_showTab): Show the tab button of the selected
 	tab.
 
