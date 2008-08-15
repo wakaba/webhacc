@@ -1,3 +1,8 @@
+2008-08-16  Wakaba  <wakaba@suika.fam.cx>
+
+	* HTML.pm (generate_syntax_error_section): Remove |input_encoding|
+	attribute value if the input is specified by direct input.
+
 2008-08-15  Wakaba  <wakaba@suika.fam.cx>
 
 	* DOM.pm: Enable localization of RDF section.

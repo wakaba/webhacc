@@ -76,6 +76,8 @@ sub generate_syntax_error_section ($) {
   $doc->document_uri ($input->{uri});
   $doc->manakai_entity_base_uri ($input->{base_uri});
 
+  $doc->input_encoding (undef) if $input->isa ('WebHACC::Input::Text');
+
   $out->end_error_list (role => 'parse-errors');
   $out->end_section;
 } # generate_syntax_error_section

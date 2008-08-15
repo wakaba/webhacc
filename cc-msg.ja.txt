@@ -223,12 +223,25 @@ s:IMT:obsolete subtype;should;<code><var>{@}</var></code>: An <em>obsolete</em> 
 s:IMT:private subtype;should;<code><var>{@}</var></code>: A private (<code>x-</code> or <code>x.</code>) subtype is used.
 s:IMT:unregistered subtype;should;<code><var>{@}</var></code>: The subtype is not registered to IANA.
 not IMT;;A value that is not an Internet Media Type is not allowed here.
-m:URI::syntax error;must;The specified value is syntactically not an IRI reference.
-s:URI::dot-segment;should;A dot-segment (<code>.</code> or <code>..</code>) occurs in an absolute reference.
-s:URI::empty path;should;This IRI does not end with a <code>/</code>.
-s:URI::lowercase hexadecimal digit;should;A lowercase hexadecimal digit is used in percent-encoding.
-s:URI::percent-encoded unreserved;should;An unreserved character is percent-encoded.
-s:URI::uppercase scheme name;should;URI scheme name is in uppercase.
+syntax error:iri3987;;The specified value is syntactically not an IRI.
+syntax error:iriref3987;;The specified value is syntactically not an IRI reference.
+syntax error:rdfuriref;;The specified value is syntactically not an RDF URI reference.
+syntax error:uri2396;;The specified value is syntactically not a URI according to RFC 2396.
+syntax error:uri3986;;The specified value is syntactically not a URI.
+URL:address format;;URL host address format <code><var>{value}</var></code> is not supported by the conformance checker.
+URL:default port;;Default port number should be omitted.
+URL:dot-segment;;A dot-segment (<code>.</code> or <code>..</code>) occurs in an absolute reference.
+URL:empty host;;The host component of the URL is empty.
+URL:empty path;;The URL does not end with a <code>/</code> character.
+URL:empty port;;The port component of the URL is empty.
+URL:long host;;The host component of the URL is too long.
+URL:lowercase hexadecimal digit;;A lowercase hexadecimal digit is used in percent-encoding.
+URL:non-DNS host;;The host component of the URL is not a DNS host name.
+URL:non UTF-8 host;;The host component of the URL is not encoded in UTF-8.
+URL:password;;Password should not be included in a URL for the security.
+URL:percent-encoded unreserved;;An unreserved character is percent-encoded.
+URL:uppercase host;;The host <code><var>{value}</var></code> should be spelt in lowercase.
+URL:uppercase scheme name;;URL scheme name is in uppercase.
 m:not manifest;must;This document is not a cache manifest.
 deprecated:attr;;This attribute is deprecated.
 deprecated:element;;This element is deprecated.
@@ -240,6 +253,18 @@ status:cr:attr;;This attribute is in the <strong>call for implementation</strong
 status:lc:attr;;This attribute is in the <strong>last call for comments</strong> stage.
 status:wd:attr;;This attribute is documented in a <strong>working draft</strong>.
 status:non-standard:attr;;This attribute is <strong>not part of any standard</strong> the conformance checker knows.
+langtag:extension:duplication;;There is another extension subtag <code><var>{value}</var></code>.
+langtag:illegal;;Subtag <code><var>{value}</var></code> is syntactically invalid.
+langtag:language:case;;It is a good practice to represent ISO 639-1 language code <code><var>{value}</var></code> in lowercase.
+langtag:language:mul;;Langauge tag <code>mul</code> should not be used.
+langtag:language:nosemantics;;No semantics is defined for language subtag <code><var>{value}</var></code>.
+langtag:language:syntax;;The language subtag <code><var>{value}</var></code> is syntactically invalid.
+langtag:language:und;;Langauge tag <code>und</code> should not be used.
+langtag:private;;It would be better if a private use language tag (<code><var>{value}</var></code>) is not used.
+langtag:privateuse:syntax;;Private use subtag <code><var>{value}</var></code> is syntactically invalid.
+langtag:region:case;;It is a good practice to represent ISO 3166 country code <code><var>{value}</var></code> in uppercase.
+langtag:region:nosemantics;;No semantics is defined for region subtag <code><var>{value}</var></code>.
+langtag:region:private;;Use of private use country code <code><var>{value}</var></code> is not allowed.
 bad rdf namespace;;The namespace URI of an element that represents an RDF concept must be <code>http://www.w3.org/1999/02/22-rdf-syntax-ns#</code>.
 duplicate rdf id;;The specified value is already used as an ID.
 duplicate unqualified attr;;Both unqualified attribute and namespace‐qualified RDF attribute are specified, which is not allowed.
@@ -276,7 +301,7 @@ Setting innerHTML;;<code>innerHTML</code> に値を設定する HTML 要素
 Information;;情報
 HTTP Header;;<abbr lang="en" title="Hypertext Transfer Protocol">HTTP</abbr> 頭部
 Parse Errors Section;;構文誤り
-Parse Errors;;構\xE6\x96\x87誤り
+Parse Errors;;構文誤り
 Document Source;;文書のソース
 Source;;ソース
 Tables Section;;表の構造
@@ -351,7 +376,7 @@ No parse error found.;;構文解析中に誤りは見つかりませんでした
 No structural error found.;;構造上の誤りは見つかりませんでした。
 This checker is work in progress.;; <p><strong>重要</strong>: この適合性検査サービスは<em>開発中</em>です。 この結果は<em>間違い</em>かもしれません。</p> 
 Conformance is conforming;;この文書に適合性に関わる誤りは見つかりませんでした。
-Conformance is should-error;;この文書は<strong>おそらく<em>不</em>適合</strong>ですが、 稀に適合して\xE3\x81\x84る場合もあります。適合性検査器はこの文書が稀な場合に該当するかどうか判定できません。
+Conformance is should-error;;この文書は<strong>おそらく<em>不</em>適合</strong>ですが、 稀に適合している場合もあります。適合性検査器はこの文書が稀な場合に該当するかどうか判定できません。
 Conformance is non-conforming;;この文書は<strong><em>不</em>適合</strong>です。
 Conformance is uncertain;;適合性検査器はこの文書が適合するかどうか判定できませんでした。 この文書は適合性検査器が対応していない機能を使っています。 この文書は適合しているかもしれませんし、していないかもしれません。
 Error level m;;<a href="../error-description#level-m"><em class="rfc2119" title="REQUIRED">必須</em>級の誤り</a>

@@ -1604,9 +1604,12 @@ p {
 </section>
 
 <section id="uri-errors">
-<h2>URI (or IRI) Errors</h2>
+<h2>URL Errors</h2>
 
-<div class="section must" id="m:URI::syntax-error"><h3>The specified value is syntactically not an IRI
+<div class="section " id="syntax-error:iri3987"><h3>The specified value is syntactically not an
+  IRI.</h3></div>
+
+<div class="section " id="syntax-error:iriref3987"><h3>The specified value is syntactically not an IRI
   reference.</h3>
     <p>The specified value does not satisfy the syntactical requirements
     for IRI references.  The document is non-conforming.</p>
@@ -1621,12 +1624,22 @@ p {
     </p>
   </div>
 
-</section>
+<div class="section " id="syntax-error:rdfuriref"><h3>The specified value is syntactically not an RDF
+  URI reference.</h3></div>
 
-<section id="uri-shoulds">
-<h2>URI (or IRI) Should-level Errors</h2>
+<div class="section " id="syntax-error:uri2396"><h3>The specified value is syntactically not a
+  URI according to RFC 2396.</h3></div>
 
-<div class="section should" id="s:URI::dot-segment"><h3>A dot-segment (<code>.</code> or
+<div class="section " id="syntax-error:uri3986"><h3>The specified value is syntactically not a
+  URI.</h3></div>
+
+<div class="section " id="URL:address-format"><h3>URL host address format
+  <code><var>{value}</var></code> is not supported by the
+  conformance checker.</h3></div>
+
+<div class="section " id="URL:default-port"><h3>Default port number should be omitted.</h3></div>
+
+<div class="section " id="URL:dot-segment"><h3>A dot-segment (<code>.</code> or
   <code>..</code>) occurs in an absolute reference.</h3>
     <p>Dot-segment (<code>.</code> or <code>..</code>) should
     not occur in an absolute reference.</p>
@@ -1638,24 +1651,43 @@ p {
     canonical form before it has been published.</p>
   </div>
 
-<div class="section should" id="s:URI::empty-path"><h3>This IRI does not end with
-  a <code>/</code>.</h3></div>
+<div class="section " id="URL:empty-host"><h3>The host component of the URL is empty.</h3></div>
 
-<div class="section should" id="s:URI::lowercase-hexadecimal-digit"><h3>A lowercase hexadecimal digit is used
+<div class="section " id="URL:empty-path"><h3>The URL does not end with
+  a <code>/</code> character.</h3></div>
+
+<div class="section " id="URL:empty-port"><h3>The port component of the URL is empty.</h3></div>
+
+<div class="section " id="URL:long-host"><h3>The host component of the URL
+  is too long.</h3></div>
+
+<div class="section " id="URL:lowercase-hexadecimal-digit"><h3>A lowercase hexadecimal digit is used
   in percent-encoding.</h3>
     <p>The hexadecimal digit in percent-encoding string in the IRI
     is in lowercase.  Though the IRI <em>is</em> conforming,
     it should be in uppercase.</p>
   </div>
 
-<div class="section should" id="s:URI::percent-encoded-unreserved"><h3>An unreserved character is 
+<div class="section " id="URL:non-DNS-host"><h3>The host component of the URL
+  is not a DNS host name.</h3></div>
+
+<div class="section " id="URL:non-UTF-8-host"><h3>The host component of the URL
+  is not encoded in UTF-8.</h3></div>
+
+<div class="section " id="URL:password"><h3>Password should not be included in a URL
+  for the security.</h3></div>
+
+<div class="section " id="URL:percent-encoded-unreserved"><h3>An unreserved character is 
   percent-encoded.</h3>
     <p>An unreserved character is percent-encoded in the IRI.
     Though it <em>is</em> conforming, it should be in the 
     decoded (or bare) form.</p>
   </div>
 
-<div class="section should" id="s:URI::uppercase-scheme-name"><h3>URI scheme name is in uppercase.</h3>
+<div class="section " id="URL:uppercase-host"><h3>The host <code><var>{value}</var></code>
+  should be spelt in lowercase.</h3></div>
+
+<div class="section " id="URL:uppercase-scheme-name"><h3>URL scheme name is in uppercase.</h3>
     <p>The scheme part of the IRI is written in uppercase letter.</p>
 
     <p>Uppercase scheme names are not required to be processed
@@ -1784,6 +1816,47 @@ p {
     <p>The attribute should not be used for any practical purpose unless
     there is really a standard that defines the attribute.</p>
   </div>
+</section>
+
+<section id="langtag-errors">
+<h2>Language Tag Errors</h2>
+
+<div class="section " id="langtag:extension:duplication"><h3>There is another extension subtag
+  <code><var>{value}</var></code>.</h3></div>
+
+<div class="section " id="langtag:illegal"><h3>Subtag <code><var>{value}</var></code> is 
+  syntactically invalid.</h3></div>
+
+<div class="section " id="langtag:language:case"><h3>It is a good practice to represent ISO 639-1
+  language code <code><var>{value}</var></code> in lowercase.</h3></div>
+
+<div class="section " id="langtag:language:mul"><h3>Langauge tag <code>mul</code> should not be
+  used.</h3></div>
+
+<div class="section " id="langtag:language:nosemantics"><h3>No semantics is defined for language subtag
+  <code><var>{value}</var></code>.</h3></div>
+
+<div class="section " id="langtag:language:syntax"><h3>The language subtag <code><var>{value}</var></code>
+  is syntactically invalid.</h3></div>
+
+<div class="section " id="langtag:language:und"><h3>Langauge tag <code>und</code> should not be
+  used.</h3></div>
+
+<div class="section " id="langtag:private"><h3>It would be better if a private use language
+  tag (<code><var>{value}</var></code>) is not used.</h3></div>
+
+<div class="section " id="langtag:privateuse:syntax"><h3>Private use subtag <code><var>{value}</var></code>
+  is syntactically invalid.</h3></div>
+
+<div class="section " id="langtag:region:case"><h3>It is a good practice to represent ISO 3166
+  country code <code><var>{value}</var></code> in uppercase.</h3></div>
+
+<div class="section " id="langtag:region:nosemantics"><h3>No semantics is defined for region subtag
+  <code><var>{value}</var></code>.</h3></div>
+
+<div class="section " id="langtag:region:private"><h3>Use of private use country code
+  <code><var>{value}</var></code> is not allowed.</h3></div>
+
 </section>
 
 <section id="rdfxml-errors">
@@ -2143,6 +2216,6 @@ is used in the document.</td>
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2008/08/15 14:11:13 $ -->
+<!-- $Date: 2008/08/15 16:03:46 $ -->
 </body>
 </html>

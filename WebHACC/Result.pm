@@ -204,7 +204,8 @@ sub add_error ($%) {
   
   ## Error message
   my $error_type_text = $opt{type};
-  $out->nl_text ($error_type_text, node => $opt{node}, text => $opt{text});
+  $out->nl_text ($error_type_text, node => $opt{node}, text => $opt{text},
+                 value => $opt{value});
 
   ## Additional error description
   if (defined $opt{text}) { ## TODO: Remove this block once all errors are put into the catalog.

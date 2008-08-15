@@ -1,3 +1,9 @@
+2008-08-16  Wakaba  <wakaba@suika.fam.cx>
+
+	* error-description-source.xml: Error entries for
+	Whatpm::URIChecker and Whatpm::LangTag error types
+	are added.
+
 2008-08-15  Wakaba  <wakaba@suika.fam.cx>
 
 	* error-description-source.xml: Error entries

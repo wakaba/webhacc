@@ -2412,10 +2412,16 @@ p {
 </section>
 
 <section id="uri-errors">
-<h2>URI (or IRI) Errors</h2>
+<h2>URL Errors</h2>
 
-<d:item name="URI::syntax error"
-    class="must" level="m">
+<d:item name="syntax error:iri3987"
+    modules="URIChecker">
+  <d:message xml:lang="en">The specified value is syntactically not an
+  IRI.</d:message>
+</d:item>
+
+<d:item name="syntax error:iriref3987"
+    modules="URIChecker">
   <d:message xml:lang="en">The specified value is syntactically not an IRI
   reference.</d:message>
   <d:desc xml:lang="en">
@@ -2433,13 +2439,38 @@ p {
   </d:desc>
 </d:item>
 
-</section>
+<d:item name="syntax error:rdfuriref"
+    modules="URIChecker">
+  <d:message xml:lang="en">The specified value is syntactically not an RDF
+  URI reference.</d:message>
+</d:item>
 
-<section id="uri-shoulds">
-<h2>URI (or IRI) Should-level Errors</h2>
+<d:item name="syntax error:uri2396"
+    modules="URIChecker">
+  <d:message xml:lang="en">The specified value is syntactically not a
+  URI according to RFC 2396.</d:message>
+</d:item>
 
-<d:item name="URI::dot-segment"
-    class="should" level="s">
+<d:item name="syntax error:uri3986"
+    modules="URIChecker">
+  <d:message xml:lang="en">The specified value is syntactically not a
+  URI.</d:message>
+</d:item>
+
+<d:item name="URL:address format"
+    modules="URIChecker">
+  <d:message xml:lang="en">URL host address format
+  <code><var>{value}</var></code> is not supported by the
+  conformance checker.</d:message>
+</d:item>
+
+<d:item name="URL:default port"
+    modules="URIChecker">
+  <d:message xml:lang="en">Default port number should be omitted.</d:message>
+</d:item>
+
+<d:item name="URL:dot-segment"
+    modules="URIChecker">
   <d:message xml:lang="en">A dot-segment (<code>.</code> or
   <code>..</code>) occurs in an absolute reference.</d:message>
   <d:desc>
@@ -2454,10 +2485,15 @@ p {
   </d:desc>
 </d:item>
 
-<d:item name="URI::empty path"
-    class="should" level="s">
-  <d:message xml:lang="en">This IRI does not end with
-  a <code>/</code>.</d:message>
+<d:item name="URL:empty host"
+    modules="URIChecker">
+  <d:message xml:lang="en">The host component of the URL is empty.</d:message>
+</d:item>
+
+<d:item name="URL:empty path"
+    modules="URIChecker">
+  <d:message xml:lang="en">The URL does not end with
+  a <code>/</code> character.</d:message>
   <d:item xml:lang="en">
     <p>The IRI does not end with a <code>/</code>.  If there is an
     authority component in an IRI, a <code>/</code> should be present
@@ -2468,8 +2504,19 @@ p {
   </d:item>
 </d:item>
 
-<d:item name="URI::lowercase hexadecimal digit"
-    class="should" level="s">
+<d:item name="URL:empty port"
+    modules="URIChecker">
+  <d:message xml:lang="en">The port component of the URL is empty.</d:message>
+</d:item>
+
+<d:item name="URL:long host"
+    modules="URIChecker">
+  <d:message xml:lang="en">The host component of the URL
+  is too long.</d:message>
+</d:item>
+
+<d:item name="URL:lowercase hexadecimal digit"
+    modules="URIChecker">
   <d:message xml:lang="en">A lowercase hexadecimal digit is used
   in percent-encoding.</d:message>
   <d:desc xml:lang="en">
@@ -2479,8 +2526,26 @@ p {
   </d:desc>
 </d:item>
 
-<d:item name="URI::percent-encoded unreserved"
-    class="should" level="s">
+<d:item name="URL:non-DNS host"
+    modules="URIChecker">
+  <d:message xml:lang="en">The host component of the URL
+  is not a DNS host name.</d:message>
+</d:item>
+
+<d:item name="URL:non UTF-8 host"
+    modules="URIChecker">
+  <d:message xml:lang="en">The host component of the URL
+  is not encoded in UTF-8.</d:message>
+</d:item>
+
+<d:item name="URL:password"
+    modules="URIChecker">
+  <d:message xml:lang="en">Password should not be included in a URL
+  for the security.</d:message>
+</d:item>
+
+<d:item name="URL:percent-encoded unreserved"
+    modules="URIChecker">
   <d:message xml:lang="en">An unreserved character is 
   percent-encoded.</d:message>
   <d:desc xml:lang="en">
@@ -2490,9 +2555,15 @@ p {
   </d:desc>
 </d:item>
 
-<d:item name="URI::uppercase scheme name"
-    class="should" level="s">
-  <d:message xml:lang="en">URI scheme name is in uppercase.</d:message>
+<d:item name="URL:uppercase host"
+    modules="URIChecker">
+  <d:message xml:lang="en">The host <code><var>{value}</var></code>
+  should be spelt in lowercase.</d:message>
+</d:item>
+
+<d:item name="URL:uppercase scheme name"
+    modules="URIChecker">
+  <d:message xml:lang="en">URL scheme name is in uppercase.</d:message>
   <d:desc xml:lang="en">
     <p>The scheme part of the IRI is written in uppercase letter.</p>
 
@@ -2664,6 +2735,83 @@ p {
     there is really a standard that defines the attribute.</p>
   </d:desc>
 </d:item>
+</section>
+
+<section id="langtag-errors">
+<h2>Language Tag Errors</h2>
+
+<d:item name="langtag:extension:duplication"
+    modules="LangTag">
+  <d:message xml:lang="en">There is another extension subtag
+  <code><var>{value}</var></code>.</d:message>
+</d:item>
+
+<d:item name="langtag:illegal"
+    modules="LangTag">
+  <d:message xml:lang="en">Subtag <code><var>{value}</var></code> is 
+  syntactically invalid.</d:message>
+</d:item>
+
+<d:item name="langtag:language:case"
+    modules="LangTag">
+  <d:message xml:lang="en">It is a good practice to represent ISO 639-1
+  language code <code><var>{value}</var></code> in lowercase.</d:message>
+</d:item>
+
+<d:item name="langtag:language:mul"
+    modules="LangTag">
+  <d:message xml:lang="en">Langauge tag <code>mul</code> should not be
+  used.</d:message>
+</d:item>
+
+<d:item name="langtag:language:nosemantics"
+    modules="LangTag">
+  <d:message xml:lang="en">No semantics is defined for language subtag
+  <code><var>{value}</var></code>.</d:message>
+</d:item>
+
+<d:item name="langtag:language:syntax"
+    modules="LangTag">
+  <d:message xml:lang="en">The language subtag <code><var>{value}</var></code>
+  is syntactically invalid.</d:message>
+</d:item>
+
+<d:item name="langtag:language:und"
+    modules="LangTag">
+  <d:message xml:lang="en">Langauge tag <code>und</code> should not be
+  used.</d:message>
+</d:item>
+
+<d:item name="langtag:private"
+    modules="LangTag">
+  <d:message xml:lang="en">It would be better if a private use language
+  tag (<code><var>{value}</var></code>) is not used.</d:message>
+</d:item>
+
+<d:item name="langtag:privateuse:syntax"
+    modules="LangTag">
+  <d:message xml:lang="en">Private use subtag <code><var>{value}</var></code>
+  is syntactically invalid.</d:message>
+</d:item>
+
+<d:item name="langtag:region:case"
+    modules="LangTag">
+  <d:message xml:lang="en">It is a good practice to represent ISO 3166
+  country code <code><var>{value}</var></code> in uppercase.</d:message>
+</d:item>
+
+<d:item name="langtag:region:nosemantics"
+    modules="LangTag">
+  <d:message xml:lang="en">No semantics is defined for region subtag
+  <code><var>{value}</var></code>.</d:message>
+</d:item>
+
+<d:item name="langtag:region:private"
+    modules="LangTag">
+  <d:message xml:lang="en">Use of private use country code
+  <code><var>{value}</var></code> is not allowed.</d:message>
+</d:item>
+
 </section>
 
 <section id="rdfxml-errors">
@@ -3410,6 +3558,6 @@ is used in the document.</td>
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2008/08/15 14:11:13 $ -->
+<!-- $Date: 2008/08/15 16:03:46 $ -->
 </body>
 </html>

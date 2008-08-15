@@ -1,3 +1,8 @@
+2008-08-16  Wakaba  <wakaba@suika.fam.cx>
+
+	* Result.pm (add_error): Pass |value| argument, if any,
+	to the |nl_text| for error type texts.
+
 2008-08-15  Wakaba  <wakaba@suika.fam.cx>
 
 	* Output.pm (xref_text): New method.
