@@ -1,5 +1,11 @@
 2008-08-15  Wakaba  <wakaba@suika.fam.cx>
 
+	* HTML.pm: Set flags for encoding layer errors appropriately.
+	Save link to the document root for the parsed document
+	for garbage collection safety.
+
+2008-08-15  Wakaba  <wakaba@suika.fam.cx>
+
 	* CSS.pm, CacheManifest.pm, HTML.pm, WebIDL.pm, XML.pm: Don't
 	set "uncertain" flag to character encoding (encode) layer if the
 	input is a character string.

@@ -1,5 +1,11 @@
 2008-08-15  Wakaba  <wakaba@suika.fam.cx>
 
+	* error-description-source.xml: Missing entries for Whatpm::HTML
+	error types are added.  Error entries used by Whatpm::HTML
+	are marked as "HTML::Parser".
+
+2008-08-15  Wakaba  <wakaba@suika.fam.cx>
+
 	* cc-style.css: Add icons to links and headings of error sections.
 	Use standard "uncertain" color for level-u errors.  "No error found"
 	messages are now handled by catalog, not by CSS presentation.

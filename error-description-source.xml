@@ -115,11 +115,50 @@ Web Document Conformance Checker (BETA)</title>
   </d:desc>
 </d:item>
 
-<d:item name="charset label detected" class="format-charset warning"
-    level="w">
+<d:item name="sniffing:chardet"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">Character encoding of this document is sniffed
+  as <code><var>{text}</var></code> (Sniffed because no explicit specification
+  for the character encoding of this document is found in the transfer
+  procotol headers).</d:message>
+</d:item>
+
+<d:item name="sniffing:default"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">Character encoding of this document is defaulted
+  to <code><var>{text}</var></code> because no explicit specification
+  for the character encoding of this document is found in the transfer
+  procotol headers.</d:message>
+</d:item>
+
+<d:item name="chardecode:fallback"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">Since no decoder for the document character
+  encoding is found, decoder for the character encoding
+  <code><var>{text}</var></code> is used.  Checking results might be
+  <em>wrong</em>.</d:message>
+</d:item>
+
+<d:item name="chardecode:no error"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">Conformance error checking for the character
+  encoding <code><var>{text}</var></code> is not supported.</d:message>
+</d:item>
+
+<d:item name="charset label:matching"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">Sniffed character encoding 
+  <code><var>{text}</var></code> is same as the character encoding specified
+  in the character encoding declaration.  This is <em>not</em> an
+  error.</d:message>
+</d:item>
+
+<d:item name="charset label detected"
+    class="format-charset warning"
+    modules="HTML::Parser">
   <d:message xml:lang="en">While parsing the document as
-  <code><var>$0</var></code>, a character encoding declaration specifying
-  character encoding as <code><var>$1</var></code> is found.  The document
+  <code><var>{text}</var></code>, a character encoding declaration specifying
+  a different character encoding is found.  The document
   is reparsed.</d:message>
   <d:desc xml:lang="en">
     <p>While parsing a document in a character encoding,
@@ -145,6 +184,19 @@ Web Document Conformance Checker (BETA)</title>
     </ul>
   </d:desc>
 </d:item>
+
+<d:item name="NULL"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">The <code class="charname">NULL</code> character
+  is not allowed.</d:message>
+</d:item>
+
+<d:item name="control char"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">Code point <code><var>{text}</var></code> is
+  not allowed.</d:message>
+</d:item>
+
 </section>
 
 <section id="html5-tokenize-error">
@@ -179,8 +231,24 @@ Web Document Conformance Checker (BETA)</title>
   </d:desc>
 </d:item>
 
+<d:item name="bad attribute name"
+    class="tokenize-error"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">Attribute name cannot contain characters
+  <code>"</code>, <code>'</code>, and <code>=</code>.</d:message>
+</d:item>
+
+<d:item name="bad attribute value"
+    class="tokenize-error"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">Attribute value must be quoted by <code>"</code>
+  or <code>'</code> if it contains a <code>"</code>, <code>'</code>, or
+  <code>=</code> character.</d:message>
+</d:item>
+
 <d:item name="bare ero"
-    class="tokenize-error">
+    class="tokenize-error"
+    modules="HTML::Parser">
   <d:message xml:lang="en">The <code>&amp;</code> character must
   be escaped as <code class="html example">&amp;amp;</code>.</d:message>
   <d:desc xml:lang="en">
@@ -217,7 +285,8 @@ Web Document Conformance Checker (BETA)</title>
 </d:item>
 
 <d:item name="bare etago"
-    class="tokenize-error">
+    class="tokenize-error"
+    modules="HTML::Parser">
   <d:message xml:lang="en">A <code>&lt;/</code> string is not followed
   by a tag name.</d:message><!-- </ EOF -->
   <d:desc xml:lang="en">
@@ -240,7 +309,8 @@ Web Document Conformance Checker (BETA)</title>
 </d:item>
 
 <d:item name="bare stago"
-    class="tokenize-error">
+    class="tokenize-error"
+    modules="HTML::Parser">
   <d:message xml:lang="en">A <code>&lt;</code> character is not followed
   by tag name or by a <code>!</code> character.</d:message>
   <d:desc xml:lang="en">
@@ -256,7 +326,8 @@ Web Document Conformance Checker (BETA)</title>
 </d:item>
 
 <d:item name="bare nero"
-    class="tokenize-error">
+    class="tokenize-error"
+    modules="HTML::Parser">
   <d:message xml:lang="en">The decimal representation of the code position
   of a character must be specified after <code>&amp;#</code>.</d:message>
   <d:desc xml:lang="en">
@@ -289,7 +360,8 @@ Web Document Conformance Checker (BETA)</title>
 </d:item>
 
 <d:item name="bare hcro"
-    class="tokenize-error">
+    class="tokenize-error"
+    modules="HTML::Parser">
   <d:message xml:lang="en">The hexadecimal representation of the code position
   of a character must be specified after <code>&amp;#x</code>.</d:message>
   <d:desc xml:lang="en">
@@ -311,7 +383,8 @@ Web Document Conformance Checker (BETA)</title>
 </d:item>
 
 <d:item name="bogus comment"
-    class="tokenize-error">
+    class="tokenize-error"
+    modules="HTML::Parser">
   <d:message xml:lang="en">String <code>&lt;!</code> is not followed
   by <code>--</code>.</d:message>
   <d:desc xml:lang="en">
@@ -345,7 +418,8 @@ Web Document Conformance Checker (BETA)</title>
 </d:item>
 
 <d:item name="bogus end tag"
-    class="tokenize-error">
+    class="tokenize-error"
+    modules="HTML::Parser">
   <d:message xml:lang="en">String <code>&lt;/</code> is not followed
   by tag name.</d:message><!-- </ non-name-start-char-non-EOF -->
   <d:desc xml:lang="en">
@@ -366,8 +440,24 @@ Web Document Conformance Checker (BETA)</title>
   </d:desc>
 </d:item>
 
+<d:item name="C1 character reference"
+    class="tokenize-error"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">Character reference to
+  <code><var>{text}</var></code> is not allowed.</d:message>
+</d:item>
+
+<d:item name="CR character reference"
+    class="tokenize-error"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">Character reference to
+  <code>U+000D</code> (<code class="charname">CARRIAGE RETURN</code>)
+  is not allowed.</d:message>
+</d:item>
+
 <d:item name="dash in comment"
-    class="tokenize-error">
+    class="tokenize-error"
+    modules="HTML::Parser">
   <d:message xml:lang="en">There is a <code>--</code> sequence
   in a comment.</d:message>
   <d:desc xml:lang="en">
@@ -384,9 +474,10 @@ Web Document Conformance Checker (BETA)</title>
 </d:item>
 
 <d:item name="duplicate attribute"
-    class="tokenize-error">
+    class="tokenize-error"
+    modules="HTML::Parser">
   <d:message xml:lang="en">There are two attributes with name
-      <code><var>$0</var></code>.</d:message>
+      <code><var>{text}</var></code>.</d:message>
   <d:desc xml:lang="en">
     <p>There are more than one attributes with the same
     name in a tag.  The document is non-conforming.</p>
@@ -396,8 +487,36 @@ Web Document Conformance Checker (BETA)</title>
   </d:desc>
 </d:item>
 
+<d:item name="empty start tag"
+    class="tokenize-error"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">Empty start tag (<code>&lt;></code>) is not
+  allowed.</d:message>
+</d:item>
+
+<d:item name="empty end tag"
+    class="tokenize-error"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">Empty end tag (<code>&lt;/></code>) is not
+  allowed.</d:message>
+</d:item>
+
+<d:item name="end tag attribute"
+    class="tokenize-error"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">End tag cannot have attributes.</d:message>
+</d:item>
+
+<d:item name="invalid character reference"
+    class="tokenize-error"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">Character reference to
+  <code><var>{text}</var></code> is not allowed.</d:message>
+</d:item>
+
 <d:item name="nestc"
-    class="tokenize-error">
+    class="tokenize-error"
+    modules="HTML::Parser">
   <d:message xml:lang="en">Polytheistic slash (<code>/></code>) cannot be
   used for this element.</d:message>
   <d:desc xml:lang="en">
@@ -443,11 +562,55 @@ Web Document Conformance Checker (BETA)</title>
   </d:desc>
 </d:item>
 
+<d:item name="no DOCTYPE name"
+    class="tokenize-error"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">After the string <code>&lt;!DOCTYPE </code>, the
+  document type name must be specified.</d:message>
+</d:item>
+
+<d:item name="no PUBLIC literal"
+    class="tokenize-error"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">After the keyword <code>PUBLIC</code>, no
+  oublic identifier is specified.</d:message>
+</d:item>
+
+<d:item name="no refc"
+    class="tokenize-error"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">Character reference must be closed by a
+  <code>;</code> character.</d:message>
+</d:item>
+
+<d:item name="no space before DOCTYPE name"
+    class="tokenize-error"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">After the string <code>&lt;!DOCTYPE</code>, there
+  must be at least a white space character before the document type
+  name.</d:message>
+</d:item>
+
+<d:item name="no space between attributes"
+    class="tokenize-error"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">Attributes must be separeted by at least a
+  white space character.</d:message>
+</d:item>
+
+<d:item name="no SYSTEM literal"
+    class="tokenize-error"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">After the keyword <code>SYSTEM</code>, no
+  system identifier is specified.</d:message>
+</d:item>
 
 <d:item name="pio"
-    class="tokenize-error">
+    class="tokenize-error"
+    modules="HTML::Parser">
   <d:message xml:lang="en">Processing instruction 
-  (<code>&lt;?<var>...</var>></code>) cannot be used.</d:message>
+  (<code>&lt;?<var>...</var>></code>) is not allowed in HTML
+  document.</d:message>
   <d:desc xml:lang="en">
     <p>Processing instructions (<code>&lt;?<var>...</var>?></code>),
     including XML declaration (<code>&lt;?xml <var>...</var>?></code>)
@@ -495,15 +658,135 @@ p {
   </d:desc>
 </d:item>
 
+<d:item name="string after DOCTYPE name"
+    class="tokenize-error"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">There is a bogus string after the document type
+  name.</d:message>
+</d:item>
+
+<d:item name="string after PUBLIC"
+    class="tokenize-error"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">There is a bogus string after the keyword
+  <code>PUBLIC</code>.</d:message>
+</d:item>
+
+<d:item name="string after PUBLIC literal"
+    class="tokenize-error"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">There is a bogus string after the public
+  identifier.</d:message>
+</d:item>
+
+<d:item name="string after SYSTEM"
+    class="tokenize-error"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">There is a bogus string after the keyword
+  <code>SYSTEM</code>.</d:message>
+</d:item>
+
+<d:item name="string after SYSTEM literal"
+    class="tokenize-error"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">There is a bogus string after the system
+  identifier.</d:message>
+</d:item>
+
+<d:item name="unclosed attribute value"
+    class="tokenize-error"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">Attribute value is not closed by a quotation
+  mark.</d:message>
+</d:item>
+
+<d:item name="unclosed comment"
+    class="tokenize-error"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">Comment is not closed by a string
+  <code>--></code>.</d:message>
+</d:item>
+
+<d:item name="unclosed DOCTYPE"
+    class="tokenize-error"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">The <code>DOCTYPE</code> is not closed by a
+  <code>></code> character.</d:message>
+</d:item>
+
+<d:item name="unclosed PUBLIC literal"
+    class="tokenize-error"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">The public identifier literal is not closed by a
+  quotation mark.</d:message>
+</d:item>
+
+<d:item name="unclosed SYSTEM literal"
+    class="tokenize-error"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">The system identifier literal is not closed by a
+  quotation mark.</d:message>
+</d:item>
+
+<d:item name="unclosed tag"
+    class="tokenize-error"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">Tag is not closed by a <code>></code>
+  character.</d:message>
+</d:item>
+
 </section>
 
 <section id="html5-parse-errors">
 <h2>HTML5 Parse Errors in Tree Construction Stage</h2>
 
+<d:item name="after body"
+    class="parse-error"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">Start tag <code>&lt;<var>{text}</var>></code> is
+  not allowed after the <code>body</code> is closed.</d:message>
+</d:item>
+
+<d:item name="after body:/"
+    class="parse-error"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">End tag <code>&lt;/<var>{text}</var>></code> is
+  not allowed after the <code>body</code> is closed.</d:message>
+</d:item>
+
+<d:item name="after body:#text"
+    class="parse-error"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">Non‐white‐space characters are not allowed
+  after the <code>body</code> is closed.</d:message>
+</d:item>
+
+<d:item name="after frameset"
+    class="parse-error"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">Start tag <code>&lt;<var>{text}</var>></code> is
+  not allowed after the <code>frameset</code> is closed.</d:message>
+</d:item>
+
+<d:item name="after frameset:/"
+    class="parse-error"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">End tag <code>&lt;/<var>{text}</var>></code> is
+  not allowed after the <code>frameset</code> is closed.</d:message>
+</d:item>
+
+<d:item name="after frameset:#text"
+    class="parse-error"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">Non‐white‐space characters are not allowed
+  after the <code>frame</code> is closed.</d:message>
+</d:item>
+
 <d:item name="after head"
     class="parse-error">
-  <d:message xml:lang="en">The <code><var>$0</var></code> element cannot be
-  inserted between <code>head</code> and <code>body</code> elements.</d:message>
+  <d:message xml:lang="en">The <code><var>{text}</var></code> element cannot be
+  inserted between <code>head</code> and <code>body</code>
+  elements.</d:message>
   <d:desc xml:lang="en">
     <p>A start tag appears after the <code>head</code> element is closed
     but before the <code>body</code> element is opened.
@@ -511,22 +794,37 @@ p {
   </d:desc>
 </d:item>
 
-<d:item name="DOCTYPE in the middle"
-    class="parse-error">
-  <d:message xml:lang="en">A <code>DOCTYPE</code> appears after any
-  element or data character has been seen.</d:message>
-  <d:desc xml:lang="en">
-    <p>A <code>DOCTYPE</code> appears after any element or data character
-    has been seen.  The document is non-conforming.</p>
-    
-    <p>The <code>DOCTYPE</code> must be placed before any
-    tag, reference, or data character.  Only white space characters
-    and comments can be inserted before the <code>DOCTYPE</code>.</p>
-  </d:desc>
+<d:item name="after html"
+    class="parse-error"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">Start tag <code>&lt;<var>{text}</var>></code> is
+  not allowed after the <code>html</code> is closed.</d:message>
+</d:item>
+
+<d:item name="after html:/"
+    class="parse-error"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">End tag <code>&lt;/<var>{text}</var>></code> is
+  not allowed after the <code>html</code> is closed.</d:message>
+</d:item>
+
+<d:item name="after html:#text"
+    class="parse-error"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">Non‐white‐space characters are not allowed
+  after the <code>html</code> is closed.</d:message>
+</d:item>
+
+<d:item name="image"
+    class="parse-error"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">The <code>image</code> element is
+  obsolete.</d:message>
 </d:item>
 
 <d:item name="in a:a"
-    class="parse-error">
+    class="parse-error"
+    modules="HTML::Parser">
   <d:message xml:lang="en">Anchor cannot be nested.</d:message>
   <d:desc xml:lang="en">
     <p>HTML <code>a</code> elements cannot be nested.
@@ -538,8 +836,9 @@ p {
 </d:item>
 
 <d:item name="in body"
-    class="parse-error">
-  <d:message xml:lang="en">Tag <code>&lt;<var>$0</var>&gt;</code>
+    class="parse-error"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">Start tag <code>&lt;<var>{text}</var>&gt;</code>
   is not allowed in the <code>body</code> element.</d:message>
   <d:desc xml:lang="en">
     <p>The start or end tag of an element, which 
@@ -549,8 +848,58 @@ p {
   </d:desc>
 </d:item>
 
+<d:item name="in body:#eof"
+    class="parse-error"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">Some element is not closed before the end of
+  file.</d:message>
+</d:item>
+
+<d:item name="in button:button"
+    class="parse-error"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">The <code>button</code> element cannot be
+  nested.</d:message>
+</d:item>
+
+<d:item name="in CDATA:#eof"
+    class="parse-error"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">Element is not closed before the end of
+  file.</d:message>
+</d:item>
+
+<d:item name="in form:form"
+    class="parse-error"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">Start tag <code>&lt;form></code> is
+  not allowed in a <code>form</code> element.</d:message>
+</d:item>
+
+<d:item name="in frameset"
+    class="parse-error"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">Start tag <code>&lt;<var>{text}</var>></code> is
+  not allowed in a <code>framset</code> element.</d:message>
+</d:item>
+
+<d:item name="in frameset:/"
+    class="parse-error"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">End tag <code>&lt;/<var>{text}</var>></code> is
+  not allowed in a <code>frameset</code> element.</d:message>
+</d:item>
+
+<d:item name="in frameset:#text"
+    class="parse-error"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">Non‐white‐space characters are not allowed
+  in a <code>frameset</code> element.</d:message>
+</d:item>
+
 <d:item name="in head:head"
-    class="parse-error">
+    class="parse-error"
+    modules="HTML::Parser">
   <d:message xml:lang="en">Start tag <code>&lt;head&gt;</code>
   is not allowed in the <code>head</code> element.</d:message>
   <d:desc xml:lang="en">
@@ -563,9 +912,85 @@ p {
   </d:desc>
 </d:item>
 
+<d:item name="in html:#DOCTYPE"
+    class="parse-error"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">A <code>DOCTYPE</code> appears after any
+  element or data character has been seen.</d:message>
+  <!-- <!DOCTYPE HTML><!DOCTYPE HTML> -->
+  <!-- <html><!DOCTYPE HTML> -->
+  <d:desc xml:lang="en">
+    <p>A <code>DOCTYPE</code> appears after any element or data character
+    has been seen.  The document is non-conforming.</p>
+    
+    <p>The <code>DOCTYPE</code> must be placed before any
+    tag, reference, or data character.  Only white space characters
+    and comments can be inserted before the <code>DOCTYPE</code>.</p>
+  </d:desc>
+</d:item>
+
+<d:item name="in nobr:nobr"
+    class="parse-error"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">The <code>nobr</code> element cannot be
+  nested.</d:message>
+</d:item>
+
+<d:item name="in noscript"
+    class="parse-error"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">The <code><var>{text}</var></code> element is not
+  allowed in a <code>noscript</code> element in the
+  <code>head</code> element.</d:message>
+</d:item>
+
+<d:item name="in noscript:/"
+    class="parse-error"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">An end tag <code>&lt;/<var>{text}</var>></code>
+  appers before the <code>noscript</code> element is closed.</d:message>
+</d:item>
+
+<d:item name="in noscript:#eof"
+    class="parse-error"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">A <code>noscript</code> element is not closed
+  before the end of file.</d:message>
+</d:item>
+
+<d:item name="in noscript:#text"
+    class="parse-error"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">Non‐white‐space characters are not allowed
+  in a <code>noscript</code> element in the <code>head</code>
+  element.</d:message>
+</d:item>
+
+<d:item name="in PCDATA:#eof"
+    class="parse-error"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">Element is not closed before the end of
+  file.</d:message>
+</d:item>
+
+<d:item name="in select"
+    class="parse-error"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">Start tag <code>&lt;<var>{text}</var>&gt;</code>
+  is not allowed in a <code>select</code> element.</d:message>
+</d:item>
+
+<d:item name="in select:/"
+    class="parse-error"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">End tag <code>&lt;/<var>{text}</var>&gt;</code>
+  is not allowed in a <code>select</code> element.</d:message>
+</d:item>
+
 <d:item name="in table"
-    class="parse-error">
-  <d:message xml:lang="en">Tag <code>&lt;<var>$0</var>&gt;</code>
+    class="parse-error"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">Start tag <code>&lt;<var>{text}</var>&gt;</code>
   is not allowed in a <code>table</code> element.</d:message>
   <d:desc xml:lang="en">
     <p>The start or end tag of an element, which
@@ -581,13 +1006,21 @@ p {
   </d:desc>
 </d:item>
 
-<d:item name="in table:#character"
-    class="parse-error">
-  <d:message xml:lang="en">Data character is not allowed in 
-  <code>table</code>.</d:message>
+<d:item name="in table:/"
+    class="parse-error"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">End tag <code>&lt;/<var>{text}</var>&gt;</code>
+  is not allowed in a <code>table</code> element.</d:message>
+</d:item>
+
+<d:item name="in table:#text"
+    class="parse-error"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">Non‐white‐space character is not allowed within 
+  the <code>table</code> element, outside of the caption and cells.</d:message>
   <d:desc xml:lang="en">
-    <p>A data character appears in <code>table</code>.  The document
-    is non-conforming.</p>
+    <p>A non‐white‐space character appears in <code>table</code>.
+    The document is non-conforming.</p>
 
     <p>In <code>table</code>, only table related elements
     are allowed; any other element and data character must be contained in
@@ -597,8 +1030,16 @@ p {
   </d:desc>
 </d:item>
 
+<d:item name="isindex"
+    class="parse-error"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">The <code>isindex</code> element is
+  obsolete.</d:message>
+</d:item>
+
 <d:item name="missing start tag:tr"
-    class="parse-error">
+    class="parse-error"
+    modules="HTML::Parser">
   <d:message xml:lang="en">Start tag of <code>tr</code>
   element is missing.</d:message>
   <d:desc>
@@ -614,7 +1055,8 @@ p {
 </d:item>
 
 <d:item name="no DOCTYPE"
-    class="parse-error">
+    class="parse-error"
+    modules="HTML::Parser">
   <d:message xml:lang="en">This document does not start with a
   <code>DOCTYPE</code>.</d:message>
   <d:desc>
@@ -632,8 +1074,9 @@ p {
 </d:item>
 
 <d:item name="not closed"
-    class="parse-error">
-  <d:message xml:lang="en">Element <code><var>$0</var></code> is not
+    class="parse-error"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">Element <code><var>{text}</var></code> is not
   closed.</d:message>
   <d:desc>
     <p>End tag of an element is not found before, for example,
@@ -665,7 +1108,8 @@ p {
 </d:item>
 
 <d:item name="not first start tag"
-    class="parse-error">
+    class="parse-error"
+    modules="HTML::Parser">
   <d:message xml:lang="en">This <code>&lt;html></code> tag is not
   the first start tag.</d:message>
   <d:desc>
@@ -683,7 +1127,8 @@ p {
 </d:item>
 
 <d:item name="not HTML5"
-    class="parse-error">
+    class="parse-error"
+    modules="HTML::Parser">
   <d:message xml:lang="en">This document is written in an old version of 
   HTML.</d:message>
   <d:desc xml:lang="en">
@@ -700,9 +1145,17 @@ p {
   </d:desc>
 </d:item>
 
+<d:item name="start tag not allowed"
+    class="parse-error"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">Start tag <code>&lt;<var>{text}</var>></code> is
+  not allowed here.</d:message>
+</d:item>
+
 <d:item name="unmatched end tag"
-    class="parse-error">
-  <d:message xml:lang="en">Element <code><var>$0</var></code> is not
+    class="parse-error"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">Element <code><var>{text}</var></code> is not
   opened.</d:message>
   <d:desc>
     <p>An end tag appears though no element with the same name
@@ -2184,6 +2637,6 @@ is used in the document.</td>
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2008/08/15 05:53:23 $ -->
+<!-- $Date: 2008/08/15 08:36:41 $ -->
 </body>
 </html>

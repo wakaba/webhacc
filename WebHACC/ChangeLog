@@ -1,5 +1,12 @@
 2008-08-15  Wakaba  <wakaba@suika.fam.cx>
 
+	* Output.pm: |fieldset| end tag no longer necessary.
+
+	* Result.pm: Link to "#parse-errors" if there are
+	encoding layer errors.
+
+2008-08-15  Wakaba  <wakaba@suika.fam.cx>
+
 	* Input.pm (generate_transfer_sections): Use standard
 	error list methods for transfer errors.  Typos fixed.
 

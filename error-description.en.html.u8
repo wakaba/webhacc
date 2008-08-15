@@ -89,9 +89,32 @@ Web Document Conformance Checker (BETA)</title>
     <abbr>ASCII</abbr> for the purpose of <abbr>HTML</abbr> conformance.</p>
   </div>
 
-<div class="section format-charset warning" id="w:charset-label-detected"><h3>While parsing the document as
-  <code><var>$0</var></code>, a character encoding declaration specifying
-  character encoding as <code><var>$1</var></code> is found.  The document
+<div class="section " id="sniffing:chardet"><h3>Character encoding of this document is sniffed
+  as <code><var>{text}</var></code> (Sniffed because no explicit specification
+  for the character encoding of this document is found in the transfer
+  procotol headers).</h3></div>
+
+<div class="section " id="sniffing:default"><h3>Character encoding of this document is defaulted
+  to <code><var>{text}</var></code> because no explicit specification
+  for the character encoding of this document is found in the transfer
+  procotol headers.</h3></div>
+
+<div class="section " id="chardecode:fallback"><h3>Since no decoder for the document character
+  encoding is found, decoder for the character encoding
+  <code><var>{text}</var></code> is used.  Checking results might be
+  <em>wrong</em>.</h3></div>
+
+<div class="section " id="chardecode:no-error"><h3>Conformance error checking for the character
+  encoding <code><var>{text}</var></code> is not supported.</h3></div>
+
+<div class="section " id="charset-label:matching"><h3>Sniffed character encoding 
+  <code><var>{text}</var></code> is same as the character encoding specified
+  in the character encoding declaration.  This is <em>not</em> an
+  error.</h3></div>
+
+<div class="section format-charset warning" id="charset-label-detected"><h3>While parsing the document as
+  <code><var>{text}</var></code>, a character encoding declaration specifying
+  a different character encoding is found.  The document
   is reparsed.</h3>
     <p>While parsing a document in a character encoding,
     a character encoding declaration which declares the character
@@ -116,6 +139,13 @@ Web Document Conformance Checker (BETA)</title>
     <li>Use <code>UTF-8</code>.</li>
     </ul>
   </div>
+
+<div class="section " id="NULL"><h3>The <code class="charname">NULL</code> character
+  is not allowed.</h3></div>
+
+<div class="section " id="control-char"><h3>Code point <code><var>{text}</var></code> is
+  not allowed.</h3></div>
+
 </section>
 
 <section id="html5-tokenize-error">
@@ -141,6 +171,13 @@ Web Document Conformance Checker (BETA)</title>
     contents and comments must be put into the <code>body</code>
     element.</p>
   </div>
+
+<div class="section tokenize-error" id="bad-attribute-name"><h3>Attribute name cannot contain characters
+  <code>"</code>, <code>'</code>, and <code>=</code>.</h3></div>
+
+<div class="section tokenize-error" id="bad-attribute-value"><h3>Attribute value must be quoted by <code>"</code>
+  or <code>'</code> if it contains a <code>"</code>, <code>'</code>, or
+  <code>=</code> character.</h3></div>
 
 <div class="section tokenize-error" id="bare-ero"><h3>The <code>&amp;</code> character must
   be escaped as <code class="html example">&amp;amp;</code>.</h3>
@@ -313,6 +350,13 @@ Web Document Conformance Checker (BETA)</title>
     </p>
   </div>
 
+<div class="section tokenize-error" id="C1-character-reference"><h3>Character reference to
+  <code><var>{text}</var></code> is not allowed.</h3></div>
+
+<div class="section tokenize-error" id="CR-character-reference"><h3>Character reference to
+  <code>U+000D</code> (<code class="charname">CARRIAGE RETURN</code>)
+  is not allowed.</h3></div>
+
 <div class="section tokenize-error" id="dash-in-comment"><h3>There is a <code>--</code> sequence
   in a comment.</h3>
     <p>There is a <code>-</code> (<code>U+002D</code>
@@ -327,13 +371,24 @@ Web Document Conformance Checker (BETA)</title>
   </div>
 
 <div class="section tokenize-error" id="duplicate-attribute"><h3>There are two attributes with name
-      <code><var>$0</var></code>.</h3>
+      <code><var>{text}</var></code>.</h3>
     <p>There are more than one attributes with the same
     name in a tag.  The document is non-conforming.</p>
 
     <p>The <code>motion</code> attribute is not part of the HTML standard.
     Use <code>img</code> element with animation GIF instead.</p>
   </div>
+
+<div class="section tokenize-error" id="empty-start-tag"><h3>Empty start tag (<code>&lt;&gt;</code>) is not
+  allowed.</h3></div>
+
+<div class="section tokenize-error" id="empty-end-tag"><h3>Empty end tag (<code>&lt;/&gt;</code>) is not
+  allowed.</h3></div>
+
+<div class="section tokenize-error" id="end-tag-attribute"><h3>End tag cannot have attributes.</h3></div>
+
+<div class="section tokenize-error" id="invalid-character-reference"><h3>Character reference to
+  <code><var>{text}</var></code> is not allowed.</h3></div>
 
 <div class="section tokenize-error" id="nestc"><h3>Polytheistic slash (<code>/&gt;</code>) cannot be
   used for this element.</h3>
@@ -379,9 +434,28 @@ Web Document Conformance Checker (BETA)</title>
     no effect in HTML.</p>
   </div>
 
+<div class="section tokenize-error" id="no-DOCTYPE-name"><h3>After the string <code>&lt;!DOCTYPE </code>, the
+  document type name must be specified.</h3></div>
+
+<div class="section tokenize-error" id="no-PUBLIC-literal"><h3>After the keyword <code>PUBLIC</code>, no
+  oublic identifier is specified.</h3></div>
+
+<div class="section tokenize-error" id="no-refc"><h3>Character reference must be closed by a
+  <code>;</code> character.</h3></div>
+
+<div class="section tokenize-error" id="no-space-before-DOCTYPE-name"><h3>After the string <code>&lt;!DOCTYPE</code>, there
+  must be at least a white space character before the document type
+  name.</h3></div>
+
+<div class="section tokenize-error" id="no-space-between-attributes"><h3>Attributes must be separeted by at least a
+  white space character.</h3></div>
+
+<div class="section tokenize-error" id="no-SYSTEM-literal"><h3>After the keyword <code>SYSTEM</code>, no
+  system identifier is specified.</h3></div>
 
 <div class="section tokenize-error" id="pio"><h3>Processing instruction 
-  (<code>&lt;?<var>...</var>&gt;</code>) cannot be used.</h3>
+  (<code>&lt;?<var>...</var>&gt;</code>) is not allowed in HTML
+  document.</h3>
     <p>Processing instructions (<code>&lt;?<var>...</var>?&gt;</code>),
     including XML declaration (<code>&lt;?xml <var>...</var>?&gt;</code>)
     and XML style sheet <abbr title="processing instruction">PI</abbr>
@@ -429,27 +503,81 @@ p {
     as string.</p>
   </div>
 
+<div class="section tokenize-error" id="string-after-DOCTYPE-name"><h3>There is a bogus string after the document type
+  name.</h3></div>
+
+<div class="section tokenize-error" id="string-after-PUBLIC"><h3>There is a bogus string after the keyword
+  <code>PUBLIC</code>.</h3></div>
+
+<div class="section tokenize-error" id="string-after-PUBLIC-literal"><h3>There is a bogus string after the public
+  identifier.</h3></div>
+
+<div class="section tokenize-error" id="string-after-SYSTEM"><h3>There is a bogus string after the keyword
+  <code>SYSTEM</code>.</h3></div>
+
+<div class="section tokenize-error" id="string-after-SYSTEM-literal"><h3>There is a bogus string after the system
+  identifier.</h3></div>
+
+<div class="section tokenize-error" id="unclosed-attribute-value"><h3>Attribute value is not closed by a quotation
+  mark.</h3></div>
+
+<div class="section tokenize-error" id="unclosed-comment"><h3>Comment is not closed by a string
+  <code>--&gt;</code>.</h3></div>
+
+<div class="section tokenize-error" id="unclosed-DOCTYPE"><h3>The <code>DOCTYPE</code> is not closed by a
+  <code>&gt;</code> character.</h3></div>
+
+<div class="section tokenize-error" id="unclosed-PUBLIC-literal"><h3>The public identifier literal is not closed by a
+  quotation mark.</h3></div>
+
+<div class="section tokenize-error" id="unclosed-SYSTEM-literal"><h3>The system identifier literal is not closed by a
+  quotation mark.</h3></div>
+
+<div class="section tokenize-error" id="unclosed-tag"><h3>Tag is not closed by a <code>&gt;</code>
+  character.</h3></div>
+
 </section>
 
 <section id="html5-parse-errors">
 <h2>HTML5 Parse Errors in Tree Construction Stage</h2>
 
-<div class="section parse-error" id="after-head"><h3>The <code><var>$0</var></code> element cannot be
-  inserted between <code>head</code> and <code>body</code> elements.</h3>
+<div class="section parse-error" id="after-body"><h3>Start tag <code>&lt;<var>{text}</var>&gt;</code> is
+  not allowed after the <code>body</code> is closed.</h3></div>
+
+<div class="section parse-error" id="after-body:/"><h3>End tag <code>&lt;/<var>{text}</var>&gt;</code> is
+  not allowed after the <code>body</code> is closed.</h3></div>
+
+<div class="section parse-error" id="after-body:#text"><h3>Non‐white‐space characters are not allowed
+  after the <code>body</code> is closed.</h3></div>
+
+<div class="section parse-error" id="after-frameset"><h3>Start tag <code>&lt;<var>{text}</var>&gt;</code> is
+  not allowed after the <code>frameset</code> is closed.</h3></div>
+
+<div class="section parse-error" id="after-frameset:/"><h3>End tag <code>&lt;/<var>{text}</var>&gt;</code> is
+  not allowed after the <code>frameset</code> is closed.</h3></div>
+
+<div class="section parse-error" id="after-frameset:#text"><h3>Non‐white‐space characters are not allowed
+  after the <code>frame</code> is closed.</h3></div>
+
+<div class="section parse-error" id="after-head"><h3>The <code><var>{text}</var></code> element cannot be
+  inserted between <code>head</code> and <code>body</code>
+  elements.</h3>
     <p>A start tag appears after the <code>head</code> element is closed
     but before the <code>body</code> element is opened.
     The document is non-conforming.</p>
   </div>
 
-<div class="section parse-error" id="DOCTYPE-in-the-middle"><h3>A <code>DOCTYPE</code> appears after any
-  element or data character has been seen.</h3>
-    <p>A <code>DOCTYPE</code> appears after any element or data character
-    has been seen.  The document is non-conforming.</p>
-    
-    <p>The <code>DOCTYPE</code> must be placed before any
-    tag, reference, or data character.  Only white space characters
-    and comments can be inserted before the <code>DOCTYPE</code>.</p>
-  </div>
+<div class="section parse-error" id="after-html"><h3>Start tag <code>&lt;<var>{text}</var>&gt;</code> is
+  not allowed after the <code>html</code> is closed.</h3></div>
+
+<div class="section parse-error" id="after-html:/"><h3>End tag <code>&lt;/<var>{text}</var>&gt;</code> is
+  not allowed after the <code>html</code> is closed.</h3></div>
+
+<div class="section parse-error" id="after-html:#text"><h3>Non‐white‐space characters are not allowed
+  after the <code>html</code> is closed.</h3></div>
+
+<div class="section parse-error" id="image"><h3>The <code>image</code> element is
+  obsolete.</h3></div>
 
 <div class="section parse-error" id="in-a:a"><h3>Anchor cannot be nested.</h3>
     <p>HTML <code>a</code> elements cannot be nested.
@@ -459,13 +587,34 @@ p {
     implies the end tag of any opening <code>a</code> element.</p>
   </div>
 
-<div class="section parse-error" id="in-body"><h3>Tag <code>&lt;<var>$0</var>&gt;</code>
+<div class="section parse-error" id="in-body"><h3>Start tag <code>&lt;<var>{text}</var>&gt;</code>
   is not allowed in the <code>body</code> element.</h3>
     <p>The start or end tag of an element, which 
     cannot be a descendant of <code>body</code> element, appears
     in the input stream while the <code>body</code> element has been opened.
     The document is non-conforming.</p>
   </div>
+
+<div class="section parse-error" id="in-body:#eof"><h3>Some element is not closed before the end of
+  file.</h3></div>
+
+<div class="section parse-error" id="in-button:button"><h3>The <code>button</code> element cannot be
+  nested.</h3></div>
+
+<div class="section parse-error" id="in-CDATA:#eof"><h3>Element is not closed before the end of
+  file.</h3></div>
+
+<div class="section parse-error" id="in-form:form"><h3>Start tag <code>&lt;form&gt;</code> is
+  not allowed in a <code>form</code> element.</h3></div>
+
+<div class="section parse-error" id="in-frameset"><h3>Start tag <code>&lt;<var>{text}</var>&gt;</code> is
+  not allowed in a <code>framset</code> element.</h3></div>
+
+<div class="section parse-error" id="in-frameset:/"><h3>End tag <code>&lt;/<var>{text}</var>&gt;</code> is
+  not allowed in a <code>frameset</code> element.</h3></div>
+
+<div class="section parse-error" id="in-frameset:#text"><h3>Non‐white‐space characters are not allowed
+  in a <code>frameset</code> element.</h3></div>
 
 <div class="section parse-error" id="in-head:head"><h3>Start tag <code>&lt;head&gt;</code>
   is not allowed in the <code>head</code> element.</h3>
@@ -477,7 +626,43 @@ p {
     start tag <code>&lt;head&gt;</code> can appear in the input stream.</p>
   </div>
 
-<div class="section parse-error" id="in-table"><h3>Tag <code>&lt;<var>$0</var>&gt;</code>
+<div class="section parse-error" id="in-html:#DOCTYPE"><h3>A <code>DOCTYPE</code> appears after any
+  element or data character has been seen.</h3>
+    <p>A <code>DOCTYPE</code> appears after any element or data character
+    has been seen.  The document is non-conforming.</p>
+    
+    <p>The <code>DOCTYPE</code> must be placed before any
+    tag, reference, or data character.  Only white space characters
+    and comments can be inserted before the <code>DOCTYPE</code>.</p>
+  </div>
+
+<div class="section parse-error" id="in-nobr:nobr"><h3>The <code>nobr</code> element cannot be
+  nested.</h3></div>
+
+<div class="section parse-error" id="in-noscript"><h3>The <code><var>{text}</var></code> element is not
+  allowed in a <code>noscript</code> element in the
+  <code>head</code> element.</h3></div>
+
+<div class="section parse-error" id="in-noscript:/"><h3>An end tag <code>&lt;/<var>{text}</var>&gt;</code>
+  appers before the <code>noscript</code> element is closed.</h3></div>
+
+<div class="section parse-error" id="in-noscript:#eof"><h3>A <code>noscript</code> element is not closed
+  before the end of file.</h3></div>
+
+<div class="section parse-error" id="in-noscript:#text"><h3>Non‐white‐space characters are not allowed
+  in a <code>noscript</code> element in the <code>head</code>
+  element.</h3></div>
+
+<div class="section parse-error" id="in-PCDATA:#eof"><h3>Element is not closed before the end of
+  file.</h3></div>
+
+<div class="section parse-error" id="in-select"><h3>Start tag <code>&lt;<var>{text}</var>&gt;</code>
+  is not allowed in a <code>select</code> element.</h3></div>
+
+<div class="section parse-error" id="in-select:/"><h3>End tag <code>&lt;/<var>{text}</var>&gt;</code>
+  is not allowed in a <code>select</code> element.</h3></div>
+
+<div class="section parse-error" id="in-table"><h3>Start tag <code>&lt;<var>{text}</var>&gt;</code>
   is not allowed in a <code>table</code> element.</h3>
     <p>The start or end tag of an element, which
     cannot be a child of <code>table</code> element, appears
@@ -491,10 +676,13 @@ p {
     a table caption.</p>
   </div>
 
-<div class="section parse-error" id="in-table:#character"><h3>Data character is not allowed in 
-  <code>table</code>.</h3>
-    <p>A data character appears in <code>table</code>.  The document
-    is non-conforming.</p>
+<div class="section parse-error" id="in-table:/"><h3>End tag <code>&lt;/<var>{text}</var>&gt;</code>
+  is not allowed in a <code>table</code> element.</h3></div>
+
+<div class="section parse-error" id="in-table:#text"><h3>Non‐white‐space character is not allowed within 
+  the <code>table</code> element, outside of the caption and cells.</h3>
+    <p>A non‐white‐space character appears in <code>table</code>.
+    The document is non-conforming.</p>
 
     <p>In <code>table</code>, only table related elements
     are allowed; any other element and data character must be contained in
@@ -502,6 +690,9 @@ p {
     a part of the table, or <code>caption</code> element to create
     a table caption.</p>
   </div>
+
+<div class="section parse-error" id="isindex"><h3>The <code>isindex</code> element is
+  obsolete.</h3></div>
 
 <div class="section parse-error" id="missing-start-tag:tr"><h3>Start tag of <code>tr</code>
   element is missing.</h3>
@@ -530,7 +721,7 @@ p {
     allowed in HTML document.</p>
   </div>
 
-<div class="section parse-error" id="not-closed"><h3>Element <code><var>$0</var></code> is not
+<div class="section parse-error" id="not-closed"><h3>Element <code><var>{text}</var></code> is not
   closed.</h3>
     <p>End tag of an element is not found before, for example,
     an end tag of another element appears or
@@ -587,7 +778,10 @@ p {
     HTML document (roughly) as defined in HTML5.</p>
   </div>
 
-<div class="section parse-error" id="unmatched-end-tag"><h3>Element <code><var>$0</var></code> is not
+<div class="section parse-error" id="start-tag-not-allowed"><h3>Start tag <code>&lt;<var>{text}</var>&gt;</code> is
+  not allowed here.</h3></div>
+
+<div class="section parse-error" id="unmatched-end-tag"><h3>Element <code><var>{text}</var></code> is not
   opened.</h3>
     <p>An end tag appears though no element with the same name
     has been opened.  The document is non-conforming.</p>
@@ -1555,6 +1749,6 @@ is used in the document.</td>
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2008/08/15 05:53:23 $ -->
+<!-- $Date: 2008/08/15 08:36:41 $ -->
 </body>
 </html>

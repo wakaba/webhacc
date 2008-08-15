@@ -5,9 +5,18 @@ w:character encoding;format-charset warning;Use of UTF-8 is encouraged.
 unsupported:character encoding;format-charset unsupported;Conformance for character encoding requirements cannot be checked.
 m:no character encoding declaration;format-charset error;There is no character encoding declaration.
 m:non ascii superset;format-charset error;No character encoding metadata is found in lower‐level protocol nor is there <abbr>BOM</abbr>, while character encoding <code><var>$0</var></code> is not a superset of <abbr>ASCII</abbr>.
-w:charset label detected;format-charset warning;While parsing the document as <code><var>$0</var></code>, a character encoding declaration specifying character encoding as <code><var>$1</var></code> is found. The document is reparsed.
+sniffing:chardet;;Character encoding of this document is sniffed as <code><var>{text}</var></code> (Sniffed because no explicit specification for the character encoding of this document is found in the transfer procotol headers).
+sniffing:default;;Character encoding of this document is defaulted to <code><var>{text}</var></code> because no explicit specification for the character encoding of this document is found in the transfer procotol headers.
+chardecode:fallback;;Since no decoder for the document character encoding is found, decoder for the character encoding <code><var>{text}</var></code> is used. Checking results might be <em>wrong</em>.
+chardecode:no error;;Conformance error checking for the character encoding <code><var>{text}</var></code> is not supported.
+charset label:matching;;Sniffed character encoding <code><var>{text}</var></code> is same as the character encoding specified in the character encoding declaration. This is <em>not</em> an error.
+charset label detected;format-charset warning;While parsing the document as <code><var>{text}</var></code>, a character encoding declaration specifying a different character encoding is found. The document is reparsed.
+NULL;;The <code class="charname">NULL</code> character is not allowed.
+control char;;Code point <code><var>{text}</var></code> is not allowed.
 after html;parse-error;Tag <code>&lt;<var>$0</var>&gt;</code> is not allowed after the end tag <code>&lt;/html&gt;</code>.
 after body;parse-error;Tag <code>&lt;<var>$0</var>&gt;</code> is not allowed after the end tag <code>&lt;/body&gt;</code>.
+bad attribute name;tokenize-error;Attribute name cannot contain characters <code>"</code>, <code>'</code>, and <code>=</code>.
+bad attribute value;tokenize-error;Attribute value must be quoted by <code>"</code> or <code>'</code> if it contains a <code>"</code>, <code>'</code>, or <code>=</code> character.
 bare ero;tokenize-error;The <code>&amp;</code> character must be escaped as <code class="html example">&amp;amp;</code>.
 bare etago;tokenize-error;A <code>&lt;/</code> string is not followed by a tag name.
 bare stago;tokenize-error;A <code>&lt;</code> character is not followed by tag name or by a <code>!</code> character.
@@ -15,23 +24,74 @@ bare nero;tokenize-error;The decimal representation of the code position of a ch
 bare hcro;tokenize-error;The hexadecimal representation of the code position of a character must be specified after <code>&amp;#x</code>.
 bogus comment;tokenize-error;String <code>&lt;!</code> is not followed by <code>--</code>.
 bogus end tag;tokenize-error;String <code>&lt;/</code> is not followed by tag name.
+C1 character reference;tokenize-error;Character reference to <code><var>{text}</var></code> is not allowed.
+CR character reference;tokenize-error;Character reference to <code>U+000D</code> (<code class="charname">CARRIAGE RETURN</code>) is not allowed.
 dash in comment;tokenize-error;There is a <code>--</code> sequence in a comment.
-duplicate attribute;tokenize-error;There are two attributes with name <code><var>$0</var></code>.
+duplicate attribute;tokenize-error;There are two attributes with name <code><var>{text}</var></code>.
+empty start tag;tokenize-error;Empty start tag (<code>&lt;&gt;</code>) is not allowed.
+empty end tag;tokenize-error;Empty end tag (<code>&lt;/&gt;</code>) is not allowed.
+end tag attribute;tokenize-error;End tag cannot have attributes.
+invalid character reference;tokenize-error;Character reference to <code><var>{text}</var></code> is not allowed.
 nestc;tokenize-error;Polytheistic slash (<code>/&gt;</code>) cannot be used for this element.
-pio;tokenize-error;Processing instruction (<code>&lt;?<var>...</var>&gt;</code>) cannot be used.
-after head;parse-error;The <code><var>$0</var></code> element cannot be inserted between <code>head</code> and <code>body</code> elements.
-DOCTYPE in the middle;parse-error;A <code>DOCTYPE</code> appears after any element or data character has been seen.
+no DOCTYPE name;tokenize-error;After the string <code>&lt;!DOCTYPE </code>, the document type name must be specified.
+no PUBLIC literal;tokenize-error;After the keyword <code>PUBLIC</code>, no oublic identifier is specified.
+no refc;tokenize-error;Character reference must be closed by a <code>;</code> character.
+no space before DOCTYPE name;tokenize-error;After the string <code>&lt;!DOCTYPE</code>, there must be at least a white space character before the document type name.
+no space between attributes;tokenize-error;Attributes must be separeted by at least a white space character.
+no SYSTEM literal;tokenize-error;After the keyword <code>SYSTEM</code>, no system identifier is specified.
+pio;tokenize-error;Processing instruction (<code>&lt;?<var>...</var>&gt;</code>) is not allowed in HTML document.
+string after DOCTYPE name;tokenize-error;There is a bogus string after the document type name.
+string after PUBLIC;tokenize-error;There is a bogus string after the keyword <code>PUBLIC</code>.
+string after PUBLIC literal;tokenize-error;There is a bogus string after the public identifier.
+string after SYSTEM;tokenize-error;There is a bogus string after the keyword <code>SYSTEM</code>.
+string after SYSTEM literal;tokenize-error;There is a bogus string after the system identifier.
+unclosed attribute value;tokenize-error;Attribute value is not closed by a quotation mark.
+unclosed comment;tokenize-error;Comment is not closed by a string <code>--&gt;</code>.
+unclosed DOCTYPE;tokenize-error;The <code>DOCTYPE</code> is not closed by a <code>&gt;</code> character.
+unclosed PUBLIC literal;tokenize-error;The public identifier literal is not closed by a quotation mark.
+unclosed SYSTEM literal;tokenize-error;The system identifier literal is not closed by a quotation mark.
+unclosed tag;tokenize-error;Tag is not closed by a <code>&gt;</code> character.
+after body;parse-error;Start tag <code>&lt;<var>{text}</var>&gt;</code> is not allowed after the <code>body</code> is closed.
+after body:/;parse-error;End tag <code>&lt;/<var>{text}</var>&gt;</code> is not allowed after the <code>body</code> is closed.
+after body:#text;parse-error;Non‐white‐space characters are not allowed after the <code>body</code> is closed.
+after frameset;parse-error;Start tag <code>&lt;<var>{text}</var>&gt;</code> is not allowed after the <code>frameset</code> is closed.
+after frameset:/;parse-error;End tag <code>&lt;/<var>{text}</var>&gt;</code> is not allowed after the <code>frameset</code> is closed.
+after frameset:#text;parse-error;Non‐white‐space characters are not allowed after the <code>frame</code> is closed.
+after head;parse-error;The <code><var>{text}</var></code> element cannot be inserted between <code>head</code> and <code>body</code> elements.
+after html;parse-error;Start tag <code>&lt;<var>{text}</var>&gt;</code> is not allowed after the <code>html</code> is closed.
+after html:/;parse-error;End tag <code>&lt;/<var>{text}</var>&gt;</code> is not allowed after the <code>html</code> is closed.
+after html:#text;parse-error;Non‐white‐space characters are not allowed after the <code>html</code> is closed.
+image;parse-error;The <code>image</code> element is obsolete.
 in a:a;parse-error;Anchor cannot be nested.
-in body;parse-error;Tag <code>&lt;<var>$0</var>&gt;</code> is not allowed in the <code>body</code> element.
+in body;parse-error;Start tag <code>&lt;<var>{text}</var>&gt;</code> is not allowed in the <code>body</code> element.
+in body:#eof;parse-error;Some element is not closed before the end of file.
+in button:button;parse-error;The <code>button</code> element cannot be nested.
+in CDATA:#eof;parse-error;Element is not closed before the end of file.
+in form:form;parse-error;Start tag <code>&lt;form&gt;</code> is not allowed in a <code>form</code> element.
+in frameset;parse-error;Start tag <code>&lt;<var>{text}</var>&gt;</code> is not allowed in a <code>framset</code> element.
+in frameset:/;parse-error;End tag <code>&lt;/<var>{text}</var>&gt;</code> is not allowed in a <code>frameset</code> element.
+in frameset:#text;parse-error;Non‐white‐space characters are not allowed in a <code>frameset</code> element.
 in head:head;parse-error;Start tag <code>&lt;head&gt;</code> is not allowed in the <code>head</code> element.
-in table;parse-error;Tag <code>&lt;<var>$0</var>&gt;</code> is not allowed in a <code>table</code> element.
-in table:#character;parse-error;Data character is not allowed in <code>table</code>.
+in html:#DOCTYPE;parse-error;A <code>DOCTYPE</code> appears after any element or data character has been seen.
+in nobr:nobr;parse-error;The <code>nobr</code> element cannot be nested.
+in noscript;parse-error;The <code><var>{text}</var></code> element is not allowed in a <code>noscript</code> element in the <code>head</code> element.
+in noscript:/;parse-error;An end tag <code>&lt;/<var>{text}</var>&gt;</code> appers before the <code>noscript</code> element is closed.
+in noscript:#eof;parse-error;A <code>noscript</code> element is not closed before the end of file.
+in noscript:#text;parse-error;Non‐white‐space characters are not allowed in a <code>noscript</code> element in the <code>head</code> element.
+in PCDATA:#eof;parse-error;Element is not closed before the end of file.
+in select;parse-error;Start tag <code>&lt;<var>{text}</var>&gt;</code> is not allowed in a <code>select</code> element.
+in select:/;parse-error;End tag <code>&lt;/<var>{text}</var>&gt;</code> is not allowed in a <code>select</code> element.
+in table;parse-error;Start tag <code>&lt;<var>{text}</var>&gt;</code> is not allowed in a <code>table</code> element.
+in table:/;parse-error;End tag <code>&lt;/<var>{text}</var>&gt;</code> is not allowed in a <code>table</code> element.
+in table:#text;parse-error;Non‐white‐space character is not allowed within the <code>table</code> element, outside of the caption and cells.
+isindex;parse-error;The <code>isindex</code> element is obsolete.
 missing start tag:tr;parse-error;Start tag of <code>tr</code> element is missing.
 no DOCTYPE;parse-error;This document does not start with a <code>DOCTYPE</code>.
-not closed;parse-error;Element <code><var>$0</var></code> is not closed.
+not closed;parse-error;Element <code><var>{text}</var></code> is not closed.
 not first start tag;parse-error;This <code>&lt;html&gt;</code> tag is not the first start tag.
 not HTML5;parse-error;This document is written in an old version of HTML.
-unmatched end tag;parse-error;Element <code><var>$0</var></code> is not opened.
+start tag not allowed;parse-error;Start tag <code>&lt;<var>{text}</var>&gt;</code> is not allowed here.
+unmatched end tag;parse-error;Element <code><var>{text}</var></code> is not opened.
 character not allowed;content-model-error;Data character is not allowed in this context.
 child element missing;content-model-error;There must be a <code><var>$0</var></code> element as a child of this element.
 child element missing:td|th;content-model-error;There must be a <code>td</code> or <code>th</code> element as a child of this element.

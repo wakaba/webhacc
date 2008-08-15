@@ -627,8 +627,6 @@ sub generate_input_section ($$) {
   $out->end_tag ('form');
   $out->end_section;
 
-  $out->end_tag ('fieldset');
-
   ## TODO: File upload
 
   $out->start_section (id => 'input-text', title => 'By direct input',

@@ -81,8 +81,6 @@ sub add_error ($%) {
     $error_layer = 'syntax'; ## NOTE: Unknown - an error of the implementation
   }
 
-  my $error_type_text = $opt{type};
-
   my $class = qq[level-$error_level layer-$error_layer];
  
   ## Line & column numbers (prepare values)
@@ -205,6 +203,7 @@ sub add_error ($%) {
   $out->text (': ');
   
   ## Error message
+  my $error_type_text = $opt{type};
   $out->nl_text ($error_type_text, node => $opt{node}, text => $opt{text});
 
   ## Additional error description
@@ -292,7 +291,7 @@ sub generate_result_section ($) {
        target => 'transfer-errors', score_base => 20,
        parent_status => $maindoc_status},
       {label => 'Encode L.', status => $self->{layers}->{encode},
-       score_base => 10,
+       target => 'parse-errors', score_base => 10,
        parent_status => $maindoc_status},
       {label => 'Char L.', status => $self->{layers}->{charset},
        score_base => 10,
