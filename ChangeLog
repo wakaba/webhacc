@@ -1,5 +1,10 @@
 2008-08-15  Wakaba  <wakaba@suika.fam.cx>
 
+	* error-description-source.xml: Missing entries for 
+	Whatpm::ContentChecker::Atom errors are added.
+
+2008-08-15  Wakaba  <wakaba@suika.fam.cx>
+
 	* error-description-source.xml: Missing entries for
 	Whatpm::ContentChecker and Whatpm::ContentChecker::HTML
 	error types are added.  Error entries used by these

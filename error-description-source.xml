@@ -1233,10 +1233,22 @@ p {
   an empty element.</d:message>
 </d:item>
 
-<d:item name="child element missing"
+<d:item name="character not allowed:atom|PersonConstruct"
     modules="ContentChecker::HTML">
-  <d:message xml:lang="en">There must be a <code><var>{text}</var></code>
-  element as a child of this element.</d:message>
+  <d:message xml:lang="en">Non‐white‐space characters are not allowed in
+  Person construct.</d:message>
+</d:item>
+
+<d:item name="character not allowed:atom|TextConstruct"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">Non‐white‐space characters are not allowed in
+  Text construct.</d:message>
+</d:item>
+
+<d:item name="child element missing"
+    modules="ContentChecker::HTML ContentChecker::Atom">
+  <d:message xml:lang="en">There must be an element
+  <code><var>{text}</var></code> as a child of this element.</d:message>
   <d:desc xml:lang="en">
     <p>The content model of the element is so defined that it
     must contain a <code><var>$0</var></code> child element.
@@ -1264,6 +1276,27 @@ p {
     <code>td</code> or <code>th</code> child element.  The document
     is non-conforming.</p>
   </d:desc>
+</d:item>
+
+<d:item name="child element missing:atom"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">There must be an element
+  <code><var>{text}</var></code> in the Atom namespace as a child of this
+  element.</d:message>
+</d:item>
+
+<d:item name="child element missing:atom:link:alternate"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">There must be an Atom <code>link</code> element
+  whose <code>rel</code> attribute is set to <code>alternate</code> as a
+  child of this element.</d:messag>
+</d:item>
+
+<d:item name="child element missing:atom:link:self"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">There should be an Atom <code>link</code> element
+  whose <code>rel</code> attribute is set to <code>self</code> as a
+  child of this element.</d:messag>
 </d:item>
 
 <d:item name="element missing:hn"
@@ -1366,7 +1399,7 @@ p {
 </d:item>
 
 <d:item name="element not allowed:empty"
-    modules="ContentChecker::HTML">
+    modules="ContentChecker::HTML ContentChecker::Atom">
   <d:message xml:lang="en">Elements are not allowed in an empty
   element.</d:message>
 </d:item>
@@ -1479,6 +1512,24 @@ p {
     modules="ContentChecker::HTML">
   <d:message xml:lang="en">This element is not allowed in this
   context.</d:message>
+</d:item>
+
+<d:item name="element not allowed:atom|content"
+    modules="ContentChecker::Atom">
+  <d:message xml:lang="en">This element is not allowed in an Atom
+  <code>content</code> element.</d:message>
+</d:item>
+
+<d:item name="element not allowed:atom|PersonConstruct"
+    modules="ContentChecker::Atom">
+  <d:message xml:lang="en">This element is not allowed in Person
+  construct.</d:message>
+</d:item>
+
+<d:item name="element not allowed:atom|TextConstruct"
+    modules="ContentChecker::Atom">
+  <d:message xml:lang="en">This element is not allowed in Text
+  construct.</d:message>
 </d:item>
 
 <d:item name="element not defined"
@@ -2036,7 +2087,7 @@ p {
 
 <d:item name="invalid attribute value"
     class="attribute-value-error"
-    modules="ContentChecker::XML ContentChecker::HTML">
+    modules="ContentChecker::XML ContentChecker::HTML ContentChecker::Atom">
   <d:message xml:lang="en">Attribute value <code><var>{@}</var></code>
   is not an allowed value.</d:message>
 </d:item>
@@ -2268,8 +2319,14 @@ p {
 <section id="imt-warnings">
 <h2>Internet Media Type Errors</h2>
 
+<d:item name="IMT:composite"
+    modules="ContentChecker::Atom">
+  <d:message xml:lang="en">The specified media type is a composite
+  type, which is not allowed in this context.</d:message>
+</d:item>
+
 <d:item name="IMT:syntax error"
-    modules="ContentChecker::HTML">
+    modules="ContentChecker::HTML ContentChecker::Atom">
   <d:message xml:lang="en">The specified value is not an Internet Media
   Type.</d:message>
 </d:item>
@@ -2308,6 +2365,12 @@ p {
   <d:message xml:lang="en"><code><var>{@}</var></code>: The subtype is
   not registered to IANA.</d:message>
 <!-- TODO: Unknown message?? -->
+</d:item>
+
+<d:item name="not IMT"
+    modules="ContentChecker::Atom">
+  <d:message xml:lang="en">A value that is not an Internet Media Type
+  is not allowed here.</d:message>
 </d:item>
 
 </section>
@@ -2582,7 +2645,7 @@ p {
 </d:item>
 
 <d:item name="unknown attribute"
-    modules="ContentChecker ContentChecker::HTML">
+    modules="ContentChecker ContentChecker::HTML ContentChecker::Atom">
   <d:message xml:lang="en">Conformance checking for attribute
   <code><var>{local-name}</var></code> of element 
   <code><var>{element-local-name}</var></code> is not supported;
@@ -2631,6 +2694,12 @@ p {
   is not supported; <em>it might or might not be conforming.</em></d:message>
 </d:item>
 
+<d:item name="addr-spec not supported"
+    modules="ContentChecker::Atom">
+  <d:message xml:lang="en">Conformance checking for an <code>addr-spec</code>
+  is not supported; <em>it might or might not be conforming.</em></d:message>
+</d:item>
+
 <d:item name="XML script lang"
     modules="ContentChecker::HTML">
   <d:message xml:lang="en">Conformance checking for script
@@ -2643,6 +2712,13 @@ p {
   <d:message xml:lang="en">Conformance checking for style
   language <code><var>{text}</var></code> is not supported;
   <em>it might or might not be conforming.</em></d:message>
+</d:item>
+
+<d:item name="atom|content not supported"
+    modules="ContentChecker::Atom">
+  <d:message xml:lang="en">Conformance checking for an Atom
+  <code>content</code> element with <code>type</code>
+  <code><var>{text}</var></code> is not supported.</d:message>
 </d:item>
 
 </section>
@@ -3226,6 +3302,6 @@ is used in the document.</td>
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2008/08/15 12:11:56 $ -->
+<!-- $Date: 2008/08/15 12:47:21 $ -->
 </body>
 </html>
