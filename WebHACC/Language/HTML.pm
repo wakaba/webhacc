@@ -14,7 +14,6 @@ sub generate_syntax_error_section ($) {
   require Encode;
   require Whatpm::HTML;
   
-  $self->result->layer_uncertain ('encode');
   $self->result->layer_uncertain ('charset');
 
   my $out = $self->output;
@@ -38,6 +37,7 @@ sub generate_syntax_error_section ($) {
     my $t = \($input->{s});
     unless ($input->{is_char_string}) {
       $t = \(Encode::decode ($input->{charset}, $$t));
+      $self->result->layer_uncertain ('encode');
     }
     
     $el = $doc->create_element_ns
@@ -51,6 +51,7 @@ sub generate_syntax_error_section ($) {
     } else {
       Whatpm::HTML->parse_byte_string
           ($input->{charset}, $input->{s} => $doc, $onerror);
+      $self->result->layer_uncertain ('encode');
     }
 
     $self->{structure} = $doc;

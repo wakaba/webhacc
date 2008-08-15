@@ -13,7 +13,6 @@ sub generate_syntax_error_section ($) {
 
   require Whatpm::WebIDL;
 
-  $self->result->layer_uncertain ('encode');
   $self->result->layer_uncertain ('charset');
 
   my $out = $self->output;
@@ -23,6 +22,8 @@ sub generate_syntax_error_section ($) {
 
   my $input = $self->input;
   my $result = $self->result;
+
+  $self->result->layer_uncertain ('encode') unless $input->{is_char_string};
 
   require Encode;
   my $s = $input->{is_char_string} ? $input->{s} : Encode::decode ($input->{charset} || 'utf-8', $input->{s}); ## TODO: charset

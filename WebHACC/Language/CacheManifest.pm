@@ -15,7 +15,6 @@ sub generate_syntax_error_section ($) {
 
   my $out = $self->output;
 
-  $self->result->layer_uncertain ('encode');
   $self->result->layer_uncertain ('charset');
 
   $out->start_section (role => 'parse-errors');
@@ -24,6 +23,8 @@ sub generate_syntax_error_section ($) {
 
   my $input = $self->input;
   my $result = $self->result;
+
+  $self->result->layer_uncertain ('encode') unless $input->{is_char_string};
 
   my $m = $input->{is_char_string} ? 'parse_char_string' : 'parse_byte_string';
   $self->{structure} = Whatpm::CacheManifest->$m

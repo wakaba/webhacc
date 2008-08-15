@@ -52,6 +52,7 @@ sub add_error ($%) {
   my ($self, %opt) = @_;
 
   my $out = $self->output;
+  $out->has_error (1);
 
   my $error_level = $opt{level};
   if (not defined $error_level) {
@@ -193,7 +194,7 @@ sub add_error ($%) {
     }
     
     unless ($has_location) {
-      $out->text ('Unknown location');
+      $out->nl_text ('Unknown location');
     }
   }
  
@@ -287,22 +288,22 @@ sub generate_result_section ($) {
       $out->start_tag ('th', colspan => 7, scope => 'col');
       $out->nl_text ('Main document');
     },
-      {label => 'Transfer', status => $self->{layers}->{transfer},
+      {label => 'Transfer L.', status => $self->{layers}->{transfer},
        target => 'transfer-errors', score_base => 20,
        parent_status => $maindoc_status},
-      {label => 'Encode', status => $self->{layers}->{encode},
+      {label => 'Encode L.', status => $self->{layers}->{encode},
        score_base => 10,
        parent_status => $maindoc_status},
-      {label => 'Charset', status => $self->{layers}->{charset},
+      {label => 'Char L.', status => $self->{layers}->{charset},
        score_base => 10,
        parent_status => $maindoc_status},
-      {label => 'Syntax', status => $self->{layers}->{syntax},
+      {label => 'Syntax L.', status => $self->{layers}->{syntax},
        target => 'parse-errors', score_base => 20,
        parent_status => $maindoc_status},
-      {label => 'Structure', status => $self->{layers}->{structure},
+      {label => 'Structure L.', status => $self->{layers}->{structure},
        target => 'document-errors', score_base => 20,
        parent_status => $maindoc_status},
-      {label => 'Semantics', status => $self->{layers}->{semantics},
+      {label => 'Semantics L.', status => $self->{layers}->{semantics},
        score_base => 20,
        parent_status => $maindoc_status},
   );

@@ -1618,6 +1618,81 @@ p {
   </d:text>
 </d:cat>
 
+<d:cat name="Input">
+  <d:text xml:lang="en">Input</d:text>
+  <d:text xml:lang="ja">入力</d:text>
+</d:cat>
+
+<d:cat name="By URL">
+  <d:text xml:lang="en">By URL</d:text>
+  <d:text xml:lang="ja">URL で指定</d:text>
+</d:cat>
+
+<d:cat name="By direct input">
+  <d:text xml:lang="en">By direct input</d:text>
+  <d:text xml:lang="ja">直接入力</d:text>
+</d:cat>
+
+<d:cat name="Options">
+  <d:text xml:lang="en">More options</d:text>
+  <d:text xml:lang="ja">検査オプション</d:text>
+</d:cat>
+
+<d:cat name="Check error page">
+  <d:text xml:lang="en">Check an error page</d:text>
+  <d:text xml:lang="ja">誤り頁を検査する</d:text>
+</d:cat>
+
+<d:cat name="Content type">
+  <d:text xml:lang="en">Content type</d:text>
+  <d:text xml:lang="ja">内容型</d:text>
+</d:cat>
+
+<d:cat name="Charset">
+  <d:text xml:lang="en">Character encoding</d:text>
+  <d:text xml:lang="ja">文字符号化</d:text>
+</d:cat>
+
+<d:cat name="As specified">
+  <d:text xml:lang="en">As specified</d:text>
+  <d:text xml:lang="ja">指定通り</d:text>
+</d:cat>
+
+<d:cat name="Japanese charsets">
+  <d:text xml:lang="en">Japanese character encodings</d:text>
+  <d:text xml:lang="ja">日本語用文字符号化</d:text>
+</d:cat>
+
+<d:cat name="European charsets">
+  <d:text xml:lang="en">European character encodings</d:text>
+  <d:text xml:lang="ja">欧米言語用文字符号化</d:text>
+</d:cat>
+
+<d:cat name="Asian charsets">
+  <d:text xml:lang="en">Asian character encodings</d:text>
+  <d:text xml:lang="ja">アジア諸語用文字符号化</d:text>
+</d:cat>
+
+<d:cat name="Unicode charsets">
+  <d:text xml:lang="en">Unicode character encodings</d:text>
+  <d:text xml:lang="ja">Unicode 系文字符号化</d:text>
+</d:cat>
+
+<d:cat name="Document source to check">
+  <d:text xml:lang="en">Document source to check</d:text>
+  <d:text xml:lang="ja">検査する文書のソース</d:text>
+</d:cat>
+
+<d:cat name="Check">
+  <d:text xml:lang="en">Check</d:text>
+  <d:text xml:lang="ja">検査</d:text>
+</d:cat>
+
+<d:cat name="Setting innerHTML">
+  <d:text xml:lang="en">Setting <code>innerHTML</code> of HTML element</d:text>
+  <d:text xml:lang="ja"><code>innerHTML</code> に値を設定する HTML 要素</d:text>
+</d:cat>
+
 <d:cat name="Information">
   <d:text xml:lang="en">Information</d:text>
   <d:text xml:lang="ja">情報</d:text>
@@ -1713,6 +1788,11 @@ p {
 <d:cat name="Trans. Errors">
   <d:text xml:lang="en">Trans. Errors</d:text>
   <d:text xml:lang="ja">転送誤り</d:text>
+</d:cat>
+
+<d:cat name="Result">
+  <d:text xml:lang="en">Result</d:text>
+  <d:text xml:lang="ja">結果</d:text>
 </d:cat>
 
 <d:cat name="manakaiCompatMode:quirks">
@@ -1867,6 +1947,11 @@ p {
   <d:text xml:lang="ja">索引 #<var>{text}</var></d:text>
 </d:cat>
 
+<d:cat name="Unknown location">
+  <d:text xml:lang="en">Unknown location</d:text>
+  <d:text xml:lang="ja">位置不明</d:text>
+</d:cat>
+
 <d:cat name="Table #">
   <d:text xml:lang="en">Structure of Table #<var>{text}</var></d:text>
   <d:text xml:lang="ja">表 #<var>{text}</var> の構造</d:text>
@@ -1912,29 +1997,32 @@ p {
   <d:text xml:lang="ja">部分文書</d:text>
 </d:cat>
 
-<d:cat name="Transfer">
+<d:cat name="Transfer L.">
   <d:text xml:lang="en"><abbr title="Transfer protocol">Transfer</abbr></d:text>
   <d:text xml:lang="ja"><abbr title="転送プロトコル">転送</abbr></d:text>
 </d:cat>
 
-<d:cat name="Encode">
+<d:cat name="Encode L.">
   <d:text xml:lang="en"><abbr title="Character encoding">Encoding</abbr></d:text>
   <d:text xml:lang="ja"><abbr title="文字符号化">符号</abbr></d:text>
 </d:cat>
 
-<d:cat name="Charset">
+<d:cat name="Char L.">
   <d:text xml:lang="en"><abbr title="Coded characters">Character</abbr></d:text>
   <d:text xml:lang="ja"><abbr title="符号化文字">文字</abbr></d:text>
 </d:cat>
 
-<d:cat name="Syntax">
+<d:cat name="Syntax L.">
   <d:text xml:lang="en">Syntax</d:text>
   <d:text xml:lang="ja">構文</d:text>
 </d:cat>
 
-<!-- Structure -->
+<d:cat name="Structure L.">
+  <d:text xml:lang="en">Structure</d:text>
+  <d:text xml:lang="ja">構造</d:text>
+</d:cat>
 
-<d:cat name="Semantics">
+<d:cat name="Semantics L.">
   <d:text xml:lang="en">Semantics</d:text>
   <d:text xml:lang="ja">意味</d:text>
 </d:cat>
@@ -1942,6 +2030,26 @@ p {
 <d:cat name="N/A">
   <d:text xml:lang="en">N/A</d:text>
   <d:text xml:lang="ja">−</d:text>
+</d:cat>
+
+<d:cat name="No error found.">
+  <d:text xml:lang="en">No error found.</d:text>
+  <d:text xml:lang="ja">誤りは見つかりませんでした。</d:text>
+</d:cat>
+
+<d:cat name="No transfer error found.">
+  <d:text xml:lang="en">This document has no transfer protocol header error.</d:text>
+  <d:text xml:lang="ja">転送プロトコルの頭部に誤りは見つかりませんでした。</d:text>
+</d:cat>
+
+<d:cat name="No parse error found.">
+  <d:text xml:lang="en">This document has no parse error.</d:text>
+  <d:text xml:lang="ja">構文解析中に誤りは見つかりませんでした。</d:text>
+</d:cat>
+
+<d:cat name="No structural error found.">
+  <d:text xml:lang="en">This document has no structral error.</d:text>
+  <d:text xml:lang="ja">構造上の誤りは見つかりませんでした。</d:text>
 </d:cat>
 
 <d:cat name="This checker is work in progress.">
@@ -2076,6 +2184,6 @@ is used in the document.</td>
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2008/08/14 15:50:42 $ -->
+<!-- $Date: 2008/08/15 05:53:23 $ -->
 </body>
 </html>

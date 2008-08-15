@@ -81,6 +81,21 @@ unsupported:script;unsupported;Conformance checking for script language <code><v
 unsupported:style;unsupported;Conformance checking for style language <code><var>$0</var></code> is not supported; <em>it might or might not be conforming.</em>
 WebHACC:Title;;WebHACC (β)
 WebHACC:Heading;; <a href="../cc-about"><abbr title="Web ハイパーテキスト応用適合性検査器 (β)"><img alt="WebHACC" src="../icons/title"></abbr></a> 
+Input;;入力
+By URL;;URL で指定
+By direct input;;直接入力
+Options;;検査オプション
+Check error page;;誤り頁を検査する
+Content type;;内容型
+Charset;;文字符号化
+As specified;;指定通り
+Japanese charsets;;日本語用文字符号化
+European charsets;;欧米言語用文字符号化
+Asian charsets;;アジア諸語用文字符号化
+Unicode charsets;;Unicode 系文字符号化
+Document source to check;;検査する文書のソース
+Check;;検査
+Setting innerHTML;;<code>innerHTML</code> に値を設定する HTML 要素
 Information;;情報
 HTTP Header;;<abbr lang="en" title="Hypertext Transfer Protocol">HTTP</abbr> 頭部
 Parse Errors Section;;構文誤り
@@ -100,6 +115,7 @@ Structural Errors;;構造的誤り
 Struct. Errors;;構造誤り
 Transfer Errors;;転送誤り
 Trans. Errors;;転送誤り
+Result;;結果
 manakaiCompatMode:quirks;;奇癖モード
 manakaiCompatMode:limited quirks;;限定奇癖モード
 manakaiCompatMode:no quirks;;無奇癖モード
@@ -130,6 +146,7 @@ characters;;文字
 Line #;;<var>{text}</var> 行
 column #;;<var>{text}</var> 列
 Index #;;索引 #<var>{text}</var>
+Unknown location;;位置不明
 Table #;;表 #<var>{text}</var> の構造
 Subdocument #;;部分文書 #<var>{text}</var>
 Sub #;;部分 #<var>{text}</var>
@@ -139,12 +156,17 @@ Subtotal;;小計
 Total;;合計
 Main document;;主文書
 Subdocuments;;部分文書
-Transfer;;<abbr title="転送プロトコル">転送</abbr>
-Encode;;<abbr title="文字符号化">符号</abbr>
-Charset;;<abbr title="符号化文字">文字</abbr>
-Syntax;;構文
-Semantics;;意味
+Transfer L.;;<abbr title="転送プロトコル">転送</abbr>
+Encode L.;;<abbr title="文字符号化">符号</abbr>
+Char L.;;<abbr title="符号化文字">文字</abbr>
+Syntax L.;;構文
+Structure L.;;構造
+Semantics L.;;意味
 N/A;;−
+No error found.;;誤りは見つかりませんでした。
+No transfer error found.;;転送プロトコルの頭部に誤りは見つかりませんでした。
+No parse error found.;;構文解析中に誤りは見つかりませんでした。
+No structural error found.;;構造上の誤りは見つかりませんでした。
 This checker is work in progress.;; <p><strong>重要</strong>: この適合性検査サービスは<em>開発中</em>です。 この結果は<em>間違い</em>かもしれません。</p> 
 Conformance is conforming;;この文書に適合性に関わる誤りは見つかりませんでした。
 Conformance is should-error;;この文書は<strong>おそらく<em>不</em>適合</strong>ですが、 稀に適合している場合もあります。適合性検査器はこの文書が稀な場合に該当するかどうか判定できません。

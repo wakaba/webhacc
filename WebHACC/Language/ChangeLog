@@ -1,3 +1,9 @@
+2008-08-15  Wakaba  <wakaba@suika.fam.cx>
+
+	* CSS.pm, CacheManifest.pm, HTML.pm, WebIDL.pm, XML.pm: Don't
+	set "uncertain" flag to character encoding (encode) layer if the
+	input is a character string.
+
 2008-08-14  Wakaba  <wakaba@suika.fam.cx>
 
 	* Base.pm, CSS.pm, CacheManifest.pm, DOM.pm, Default.pm, 

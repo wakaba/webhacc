@@ -1,3 +1,19 @@
+2008-08-15  Wakaba  <wakaba@suika.fam.cx>
+
+	* Input.pm (generate_transfer_sections): Use standard
+	error list methods for transfer errors.  Typos fixed.
+
+	* Output.pm (has_error): New attribute.
+	(start_error_list, end_error_list): Support for role "transfer-errors".
+	(end_error_list): Generate "no error found" paragraph if it should be.
+	(generate_input_section): Decode parameters as UTF-8.
+
+	* Result.pm (add_error): Set |has_error| flag.  Use catalog
+	for "Unknown location" message.
+	(generate_result_section): Use different text for
+	result table rows than normal messages, to avoid collision
+	with other messages (such as "Charset").
+
 2008-08-14  Wakaba  <wakaba@suika.fam.cx>
 
 	* Input.pm: Methods |generate_transfer_sections|

@@ -55,6 +55,18 @@ sub handle ($;$) {
   return $_[0]->{handle};
 } # handle
 
+sub has_error ($;$) {
+  if (@_ > 1) {
+    if (defined $_[1]) {
+      $_[0]->{has_error} = 1;
+    } else {
+      delete $_[0]->{has_error};
+    }
+  }
+  
+  return $_[0]->{has_error};
+} # has_error
+
 sub set_utf8 ($) {
   binmode shift->{handle}, ':utf8';
 } # set_utf8
@@ -207,32 +219,47 @@ sub start_error_list ($%) {
     } elsif ($opt{role} eq 'structure-errors') {
       $opt{id} ||= 'document-errors-list';
       delete $opt{role};
+    } elsif ($opt{role} eq 'transfer-errors') {
+      $opt{id} ||= 'transfer-errors-list';
+      delete $opt{role};
     }
   }
 
   $self->start_tag ('dl', %opt);
+
+  delete $self->{has_error}; # reset
 } # start_error_list
 
 sub end_error_list ($%) {
   my ($self, %opt) = @_;
 
+  my $no_error_message = 'No error found.';
+
   if (defined $opt{role}) {
     if ($opt{role} eq 'parse-errors') {
-      delete $opt{role};
       $self->end_tag ('dl');
       ## NOTE: For parse error list, the |add_source_to_parse_error_list|
       ## method is invoked at the end of |generate_source_string_section|,
       ## since that generation method is invoked after the error list
       ## is generated.
+      $no_error_message = 'No parse error found.';
     } elsif ($opt{role} eq 'structure-errors') {
-      delete $opt{role};
       $self->end_tag ('dl');
       $self->add_source_to_parse_error_list ('document-errors-list');
+      $no_error_message = 'No structural error found.';
+    } elsif ($opt{role} eq 'transfer-errors') {
+      $self->end_tag ('dl');
+      $no_error_message = 'No transfer error found.';
     } else {
       $self->end_tag ('dl');
     }
   } else {
     $self->end_tag ('dl');
+  }
+
+  unless ($self->{has_error}) {
+    $self->start_tag ('p', class => 'no-errors');
+    $self->nl_text ($no_error_message);
   }
 } # end_error_list
 
@@ -481,6 +508,15 @@ sub html_header ($) {
 sub generate_input_section ($$) {
   my ($out, $cgi) = @_;
 
+  require Encode;
+  my $decode = sub ($) {
+    if (defined $_[0]) {
+      return Encode::decode ('utf-8', $_[0]);
+    } else {
+      return undef;
+    }
+  }; # $decode
+
   my $options = sub ($) {
     my $context = shift;
 
@@ -554,7 +590,7 @@ sub generate_input_section ($$) {
       $out->nl_text ('Setting innerHTML');
       $out->text (': ');
       $out->start_tag ('input', name => 'e',
-                       value => scalar $cgi->get_parameter ('e'));
+                       value => $decode->(scalar $cgi->get_parameter ('e')));
       $out->end_tag ('label');
     }
 
@@ -578,7 +614,7 @@ sub generate_input_section ($$) {
   $out->start_tag ('input',
                    name => 'uri',
                    type => 'url',
-                   value => $cgi->get_parameter ('uri'));
+                   value => $decode->(scalar $cgi->get_parameter ('uri')));
   $out->end_tag ('label');
 
   $out->start_tag ('p');
@@ -609,7 +645,7 @@ sub generate_input_section ($$) {
   $out->start_tag ('br');
   $out->start_tag ('textarea',
                    name => 's');
-  my $s = $cgi->get_parameter ('s');
+  my $s = $decode->($cgi->get_parameter ('s'));
   $out->html ($htescape_value->($s)) if defined $s;
   $out->end_tag ('textarea');
   $out->end_tag ('label');

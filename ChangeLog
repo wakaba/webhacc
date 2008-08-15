@@ -1,3 +1,15 @@
+2008-08-15  Wakaba  <wakaba@suika.fam.cx>
+
+	* cc-style.css: Add icons to links and headings of error sections.
+	Use standard "uncertain" color for level-u errors.  "No error found"
+	messages are now handled by catalog, not by CSS presentation.
+	The result paragraph saying that the conformance is unknown
+	should be bordered as uncertain error messages are.
+
+	* error-description-source.xml: New message entries
+	for not-translated-yet messages.  Distinguish result table's
+	layer names from other similar texts.
+
 2008-08-14  Wakaba  <wakaba@suika.fam.cx>
 
 	* cc.cgi: Generate result summary sections for

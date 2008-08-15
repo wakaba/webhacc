@@ -34,22 +34,48 @@ h2, h3, h4, h5, h6 {
   padding: 0.3em 1em;
 }
 
+.section[id$=transfer-errors] h2,
+.section[id$=transfer-errors] h3,
+.section[id$=transfer-errors] h4,
+.section[id$=transfer-errors] h5,
+.section[id$=transfer-errors] h6 {
+  padding-left: 40px;
+  background-image: url(icons/transfer-32);
+  background-repeat: no-repeat;
+  background-position: 6px center;
+  min-height: 32px;
+}
+
+.section[id$=parse-errors] h2,
+.section[id$=parse-errors] h3,
+.section[id$=parse-errors] h4,
+.section[id$=parse-errors] h5,
+.section[id$=parse-errors] h6 {
+  padding-left: 40px;
+  background-image: url(icons/syntax-32);
+  background-repeat: no-repeat;
+  background-position: 6px center;
+  min-height: 32px;
+}
+
+.section[id$=document-errors] h2,
+.section[id$=document-errors] h3,
+.section[id$=document-errors] h4,
+.section[id$=document-errors] h5,
+.section[id$=document-errors] h6 {
+  padding-left: 40px;
+  background-image: url(icons/structure-32);
+  background-repeat: no-repeat;
+  background-position: 6px center;
+  min-height: 32px;
+}
+
 .tree-text q, .tree-cdata q, .tree-comment q {
   display: block;
 }
 
 q:before, q:after {
   content: "";
-}
-
-#parse-errors dl:empty:before {
-  content: "This document has no parse error.";
-  font-style: italic;
-}
-
-#document-errors dl:empty:before {
-  content: "This document has no document error.";
-  font-style: italic;
 }
 
 #dump-manifest tbody:empty {
@@ -300,6 +326,30 @@ nav [data-active] a {
   background-color: #C0C0C0;
 }
 
+nav a[href$=transfer-errors] {
+  padding-left: 20px;
+  background-image: url(icons/transfer-16);
+  background-repeat: no-repeat;
+  background-position: 2px center;
+  min-height: 16px;
+}
+
+nav a[href$=parse-errors] {
+  padding-left: 20px;
+  background-image: url(icons/syntax-16);
+  background-repeat: no-repeat;
+  background-position: 2px center;
+  min-height: 16px;
+}
+
+nav a[href$=document-errors] {
+  padding-left: 20px;
+  background-image: url(icons/structure-16);
+  background-repeat: no-repeat;
+  background-position: 2px center;
+  min-height: 16px;
+}
+
 .section {
   clear: both;
 }
@@ -451,20 +501,24 @@ q:after {
 
 dt.level-u {
   margin: 0.2em 0 0 0;
-  border: red 0.2em solid;
+  border: blue 0.2em solid;
   border-bottom-style: none;
   padding-top: 0.2em;
   padding-right: 0.2em;
   padding-bottom: 0;
+  background-color: #e1e1ff;
+  color: black;
 }
 
 dd.level-u {
   margin: 0 0 0.2em;
-  border: red 0.2em solid;
+  border: blue 0.2em solid;
   border-top-style: none;
   padding-right: 0.2em;
   padding-bottom: 0.2em;
   padding-top: 0;
+  background-color: #e1e1ff;
+  color: black;
 }
 
 dt.layer-transfer {
@@ -487,6 +541,18 @@ dt.layer-structure {
 
 dt.layer-semantics {
   background-image: url(icons/semantics-16);
+}
+
+.errors dl:empty {
+  display: none;
+}
+
+.errors .no-errors {
+  text-indent: 0;
+}
+
+.errors .no-errors:lang(en) {
+  font-style: italic;
 }
 
 /* List of IDs */
@@ -535,6 +601,7 @@ dt.layer-semantics {
    .must-errors and .should-errors */
 
 .result-para.uncertain {
+  border: blue 0.2em solid;
   background-color: #e1e1ff;
   color: black;
   background-image: none;
@@ -683,6 +750,6 @@ Copyright 2007-2008 Wakaba <w@suika.fam.cx>.
 This library is free software; you can redistribute it
 and/or modify it under the same terms as Perl itself.
 
-$Date: 2008/08/14 15:50:42 $
+$Date: 2008/08/15 05:53:23 $
 
 */

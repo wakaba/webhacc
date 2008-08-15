@@ -13,7 +13,6 @@ sub generate_syntax_error_section ($) {
   require Message::DOM::DOMImplementation;
   require Message::DOM::XMLParserTemp;
 
-  $self->result->layer_uncertain ('encode');
   $self->result->layer_uncertain ('charset');
 
   my $out = $self->output;
@@ -44,6 +43,8 @@ sub generate_syntax_error_section ($) {
     require Encode;
     $t = \(Encode::encode ('utf8', $$t));
     $input->{charset} = 'utf-8';
+  } else {
+    $self->result->layer_uncertain ('encode');
   }
 
   open my $fh, '<', $t;

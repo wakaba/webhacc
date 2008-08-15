@@ -81,6 +81,21 @@ unsupported:script;unsupported;Conformance checking for script language <code><v
 unsupported:style;unsupported;Conformance checking for style language <code><var>$0</var></code> is not supported; <em>it might or might not be conforming.</em>
 WebHACC:Title;;WebHACC (β)
 WebHACC:Heading;; <a href="../cc-about"><abbr title="Web Hypertext Application Conformance Checker (β)"><img alt="WebHACC" src="../icons/title"></abbr></a> 
+Input;;Input
+By URL;;By URL
+By direct input;;By direct input
+Options;;More options
+Check error page;;Check an error page
+Content type;;Content type
+Charset;;Character encoding
+As specified;;As specified
+Japanese charsets;;Japanese character encodings
+European charsets;;European character encodings
+Asian charsets;;Asian character encodings
+Unicode charsets;;Unicode character encodings
+Document source to check;;Document source to check
+Check;;Check
+Setting innerHTML;;Setting <code>innerHTML</code> of HTML element
 Information;;Information
 HTTP Header;;<abbr title="Hypertext Transfer Protocol">HTTP</abbr> Header
 Parse Errors Section;;Parse Errors
@@ -100,6 +115,7 @@ Structural Errors;;Structural Errors
 Struct. Errors;;Struct. Errors
 Transfer Errors;;Transfer Errors
 Trans. Errors;;Trans. Errors
+Result;;Result
 manakaiCompatMode:quirks;;Quirks Mode
 manakaiCompatMode:limited quirks;;Limited Quirks Mode
 manakaiCompatMode:no quirks;;No Quirks Mode
@@ -130,6 +146,7 @@ characters;;characters
 Line #;;Line <var>{text}</var>
 column #;;column <var>{text}</var>
 Index #;;Index <var>{text}</var>
+Unknown location;;Unknown location
 Table #;;Structure of Table #<var>{text}</var>
 Subdocument #;;Subdocument #<var>{text}</var>
 Sub #;;Sub #<var>{text}</var>
@@ -139,12 +156,17 @@ Subtotal;;Subtotal
 Total;;Total
 Main document;;Main document
 Subdocuments;;Subdocuments
-Transfer;;<abbr title="Transfer protocol">Transfer</abbr>
-Encode;;<abbr title="Character encoding">Encoding</abbr>
-Charset;;<abbr title="Coded characters">Character</abbr>
-Syntax;;Syntax
-Semantics;;Semantics
+Transfer L.;;<abbr title="Transfer protocol">Transfer</abbr>
+Encode L.;;<abbr title="Character encoding">Encoding</abbr>
+Char L.;;<abbr title="Coded characters">Character</abbr>
+Syntax L.;;Syntax
+Structure L.;;Structure
+Semantics L.;;Semantics
 N/A;;N/A
+No error found.;;No error found.
+No transfer error found.;;This document has no transfer protocol header error.
+No parse error found.;;This document has no parse error.
+No structural error found.;;This document has no structral error.
 This checker is work in progress.;; <p><strong>Important</strong>: This conformance checking service is <em>under development</em>. The result above might be <em>wrong</em>.</p> 
 Conformance is conforming;;No conformance‐error is found in this document.
 Conformance is should-error;;This document is <strong>likely <em>non</em>-conforming</strong>, but in rare case it might be conforming. The checker cannot determine whether this document is in the rare case or not.

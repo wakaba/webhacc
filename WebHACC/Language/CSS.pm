@@ -13,7 +13,6 @@ sub generate_syntax_error_section ($) {
   
   my $out = $self->output;
   
-  $self->result->layer_uncertain ('encode');
   $self->result->layer_uncertain ('charset');
 
   $out->start_section (role => 'parse-errors');
@@ -45,6 +44,7 @@ sub generate_syntax_error_section ($) {
   my $s = \$input->{s};
   my $charset;
   unless ($input->{is_char_string}) {
+    $self->result->layer_uncertain ('encode');
     require Encode;
     if (defined $input->{charset}) {## TODO: IANA->Perl
       $charset = $input->{charset};

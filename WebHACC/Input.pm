@@ -434,15 +434,16 @@ sub generate_transfer_sections ($$) {
   my $out = $result->output;
 
   $out->start_section (role => 'transfer-errors');
+  $out->start_error_list (role => 'transfer-errors');
 
-  $out->start_tag ('dl');
+  $result->layer_applicable ('transfer');
   $result->add_error (layer => 'transfer',
                       level => 'u',
                       type => 'resource retrieval error',
                       url => $self->{request_uri},
                       text => $self->{error_status_text});
-  $out->end_tag ('dl');
 
+  $out->end_error_list (role => 'transfer-errors');
   $out->end_section;
 } # generate_transfer_sections
 
@@ -454,8 +455,8 @@ sub generate_transfer_sections ($$) {
   
   my $result = shift;
 
-  $self->WebHACC::Input::Error->generate_transfer_sections ($result);
-  $self->WebHACC::Input::HTTP->generate_transfer_sections ($result);
+  $self->WebHACC::Input::Error::generate_transfer_sections ($result);
+  $self->WebHACC::Input::HTTP::generate_transfer_sections ($result);
 
 } # generate_transfer_sections
 
