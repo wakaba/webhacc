@@ -1,7 +1,7 @@
-<!DOCTYPE html><html id="error-description" lang="en" xmlns:d="http://suika.fam.cx/~wakaba/archive/2007/wdcc-desc/" xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html><html id="error-description" lang="ja" xmlns:d="http://suika.fam.cx/~wakaba/archive/2007/wdcc-desc/" xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <base href="cc/">
-<title xml:lang="en">Description of Errors — WebHACC (β)</title>
+
 <link href="../cc-style" rel="stylesheet">
 <link href="#license" rel="license">
 </head>
@@ -16,16 +16,17 @@
 <div class="section" id="WebHACC:Heading"><h3>
     
   </h3>
-    <p><a href="./#input"><abbr title="Web Hypertext Application Conformance Checker">WebHACC</abbr></a>
-    is a <em>conformance checker</em> (or validator) for Web documents,
-    supporting <a href="../standards">latest Web standards</a> including
-    <a href="http://whatwg.org/html5"><abbr title="Hypertext Markup Language">HTML</abbr>5</a>,
-    <a href="urn:ietf:rfc:4287">Atom 1.0</a>,
-    <a href="http://www.w3.org/Style/CSS/current-work"><abbr title="Cascading Style Sheets">CSS</abbr>3</a>.</p>
+    <p><a href="./#input"><abbr title="Web ハイパーテキスト応用適合性検査器">WebHACC</abbr></a>
+    は、 Web 文書のための<em>適合性検査器</em> (妥当性検証器) です。
+    <a href="http://whatwg.org/html5"><abbr title="Hypertext Markup Language">HTML</abbr>5</a>、
+    <a href="urn:ietf:rfc:4287">Atom 1.0</a>、
+    <a href="http://www.w3.org/Style/CSS/current-work"><abbr title="Cascading Style Sheets">CSS</abbr>3</a>
+    などの<a href="../standards">最新の Web 標準</a>に対応しています。</p>
 
-    <p><strong><a href="./#input">Check your document</a></strong>, or
-    <a href="../cc-about">learn more about
-    <abbr title="Web Hypertext Application Conformance Checker">WebHACC</abbr></a>.</p>
+    <p><strong><a href="./#input">文書を検査する</a></strong></p>
+
+    <p><a href="../cc-about"><abbr title="Web ハイパーテキスト応用適合性検査器">WebHACC</abbr>
+    の詳細</a></p>
   </div>
 
 <section id="character-encoding-layer">
@@ -2319,35 +2320,32 @@ p {
 
 
 
-<div class="section" id="Error-level-m"><h3><a href="../error-description#Error-level-m" rel="help"><em class="rfc2119">MUST</em>‐level
-        error</a></h3>
+<div class="section" id="Error-level-m"><h3><a href="../error-description#Error-level-m" rel="help"><em class="rfc2119" title="REQUIRED">必須</em>級の誤り</a></h3>
     <p>A violation to a hard requirement of the specification.
     The document is non‐conforming.</p>
   </div>
 
-<div class="section" id="Error-level-s"><h3><a href="../error-description#Error-level-s" rel="help"><em class="rfc2119">SHOULD</em>‐level
-        error</a></h3>
+<div class="section" id="Error-level-s"><h3><a href="../error-description#Error-level-s" rel="help"><em class="rfc2119" title="RECOMMENDED">推奨</em>級の誤り</a></h3>
     <p>A violation to a requirement of the specification.
     The violation might be legitimize in some case.  Otherwise,
     the document is non‐conforming.</p>
   </div>
 
-<div class="section" id="Error-level-w"><h3><a href="../error-description#Error-level-w" rel="help">Warning</a></h3>
+<div class="section" id="Error-level-w"><h3><a href="../error-description#Error-level-w" rel="help">警告</a></h3>
     <p>A warning is an advice from the conformance checker
     to avoid solving a problem in a confusing or possibly wrong way.
     It does not affect to the conformance of the document, and
     may sometimes be inappropriate.</p>
   </div>
 
-<div class="section" id="Error-level-i"><h3><a href="../error-description#Error-level-i" rel="help">Information</a></h3>
+<div class="section" id="Error-level-i"><h3><a href="../error-description#Error-level-i" rel="help">情報</a></h3>
     <p>An informational message just provides an additional information
     on the feature used in the document or the status of the retrieval
     or so on.
     It does not affect to the conformance of the document.</p>
   </div>
 
-<div class="section" id="Error-level-u"><h3><a href="../error-description#Error-level-u" rel="help">Not
-      supported</a></h3>
+<div class="section" id="Error-level-u"><h3><a href="../error-description#Error-level-u" rel="help">未対応</a></h3>
     <p>Some feature that is not supported by the conformance checker
     is used in the document.</p>
   </div>

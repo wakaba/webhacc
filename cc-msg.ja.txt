@@ -1,3 +1,5 @@
+WebHACC:Title;;WebHACC (β)
+WebHACC:Heading;; <a href="../error-description#WebHACC:Heading" rel="help"><abbr title="Web ハイパーテキスト応用適合性検査器 (β)"><img alt="WebHACC" src="../icons/title"></abbr></a> 
 m:illegal-octets-error;error-category-charset;An illegal octet in the input stream.
 disallowed character encoding;;Character encoding <code><var>{text}</var></code> is not allowed for <abbr>HTML</abbr> document.
 bad character encoding;;Character encoding <code><var>{text}</var></code> should not be used for <abbr>HTML</abbr> document.
@@ -326,8 +328,7 @@ addr-spec not supported;;Conformance checking for an <code>addr-spec</code> is n
 XML script lang;;Conformance checking for script language <code><var>{text}</var></code> is not supported; <em>it might or might not be conforming.</em>
 XML style lang;;Conformance checking for style language <code><var>{text}</var></code> is not supported; <em>it might or might not be conforming.</em>
 atom|content not supported;;Conformance checking for an Atom <code>content</code> element with <code>type</code> <code><var>{text}</var></code> is not supported.
-WebHACC:Title;;WebHACC (β)
-WebHACC:Heading;; <a href="../cc-about"><abbr title="Web ハイパーテキスト応用適合性検査器 (β)"><img alt="WebHACC" src="../icons/title"></abbr></a> 
+help not available;;No more information is available.
 Input;;入力
 By URL;;URL で指定
 By direct input;;直接入力
@@ -351,7 +352,7 @@ Document Source;;文書のソース
 Source;;ソース
 Tables Section;;表の構造
 Tables;;表
-Document Tree;;文書木
+Document Tree;;文\xE6\x9B\xB8木
 Tree;;木
 Document;;文書
 Document Structure;;文書構造
@@ -377,9 +378,9 @@ xmlEncoding;;XML <code lang="en">encoding</code>
 xmlStandalone;;XML <code lang="en">standalone</code>
 ... with BOM;; (<code class="charname" lang="en"><abbr title="BYTE ORDER MARK">BOM</abbr></code> つき)
 URL;;<abbr title="統一資源所在子">URL</abbr>
-URLs;;<abbr title="統一資源所在子">URL</abbr>
+URLs;;<abbr title="統\xE4\xB8\x80資源所在子">URL</abbr>
 Container Node;;この文書を含む節点
-Table Element;;\xE8\xA1\xA8要素
+Table Element;;表要素
 Base URL;;基底 URL
 Internet Media Type;;インターネット媒体型
 Character Encoding;;文字符号化
@@ -405,11 +406,12 @@ Line #;;<var>{text}</var> 行
 column #;;<var>{text}</var> 列
 Index #;;索引 #<var>{text}</var>
 Unknown location;;位置不明
-Table #;;表 #<var>{text}</var> の構造
+Description;;説明
+Table #;;表 #<var>{text}</var> \xE3\x81\xAE構造
 Subdocument #;;部分文書 #<var>{text}</var>
 Sub #;;部分 #<var>{text}</var>
 ...;;〜
-Score;;得\xE7\x82\xB9
+Score;;得点
 Subtotal;;小計
 Total;;合計
 Main document;;主文書
@@ -430,8 +432,8 @@ Conformance is conforming;;この文書に適合性に関わる誤りは見つ�
 Conformance is should-error;;この文書は<strong>おそらく<em>不</em>適合</strong>ですが、 稀に適合している場合もあります。適合性検査器はこの文書が稀な場合に該当するかどうか判定できません。
 Conformance is non-conforming;;この文書は<strong><em>不</em>適合</strong>です。
 Conformance is uncertain;;適合性検査器はこの文書が適合するかどうか判定できませんでした。 この文書は適合性検査器が対応していない機能を使っています。 この文書は適合しているかもしれませんし、していないかもしれません。
-Error level m;;<a href="../error-description#level-m"><em class="rfc2119" title="REQUIRED">必須</em>級の誤り</a>
-Error level s;;<a href="../error-description#level-s"><em class="rfc2119" title="RECOMMENDED">推奨</em>級の誤り</a>
-Error level w;;<a href="../error-description#level-w">警告</a>
-Error level i;;<a href="../error-description#level-i">情報</a>
-Error level u;;<a href="../error-description#level-u">未対応</a>
+Error level m;;<a href="../error-description#Error-level-m" rel="help"><em class="rfc2119" title="REQUIRED">必須</em>級の誤り</a>
+Error level s;;<a href="../error-description#Error-level-s" rel="help"><em class="rfc2119" title="RECOMMENDED">推奨</em>級の誤り</a>
+Error level w;;<a href="../error-description#Error-level-w" rel="help">警告</a>
+Error level i;;<a href="../error-description#Error-level-i" rel="help">情報</a>
+Error level u;;<a href="../error-description#Error-level-u" rel="help">未対応</a>

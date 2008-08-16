@@ -1,5 +1,18 @@
 2008-08-16  Wakaba  <wakaba@suika.fam.cx>
 
+	* Makefile: Generate Japanese version of error description document.
+
+	* cc-script.js, cc-style.css: Support for help popup.
+
+	* error-description-source.xml: Descriptions are added
+	to the description of WebHACC itself and descriptions
+	of error levels.  Old error level table is removed.
+
+	* mkdescription.pl: Assume the second argument is
+	the language.  Support for d:cat/d:desc.
+
+2008-08-16  Wakaba  <wakaba@suika.fam.cx>
+
 	* error-description-source.xml: Error for CSS cursor: hand
 	is added.
 

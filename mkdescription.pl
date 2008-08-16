@@ -23,7 +23,8 @@ my $doc;
   $doc->manakai_is_html (1);
 }
 
-my $target_lang = 'en';
+my $target_lang = shift || 'en';
+
 my @node = (@{$doc->child_nodes});
 while (@node) {
   my $node = shift @node;
@@ -37,9 +38,11 @@ while (@node) {
         unshift @node, @{$node->child_nodes};
       }
     } elsif ($node->namespace_uri eq $SRC_NS) {
-      if ($node->manakai_local_name eq 'item') {
+      my $ln = $node->manakai_local_name;
+      if ($ln eq 'item' or $ln eq 'cat') {
         my $message;
         my $desc;
+        my $text;
         for (@{$node->child_nodes}) {
           if ($_->node_type == $_->ELEMENT_NODE and
               $_->namespace_uri eq $SRC_NS) {
@@ -57,33 +60,41 @@ while (@node) {
               } else {
                 $message ||= $_;
               }
+            } elsif ($_->manakai_local_name eq 'text') {
+              if ($_->get_attribute_ns ($XML_NS, 'lang') eq $target_lang) {
+                $text = $_;
+                next;
+              } else {
+                $text ||= $_;
+              }
             }
           }
         }
 
-        my $name = $node->get_attribute_ns (undef, 'name');
-        $name =~ tr/ /-/;
-        my $level = $node->get_attribute_ns (undef, 'level');
-        $name = $level . ':' . $name if defined $level;
-        my $section = $doc->create_element_ns ($HTML_NS, 'div');
-        $section->set_attribute_ns
-            (undef, class => 'section ' .
-                 $node->get_attribute_ns (undef, 'class'));
-        $section->set_attribute_ns (undef, id => $name);
-
-        my @message_child = @{$message->child_nodes};
-        my $msg = $section->append_child
-            ($doc->create_element_ns ($HTML_NS, 'h3'));
-        $msg->append_child ($_) for @message_child;
-
-        if ($desc) {
-          my @desc_child = @{$desc->child_nodes};
-          $section->append_child ($_) for @desc_child;
+        if ($ln eq 'item' or $desc) {
+          my $name = $node->get_attribute_ns (undef, 'name');
+          $name =~ tr/ /-/;
+          
+          my $section = $doc->create_element_ns ($HTML_NS, 'div');
+          $section->set_attribute_ns (undef, class => 'section');
+          $section->set_attribute_ns (undef, id => $name);
+          
+          my $msg = $section->append_child
+              ($doc->create_element_ns ($HTML_NS, 'h3'));
+          if ($ln eq 'item' and $message) {
+            my @message_child = @{$message->child_nodes};
+            $msg->append_child ($_) for @message_child;
+          } elsif ($ln eq 'cat' and $text) {
+            $msg->append_child ($_) for @{$text->child_nodes};
+          }
+          
+          if ($desc) {
+            my @desc_child = @{$desc->child_nodes};
+            $section->append_child ($_) for @desc_child;
+          }
+          
+          $node->parent_node->insert_before ($section, $node);
         }
-
-        $node->parent_node->insert_before ($section, $node);
-        $node->parent_node->remove_child ($node); ## TODO: replace_child is not yet implemented
-      } elsif ($node->manakai_local_name eq 'cat') {
         $node->parent_node->remove_child ($node);
       } else {
         warn "$0: ", $node->manakai_local_name, " is not supported\n";

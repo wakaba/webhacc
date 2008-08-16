@@ -3,13 +3,54 @@
     xmlns:d="http://suika.fam.cx/~wakaba/archive/2007/wdcc-desc/"
     id="error-description">
 <head>
-<title xml:lang="en">Description of Errors &#x2014; 
-Web Document Conformance Checker (BETA)</title>
-<link rel="stylesheet" href="cc-style"/>
+<base href="cc/"/>
+<title xml:lang="en">Description of Errors &#x2014; WebHACC (β)</title>
+<link rel="stylesheet" href="../cc-style"/>
 <link rel="license" href="#license"/>
 </head>
 <body>
-<h1>Description of Errors</h1>
+<header>
+<h1><a href="../cc-about"><abbr title="Web Hypertext Application Conformance Checker (β)"><img src="../icons/title" alt="WebHACC"/></abbr></a></h1>
+<h2>Description of Errors</h2>
+</header>
+
+<d:cat name="WebHACC:Title">
+  <d:text xml:lang="en">WebHACC (β)</d:text>
+</d:cat>
+
+<d:cat name="WebHACC:Heading">
+  <d:text xml:lang="en">
+    <a href="../error-description#WebHACC:Heading" rel="help"><abbr title="Web Hypertext Application Conformance Checker (β)"><img src="../icons/title" alt="WebHACC"/></abbr></a>
+  </d:text>
+  <d:text xml:lang="ja">
+    <a href="../error-description#WebHACC:Heading" rel="help"><abbr title="Web ハイパーテキスト応用適合性検査器 (β)"><img src="../icons/title" alt="WebHACC"/></abbr></a>
+  </d:text>
+  <d:desc xml:lang="en">
+    <p><a href="./#input"><abbr title="Web Hypertext Application Conformance Checker">WebHACC</abbr></a>
+    is a <em>conformance checker</em> (or validator) for Web documents,
+    supporting <a href="../standards">latest Web standards</a> including
+    <a href="http://whatwg.org/html5"><abbr title="Hypertext Markup Language">HTML</abbr>5</a>,
+    <a href="urn:ietf:rfc:4287">Atom 1.0</a>,
+    <a href="http://www.w3.org/Style/CSS/current-work"><abbr title="Cascading Style Sheets">CSS</abbr>3</a>.</p>
+
+    <p><strong><a href="./#input">Check your document</a></strong>, or
+    <a href="../cc-about">learn more about
+    <abbr title="Web Hypertext Application Conformance Checker">WebHACC</abbr></a>.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p><a href="./#input"><abbr title="Web ハイパーテキスト応用適合性検査器">WebHACC</abbr></a>
+    は、 Web 文書のための<em>適合性検査器</em> (妥当性検証器) です。
+    <a href="http://whatwg.org/html5"><abbr title="Hypertext Markup Language">HTML</abbr>5</a>、
+    <a href="urn:ietf:rfc:4287">Atom 1.0</a>、
+    <a href="http://www.w3.org/Style/CSS/current-work"><abbr title="Cascading Style Sheets">CSS</abbr>3</a>
+    などの<a href="../standards">最新の Web 標準</a>に対応しています。</p>
+
+    <p><strong><a href="./#input">文書を検査する</a></strong></p>
+
+    <p><a href="../cc-about"><abbr title="Web ハイパーテキスト応用適合性検査器">WebHACC</abbr>
+    の詳細</a></p>
+  </d:desc>
+</d:cat>
 
 <section id="character-encoding-layer">
 <h2>Character Encoding Layer Errors</h2>
@@ -3231,20 +3272,15 @@ p {
   <code><var>{text}</var></code> is not supported.</d:message>
 </d:item>
 
+<d:item name="help not available"
+    modules="cc-script">
+  <d:message xml:lang="en">No more information is available.</d:message>
+  <d:desc xml:lang="en">
+    <p>No more information is available for this topic.</p>
+  </d:desc>
+</d:item>
+
 </section>
-
-<d:cat name="WebHACC:Title">
-  <d:text xml:lang="en">WebHACC (β)</d:text>
-</d:cat>
-
-<d:cat name="WebHACC:Heading">
-  <d:text xml:lang="en">
-    <a href="../cc-about"><abbr title="Web Hypertext Application Conformance Checker (β)"><img src="../icons/title" alt="WebHACC"/></abbr></a>
-  </d:text>
-  <d:text xml:lang="ja">
-    <a href="../cc-about"><abbr title="Web ハイパーテキスト応用適合性検査器 (β)"><img src="../icons/title" alt="WebHACC"/></abbr></a>
-  </d:text>
-</d:cat>
 
 <d:cat name="Input">
   <d:text xml:lang="en">Input</d:text>
@@ -3635,6 +3671,11 @@ p {
   <d:text xml:lang="ja">位置不明</d:text>
 </d:cat>
 
+<d:cat name="Description">
+  <d:text xml:lang="en">Description</d:text>
+  <d:text xml:lang="ja">説明</d:text>
+</d:cat>
+
 <d:cat name="Table #">
   <d:text xml:lang="en">Structure of Table #<var>{text}</var></d:text>
   <d:text xml:lang="ja">表 #<var>{text}</var> の構造</d:text>
@@ -3778,83 +3819,57 @@ p {
 </d:cat>
 
 <d:cat name="Error level m">
-  <d:text xml:lang="en"><a href="../error-description#level-m"><em class="rfc2119">MUST</em>‐level
+  <d:text xml:lang="en"><a href="../error-description#Error-level-m" rel="help"><em class="rfc2119">MUST</em>‐level
         error</a></d:text>
-  <d:text xml:lang="ja"><a href="../error-description#level-m"><em class="rfc2119" title="REQUIRED">必須</em>級の誤り</a></d:text>
+  <d:text xml:lang="ja"><a href="../error-description#Error-level-m" rel="help"><em class="rfc2119" title="REQUIRED">必須</em>級の誤り</a></d:text>
+  <d:desc xml:lang="en">
+    <p>A violation to a hard requirement of the specification.
+    The document is non‐conforming.</p>
+  </d:desc>
 </d:cat>
 
 <d:cat name="Error level s">
-  <d:text xml:lang="en"><a href="../error-description#level-s"><em class="rfc2119">SHOULD</em>‐level
+  <d:text xml:lang="en"><a href="../error-description#Error-level-s" rel="help"><em class="rfc2119">SHOULD</em>‐level
         error</a></d:text>
-  <d:text xml:lang="ja"><a href="../error-description#level-s"><em class="rfc2119" title="RECOMMENDED">推奨</em>級の誤り</a></d:text>
+  <d:text xml:lang="ja"><a href="../error-description#Error-level-s" rel="help"><em class="rfc2119" title="RECOMMENDED">推奨</em>級の誤り</a></d:text>
+  <d:desc xml:lang="en">
+    <p>A violation to a requirement of the specification.
+    The violation might be legitimize in some case.  Otherwise,
+    the document is non‐conforming.</p>
+  </d:desc>
 </d:cat>
 
 <d:cat name="Error level w">
-  <d:text xml:lang="en"><a href="../error-description#level-w">Warning</a></d:text>
-  <d:text xml:lang="ja"><a href="../error-description#level-w">警告</a></d:text>
+  <d:text xml:lang="en"><a href="../error-description#Error-level-w" rel="help">Warning</a></d:text>
+  <d:text xml:lang="ja"><a href="../error-description#Error-level-w" rel="help">警告</a></d:text>
+  <d:desc xml:lang="en">
+    <p>A warning is an advice from the conformance checker
+    to avoid solving a problem in a confusing or possibly wrong way.
+    It does not affect to the conformance of the document, and
+    may sometimes be inappropriate.</p>
+  </d:desc>
 </d:cat>
 
 <d:cat name="Error level i">
-  <d:text xml:lang="en"><a href="../error-description#level-i">Information</a></d:text>
-  <d:text xml:lang="ja"><a href="../error-description#level-i">情報</a></d:text>
+  <d:text xml:lang="en"><a href="../error-description#Error-level-i" rel="help">Information</a></d:text>
+  <d:text xml:lang="ja"><a href="../error-description#Error-level-i" rel="help">情報</a></d:text>
+  <d:desc xml:lang="en">
+    <p>An informational message just provides an additional information
+    on the feature used in the document or the status of the retrieval
+    or so on.
+    It does not affect to the conformance of the document.</p>
+  </d:desc>
 </d:cat>
 
 <d:cat name="Error level u">
-  <d:text xml:lang="en"><a href="../error-description#level-u">Not
+  <d:text xml:lang="en"><a href="../error-description#Error-level-u" rel="help">Not
       supported</a></d:text>
-  <d:text xml:lang="ja"><a href="../error-description#level-u">未対応</a></d:text>
+  <d:text xml:lang="ja"><a href="../error-description#Error-level-u" rel="help">未対応</a></d:text>
+  <d:desc xml:lang="en">
+    <p>Some feature that is not supported by the conformance checker
+    is used in the document.</p>
+  </d:desc>
 </d:cat>
-
-<section id="levels">
-<h2>Error Levels</h2>
-
-<table id="levels-table">
-<thead>
-<tr><th scope="col">Level</th>
-<th scope="col">Conforming?</th>
-<th scope="col">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr id="level-m" class="level-m">
-<th scope="row"><em class="rfc2119">MUST</em>‐level error</th>
-<td>Non‐conforming.</td>
-<td>A violation to a hard requirement of the specification.
-The document is non‐conforming.</td>
-</tr>
-<tr id="level-s" class="level-s">
-<th scope="row"><em class="rfc2119">SHOULD</em>‐level error</th>
-<td>Non‐conforming, but <em>in some case</em>
-conforming.</td>
-<td>A violation to a requirement of the specification.
-The violation might be legitimize in some case.  Otherwise,
-the document is non‐conforming.</td>
-</tr>
-<tr id="level-w" class="level-w">
-<th scope="row">Warning</th>
-<td>Conforming.</td>
-<td>A warning is an advice from the conformance checker to avoid
-to solve a problem in a confusing or possibly wrong way.
-It does not affect to the conformance of the document, and
-may sometimes be inappropriate.</td>
-</tr>
-<tr id="level-i" class="level-i">
-<th scope="row">Information</th>
-<td>Conforming.</td>
-<td>An informational message just provides an additional information
-on the feature used in the document or the status of the retrieval
-or so on.
-It does not affect to the conformance of the document.</td>
-</tr>
-<tr id="level-u" class="level-u">
-<th scope="row">Not supported</th>
-<td><em>Unknown</em>.</td>
-<td>Some feature that is not supported by the conformance checker
-is used in the document.</td>
-</tr>
-</tbody>
-</table>
-</section>
 
 <section id="license">
 <h2>License of This Document</h2>
@@ -3867,6 +3882,6 @@ is used in the document.</td>
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2008/08/16 08:37:12 $ -->
+<!-- $Date: 2008/08/16 13:09:08 $ -->
 </body>
 </html>

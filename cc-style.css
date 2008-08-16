@@ -774,6 +774,52 @@ dt.layer-semantics {
   padding-left: 20px; /* background-image's width is 16px */
 }
 
+/* Floating help box */
+
+aside.help {
+  display: block;
+  position: fixed;
+  z-index: 10000;
+  background-color: #FFFFCC;
+  color: black;
+  border: 0.1em outset #FFFF66;
+  -moz-border-radius: 0.4em;
+  -webkit-border-radius: 0.4em;
+  border-radius: 0.4em;
+  padding: 0.5em;
+  overflow: auto;
+  max-height: 50%;
+  max-width: 50%;
+  -webkit-box-shadow: 0.6em 0.6em 0.4em gray;
+}
+
+aside.help > h3 {
+  display: none; /* since it is duplicated with the main document's content. */
+}
+
+aside.help > h3 + * {
+  margin-top: 0;
+}
+
+aside.help > *:last-child {
+  margin-bottom: 0;
+}
+
+/* Used instead of XHR for HTML documents */
+iframe {
+  margin: 0;
+  border-style: none;
+  padding: 0;
+  width: 0;
+  height: 0;
+}
+
+body[data-scripted] a[rel~=help] {
+  text-decoration: none;
+  border-bottom: dotted 1px;
+  padding-bottom: 0;
+}
+
 /*
 
 Copyright 2007-2008 Wakaba <w@suika.fam.cx>.
@@ -781,6 +827,6 @@ Copyright 2007-2008 Wakaba <w@suika.fam.cx>.
 This library is free software; you can redistribute it
 and/or modify it under the same terms as Perl itself.
 
-$Date: 2008/08/16 07:42:20 $
+$Date: 2008/08/16 13:09:08 $
 
 */

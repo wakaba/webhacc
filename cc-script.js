@@ -191,25 +191,173 @@ function _showTab (sections, id) {
   }
 } // _showTab
 
-function getAncestorAnchorElement (e) {
+function getAncestorElements (e) {
+  var ret = {};
   do {
     if (e.nodeName == 'A' || e.nodeName == 'AREA') {
-      return e;
+      ret.a = e;
+      if (ret.aside) {
+        return ret;
+      }
+    } else if (e.nodeName == 'ASIDE' || e.nodeName == 'aside') {
+      ret.aside = e;
+      if (ret.a) {
+        ret.aInAside = true;
+        return ret;
+      }
     }
     e = e.parentNode;
   } while (e);
-} // getAncestorAnchorElement
+  return ret;
+} // getAncestorElements
 
-function onbodyclick (ev) {
-  var a = getAncestorAnchorElement (ev.target || ev.srcElement);
-  if (a) {
-    var href = a.getAttribute ('href');
-    if (href && href.match (/^#/)) {
-      var id = decodeURIComponent (href.substring (1));
-      showTab (id);
-      return true;
+function showHelp (id, context) {
+  if (document.webhaccHelp === undefined) {
+    loadHelp ('../error-description', function () {
+      _showHelp (id, context);
+    });
+    return true;
+  } else if (document.webhaccHelp === null) {
+    return false;
+  } else {
+    _showHelp (id, context);
+  }
+} // showHelp
+
+function loadHelp (url, code) {
+  document.webhaccHelp = null;
+  var iframe = document.createElement ('iframe');
+  var iframecode = function () {
+    var doc;
+    var docel;
+    try {
+      doc = iframe.contentWindow.document;
+      docel = doc.getElementById ('error-description');
+    } catch (e) { }
+    if (docel) {
+      document.webhaccHelp = doc;
+      code ();
+    } else if (url != '../error-description.en.html.u8') {
+      // doc would be a 406 error.
+      loadHelp ('../error-description.en.html.u8', code);
+      iframe.parentNode.removeChild (iframe);
+      /*
+        |iframe| is removed from the document after another |iframe|
+        is inserted by nested |loadHelp| call, otherwise Safari 3
+        would reuse(?) removed |iframe| and it sometimes (not always)
+        requests old URL even when another URL is set to the |src| attribute.
+      */
+    }
+    iframe.onreadystatechange = null;
+    iframe.onload = null;
+  };
+  iframe.onreadystatechange = function () {
+    if (this.readyState == 'complete') {
+      iframecode ();
+    }
+  };
+  iframe.onload = iframecode;
+  iframe.src = url;
+  document.body.appendChild (iframe);
+} // loadHelp
+
+function _showHelp (id, context) {
+  var helpDataEl = document.webhaccHelp.getElementById (id);
+  if (!helpDataEl) {
+    helpDataEl = document.webhaccHelp.getElementById ('help-not-available');
+    if (!helpDataEl) {
+      helpDataEl = document.createElement ('div');
+      helpDataEl.innerHTML = '<p>There is no help for this item available.';
     }
   }
+
+  if (id != 'help-not-available' &&
+      helpDataEl.getElementsByTagName ('p').length == 0) {
+    _showHelp ('help-not-available', context);
+    return;
+  }
+
+  var helpBox = document.createElement ('aside');
+  helpBox.className = 'help';
+  helpBox.innerHTML = helpDataEl.innerHTML; /* adoptNode + appendChild */
+  document.body.appendChild (helpBox);
+
+  var vp = document.documentElement;
+  if (vp.clientHeight < document.body.clientHeight) {
+    vp = document.body;
+    /*
+      |vp| is the element that is associated with the viewport.
+      In standard mode, the viewport element is the root element, i.e.
+      the |document.documentElement|.  However, in Opera 9, the viewport
+      element is the |body| element.  If the document element is not the
+      viewport element, its |clientHeight| takes less value than that
+      of the |body| element.  (I don't know whether this is always true.)
+    */
+  }
+
+
+  var left = context.x;
+  var top = context.y;
+  if (left > vp.clientWidth * 0.5) {
+    helpBox.style.left = '45%';
+  } else if (left < 10) {
+    helpBox.style.left = '10px';
+  } else {
+    helpBox.style.left = left + 'px';
+  }
+  if (top > vp.clientHeight - 100) {
+    helpBox.style.bottom = '10px';
+  } else if (top < 10) {
+    helpBox.style.top = '10px';
+  } else {
+    helpBox.style.top = top + 'px';
+  }
+
+  if (helpBox.offsetTop + helpBox.clientHeight > vp.clientHeight) {
+    helpBox.style.top = '50%';
+    helpBox.style.bottom = '10px';
+  }
+} // _showHelp
+
+function removeHelps () {
+  var asides = document.getElementsByTagName ('aside');
+  while (asides.length > 0) {
+    var aside = asides[0];
+    aside.parentNode.removeChild (aside);
+  }
+} // removeHelps
+
+function onbodyclick (ev) {
+  var aels = getAncestorElements (ev.target || ev.srcElement);
+
+  if (!aels.aside) {
+    removeHelps ();
+  }
+
+  if (aels.a) {
+    var href = aels.a.getAttribute ('href');
+    if (href) {
+      var m;
+      if (href.match (/^#/)) {
+        var id = decodeURIComponent (href.substring (1));
+        showTab (id);
+        return true;
+      } else if ((aels.a.rel == 'help' /* relList.has ('help') */) &&
+                 (m = href.match (/#(.+)$/) /* aels.a.hash, in fact... */)) {
+        var id = decodeURIComponent (m[1]);
+        showHelp (id, {x: ev.clientX, y: ev.clientY});
+        return false;
+      } else if (href.match (/^.\/#/)) {
+        var id = decodeURIComponent (href.substring (3));
+        showTab (id);
+        if (aels.aInAside) {
+          removeHelps ();
+        }
+        return true;
+      }
+    }
+  }
+
   return true;
 } // onbodyclick
 
@@ -231,4 +379,4 @@ function onbodyload () {
   }
 } // onbodyload
 
-// $Date: 2008/08/16 07:42:20 $
+// $Date: 2008/08/16 13:09:08 $

@@ -1,3 +1,5 @@
+WebHACC:Title;;WebHACC (β)
+WebHACC:Heading;; <a href="../error-description#WebHACC:Heading" rel="help"><abbr title="Web Hypertext Application Conformance Checker (β)"><img alt="WebHACC" src="../icons/title"></abbr></a> 
 m:illegal-octets-error;error-category-charset;An illegal octet in the input stream.
 disallowed character encoding;;Character encoding <code><var>{text}</var></code> is not allowed for <abbr>HTML</abbr> document.
 bad character encoding;;Character encoding <code><var>{text}</var></code> should not be used for <abbr>HTML</abbr> document.
@@ -326,8 +328,7 @@ addr-spec not supported;;Conformance checking for an <code>addr-spec</code> is n
 XML script lang;;Conformance checking for script language <code><var>{text}</var></code> is not supported; <em>it might or might not be conforming.</em>
 XML style lang;;Conformance checking for style language <code><var>{text}</var></code> is not supported; <em>it might or might not be conforming.</em>
 atom|content not supported;;Conformance checking for an Atom <code>content</code> element with <code>type</code> <code><var>{text}</var></code> is not supported.
-WebHACC:Title;;WebHACC (β)
-WebHACC:Heading;; <a href="../cc-about"><abbr title="Web Hypertext Application Conformance Checker (β)"><img alt="WebHACC" src="../icons/title"></abbr></a> 
+help not available;;No more information is available.
 Input;;Input
 By URL;;By URL
 By direct input;;By direct input
@@ -405,6 +406,7 @@ Line #;;Line <var>{text}</var>
 column #;;column <var>{text}</var>
 Index #;;Index <var>{text}</var>
 Unknown location;;Unknown location
+Description;;Description
 Table #;;Structure of Table #<var>{text}</var>
 Subdocument #;;Subdocument #<var>{text}</var>
 Sub #;;Sub #<var>{text}</var>
@@ -430,8 +432,8 @@ Conformance is conforming;;No conformance‐error is found in this document.
 Conformance is should-error;;This document is <strong>likely <em>non</em>-conforming</strong>, but in rare case it might be conforming. The checker cannot determine whether this document is in the rare case or not.
 Conformance is non-conforming;;This document is <strong><em>non</em>-conforming</strong>.
 Conformance is uncertain;;The conformance checker cannot decide whether the document is conforming or not, since the document contains one or more unsupported features. The document might or might not be conforming.
-Error level m;;<a href="../error-description#level-m"><em class="rfc2119">MUST</em>‐level error</a>
-Error level s;;<a href="../error-description#level-s"><em class="rfc2119">SHOULD</em>‐level error</a>
-Error level w;;<a href="../error-description#level-w">Warning</a>
-Error level i;;<a href="../error-description#level-i">Information</a>
-Error level u;;<a href="../error-description#level-u">Not supported</a>
+Error level m;;<a href="../error-description#Error-level-m" rel="help"><em class="rfc2119">MUST</em>‐level error</a>
+Error level s;;<a href="../error-description#Error-level-s" rel="help"><em class="rfc2119">SHOULD</em>‐level error</a>
+Error level w;;<a href="../error-description#Error-level-w" rel="help">Warning</a>
+Error level i;;<a href="../error-description#Error-level-i" rel="help">Information</a>
+Error level u;;<a href="../error-description#Error-level-u" rel="help">Not supported</a>
