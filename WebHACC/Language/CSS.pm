@@ -31,7 +31,7 @@ sub generate_syntax_error_section ($) {
     }
     $result->add_error (%opt, layer => 'syntax');
   };
-  $p->{href} = $input->{uri};
+  $p->{href} = $input->url;
   $p->{base_uri} = $input->{base_uri};
 
 #  if ($parse_mode eq 'q') {

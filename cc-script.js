@@ -137,6 +137,8 @@ function showTab (id) {
     ids = ['source-string'];
   } else if (id.match (/^node-/)) {
     ids = ['document-tree'];
+  } else if (id.match (/^index-/)) {
+    ids = ['document-structure'];
   } else if (id.match (/^subdoc-[^-]+-/)) {
     var m;
     ids = [''];
@@ -153,6 +155,8 @@ function showTab (id) {
         ids.push (ids[ids.length - 1] + 'source-string');
       } else if (id.match (/^node-/)) {
         ids.push (ids[ids.length - 1] + 'document-tree');
+      } else if (id.match (/^index-/)) {
+        ids.push (ids[ids.length - 1] + 'document-structure');
       } else {
         ids.push (ids[ids.length - 1] + id);
       }
@@ -227,4 +231,4 @@ function onbodyload () {
   }
 } // onbodyload
 
-// $Date: 2008/08/15 16:44:03 $
+// $Date: 2008/08/16 07:42:20 $

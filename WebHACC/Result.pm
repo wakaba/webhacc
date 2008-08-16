@@ -185,8 +185,8 @@ sub add_error ($%) {
       } elsif (defined $opt{input}->{request_uri}) {
         $out->url ($opt{input}->{request_uri});
         $has_location = 1;
-      } elsif (defined $opt{input}->{uri}) {
-        $out->url ($opt{input}->{uri});
+      } elsif (defined $opt{input}->url) {
+        $out->url ($opt{input}->url);
         $has_location = 1;
       }
     }
@@ -206,13 +206,6 @@ sub add_error ($%) {
   my $error_type_text = $opt{type};
   $out->nl_text ($error_type_text, node => $opt{node}, text => $opt{text},
                  value => $opt{value});
-
-  ## Additional error description
-  if (defined $opt{text}) { ## TODO: Remove this block once all errors are put into the catalog.
-    $out->html (' (<q>');
-    $out->text ($opt{text});
-    $out->html ('</q>)');
-  }
   
   ## Link to a long description
 

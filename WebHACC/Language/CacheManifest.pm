@@ -28,7 +28,7 @@ sub generate_syntax_error_section ($) {
 
   my $m = $input->{is_char_string} ? 'parse_char_string' : 'parse_byte_string';
   $self->{structure} = Whatpm::CacheManifest->$m
-      ($input->{s}, $input->{uri}, $input->{base_uri}, sub {
+      ($input->{s}, $input->url, $input->{base_uri}, sub {
         $result->add_error (@_, layer => 'syntax', index_has_link => 1);
       });
        
@@ -44,31 +44,54 @@ sub generate_structure_dump_section ($) {
 
   $out->start_section (role => 'structure');
 
-  $out->html (qq[<dl><dt>Explicit entries</dt>]);
+  $out->start_tag ('dl');
   my $i = 0;
-  for my $uri (@{$manifest->[0]}) {
-    $out->start_tag ('dd', id => 'index-' . $i++);
-    $out->url ($uri);
+
+  $out->start_tag ('dt');
+  $out->nl_text ('Explicit entries');
+  if (@{$manifest->[0]}) {
+    for my $uri (@{$manifest->[0]}) {
+      $out->start_tag ('dd', id => 'index-' . $i++);
+      $out->url ($uri);
+    }
+  } else {
+    $out->start_tag ('dd', class => 'no-entry');
+    $out->nl_text ('No entry');
   }
 
-  $out->html (qq[<dt>Fallback entries</dt><dd>
-      <table><thead><tr><th scope=row>Oppotunistic Caching Namespace</th>
-      <th scope=row>Fallback Entry</tr><tbody>]);
-  for my $uri (sort {$a cmp $b} keys %{$manifest->[1]}) {
-    $out->start_tag ('tr');
-
-    $out->start_tag ('td', id => 'index-' . $i++);
-    $out->url ($uri);
-
-    $out->start_tag ('td', id => 'index-' . $i++);
-    $out->url ($manifest->[1]->{$uri});
+  $out->start_tag ('dt');
+  $out->nl_text ('Fallback entries');
+  if (keys %{$manifest->[1]}) {
+    $out->start_tag ('dd', class => 'manifest-fallbacks');
+    for my $uri (sort {$a cmp $b} keys %{$manifest->[1]}) {
+      $out->start_tag ('p', id => 'index-' . $i++);
+      $out->nl_text ('Opportunistic caching namespace');
+      $out->text (': ');
+      $out->url ($uri);
+      
+      $out->start_tag ('p', id => 'index-' . $i++);
+      $out->nl_text ('Fallback entry');
+      $out->text (': ');
+      $out->url ($manifest->[1]->{$uri});
+    }
+  } else {
+    $out->start_tag ('dd', class => 'no-entry');
+    $out->nl_text ('No entry');
   }
 
-  $out->html (qq[</table><dt>Online whitelist</dt>]);
-  for my $uri (@{$manifest->[2]}) {
-    $out->start_tag ('dd', id => 'index-' . $i++);
-    $out->url ($uri);
+  $out->start_tag ('dt');
+  $out->nl_text ('Online whitelist');
+  if (@{$manifest->[2]}) {
+    for my $uri (@{$manifest->[2]}) {
+      $out->start_tag ('dd', id => 'index-' . $i++);
+      $out->url ($uri);
+    }
+  } else {
+    $out->start_tag ('dd', class => 'no-entry');
+    $out->nl_text ('No entry');
   }
+
+  $out->end_tag ('dl');
 
   $out->end_section;
 } # generate_structure_dump_section

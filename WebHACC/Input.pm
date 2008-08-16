@@ -348,7 +348,7 @@ package WebHACC::Input::Subdocument;
 push our @ISA, 'WebHACC::Input';
 
 sub new ($$) {
-  my $self = bless {}, shift;
+  my $self = shift->SUPER::new;
   $self->{subdocument_index} = shift;
   return $self;
 } # new

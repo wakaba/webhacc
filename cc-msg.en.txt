@@ -234,6 +234,7 @@ URL:dot-segment;;A dot-segment (<code>.</code> or <code>..</code>) occurs in an 
 URL:empty host;;The host component of the URL is empty.
 URL:empty path;;The URL does not end with a <code>/</code> character.
 URL:empty port;;The port component of the URL is empty.
+URL fragment not allowed;;The fragment component of the URL is not allowed.
 URL:long host;;The host component of the URL is too long.
 URL:lowercase hexadecimal digit;;A lowercase hexadecimal digit is used in percent-encoding.
 URL:non-DNS host;;The host component of the URL is not a DNS host name.
@@ -242,7 +243,50 @@ URL:password;;Password should not be included in a URL for the security.
 URL:percent-encoded unreserved;;An unreserved character is percent-encoded.
 URL:uppercase host;;The host <code><var>{value}</var></code> should be spelt in lowercase.
 URL:uppercase scheme name;;URL scheme name is in uppercase.
-m:not manifest;must;This document is not a cache manifest.
+mq syntax error;;The specified value has a syntax error as a media query.
+unknown media type;;Media type <code><var>{value}</var></code> is not supported by the conformance checker.
+an+b not closed;;Argument list of the pseudo-class is not closed by a <code>)</code> character.
+ab+b not integer;;Numbers in the argument <code><var>a</var>n+<var>b</var></code> have to be integers.
+an+b syntax error;;Argument <code><var>a</var>n+<var>b</var></code> is syntactically incorrect.
+attr selector not closed;;Attribute selector is not closed by a <code>]</code> character.
+lang selector not closed;;Argument list of the <code>:lang</code> selector is not closed by a <code>)</code> character.
+namespace prefix:not declared;;Namespace prefix <code><var>{value}</var></code> is not declared.
+no attr local name;;Attribute local name is missing.
+no attr match;;Attribute matching operator (e.g. <code>=</code>) is missing.
+no attr name;;Attribute name is missing.
+no attr namespace separator;;Attribute namespace wildcard <code>*</code> is not followed by a <code>|</code> character.
+no attr value;;Attribute value is missing.
+no class name selector;;Class name is missing.
+no combinator;;Combinator is missing.
+no contains string;;No string is specified in the argument list of the <code>:-manakai-contains</code> pseudo-class selector.
+no lang tag;;Language tag argument is missing.
+no local name selector;;Local name part of the type selector (or <code>*</code> for the universal selector) is missing.
+no pseudo-class name;;Pseudo-class name is missing.
+no pseudo-element name;;Pseudo-element name is missing.
+no sss;;Sequence of simple selectors is expected.
+not not closed;;Argument list of the <code>:not</code> selector is not closed by a <code>)</code> character.
+ss after pseudo-element;;Simple selector is not allowed after a pseudo element.
+unknown pseudo-class;;Pseudo-class <code>:<var>{value}</var></code> is not supported by the conformance checker.
+unknown pseudo-element;;Pseudo-element <code>::<var>{value}</var></code> is not supported by the conformance checker.
+at-rule not allowed;;An <code>@<var>{text}</var></code> rule is not allowed here.
+at-rule syntax error;;The <code>@<var>{text}</var></code> rule is syntactically incorrect.
+block not closed;;Block is not closed before the end of file.
+CSS duplication;;Component <code>&lt;<var>{text}</var>&gt;</code> is already specified.
+CSS syntax error;;Specified value is syntactically not a correct <code>&lt;<var>{text}</var>&gt;</code>.
+no declaration block;;No declaration block is found after a group of selectors.
+no property colon;;A <code>:</code> character is missing after a property name.
+no property name;;Property name is expected.
+no property semicolon;;A <code>;</code> character is missing at the end of the property.
+priority syntax error;;Priority part of the declaration is syntactically incorrect.
+unknown at-rule;;The <code>@<var>{value}</var></code> rule is not supported by the conformance checker.
+unknown property;;Property <code><var>{value}</var></code> is not supported by the conformance checker.
+both in entries and whitelist;;This URL is found both in the explicit or fallback entries and in the online whitelist.
+different origin from manifest;;The specified URL has different origin from the manifest.
+different scheme from manifest;;The scheme component of the URL is different from that of the manifest URL. The URL is ignored.
+duplicate oc namespace;;This oppotunistic caching namespace is already specified.
+no fallback entry URL;;Fallback entry URL is missing.
+not manifest;;This document is not a cache manifest.
+same as manifest URL;;This URL is same as the manifest URL.
 deprecated:attr;;This attribute is deprecated.
 deprecated:element;;This element is deprecated.
 status:cr:element;;This element is in the <strong>call for implementation</strong> stage.
@@ -345,6 +389,12 @@ Character Length;;Character Length
 ... sniffed;; (<i>sniffed</i>)
 byte;;byte
 bytes;;bytes
+Explicit entries;;Explicit entries
+Fallback entries;;Fallback entries
+Opportunistic caching namespace;;Opportunistic caching namespace
+Fallback entry;;Fallback entry
+Online whitelist;;Online whitelist
+No entry;;No entry
 Subject;;Subject
 Predicate;;Predicate
 Object;;Object

@@ -73,7 +73,7 @@ sub generate_syntax_error_section ($) {
   $doc->manakai_charset ($input->{official_charset})
       if defined $input->{official_charset};
 
-  $doc->document_uri ($input->{uri});
+  $doc->document_uri ($input->url);
   $doc->manakai_entity_base_uri ($input->{base_uri});
 
   $doc->input_encoding (undef) if $input->isa ('WebHACC::Input::Text');

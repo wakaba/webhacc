@@ -54,7 +54,7 @@ sub generate_syntax_error_section ($) {
   $self->{structure}->manakai_charset ($input->{official_charset})
       if defined $input->{official_charset};
 
-  $self->{structure}->document_uri ($input->{uri});
+  $self->{structure}->document_uri ($input->url);
   $self->{structure}->manakai_entity_base_uri ($input->{base_uri});
 
   $out->end_error_list;

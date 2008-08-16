@@ -78,32 +78,6 @@ q:before, q:after {
   content: "";
 }
 
-#dump-manifest tbody:empty {
-  display: table-caption;
-  caption-side: bottom;
-}
-
-#dump-manifest tbody:empty::after {
-  content: "This cache manifest contains no oppotunistic caching namespace.";
-  font-style: italic;
-}
-
-#dump-manifest dt:first-child + dt::before,
-#dump-manifest dt:last-child::after {
-  display: block;
-  content: "This cache manifest contains no explicit entry.";
-  margin-left: 2.5em;
-  font-style: italic;
-  font-weight: normal;
-  font-family: serif;
-}
-
-#dump-manifest dt:last-child::after {
-  content: "This cache manifest has an empty online whitelist.";
-}
-
-
-
 
 #nav-items {
   display: block;
@@ -150,6 +124,10 @@ code {
   color: orangered;
   white-space: -moz-pre-wrap;
   white-space: pre-wrap;
+}
+
+pre > code:empty:after {
+  content: " "; /* such that a line box is rendered */
 }
 
 .example {
@@ -434,18 +412,23 @@ textarea {
   height: 20em;
 }
 
-/* Source codes taken from the input document */
+/* Source codes taken from the input document or reformatted source */
 
-/* q, */ .source li {
+/* q, */ .source li, .dump pre {
   white-space: pre;
   white-space: -moz-pre-wrap;
   white-space: pre-wrap;
 }
 
-q, .source ol {
+q, .source ol, .dump pre {
   background-color: #f0f0ff;
   color: black;
   line-height: 1.5;
+}
+
+.dump pre > code {
+  color: inherit;
+  background-color: transparent;
 }
 
 /* Document dumps */
@@ -489,6 +472,27 @@ q, .source ol {
 q:after {
   content: " "; /* Make white-space-only quotations visible */
   white-space: pre;
+}
+
+dd.no-entry:lang(en) {
+  font-style: italic;
+}
+
+dd.manifest-fallbacks + dd.manifest-fallbacks {
+  margin-top: 1em;
+}
+
+dd.manifest-fallbacks p {
+  margin: 0;
+  text-indent: 0;
+}
+
+dd.manifest-fallbacks > p + p {
+  text-indent: -1em;
+}
+
+dd.manifest-fallbacks > p + p:before {
+  content: "\21B3  ";
 }
 
 /* Errors */
@@ -777,6 +781,6 @@ Copyright 2007-2008 Wakaba <w@suika.fam.cx>.
 This library is free software; you can redistribute it
 and/or modify it under the same terms as Perl itself.
 
-$Date: 2008/08/15 17:51:03 $
+$Date: 2008/08/16 07:42:20 $
 
 */

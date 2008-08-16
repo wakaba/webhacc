@@ -1,5 +1,15 @@
 2008-08-16  Wakaba  <wakaba@suika.fam.cx>
 
+	* Input.pm (Subdocument new): Invoke superclass's new method
+	such that |urls| attribute is initialized.
+
+	* Result.pm (add_error): Use ->url attribute to obtain
+	the URL of the document.  No longer output |text| argument,
+	since all error types except for those used in the WebIDL module
+	are now defined in the catalog.
+
+2008-08-16  Wakaba  <wakaba@suika.fam.cx>
+
 	* Output.pm (start_section): Don't add item to the non-tab
 	navigation menu if the item's rank is higher than 2.
 

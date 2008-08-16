@@ -1,5 +1,16 @@
 2008-08-16  Wakaba  <wakaba@suika.fam.cx>
 
+	* CSS.pm, CacheManifest.pm, HTML.pm, XML.pm: Use ->url attribute to
+	obtain the URL of the document.
+
+	* CacheManifest.pm (generate_structure_dump_section): It is
+	now i18n'ed.  In addition, since URLs are tend to be long,
+	tables for fallback entries are replaced by |dd| entries and 
+	paragraphs.  "No entry" message is now handled by catalog,
+	rather than CSS.
+
+2008-08-16  Wakaba  <wakaba@suika.fam.cx>
+
 	* HTML.pm (generate_syntax_error_section): Remove |input_encoding|
 	attribute value if the input is specified by direct input.
 

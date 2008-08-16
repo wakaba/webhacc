@@ -2415,7 +2415,7 @@ p {
 <h2>URL Errors</h2>
 
 <d:item name="syntax error:iri3987"
-    modules="URIChecker">
+    modules="URIChecker CacheManifest">
   <d:message xml:lang="en">The specified value is syntactically not an
   IRI.</d:message>
 </d:item>
@@ -2509,6 +2509,12 @@ p {
   <d:message xml:lang="en">The port component of the URL is empty.</d:message>
 </d:item>
 
+<d:item name="URL fragment not allowed"
+    modules="CacheManifest">
+  <d:message xml:lang="en">The fragment component of the URL is not 
+  allowed.</d:message>
+</d:item>
+
 <d:item name="URL:long host"
     modules="URIChecker">
   <d:message xml:lang="en">The host component of the URL
@@ -2583,10 +2589,271 @@ p {
 
 </section>
 
+<section id="mq-errors">
+<h2>Media Query Errors</h2>
+
+<d:item name="mq syntax error"
+    modules="CSS::MediaQueryParser">
+  <d:message xml:lang="en">The specified value has a syntax error as a
+  media query.</d:message>
+</d:item>
+
+<d:item name="unknown media type"
+    modules="CSS::MediaQueryParser">
+  <d:message xml:lang="en">Media type <code><var>{value}</var></code> is
+  not supported by the conformance checker.</d:message>
+</d:item>
+
+</section>
+
+<section id="selectors-errors">
+<h2>Selectors Errors</h2>
+
+<d:item name="an+b not closed"
+    modules="CSS::SelectorsParser">
+  <d:message xml:lang="en">Argument list of the pseudo-class is
+  not closed by a <code>)</code> character.</d:message>
+</d:item>
+
+<d:item name="ab+b not integer"
+    modules="CSS::SelectorsParser">
+  <d:message xml:lang="en">Numbers in the argument
+  <code><var>a</var>n+<var>b</var></code> have to be integers.</d:message>
+</d:item>
+
+<d:item name="an+b syntax error"
+    modules="CSS::SelectorsParser">
+  <d:message xml:lang="en">Argument <code><var>a</var>n+<var>b</var></code> is 
+  syntactically incorrect.</d:message>
+</d:item>
+
+<d:item name="attr selector not closed"
+    modules="CSS::SelectorsParser">
+  <d:message xml:lang="en">Attribute selector is not closed by
+  a <code>]</code> character.</d:message>
+</d:item>
+
+<d:item name="lang selector not closed"
+    modules="CSS::SelectorsParser">
+  <d:message xml:lang="en">Argument list of the <code>:lang</code>
+  selector is not closed by a <code>)</code> character.</d:message>
+</d:item>
+
+<d:item name="namespace prefix:not declared"
+    modules="CSS::SelectorsParser">
+  <d:message xml:lang="en">Namespace prefix <code><var>{value}</var></code>
+  is not declared.</d:message>
+</d:item>
+
+<d:item name="no attr local name"
+    modules="CSS::SelectorsParser">
+  <d:message xml:lang="en">Attribute local name is missing.</d:message>
+</d:item>
+
+<d:item name="no attr match"
+    modules="CSS::SelectorsParser">
+  <d:message xml:lang="en">Attribute matching operator (e.g.
+  <code>=</code>) is missing.</d:message>
+</d:item>
+
+<d:item name="no attr name"
+    modules="CSS::SelectorsParser">
+  <d:message xml:lang="en">Attribute name is missing.</d:message>
+</d:item>
+
+<d:item name="no attr namespace separator"
+    modules="CSS::SelectorsParser">
+  <d:message xml:lang="en">Attribute namespace wildcard <code>*</code>
+  is not followed by a <code>|</code> character.</d:message>
+</d:item>
+
+<d:item name="no attr value"
+    modules="CSS::SelectorsParser">
+  <d:message xml:lang="en">Attribute value is missing.</d:message>
+</d:item>
+
+<d:item name="no class name selector"
+    modules="CSS::SelectorsParser">
+  <d:message xml:lang="en">Class name is missing.</d:message>
+  <!-- "." not followed by a class name -->
+</d:item>
+
+<d:item name="no combinator"
+    modules="CSS::SelectorsParser">
+  <d:message xml:lang="en">Combinator is missing.</d:message>
+</d:item>
+
+<d:item name="no contains string"
+    modules="CSS::SelectorsParser">
+  <d:message xml:lang="en">No string is specified in the argument
+  list of the <code>:-manakai-contains</code> pseudo-class
+  selector.</d:message>
+</d:item>
+
+<d:item name="no lang tag"
+    modules="CSS::SelectorsParser">
+  <d:message xml:lang="en">Language tag argument is missing.</d:message>
+</d:item>
+
+<d:item name="no local name selector"
+    modules="CSS::SelectorsParser">
+  <d:message xml:lang="en">Local name part of the type selector (or 
+  <code>*</code> for the universal selector) is missing.</d:message>
+  <!-- "|" not followed by a name or "*" -->
+</d:item>
+
+<d:item name="no pseudo-class name"
+    modules="CSS::SelectorsParser">
+  <d:message xml:lang="en">Pseudo-class name is missing.</d:message>
+</d:item>
+
+<d:item name="no pseudo-element name"
+    modules="CSS::SelectorsParser">
+  <d:message xml:lang="en">Pseudo-element name is missing.</d:message>
+</d:item>
+
+<d:item name="no sss"
+    modules="CSS::SelectorsParser">
+  <d:message xml:lang="en">Sequence of simple selectors is
+  expected.</d:message>
+</d:item>
+
+<d:item name="not not closed"
+    modules="CSS::SelectorsParser">
+  <d:message xml:lang="en">Argument list of the <code>:not</code> selector
+  is not closed by a <code>)</code> character.</d:message>
+</d:item>
+
+<d:item name="ss after pseudo-element"
+    modules="CSS::SelectorsParser">
+  <d:message xml:lang="en">Simple selector is not allowed after a
+  pseudo element.</d:message>
+</d:item>
+
+<d:item name="unknown pseudo-class"
+    modules="CSS::SelectorsParser">
+  <d:message xml:lang="en">Pseudo-class <code>:<var>{value}</var></code>
+  is not supported by the conformance checker.</d:message>
+</d:item>
+
+<d:item name="unknown pseudo-element"
+    modules="CSS::SelectorsParser">
+  <d:message xml:lang="en">Pseudo-element <code>::<var>{value}</var></code>
+  is not supported by the conformance checker.</d:message>
+</d:item>
+
+</section>
+
+<section id="css-errors">
+<h2>CSS Errors</h2>
+
+<d:item name="at-rule not allowed"
+    modules="CSS::Parser">
+  <d:message xml:lang="en">An <code>@<var>{text}</var></code> rule is not
+  allowed here.</d:message>
+</d:item>
+
+<d:item name="at-rule syntax error"
+    modules="CSS::Parser">
+  <d:message xml:lang="en">The <code>@<var>{text}</var></code> rule is
+  syntactically incorrect.</d:message>
+</d:item>
+
+<d:item name="block not closed"
+    modules="CSS::Parser">
+  <d:message xml:lang="en">Block is not closed before the end of
+  file.</d:message>
+</d:item>
+
+<d:item name="CSS duplication"
+    modules="CSS::Parser">
+  <d:message xml:lang="en">Component <code>&lt;<var>{text}</var>></code> is
+  already specified.</d:message>
+</d:item>
+
+<d:item name="CSS syntax error"
+    modules="CSS::Parser">
+  <d:message xml:lang="en">Specified value is syntactically not a correct
+  <code>&lt;<var>{text}</var>></code>.</d:message>
+</d:item>
+
+<d:item name="no declaration block"
+    modules="CSS::Parser">
+  <d:message xml:lang="en">No declaration block is found after a group of
+  selectors.</d:message>
+</d:item>
+
+<d:item name="no property colon"
+    modules="CSS::Parser">
+  <d:message xml:lang="en">A <code>:</code> character is missing after
+  a property name.</d:message>
+</d:item>
+
+<d:item name="no property name"
+   modules="CSS::Parser">
+  <d:message xml:lang="en">Property name is expected.</d:message>
+</d:item>
+
+<d:item name="no property semicolon"
+   modules="CSS::Parser">
+  <d:message xml:lang="en">A <code>;</code> character is missing at the
+  end of the property.</d:message>
+</d:item>
+
+<d:item name="priority syntax error"
+    modules="CSS::Parser">
+  <d:message xml:lang="en">Priority part of the declaration is syntactically
+  incorrect.</d:message>
+</d:item>
+
+<d:item name="unknown at-rule"
+    modules="CSS::Parser">
+  <d:message xml:lang="en">The <code>@<var>{value}</var></code> rule is
+  not supported by the conformance checker.</d:message>
+</d:item>
+
+<d:item name="unknown property"
+    modules="CSS::Parser">
+  <d:message xml:lang="en">Property <code><var>{value}</var></code> is
+  not supported by the conformance checker.</d:message>
+</d:item>
+
+</section>
+
 <section id="cache-manifest-errors">
 <h2>Cache Manifest Errors</h2>
 
-<d:item name="not manifest" class="must" level="m">
+<d:item name="both in entries and whitelist"
+    modules="CacheManifest">
+  <d:message xml:lang="en">This URL is found both in the explicit or
+  fallback entries and in the online whitelist.</d:message>
+</d:item>
+
+<d:item name="different origin from manifest"
+    modules="CacheManifest">
+  <d:message xml:lang="en">The specified URL has different origin from
+  the manifest.</d:message>
+</d:item>
+
+<d:item name="different scheme from manifest"
+    modules="CacheManifest">
+  <d:message xml:lang="en">The scheme component of the URL is
+  different from that of the manifest URL.  The URL is ignored.</d:message>
+</d:item>
+
+<d:item name="duplicate oc namespace"
+    modules="CacheManifest">
+  <d:message xml:lang="en">This oppotunistic caching namespace is already
+  specified.</d:message>
+</d:item>
+
+<d:item name="no fallback entry URL"
+    modules="CacheManifest">
+  <d:message xml:lang="en">Fallback entry URL is missing.</d:message>
+</d:item>
+
+<d:item name="not manifest"
+    modules="CacheManifest">
   <d:message xml:lang="en">This document is not a cache manifest.</d:message>
   <d:desc xml:lang="en">
     <p>The specified document is <em>not</em> a cache manifest.
@@ -2601,6 +2868,12 @@ p {
     <code>CACHE</code> and <code>MANIFEST</code>).</p>
   </d:desc>
 </d:item>
+
+<d:item name="same as manifest URL"
+    modules="CacheManifest">
+  <d:message xml:lang="en">This URL is same as the manifest URL.</d:message>
+</d:item>
+
 </section>
 
 <section id="information">
@@ -3281,6 +3554,36 @@ p {
   <d:text xml:lang="ja">バイト</d:text>
 </d:cat>
 
+<d:cat name="Explicit entries">
+  <d:text xml:lang="en">Explicit entries</d:text>
+  <d:text xml:lang="ja">明示的項目</d:text>
+</d:cat>
+
+<d:cat name="Fallback entries">
+  <d:text xml:lang="en">Fallback entries</d:text>
+  <d:text xml:lang="ja">滑り止め項目</d:text>
+</d:cat>
+
+<d:cat name="Opportunistic caching namespace">
+  <d:text xml:lang="en">Opportunistic caching namespace</d:text>
+  <d:text xml:lang="ja">日和見的キャッシュ化名前空間</d:text>
+</d:cat>
+
+<d:cat name="Fallback entry">
+  <d:text xml:lang="en">Fallback entry</d:text>
+  <d:text xml:lang="ja">滑り止め項目</d:text>
+</d:cat>
+
+<d:cat name="Online whitelist">
+  <d:text xml:lang="en">Online whitelist</d:text>
+  <d:text xml:lang="ja">オンライン・ホワイトリスト</d:text>
+</d:cat>
+
+<d:cat name="No entry">
+  <d:text xml:lang="en">No entry</d:text>
+  <d:text xml:lang="ja">項目なし</d:text>
+</d:cat>
+
 <d:cat name="Subject">
   <d:text xml:lang="en">Subject</d:text>
   <d:text xml:lang="ja">主語</d:text>
@@ -3558,6 +3861,6 @@ is used in the document.</td>
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2008/08/15 16:03:46 $ -->
+<!-- $Date: 2008/08/16 07:42:20 $ -->
 </body>
 </html>

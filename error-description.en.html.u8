@@ -1658,6 +1658,9 @@ p {
 
 <div class="section " id="URL:empty-port"><h3>The port component of the URL is empty.</h3></div>
 
+<div class="section " id="URL-fragment-not-allowed"><h3>The fragment component of the URL is not 
+  allowed.</h3></div>
+
 <div class="section " id="URL:long-host"><h3>The host component of the URL
   is too long.</h3></div>
 
@@ -1705,10 +1708,142 @@ p {
 
 </section>
 
+<section id="mq-errors">
+<h2>Media Query Errors</h2>
+
+<div class="section " id="mq-syntax-error"><h3>The specified value has a syntax error as a
+  media query.</h3></div>
+
+<div class="section " id="unknown-media-type"><h3>Media type <code><var>{value}</var></code> is
+  not supported by the conformance checker.</h3></div>
+
+</section>
+
+<section id="selectors-errors">
+<h2>Selectors Errors</h2>
+
+<div class="section " id="an+b-not-closed"><h3>Argument list of the pseudo-class is
+  not closed by a <code>)</code> character.</h3></div>
+
+<div class="section " id="ab+b-not-integer"><h3>Numbers in the argument
+  <code><var>a</var>n+<var>b</var></code> have to be integers.</h3></div>
+
+<div class="section " id="an+b-syntax-error"><h3>Argument <code><var>a</var>n+<var>b</var></code> is 
+  syntactically incorrect.</h3></div>
+
+<div class="section " id="attr-selector-not-closed"><h3>Attribute selector is not closed by
+  a <code>]</code> character.</h3></div>
+
+<div class="section " id="lang-selector-not-closed"><h3>Argument list of the <code>:lang</code>
+  selector is not closed by a <code>)</code> character.</h3></div>
+
+<div class="section " id="namespace-prefix:not-declared"><h3>Namespace prefix <code><var>{value}</var></code>
+  is not declared.</h3></div>
+
+<div class="section " id="no-attr-local-name"><h3>Attribute local name is missing.</h3></div>
+
+<div class="section " id="no-attr-match"><h3>Attribute matching operator (e.g.
+  <code>=</code>) is missing.</h3></div>
+
+<div class="section " id="no-attr-name"><h3>Attribute name is missing.</h3></div>
+
+<div class="section " id="no-attr-namespace-separator"><h3>Attribute namespace wildcard <code>*</code>
+  is not followed by a <code>|</code> character.</h3></div>
+
+<div class="section " id="no-attr-value"><h3>Attribute value is missing.</h3></div>
+
+<div class="section " id="no-class-name-selector"><h3>Class name is missing.</h3></div>
+
+<div class="section " id="no-combinator"><h3>Combinator is missing.</h3></div>
+
+<div class="section " id="no-contains-string"><h3>No string is specified in the argument
+  list of the <code>:-manakai-contains</code> pseudo-class
+  selector.</h3></div>
+
+<div class="section " id="no-lang-tag"><h3>Language tag argument is missing.</h3></div>
+
+<div class="section " id="no-local-name-selector"><h3>Local name part of the type selector (or 
+  <code>*</code> for the universal selector) is missing.</h3></div>
+
+<div class="section " id="no-pseudo-class-name"><h3>Pseudo-class name is missing.</h3></div>
+
+<div class="section " id="no-pseudo-element-name"><h3>Pseudo-element name is missing.</h3></div>
+
+<div class="section " id="no-sss"><h3>Sequence of simple selectors is
+  expected.</h3></div>
+
+<div class="section " id="not-not-closed"><h3>Argument list of the <code>:not</code> selector
+  is not closed by a <code>)</code> character.</h3></div>
+
+<div class="section " id="ss-after-pseudo-element"><h3>Simple selector is not allowed after a
+  pseudo element.</h3></div>
+
+<div class="section " id="unknown-pseudo-class"><h3>Pseudo-class <code>:<var>{value}</var></code>
+  is not supported by the conformance checker.</h3></div>
+
+<div class="section " id="unknown-pseudo-element"><h3>Pseudo-element <code>::<var>{value}</var></code>
+  is not supported by the conformance checker.</h3></div>
+
+</section>
+
+<section id="css-errors">
+<h2>CSS Errors</h2>
+
+<div class="section " id="at-rule-not-allowed"><h3>An <code>@<var>{text}</var></code> rule is not
+  allowed here.</h3></div>
+
+<div class="section " id="at-rule-syntax-error"><h3>The <code>@<var>{text}</var></code> rule is
+  syntactically incorrect.</h3></div>
+
+<div class="section " id="block-not-closed"><h3>Block is not closed before the end of
+  file.</h3></div>
+
+<div class="section " id="CSS-duplication"><h3>Component <code>&lt;<var>{text}</var>&gt;</code> is
+  already specified.</h3></div>
+
+<div class="section " id="CSS-syntax-error"><h3>Specified value is syntactically not a correct
+  <code>&lt;<var>{text}</var>&gt;</code>.</h3></div>
+
+<div class="section " id="no-declaration-block"><h3>No declaration block is found after a group of
+  selectors.</h3></div>
+
+<div class="section " id="no-property-colon"><h3>A <code>:</code> character is missing after
+  a property name.</h3></div>
+
+<div class="section " id="no-property-name"><h3>Property name is expected.</h3></div>
+
+<div class="section " id="no-property-semicolon"><h3>A <code>;</code> character is missing at the
+  end of the property.</h3></div>
+
+<div class="section " id="priority-syntax-error"><h3>Priority part of the declaration is syntactically
+  incorrect.</h3></div>
+
+<div class="section " id="unknown-at-rule"><h3>The <code>@<var>{value}</var></code> rule is
+  not supported by the conformance checker.</h3></div>
+
+<div class="section " id="unknown-property"><h3>Property <code><var>{value}</var></code> is
+  not supported by the conformance checker.</h3></div>
+
+</section>
+
 <section id="cache-manifest-errors">
 <h2>Cache Manifest Errors</h2>
 
-<div class="section must" id="m:not-manifest"><h3>This document is not a cache manifest.</h3>
+<div class="section " id="both-in-entries-and-whitelist"><h3>This URL is found both in the explicit or
+  fallback entries and in the online whitelist.</h3></div>
+
+<div class="section " id="different-origin-from-manifest"><h3>The specified URL has different origin from
+  the manifest.</h3></div>
+
+<div class="section " id="different-scheme-from-manifest"><h3>The scheme component of the URL is
+  different from that of the manifest URL.  The URL is ignored.</h3></div>
+
+<div class="section " id="duplicate-oc-namespace"><h3>This oppotunistic caching namespace is already
+  specified.</h3></div>
+
+<div class="section " id="no-fallback-entry-URL"><h3>Fallback entry URL is missing.</h3></div>
+
+<div class="section " id="not-manifest"><h3>This document is not a cache manifest.</h3>
     <p>The specified document is <em>not</em> a cache manifest.
     The document is non-conforming.</p>
 
@@ -1720,6 +1855,9 @@ p {
     (exactly one space character between
     <code>CACHE</code> and <code>MANIFEST</code>).</p>
   </div>
+
+<div class="section " id="same-as-manifest-URL"><h3>This URL is same as the manifest URL.</h3></div>
+
 </section>
 
 <section id="information">
@@ -2154,6 +2292,18 @@ p {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 <section id="levels">
 <h2>Error Levels</h2>
 
@@ -2216,6 +2366,6 @@ is used in the document.</td>
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2008/08/15 16:03:46 $ -->
+<!-- $Date: 2008/08/16 07:42:20 $ -->
 </body>
 </html>
