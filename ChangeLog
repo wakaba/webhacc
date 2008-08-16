@@ -1,5 +1,10 @@
 2008-08-16  Wakaba  <wakaba@suika.fam.cx>
 
+	* error-description-source.xml: Error for CSS cursor: hand
+	is added.
+
+2008-08-16  Wakaba  <wakaba@suika.fam.cx>
+
 	* cc-script.js: Support for #index- fragment identifiers.
 
 	* cc-style.css: Prety styling for reformatted sources.

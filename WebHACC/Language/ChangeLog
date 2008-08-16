@@ -1,5 +1,10 @@
 2008-08-16  Wakaba  <wakaba@suika.fam.cx>
 
+	* CSS.pm (generate_structure_error_section): Make the method
+	do nothing.
+
+2008-08-16  Wakaba  <wakaba@suika.fam.cx>
+
 	* CSS.pm, CacheManifest.pm, HTML.pm, XML.pm: Use ->url attribute to
 	obtain the URL of the document.
 

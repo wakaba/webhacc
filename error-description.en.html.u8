@@ -1801,6 +1801,9 @@ p {
 <div class="section " id="CSS-duplication"><h3>Component <code>&lt;<var>{text}</var>&gt;</code> is
   already specified.</h3></div>
 
+<div class="section " id="CSS-cursor-hand"><h3>Value <code>hand</code> is not valid as
+  <code>&lt;'cursor'&gt;</code>.</h3></div>
+
 <div class="section " id="CSS-syntax-error"><h3>Specified value is syntactically not a correct
   <code>&lt;<var>{text}</var>&gt;</code>.</h3></div>
 
@@ -2366,6 +2369,6 @@ is used in the document.</td>
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2008/08/16 07:42:20 $ -->
+<!-- $Date: 2008/08/16 08:37:12 $ -->
 </body>
 </html>

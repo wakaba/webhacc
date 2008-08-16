@@ -81,21 +81,27 @@ sub generate_structure_dump_section ($) {
 } # generate_structure_dump_section
 
 sub generate_structure_error_section ($) {
-  my $self = shift;
-
-  my $out = $self->output;
-
-  $out->start_section (role => 'structure-errors');
-  $out->start_error_list (role => 'structure-errors');
-  $self->result->layer_applicable ('structure');
-
-  $self->result->add_error (level => 'u',
-                            layer => 'structure',
-                            input => $self->input,
-                            type => 'CSSOM validation not supported');
-
-  $out->end_error_list (role => 'structure-errors');
-  $out->end_section;
+## NOTE: The content of this method is commented out, since a CSSOM
+## tree would contain no error that affect conformance, AFAICT.
+## The plan is that we could someday implement "semantic" checking for CSSOM
+## trees, like "this color and this background color is too resemble such that
+## a user might not be able to read the text".  Such errors do not affect
+## conformance, in any way.
+#  my $self = shift;
+#
+#  my $out = $self->output;
+#
+#  $out->start_section (role => 'structure-errors');
+#  $out->start_error_list (role => 'structure-errors');
+#  $self->result->layer_applicable ('structure');
+#
+#  $self->result->add_error (level => 'u',
+#                            layer => 'structure',
+#                            input => $self->input,
+#                            type => 'CSSOM validation not supported');
+#
+#  $out->end_error_list (role => 'structure-errors');
+#  $out->end_section;
 } # generate_structure_error_section
 
 sub get_css_parser () {

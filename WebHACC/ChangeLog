@@ -1,5 +1,9 @@
 2008-08-16  Wakaba  <wakaba@suika.fam.cx>
 
+	* Output.pm (nl_text): We can finally get rid of a quirk.
+
+2008-08-16  Wakaba  <wakaba@suika.fam.cx>
+
 	* Input.pm (Subdocument new): Invoke superclass's new method
 	such that |urls| attribute is initialized.
 

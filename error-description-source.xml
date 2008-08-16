@@ -2771,6 +2771,12 @@ p {
   already specified.</d:message>
 </d:item>
 
+<d:item name="CSS cursor hand"
+    modules="CSS::Parser">
+  <d:message xml:lang="en">Value <code>hand</code> is not valid as
+  <code>&lt;'cursor'></code>.</d:message>
+</d:item>
+
 <d:item name="CSS syntax error"
     modules="CSS::Parser">
   <d:message xml:lang="en">Specified value is syntactically not a correct
@@ -3861,6 +3867,6 @@ is used in the document.</td>
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2008/08/16 07:42:20 $ -->
+<!-- $Date: 2008/08/16 08:37:12 $ -->
 </body>
 </html>

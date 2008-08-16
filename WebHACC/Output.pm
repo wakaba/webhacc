@@ -433,45 +433,35 @@ sub nl_text ($$;%) {
   my ($self, $type, %opt) = @_;
   my $node = $opt{node};
 
-  my @arg;
-  {
-    if (defined $Msg->{$type}) {
-      my $msg = $Msg->{$type}->[1];
-      if ($msg =~ /<var>/) {
-        $msg =~ s{<var>\$([0-9]+)</var>}{
-          defined $arg[$1] ? $htescape->($arg[$1]) : '(undef)';
-        }ge;
-        $msg =~ s{<var>{\@([A-Za-z0-9:_.-]+)}</var>}{
-          UNIVERSAL::can ($node, 'get_attribute_ns')
-              ? $htescape->($node->get_attribute_ns (undef, $1)) : ''
-        }ge;
-        $msg =~ s{<var>{\@}</var>}{
-          UNIVERSAL::can ($node, 'value') ? $htescape->($node->value) : ''
-        }ge;
-        $msg =~ s{<var>{text}</var>}{
-          defined $opt{text} ? $htescape->($opt{text}) : ''
-        }ge;
-        $msg =~ s{<var>{value}</var>}{
-          defined $opt{value} ? $htescape->($opt{value}) : ''
-        }ge;
-        $msg =~ s{<var>{local-name}</var>}{
-          UNIVERSAL::can ($node, 'manakai_local_name')
+  if (defined $Msg->{$type}) {
+    my $msg = $Msg->{$type}->[1];
+    if ($msg =~ /<var>/) {
+      $msg =~ s{<var>{\@([A-Za-z0-9:_.-]+)}</var>}{
+        UNIVERSAL::can ($node, 'get_attribute_ns')
+            ? $htescape->($node->get_attribute_ns (undef, $1)) : ''
+      }ge;
+      $msg =~ s{<var>{\@}</var>}{
+        UNIVERSAL::can ($node, 'value') ? $htescape->($node->value) : ''
+      }ge;
+      $msg =~ s{<var>{text}</var>}{
+        defined $opt{text} ? $htescape->($opt{text}) : ''
+      }ge;
+      $msg =~ s{<var>{value}</var>}{
+        defined $opt{value} ? $htescape->($opt{value}) : ''
+      }ge;
+      $msg =~ s{<var>{local-name}</var>}{
+        UNIVERSAL::can ($node, 'manakai_local_name')
             ? $htescape->($node->manakai_local_name) : ''
-        }ge;
-        $msg =~ s{<var>{element-local-name}</var>}{
-          (UNIVERSAL::can ($node, 'owner_element') and
-           $node->owner_element)
+      }ge;
+      $msg =~ s{<var>{element-local-name}</var>}{
+        (UNIVERSAL::can ($node, 'owner_element') and $node->owner_element)
             ? $htescape->($node->owner_element->manakai_local_name) : ''
-        }ge;
-      }
-      $self->html ($msg);
-      return;
-    } elsif ($type =~ s/:([^:]*)$//) {
-      unshift @arg, $1;
-      redo;
+      }ge;
     }
+    $self->html ($msg);
+  } else {
+    $self->text ($type);
   }
-  $self->text ($type);
 } # nl_text
 
 }

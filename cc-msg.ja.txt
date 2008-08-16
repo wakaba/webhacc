@@ -272,6 +272,7 @@ at-rule not allowed;;An <code>@<var>{text}</var></code> rule is not allowed here
 at-rule syntax error;;The <code>@<var>{text}</var></code> rule is syntactically incorrect.
 block not closed;;Block is not closed before the end of file.
 CSS duplication;;Component <code>&lt;<var>{text}</var>&gt;</code> is already specified.
+CSS cursor hand;;Value <code>hand</code> is not valid as <code>&lt;'cursor'&gt;</code>.
 CSS syntax error;;Specified value is syntactically not a correct <code>&lt;<var>{text}</var>&gt;</code>.
 no declaration block;;No declaration block is found after a group of selectors.
 no property colon;;A <code>:</code> character is missing after a property name.
@@ -378,7 +379,7 @@ xmlStandalone;;XML <code lang="en">standalone</code>
 URL;;<abbr title="統一資源所在子">URL</abbr>
 URLs;;<abbr title="統一資源所在子">URL</abbr>
 Container Node;;この文書を含む節点
-Table Element;;表要素
+Table Element;;\xE8\xA1\xA8要素
 Base URL;;基底 URL
 Internet Media Type;;インターネット媒体型
 Character Encoding;;文字符号化
@@ -408,7 +409,7 @@ Table #;;表 #<var>{text}</var> の構造
 Subdocument #;;部分文書 #<var>{text}</var>
 Sub #;;部分 #<var>{text}</var>
 ...;;〜
-Score;;得点
+Score;;得\xE7\x82\xB9
 Subtotal;;小計
 Total;;合計
 Main document;;主文書
