@@ -1,3 +1,7 @@
+2008-08-17  Wakaba  <wakaba@suika.fam.cx>
+
+	* Output.pm: |text/x-h2h| added.
+
 2008-08-16  Wakaba  <wakaba@suika.fam.cx>
 
 	* Output.pm (nl_text): We can finally get rid of a quirk.

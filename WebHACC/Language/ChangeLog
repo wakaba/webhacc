@@ -1,3 +1,10 @@
+2008-08-17  Wakaba  <wakaba@suika.fam.cx>
+
+	* CacheManifest.pm (generate_structure_dump_section): Support
+	for broken manifest.
+
+	* H2H.pm: New module.
+
 2008-08-16  Wakaba  <wakaba@suika.fam.cx>
 
 	* CSS.pm (generate_structure_error_section): Make the method

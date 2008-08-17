@@ -78,6 +78,7 @@ sub check_and_print ($$$) {
     'text/cache-manifest' => 'WebHACC::Language::CacheManifest',
     'text/css' => 'WebHACC::Language::CSS',
     'text/html' => 'WebHACC::Language::HTML',
+    'text/x-h2h' => 'WebHACC::Language::H2H',
     'text/x-webidl' => 'WebHACC::Language::WebIDL',
 
     'text/xml' => 'WebHACC::Language::XML',
@@ -149,4 +150,4 @@ and/or modify it under the same terms as Perl itself.
 
 =cut
 
-## $Date: 2008/08/15 16:44:03 $
+## $Date: 2008/08/17 05:06:21 $

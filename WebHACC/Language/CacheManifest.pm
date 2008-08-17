@@ -38,7 +38,7 @@ sub generate_syntax_error_section ($) {
 
 sub generate_structure_dump_section ($) {
   my $self = shift;
-  my $manifest = $self->{structure};
+  my $manifest = $self->{structure} || [[], {}, []]; # undef if it is not a manifest.
 
   my $out = $self->output;
 

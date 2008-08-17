@@ -543,13 +543,14 @@ sub generate_input_section ($$) {
     $out->select ([
       {value => '', label => 'As specified'},
       {value => 'application/atom+xml'},
+      {value => 'text/cache-manifest'},
+      {value => 'text/css'},
+      {value => 'text/x-h2h'},
+      {value => 'text/html'},
+      {value => 'text/x-webidl'},
       {value => 'application/xhtml+xml'},
       {value => 'application/xml'},
-      {value => 'text/html'},
       {value => 'text/xml'},
-      {value => 'text/css'},
-      {value => 'text/cache-manifest'},
-      {value => 'text/x-webidl'},
     ], name => 'i', selected => scalar $cgi->get_parameter ('i'));
     $out->end_tag ('label');
 
