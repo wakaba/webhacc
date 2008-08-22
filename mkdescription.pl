@@ -26,12 +26,18 @@ my $doc;
 my $target_lang = shift || 'en';
 
 my @node = (@{$doc->child_nodes});
+my $title;
+my $title_parent;
 while (@node) {
   my $node = shift @node;
   if ($node->node_type == $node->ELEMENT_NODE) {
     if ($node->namespace_uri eq $HTML_NS) {
       if ($node->manakai_local_name eq 'title') {
-        unless ($node->get_attribute_ns ($XML_NS, 'lang') eq $target_lang) {
+        $title_parent = $node->parent_node;
+        if ($node->get_attribute_ns ($XML_NS, 'lang') eq $target_lang) {
+          $title = $node;
+        } else {
+          $title ||= $node;
           $node->parent_node->remove_child ($node);
         }
       } else {
@@ -103,5 +109,6 @@ while (@node) {
   }
 }
 $doc->document_element->set_attribute_ns (undef, lang => $target_lang);
+$title_parent->append_child ($title) if $title;
 
 print $doc->inner_html;

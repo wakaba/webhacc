@@ -5,6 +5,7 @@
 <head>
 <base href="cc/"/>
 <title xml:lang="en">Description of Errors &#x2014; WebHACC (β)</title>
+<title xml:lang="ja">誤りの説明 &#x2014; WebHACC (β)</title>
 <link rel="stylesheet" href="../cc-style"/>
 <link rel="license" href="#license"/>
 </head>
@@ -3275,8 +3276,12 @@ p {
 <d:item name="help not available"
     modules="cc-script">
   <d:message xml:lang="en">No more information is available.</d:message>
+  <d:message xml:lang="ja">これ以上の詳しい情報はありません。</d:message>
   <d:desc xml:lang="en">
     <p>No more information is available for this topic.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>これについての詳しい情報はありません。</p>
   </d:desc>
 </d:item>
 
@@ -3671,6 +3676,11 @@ p {
   <d:text xml:lang="ja">位置不明</d:text>
 </d:cat>
 
+<d:cat name="(Unknown)">
+  <d:text xml:lang="en">(Unknown)</d:text>
+  <d:text xml:lang="ja">(不明)</d:text>
+</d:cat>
+
 <d:cat name="Description">
   <d:text xml:lang="en">Description</d:text>
   <d:text xml:lang="ja">説明</d:text>
@@ -3882,6 +3892,6 @@ p {
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2008/08/16 13:09:08 $ -->
+<!-- $Date: 2008/08/22 13:08:12 $ -->
 </body>
 </html>

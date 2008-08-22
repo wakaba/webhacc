@@ -328,7 +328,7 @@ addr-spec not supported;;Conformance checking for an <code>addr-spec</code> is n
 XML script lang;;Conformance checking for script language <code><var>{text}</var></code> is not supported; <em>it might or might not be conforming.</em>
 XML style lang;;Conformance checking for style language <code><var>{text}</var></code> is not supported; <em>it might or might not be conforming.</em>
 atom|content not supported;;Conformance checking for an Atom <code>content</code> element with <code>type</code> <code><var>{text}</var></code> is not supported.
-help not available;;No more information is available.
+help not available;;これ以上の詳しい情報はありません。
 Input;;入力
 By URL;;URL で指定
 By direct input;;直接入力
@@ -352,7 +352,7 @@ Document Source;;文書のソース
 Source;;ソース
 Tables Section;;表の構造
 Tables;;表
-Document Tree;;文\xE6\x9B\xB8木
+Document Tree;;文書木
 Tree;;木
 Document;;文書
 Document Structure;;文書構造
@@ -378,7 +378,7 @@ xmlEncoding;;XML <code lang="en">encoding</code>
 xmlStandalone;;XML <code lang="en">standalone</code>
 ... with BOM;; (<code class="charname" lang="en"><abbr title="BYTE ORDER MARK">BOM</abbr></code> つき)
 URL;;<abbr title="統一資源所在子">URL</abbr>
-URLs;;<abbr title="統\xE4\xB8\x80資源所在子">URL</abbr>
+URLs;;<abbr title="統一資源所在子">URL</abbr>
 Container Node;;この文書を含む節点
 Table Element;;表要素
 Base URL;;基底 URL
@@ -406,8 +406,9 @@ Line #;;<var>{text}</var> 行
 column #;;<var>{text}</var> 列
 Index #;;索引 #<var>{text}</var>
 Unknown location;;位置不明
-Description;;説明
-Table #;;表 #<var>{text}</var> \xE3\x81\xAE構造
+(Unknown);;(不明)
+Description;;\xE8\xAA\xAC明
+Table #;;表 #<var>{text}</var> の構造
 Subdocument #;;部分文書 #<var>{text}</var>
 Sub #;;部分 #<var>{text}</var>
 ...;;〜
@@ -428,7 +429,7 @@ No transfer error found.;;転送プロトコルの頭部に誤りは見つかり
 No parse error found.;;構文解析中に誤りは見つかりませんでした。
 No structural error found.;;構造上の誤りは見つかりませんでした。
 This checker is work in progress.;; <p><strong>重要</strong>: この適合性検査サービスは<em>開発中</em>です。 この結果は<em>間違い</em>かもしれません。</p> 
-Conformance is conforming;;この文書に適合性に関わる誤りは見つかりませんでした。
+Conformance is conforming;;こ\xE3\x81\xAE文書に適合性に関わる誤りは見つかりませんでした。
 Conformance is should-error;;この文書は<strong>おそらく<em>不</em>適合</strong>ですが、 稀に適合している場合もあります。適合性検査器はこの文書が稀な場合に該当するかどうか判定できません。
 Conformance is non-conforming;;この文書は<strong><em>不</em>適合</strong>です。
 Conformance is uncertain;;適合性検査器はこの文書が適合するかどうか判定できませんでした。 この文書は適合性検査器が対応していない機能を使っています。 この文書は適合しているかもしれませんし、していないかもしれません。

@@ -1,3 +1,7 @@
+2008-08-22  Wakaba  <wakaba@suika.fam.cx>
+
+	* Result.pm (add_error): Localize "description" link.
+
 2008-08-17  Wakaba  <wakaba@suika.fam.cx>
 
 	* Output.pm: |text/x-h2h| added.

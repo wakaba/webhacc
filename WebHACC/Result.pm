@@ -213,8 +213,10 @@ sub add_error ($%) {
   $fragment =~ tr/ /-/;
   $fragment = $out->encode_url_component ($fragment);
   $out->text (' [');
-  $out->link ('Description', url => '../error-description#' . $fragment,
-              rel => 'help');
+  $out->start_tag ('a', href => '../error-description#' . $fragment,
+                   rel => 'help');
+  $out->nl_text ('Description');
+  $out->end_tag ('a');
   $out->text (']');
 
   if ($error_level eq 'm') {

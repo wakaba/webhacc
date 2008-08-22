@@ -1,10 +1,11 @@
 <!DOCTYPE html><html id="error-description" lang="en" xmlns:d="http://suika.fam.cx/~wakaba/archive/2007/wdcc-desc/" xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <base href="cc/">
-<title xml:lang="en">Description of Errors — WebHACC (β)</title>
+
+
 <link href="../cc-style" rel="stylesheet">
 <link href="#license" rel="license">
-</head>
+<title xml:lang="en">Description of Errors — WebHACC (β)</title></head>
 <body>
 <header>
 <h1><a href="../cc-about"><abbr title="Web Hypertext Application Conformance Checker (β)"><img alt="WebHACC" src="../icons/title"></abbr></a></h1>
@@ -2319,6 +2320,8 @@ p {
 
 
 
+
+
 <div class="section" id="Error-level-m"><h3><a href="../error-description#Error-level-m" rel="help"><em class="rfc2119">MUST</em>‐level
         error</a></h3>
     <p>A violation to a hard requirement of the specification.
@@ -2363,6 +2366,6 @@ p {
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2008/08/16 13:09:08 $ -->
+<!-- $Date: 2008/08/22 13:08:12 $ -->
 </body>
 </html>

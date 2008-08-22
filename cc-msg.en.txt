@@ -406,6 +406,7 @@ Line #;;Line <var>{text}</var>
 column #;;column <var>{text}</var>
 Index #;;Index <var>{text}</var>
 Unknown location;;Unknown location
+(Unknown);;(Unknown)
 Description;;Description
 Table #;;Structure of Table #<var>{text}</var>
 Subdocument #;;Subdocument #<var>{text}</var>

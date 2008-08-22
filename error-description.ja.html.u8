@@ -2,9 +2,10 @@
 <head>
 <base href="cc/">
 
+
 <link href="../cc-style" rel="stylesheet">
 <link href="#license" rel="license">
-</head>
+<title xml:lang="ja">誤りの説明 — WebHACC (β)</title></head>
 <body>
 <header>
 <h1><a href="../cc-about"><abbr title="Web Hypertext Application Conformance Checker (β)"><img alt="WebHACC" src="../icons/title"></abbr></a></h1>
@@ -2108,11 +2109,13 @@ p {
   <code>content</code> element with <code>type</code>
   <code><var>{text}</var></code> is not supported.</h3></div>
 
-<div class="section" id="help-not-available"><h3>No more information is available.</h3>
-    <p>No more information is available for this topic.</p>
+<div class="section" id="help-not-available"><h3>これ以上の詳しい情報はありません。</h3>
+    <p>これについての詳しい情報はありません。</p>
   </div>
 
 </section>
+
+
 
 
 
@@ -2361,6 +2364,6 @@ p {
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2008/08/16 13:09:08 $ -->
+<!-- $Date: 2008/08/22 13:08:12 $ -->
 </body>
 </html>

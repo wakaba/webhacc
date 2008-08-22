@@ -1,3 +1,14 @@
+2008-08-22  Wakaba  <wakaba@suika.fam.cx>
+
+	* error-description-source.xml: More l10n.
+
+	* mkdescription.pl: Fallback <html:title> to xml:lang=en's one.
+
+2008-08-22  Wakaba  <wakaba@suika.fam.cx>
+
+	* error-description-source.xml: Localize "no more information"
+	message.
+
 2008-08-17  Wakaba  <wakaba@suika.fam.cx>
 
 	* cc-about.en.html: Author section added.
