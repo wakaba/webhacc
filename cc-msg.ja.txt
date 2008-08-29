@@ -12,82 +12,80 @@ sniffing:default;;Character encoding of this document is defaulted to <code><var
 chardecode:fallback;;Since no decoder for the document character encoding is found, decoder for the character encoding <code><var>{text}</var></code> is used. Checking results might be <em>wrong</em>.
 chardecode:no error;;Conformance error checking for the character encoding <code><var>{text}</var></code> is not supported.
 charset label:matching;;Sniffed character encoding <code><var>{text}</var></code> is same as the character encoding specified in the character encoding declaration. This is <em>not</em> an error.
-charset label detected;format-charset warning;While parsing the document as <code><var>{text}</var></code>, a character encoding declaration specifying a different character encoding is found. The document is reparsed.
+charset label detected;;While parsing the document as <code><var>{text}</var></code>, a character encoding declaration specifying a different character encoding is found. The document is reparsed.
 NULL;;The <code class="charname">NULL</code> character is not allowed.
 control char;;Code point <code><var>{text}</var></code> is not allowed.
-after html;parse-error;Tag <code>&lt;<var>$0</var>&gt;</code> is not allowed after the end tag <code>&lt;/html&gt;</code>.
-after body;parse-error;Tag <code>&lt;<var>$0</var>&gt;</code> is not allowed after the end tag <code>&lt;/body&gt;</code>.
-bad attribute name;tokenize-error;Attribute name cannot contain characters <code>"</code>, <code>'</code>, and <code>=</code>.
-bad attribute value;tokenize-error;Attribute value must be quoted by <code>"</code> or <code>'</code> if it contains a <code>"</code>, <code>'</code>, or <code>=</code> character.
-bare ero;tokenize-error;The <code>&amp;</code> character must be escaped as <code class="html example">&amp;amp;</code>.
-bare etago;tokenize-error;A <code>&lt;/</code> string is not followed by a tag name.
-bare stago;tokenize-error;A <code>&lt;</code> character is not followed by tag name or by a <code>!</code> character.
-bare nero;tokenize-error;The decimal representation of the code position of a character must be specified after <code>&amp;#</code>.
-bare hcro;tokenize-error;The hexadecimal representation of the code position of a character must be specified after <code>&amp;#x</code>.
-bogus comment;tokenize-error;String <code>&lt;!</code> is not followed by <code>--</code>.
-bogus end tag;tokenize-error;String <code>&lt;/</code> is not followed by tag name.
-C1 character reference;tokenize-error;Character reference to <code><var>{text}</var></code> is not allowed.
-CR character reference;tokenize-error;Character reference to <code>U+000D</code> (<code class="charname">CARRIAGE RETURN</code>) is not allowed.
-dash in comment;tokenize-error;There is a <code>--</code> sequence in a comment.
-duplicate attribute;tokenize-error;There are two attributes with name <code><var>{text}</var></code>.
-empty start tag;tokenize-error;Empty start tag (<code>&lt;&gt;</code>) is not allowed.
-empty end tag;tokenize-error;Empty end tag (<code>&lt;/&gt;</code>) is not allowed.
-end tag attribute;tokenize-error;End tag cannot have attributes.
-invalid character reference;tokenize-error;Character reference to <code><var>{text}</var></code> is not allowed.
-nestc;tokenize-error;Polytheistic slash (<code>/&gt;</code>) cannot be used for this element.
-no DOCTYPE name;tokenize-error;After the string <code>&lt;!DOCTYPE </code>, the document type name must be specified.
-no PUBLIC literal;tokenize-error;After the keyword <code>PUBLIC</code>, no oublic identifier is specified.
-no refc;tokenize-error;Character reference must be closed by a <code>;</code> character.
-no space before DOCTYPE name;tokenize-error;After the string <code>&lt;!DOCTYPE</code>, there must be at least a white space character before the document type name.
-no space between attributes;tokenize-error;Attributes must be separeted by at least a white space character.
-no SYSTEM literal;tokenize-error;After the keyword <code>SYSTEM</code>, no system identifier is specified.
-pio;tokenize-error;Processing instruction (<code>&lt;?<var>...</var>&gt;</code>) is not allowed in HTML document.
-string after DOCTYPE name;tokenize-error;There is a bogus string after the document type name.
-string after PUBLIC;tokenize-error;There is a bogus string after the keyword <code>PUBLIC</code>.
-string after PUBLIC literal;tokenize-error;There is a bogus string after the public identifier.
-string after SYSTEM;tokenize-error;There is a bogus string after the keyword <code>SYSTEM</code>.
-string after SYSTEM literal;tokenize-error;There is a bogus string after the system identifier.
-unclosed attribute value;tokenize-error;Attribute value is not closed by a quotation mark.
-unclosed comment;tokenize-error;Comment is not closed by a string <code>--&gt;</code>.
-unclosed DOCTYPE;tokenize-error;The <code>DOCTYPE</code> is not closed by a <code>&gt;</code> character.
-unclosed PUBLIC literal;tokenize-error;The public identifier literal is not closed by a quotation mark.
-unclosed SYSTEM literal;tokenize-error;The system identifier literal is not closed by a quotation mark.
-unclosed tag;tokenize-error;Tag is not closed by a <code>&gt;</code> character.
-after body;parse-error;Start tag <code>&lt;<var>{text}</var>&gt;</code> is not allowed after the <code>body</code> is closed.
-after body:/;parse-error;End tag <code>&lt;/<var>{text}</var>&gt;</code> is not allowed after the <code>body</code> is closed.
-after body:#text;parse-error;Non‐white‐space characters are not allowed after the <code>body</code> is closed.
-after frameset;parse-error;Start tag <code>&lt;<var>{text}</var>&gt;</code> is not allowed after the <code>frameset</code> is closed.
-after frameset:/;parse-error;End tag <code>&lt;/<var>{text}</var>&gt;</code> is not allowed after the <code>frameset</code> is closed.
-after frameset:#text;parse-error;Non‐white‐space characters are not allowed after the <code>frame</code> is closed.
-after head;parse-error;The <code><var>{text}</var></code> element cannot be inserted between <code>head</code> and <code>body</code> elements.
-after html;parse-error;Start tag <code>&lt;<var>{text}</var>&gt;</code> is not allowed after the <code>html</code> is closed.
-after html:/;parse-error;End tag <code>&lt;/<var>{text}</var>&gt;</code> is not allowed after the <code>html</code> is closed.
-after html:#text;parse-error;Non‐white‐space characters are not allowed after the <code>html</code> is closed.
-image;parse-error;The <code>image</code> element is obsolete.
-in a:a;parse-error;Anchor cannot be nested.
-in body;parse-error;Start tag <code>&lt;<var>{text}</var>&gt;</code> is not allowed in the <code>body</code> element.
-in body:#eof;parse-error;Some element is not closed before the end of file.
-in button:button;parse-error;The <code>button</code> element cannot be nested.
-in CDATA:#eof;parse-error;Element is not closed before the end of file.
-in form:form;parse-error;Start tag <code>&lt;form&gt;</code> is not allowed in a <code>form</code> element.
-in frameset;parse-error;Start tag <code>&lt;<var>{text}</var>&gt;</code> is not allowed in a <code>framset</code> element.
-in frameset:/;parse-error;End tag <code>&lt;/<var>{text}</var>&gt;</code> is not allowed in a <code>frameset</code> element.
-in frameset:#text;parse-error;Non‐white‐space characters are not allowed in a <code>frameset</code> element.
-in head:head;parse-error;Start tag <code>&lt;head&gt;</code> is not allowed in the <code>head</code> element.
-in html:#DOCTYPE;parse-error;A <code>DOCTYPE</code> appears after any element or data character has been seen.
-in nobr:nobr;parse-error;The <code>nobr</code> element cannot be nested.
-in noscript;parse-error;The <code><var>{text}</var></code> element is not allowed in a <code>noscript</code> element in the <code>head</code> element.
-in noscript:/;parse-error;An end tag <code>&lt;/<var>{text}</var>&gt;</code> appers before the <code>noscript</code> element is closed.
-in noscript:#eof;parse-error;A <code>noscript</code> element is not closed before the end of file.
-in noscript:#text;parse-error;Non‐white‐space characters are not allowed in a <code>noscript</code> element in the <code>head</code> element.
-in PCDATA:#eof;parse-error;Element is not closed before the end of file.
-in select;parse-error;Start tag <code>&lt;<var>{text}</var>&gt;</code> is not allowed in a <code>select</code> element.
-in select:/;parse-error;End tag <code>&lt;/<var>{text}</var>&gt;</code> is not allowed in a <code>select</code> element.
-in table;parse-error;Start tag <code>&lt;<var>{text}</var>&gt;</code> is not allowed in a <code>table</code> element.
-in table:/;parse-error;End tag <code>&lt;/<var>{text}</var>&gt;</code> is not allowed in a <code>table</code> element.
-in table:#text;parse-error;Non‐white‐space character is not allowed within the <code>table</code> element, outside of the caption and cells.
-isindex;parse-error;The <code>isindex</code> element is obsolete.
-missing start tag:tr;parse-error;Start tag of <code>tr</code> element is missing.
+bad attribute name;;Attribute name cannot contain characters <code>"</code>, <code>'</code>, and <code>=</code>.
+bad attribute value;;Attribute value must be quoted by <code>"</code> or <code>'</code> if it contains a <code>"</code>, <code>'</code>, or <code>=</code> character.
+bare ero;;The <code>&amp;</code> character must be escaped as <code class="html example">&amp;amp;</code>.
+bare etago;;A <code>&lt;/</code> string is not followed by a tag name.
+bare stago;;A <code>&lt;</code> character is not followed by tag name or by a <code>!</code> character.
+bare nero;;The decimal representation of the code position of a character must be specified after <code>&amp;#</code>.
+bare hcro;;The hexadecimal representation of the code position of a character must be specified after <code>&amp;#x</code>.
+bogus comment;;String <code>&lt;!</code> is not followed by <code>--</code>.
+bogus end tag;;String <code>&lt;/</code> is not followed by tag name.
+C1 character reference;;Character reference to <code><var>{text}</var></code> is not allowed.
+CR character reference;;Character reference to <code>U+000D</code> (<code class="charname">CARRIAGE RETURN</code>) is not allowed.
+dash in comment;;There is a <code>--</code> sequence in a comment.
+duplicate attribute;;There are two attributes with name <code><var>{text}</var></code>.
+empty start tag;;Empty start tag (<code>&lt;&gt;</code>) is not allowed.
+empty end tag;;Empty end tag (<code>&lt;/&gt;</code>) is not allowed.
+end tag attribute;;End tag cannot have attributes.
+invalid character reference;;Character reference to <code><var>{text}</var></code> is not allowed.
+nestc;;Polytheistic slash (<code>/&gt;</code>) cannot be used for this element.
+no DOCTYPE name;;After the string <code>&lt;!DOCTYPE </code>, the document type name must be specified.
+no PUBLIC literal;;After the keyword <code>PUBLIC</code>, no oublic identifier is specified.
+no refc;;Character reference must be closed by a <code>;</code> character.
+no space before DOCTYPE name;;After the string <code>&lt;!DOCTYPE</code>, there must be at least a white space character before the document type name.
+no space between attributes;;Attributes must be separeted by at least a white space character.
+no SYSTEM literal;;After the keyword <code>SYSTEM</code>, no system identifier is specified.
+pio;;Processing instruction (<code>&lt;?<var>...</var>&gt;</code>) is not allowed in HTML document.
+string after DOCTYPE name;;There is a bogus string after the document type name.
+string after PUBLIC;;There is a bogus string after the keyword <code>PUBLIC</code>.
+string after PUBLIC literal;;There is a bogus string after the public identifier.
+string after SYSTEM;;There is a bogus string after the keyword <code>SYSTEM</code>.
+string after SYSTEM literal;;There is a bogus string after the system identifier.
+unclosed attribute value;;Attribute value is not closed by a quotation mark.
+unclosed comment;;Comment is not closed by a string <code>--&gt;</code>.
+unclosed DOCTYPE;;The <code>DOCTYPE</code> is not closed by a <code>&gt;</code> character.
+unclosed PUBLIC literal;;The public identifier literal is not closed by a quotation mark.
+unclosed SYSTEM literal;;The system identifier literal is not closed by a quotation mark.
+unclosed tag;;Tag is not closed by a <code>&gt;</code> character.
+after body;;Start tag <code>&lt;<var>{text}</var>&gt;</code> is not allowed after the <code>body</code> is closed.
+after body:/;;End tag <code>&lt;/<var>{text}</var>&gt;</code> is not allowed after the <code>body</code> is closed.
+after body:#text;;Non‐white‐space characters are not allowed after the <code>body</code> is closed.
+after frameset;;Start tag <code>&lt;<var>{text}</var>&gt;</code> is not allowed after the <code>frameset</code> is closed.
+after frameset:/;;End tag <code>&lt;/<var>{text}</var>&gt;</code> is not allowed after the <code>frameset</code> is closed.
+after frameset:#text;;Non‐white‐space characters are not allowed after the <code>frame</code> is closed.
+after head;;The <code><var>{text}</var></code> element cannot be inserted between <code>head</code> and <code>body</code> elements.
+after html;;Start tag <code>&lt;<var>{text}</var>&gt;</code> is not allowed after the <code>html</code> is closed.
+after html:/;;End tag <code>&lt;/<var>{text}</var>&gt;</code> is not allowed after the <code>html</code> is closed.
+after html:#text;;Non‐white‐space characters are not allowed after the <code>html</code> is closed.
+image;;The <code>image</code> element is obsolete.
+in a:a;;Anchor cannot be nested.
+in body;;Start tag <code>&lt;<var>{text}</var>&gt;</code> is not allowed in the <code>body</code> element.
+in body:#eof;;Some element is not closed before the end of file.
+in button:button;;The <code>button</code> element cannot be nested.
+in CDATA:#eof;;Element is not closed before the end of file.
+in form:form;;Start tag <code>&lt;form&gt;</code> is not allowed in a <code>form</code> element.
+in frameset;;Start tag <code>&lt;<var>{text}</var>&gt;</code> is not allowed in a <code>framset</code> element.
+in frameset:/;;End tag <code>&lt;/<var>{text}</var>&gt;</code> is not allowed in a <code>frameset</code> element.
+in frameset:#text;;Non‐white‐space characters are not allowed in a <code>frameset</code> element.
+in head:head;;Start tag <code>&lt;head&gt;</code> is not allowed in the <code>head</code> element.
+in html:#DOCTYPE;;A <code>DOCTYPE</code> appears after any element or data character has been seen.
+in nobr:nobr;;The <code>nobr</code> element cannot be nested.
+in noscript;;The <code><var>{text}</var></code> element is not allowed in a <code>noscript</code> element in the <code>head</code> element.
+in noscript:/;;An end tag <code>&lt;/<var>{text}</var>&gt;</code> appers before the <code>noscript</code> element is closed.
+in noscript:#eof;;A <code>noscript</code> element is not closed before the end of file.
+in noscript:#text;;Non‐white‐space characters are not allowed in a <code>noscript</code> element in the <code>head</code> element.
+in PCDATA:#eof;;Element is not closed before the end of file.
+in select;;Start tag <code>&lt;<var>{text}</var>&gt;</code> is not allowed in a <code>select</code> element.
+in select:/;;End tag <code>&lt;/<var>{text}</var>&gt;</code> is not allowed in a <code>select</code> element.
+in table;;Start tag <code>&lt;<var>{text}</var>&gt;</code> is not allowed in a <code>table</code> element.
+in table:/;;End tag <code>&lt;/<var>{text}</var>&gt;</code> is not allowed in a <code>table</code> element.
+in table:#text;;Non‐white‐space character is not allowed within the <code>table</code> element, outside of the caption and cells.
+isindex;;The <code>isindex</code> element is obsolete.
+missing start tag:tr;;Start tag of <code>tr</code> element is missing.
 no DOCTYPE;parse-error;This document does not start with a <code>DOCTYPE</code>.
 not closed;parse-error;Element <code><var>{text}</var></code> is not closed.
 not first start tag;parse-error;This <code>&lt;html&gt;</code> tag is not the first start tag.
@@ -430,7 +428,7 @@ Subtotal;;小計
 Total;;合計
 Main document;;主文書
 Subdocuments;;部分文書
-Transfer L.;;<abbr title="転送プロト\xE3\x82\xB3ル">転送</abbr>
+Transfer L.;;<abbr title="転送プロトコル">転送</abbr>
 Encode L.;;<abbr title="文字符号化">符号</abbr>
 Char L.;;<abbr title="符号化文字">文字</abbr>
 Syntax L.;;構文
@@ -443,8 +441,8 @@ No parse error found.;;構文解析中に誤りは見つかりませんでした
 No structural error found.;;構造上の誤りは見つかりませんでした。
 This checker is work in progress.;; <p><strong>重要</strong>: この適合性検査サービスは<em>開発中</em>です。 この結果は<em>間違い</em>かもしれません。</p> 
 Conformance is conforming;;この文書に適合性に関わる誤りは見つかりませんでした。
-Conformance is should-error;;この文書は<strong>おそらく<em>不</em>適合</strong>ですが、 稀に適合している場合もあります。適合性検査器はこの文書が稀な場合\xE3\x81\xAB該当するかどうか判定できません。
-Conformance is non-conforming;;この文書は<strong><em>不</em>適合</strong>です。
+Conformance is should-error;;この文書は<strong>おそらく<em>不</em>適合</strong>ですが、 稀に適合している場合もあります。適合性検査器はこの文書が稀な場合に該当するかどうか判定できません。
+Conformance is non-conforming;;この文書は<strong><em>不</em>適合</strong>\xE3\x81\xA7す。
 Conformance is uncertain;;適合性検査器はこの文書が適合するかどうか判定できませんでした。 この文書は適合性検査器が対応していない機能を使っています。 この文書は適合しているかもしれませんし、していないかもしれません。
 Error level m;;<a href="../error-description#Error-level-m" rel="help"><em class="rfc2119" title="REQUIRED">必須</em>級の誤り</a>
 Error level s;;<a href="../error-description#Error-level-s" rel="help"><em class="rfc2119" title="RECOMMENDED">推奨</em>級の誤り</a>

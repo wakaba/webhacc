@@ -173,27 +173,6 @@
 <section id="html5-tokenize-error">
 <h2>HTML5 Parse Errors in Tokenization Stage</h2>
 
-<div class="section" id="after-html"><h3>Tag <code>&lt;<var>$0</var>&gt;</code>
-  is not allowed after the end tag <code>&lt;/html&gt;</code>.</h3>
-    <p>The start or end tag of an element appears after the
-    <code>html</code> element has been closed.  The document is
-    non-conforming.</p>
-
-    <p>Any content of the document other than comments
-    must be put into the <code>html</code> element.</p>
-  </div>
-
-<div class="section" id="after-body"><h3>Tag <code>&lt;<var>$0</var>&gt;</code>
-  is not allowed after the end tag <code>&lt;/body&gt;</code>.</h3>
-    <p>The start or end tag of an element appears after the
-    <code>body</code> element has been closed.  The document is
-    non-conforming.</p>
-
-    <p>Any content of the document other than <code>head</code>
-    contents and comments must be put into the <code>body</code>
-    element.</p>
-  </div>
-
 <div class="section" id="bad-attribute-name"><h3>Attribute name cannot contain characters
   <code>"</code>, <code>'</code>, and <code>=</code>.</h3></div>
 
@@ -590,10 +569,26 @@ p {
   </div>
 
 <div class="section" id="after-html"><h3>Start tag <code>&lt;<var>{text}</var>&gt;</code> is
-  not allowed after the <code>html</code> is closed.</h3></div>
+  not allowed after the <code>html</code> is closed.</h3>
+    <p>The start tag of an element appears after the
+    <code>body</code> element has been closed.  The document is
+    non-conforming.</p>
+
+    <p>Any content of the document other than <code>head</code>
+    contents and comments must be put into the <code>body</code>
+    element.</p>
+  </div>
 
 <div class="section" id="after-html:/"><h3>End tag <code>&lt;/<var>{text}</var>&gt;</code> is
-  not allowed after the <code>html</code> is closed.</h3></div>
+  not allowed after the <code>html</code> is closed.</h3>
+    <p>The end tag of an element appears after the
+    <code>body</code> element has been closed.  The document is
+    non-conforming.</p>
+
+    <p>Any content of the document other than <code>head</code>
+    contents and comments must be put into the <code>body</code>
+    element.</p>
+  </div>
 
 <div class="section" id="after-html:#text"><h3>Non‐white‐space characters are not allowed
   after the <code>html</code> is closed.</h3></div>
@@ -2414,6 +2409,6 @@ p {
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2008/08/29 13:35:14 $ -->
+<!-- $Date: 2008/08/29 13:46:58 $ -->
 </body>
 </html>
