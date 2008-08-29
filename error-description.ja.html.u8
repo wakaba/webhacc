@@ -1605,20 +1605,68 @@ p {
 <section id="imt-warnings">
 <h2>Internet Media Type Errors</h2>
 
+<div class="section" id="boundary:syntax-error"><h3>The specified value is not a valid value
+  as a multipart boundary.</h3></div>
+
+<div class="section" id="e4x:syntax-error"><h3>The specified value is not a valid value
+  for the attribute <code>e4x</code>.</h3></div>
+
+<div class="section" id="IMT:attribute-syntax-error"><h3>The specified value,
+  <code><var>{value}</var></code>, is syntactically not a valid
+  attribute name.</h3></div>
+
 <div class="section" id="IMT:composite"><h3>The specified media type is a composite
   type, which is not allowed in this context.</h3></div>
+
+<div class="section" id="IMT:limited-use-subtype"><h3>An Internet Media Type whose intended usage
+  is limited use, <code><var>{value}</var></code> is used.</h3></div>
 
 <div class="section" id="IMT:syntax-error"><h3>The specified value is not an Internet Media
   Type.</h3></div>
 
-<div class="section" id="IMT:obsolete-subtype"><h3><code><var>{@}</var></code>: An <em>obsolete</em>
-  subtype is used.</h3></div>
+<div class="section" id="IMT:obsolete-parameter"><h3>An obsolete parameter
+  <code><var>{value}</var></code> is used.</h3></div>
 
-<div class="section" id="IMT:private-subtype"><h3><code><var>{@}</var></code>: A private
-  (<code>x-</code> or <code>x.</code>) subtype is used.</h3></div>
+<div class="section" id="IMT:obsolete-subtype"><h3>An obsolete Internet Media Type
+  <code><var>{value}</var></code> is used.</h3></div>
 
-<div class="section" id="IMT:unregistered-subtype"><h3><code><var>{@}</var></code>: The subtype is
-  not registered to IANA.</h3></div>
+<div class="section" id="IMT:parameter-missing"><h3>Parameter <code><var>{text}</var></code> have to
+  be specified for the Internet Media Type
+  <code><var>{value}</var></code>.</h3></div>
+
+<div class="section" id="IMT:parameter-not-allowed"><h3>Parameter <code><var>{value}</var></code> is not
+  allowed for this Internet Media Type.</h3></div>
+
+<div class="section" id="IMT:private-subtype"><h3>Use of a private Internet Media Type
+  <code><var>{value}</var></code> is not encouraged.</h3></div>
+
+<div class="section" id="IMT:private-type"><h3>Use of a private type
+  <code><var>{value}</var></code> is not encouraged.</h3></div>
+
+<div class="section" id="IMT:subtype-syntax-error"><h3>Value <code><var>{value}</var></code> is
+  syntactically not a valid subtype value of an Internet Media Type.</h3></div>
+
+<div class="section" id="IMT:type-syntax-error"><h3>Value <code><var>{value}</var></code> is
+  syntactically not a valid type.</h3></div>
+
+<div class="section" id="IMT:unknown-parameter"><h3>An unknown parameter <code><var>{value}</var></code>
+  is used.  The conformance checker cannot determine whether use of this
+  parameter is valid or not.</h3></div>
+
+<div class="section" id="IMT:unknown-subtype"><h3>An unknown Internet Media Type
+  <code><var>{value}</var></code> is used.  At the time of the update of 
+  the conformance checker's Internet Media Type database, the subtype is
+  not reigstered to the IANA registry.  The subtype, however, might be
+  registerd to the IANA registry thereafter.  Please consult the IANA
+  registry.</h3></div>
+
+<div class="section" id="IMT:unregistered-subtype"><h3>Use of an Internet Media Type
+  <code><var>{value}</var></code> is not encouraged since it is not
+  part of the IANA registry.</h3></div>
+
+<div class="section" id="IMT:unregistered-type"><h3>Use of a type
+  <code><var>{value}</var></code> is not encouraged since it is not
+  a standardized type.</h3></div>
 
 <div class="section" id="not-IMT"><h3>A value that is not an Internet Media Type
   is not allowed here.</h3></div>
@@ -2364,6 +2412,6 @@ p {
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2008/08/22 13:08:12 $ -->
+<!-- $Date: 2008/08/29 13:35:14 $ -->
 </body>
 </html>

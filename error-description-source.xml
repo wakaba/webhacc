@@ -2397,10 +2397,35 @@ p {
 <section id="imt-warnings">
 <h2>Internet Media Type Errors</h2>
 
+<d:item name="boundary:syntax error"
+    modules="IMTChecker">
+  <d:message xml:lang="en">The specified value is not a valid value
+  as a multipart boundary.</d:message>
+</d:item>
+
+<d:item name="e4x:syntax error"
+    modules="IMTChecker">
+  <d:message xml:lang="en">The specified value is not a valid value
+  for the attribute <code>e4x</code>.</d:message>
+</d:item>
+
+<d:item name="IMT:attribute syntax error"
+    modules="IMTChecker">
+  <d:message xml:lang="en">The specified value,
+  <code><var>{value}</var></code>, is syntactically not a valid
+  attribute name.</d:message>
+</d:item>
+
 <d:item name="IMT:composite"
     modules="ContentChecker::Atom">
   <d:message xml:lang="en">The specified media type is a composite
   type, which is not allowed in this context.</d:message>
+</d:item>
+
+<d:item name="IMT:limited use subtype"
+    modules="IMTChecker">
+  <d:message xml:lang="en">An Internet Media Type whose intended usage
+  is limited use, <code><var>{value}</var></code> is used.</d:message>
 </d:item>
 
 <d:item name="IMT:syntax error"
@@ -2409,13 +2434,19 @@ p {
   Type.</d:message>
 </d:item>
 
+<d:item name="IMT:obsolete parameter"
+    modules="IMTChecker">
+  <d:message xml:lang="en">An obsolete parameter
+  <code><var>{value}</var></code> is used.</d:message>
+</d:item>
+
 <d:item name="IMT:obsolete subtype"
-    class="should" level="s">
-  <d:message xml:lang="en"><code><var>{@}</var></code>: An <em>obsolete</em>
-  subtype is used.</d:message>
+    modules="IMTChecker">
+  <d:message xml:lang="en">An obsolete Internet Media Type
+  <code><var>{value}</var></code> is used.</d:message>
   <d:item xml:lang="en">
     <p>The specified Internet Media Type is registered with status
-    of <i>OBSOLETE</i>.</p><!-- @@ SHOULD NOT? -->
+    of <i>OBSOLETE</i>.</p>
     
     <dl class="swtich">
     <dt>Media type <code>text/ecmascript</code></dt>
@@ -2432,17 +2463,72 @@ p {
   </d:item>
 </d:item>
 
+<d:item name="IMT:parameter missing"
+    modules="IMTChecker">
+  <d:message xml:lang="en">Parameter <code><var>{text}</var></code> have to
+  be specified for the Internet Media Type
+  <code><var>{value}</var></code>.</d:message>
+</d:item>
+
+<d:item name="IMT:parameter not allowed"
+    modules="IMTChecker">
+  <d:message xml:lang="en">Parameter <code><var>{value}</var></code> is not
+  allowed for this Internet Media Type.</d:message>
+</d:item>
+
 <d:item name="IMT:private subtype"
-    class="should" level="s">
-  <d:message xml:lang="en"><code><var>{@}</var></code>: A private
-  (<code>x-</code> or <code>x.</code>) subtype is used.</d:message>
+    modules="IMTChecker">
+  <d:message xml:lang="en">Use of a private Internet Media Type
+  <code><var>{value}</var></code> is not encouraged.</d:message>
+</d:item>
+
+<d:item name="IMT:private type"
+    modules="IMTChecker">
+  <d:message xml:lang="en">Use of a private type
+  <code><var>{value}</var></code> is not encouraged.</d:message>
+</d:item>
+
+<d:item name="IMT:subtype syntax error"
+    modules="IMTChecker">
+  <d:message xml:lang="en">Value <code><var>{value}</var></code> is
+  syntactically not a valid subtype value of an Internet Media Type.</d:message>
+</d:item>
+
+<d:item name="IMT:type syntax error"
+    modules="IMTChecker">
+  <d:message xml:lang="en">Value <code><var>{value}</var></code> is
+  syntactically not a valid type.</d:message>
+</d:item>
+
+<d:item name="IMT:unknown parameter"
+    modules="IMTChecker">
+  <d:message xml:lang="en">An unknown parameter <code><var>{value}</var></code>
+  is used.  The conformance checker cannot determine whether use of this
+  parameter is valid or not.</d:message>
+</d:item>
+
+<d:item name="IMT:unknown subtype"
+    modules="IMTChecker">
+  <d:message xml:lang="en">An unknown Internet Media Type
+  <code><var>{value}</var></code> is used.  At the time of the update of 
+  the conformance checker's Internet Media Type database, the subtype is
+  not reigstered to the IANA registry.  The subtype, however, might be
+  registerd to the IANA registry thereafter.  Please consult the IANA
+  registry.</d:message>
 </d:item>
 
 <d:item name="IMT:unregistered subtype"
-    class="should" level="s">
-  <d:message xml:lang="en"><code><var>{@}</var></code>: The subtype is
-  not registered to IANA.</d:message>
-<!-- TODO: Unknown message?? -->
+    modules="IMTChecker">
+  <d:message xml:lang="en">Use of an Internet Media Type
+  <code><var>{value}</var></code> is not encouraged since it is not
+  part of the IANA registry.</d:message>
+</d:item>
+
+<d:item name="IMT:unregistered type"
+    modules="IMTChecker">
+  <d:message xml:lang="en">Use of a type
+  <code><var>{value}</var></code> is not encouraged since it is not
+  a standardized type.</d:message>
 </d:item>
 
 <d:item name="not IMT"
@@ -3892,6 +3978,6 @@ p {
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2008/08/22 13:08:12 $ -->
+<!-- $Date: 2008/08/29 13:35:14 $ -->
 </body>
 </html>

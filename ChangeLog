@@ -1,3 +1,7 @@
+2008-08-29  Wakaba  <wakaba@suika.fam.cx>
+
+	* error-description-source.xml: Error types added for IMTChecker.
+
 2008-08-22  Wakaba  <wakaba@suika.fam.cx>
 
 	* error-description-source.xml: More l10n.

@@ -219,11 +219,24 @@ table:no cell in last row;table-model-error;The table has no cell (<code>td</cod
 table:rowspan extends table;table-model-error;This <code>rowspan</code> attribute results in creating a table row that does not contain any cell anchored to it.
 row with no anchored cell;;This row has no anchored cell.
 rowspan creates row with no anchored cell;;This <code>rowspan</code> attribute results in creating a table row that does not contain any cell anchored to it.
+boundary:syntax error;;The specified value is not a valid value as a multipart boundary.
+e4x:syntax error;;The specified value is not a valid value for the attribute <code>e4x</code>.
+IMT:attribute syntax error;;The specified value, <code><var>{value}</var></code>, is syntactically not a valid attribute name.
 IMT:composite;;The specified media type is a composite type, which is not allowed in this context.
+IMT:limited use subtype;;An Internet Media Type whose intended usage is limited use, <code><var>{value}</var></code> is used.
 IMT:syntax error;;The specified value is not an Internet Media Type.
-s:IMT:obsolete subtype;should;<code><var>{@}</var></code>: An <em>obsolete</em> subtype is used.
-s:IMT:private subtype;should;<code><var>{@}</var></code>: A private (<code>x-</code> or <code>x.</code>) subtype is used.
-s:IMT:unregistered subtype;should;<code><var>{@}</var></code>: The subtype is not registered to IANA.
+IMT:obsolete parameter;;An obsolete parameter <code><var>{value}</var></code> is used.
+IMT:obsolete subtype;;An obsolete Internet Media Type <code><var>{value}</var></code> is used.
+IMT:parameter missing;;Parameter <code><var>{text}</var></code> have to be specified for the Internet Media Type <code><var>{value}</var></code>.
+IMT:parameter not allowed;;Parameter <code><var>{value}</var></code> is not allowed for this Internet Media Type.
+IMT:private subtype;;Use of a private Internet Media Type <code><var>{value}</var></code> is not encouraged.
+IMT:private type;;Use of a private type <code><var>{value}</var></code> is not encouraged.
+IMT:subtype syntax error;;Value <code><var>{value}</var></code> is syntactically not a valid subtype value of an Internet Media Type.
+IMT:type syntax error;;Value <code><var>{value}</var></code> is syntactically not a valid type.
+IMT:unknown parameter;;An unknown parameter <code><var>{value}</var></code> is used. The conformance checker cannot determine whether use of this parameter is valid or not.
+IMT:unknown subtype;;An unknown Internet Media Type <code><var>{value}</var></code> is used. At the time of the update of the conformance checker's Internet Media Type database, the subtype is not reigstered to the IANA registry. The subtype, however, might be registerd to the IANA registry thereafter. Please consult the IANA registry.
+IMT:unregistered subtype;;Use of an Internet Media Type <code><var>{value}</var></code> is not encouraged since it is not part of the IANA registry.
+IMT:unregistered type;;Use of a type <code><var>{value}</var></code> is not encouraged since it is not a standardized type.
 not IMT;;A value that is not an Internet Media Type is not allowed here.
 syntax error:iri3987;;The specified value is syntactically not an IRI.
 syntax error:iriref3987;;The specified value is syntactically not an IRI reference.
@@ -407,7 +420,7 @@ column #;;<var>{text}</var> 列
 Index #;;索引 #<var>{text}</var>
 Unknown location;;位置不明
 (Unknown);;(不明)
-Description;;\xE8\xAA\xAC明
+Description;;説明
 Table #;;表 #<var>{text}</var> の構造
 Subdocument #;;部分文書 #<var>{text}</var>
 Sub #;;部分 #<var>{text}</var>
@@ -417,7 +430,7 @@ Subtotal;;小計
 Total;;合計
 Main document;;主文書
 Subdocuments;;部分文書
-Transfer L.;;<abbr title="転送プロトコル">転送</abbr>
+Transfer L.;;<abbr title="転送プロト\xE3\x82\xB3ル">転送</abbr>
 Encode L.;;<abbr title="文字符号化">符号</abbr>
 Char L.;;<abbr title="符号化文字">文字</abbr>
 Syntax L.;;構文
@@ -429,8 +442,8 @@ No transfer error found.;;転送プロトコルの頭部に誤りは見つかり
 No parse error found.;;構文解析中に誤りは見つかりませんでした。
 No structural error found.;;構造上の誤りは見つかりませんでした。
 This checker is work in progress.;; <p><strong>重要</strong>: この適合性検査サービスは<em>開発中</em>です。 この結果は<em>間違い</em>かもしれません。</p> 
-Conformance is conforming;;こ\xE3\x81\xAE文書に適合性に関わる誤りは見つかりませんでした。
-Conformance is should-error;;この文書は<strong>おそらく<em>不</em>適合</strong>ですが、 稀に適合している場合もあります。適合性検査器はこの文書が稀な場合に該当するかどうか判定できません。
+Conformance is conforming;;この文書に適合性に関わる誤りは見つかりませんでした。
+Conformance is should-error;;この文書は<strong>おそらく<em>不</em>適合</strong>ですが、 稀に適合している場合もあります。適合性検査器はこの文書が稀な場合\xE3\x81\xAB該当するかどうか判定できません。
 Conformance is non-conforming;;この文書は<strong><em>不</em>適合</strong>です。
 Conformance is uncertain;;適合性検査器はこの文書が適合するかどうか判定できませんでした。 この文書は適合性検査器が対応していない機能を使っています。 この文書は適合しているかもしれませんし、していないかもしれません。
 Error level m;;<a href="../error-description#Error-level-m" rel="help"><em class="rfc2119" title="REQUIRED">必須</em>級の誤り</a>
