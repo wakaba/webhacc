@@ -1,5 +1,10 @@
 2008-08-30  Wakaba  <wakaba@suika.fam.cx>
 
+	* error-description-source.xml: Descriptions for new error
+	types are added.
+
+2008-08-30  Wakaba  <wakaba@suika.fam.cx>
+
 	* cc-style.css: Rule for empty |mark| elements is added.
 
 	* error-description-source.xml: Error message for

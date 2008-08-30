@@ -31,6 +31,7 @@ duplicate attribute;;There are two attributes with name <code><var>{text}</var><
 empty start tag;;Empty start tag (<code>&lt;&gt;</code>) is not allowed.
 empty end tag;;Empty end tag (<code>&lt;/&gt;</code>) is not allowed.
 end tag attribute;;End tag cannot have attributes.
+empty unquoted attribute value;;Attribute value is not specified.
 invalid character reference;;Character reference to <code><var>{text}</var></code> is not allowed.
 nestc;;Polytheistic slash (<code>/&gt;</code>) cannot be used for this element.
 no DOCTYPE name;;After the string <code>&lt;!DOCTYPE </code>, the document type name must be specified.
@@ -141,11 +142,12 @@ attribute missing:name|http-equiv|charset;;For a <code>meta</code> element, exac
 attribute not allowed;;Attribute <code><var>{local-name}</var></code> is not allowed for <code><var>{element-local-name}</var></code> element.
 attribute not allowed:ismap;;The <code>ismap</code> attribute may only be used for the image contained in an <code>a</code> element.
 attribute not defined;;This attribute is not defined.
-in HTML:xml:lang;attribute-error;The <code>xml:lang</code> attribute is not allowed in HTML document.
+in HTML:xml:lang;;The <code>xml:lang</code> attribute in HTML document is ignored.
 in XML:charset;;The <code>charset</code> attribute is not allowed in XML document.
-in XML:lang;;The <code>lang</code> attribute is not allowed in XML document.
 in XML:noscript;;A <code>noscript</code> element cannot be used in XML document.
+in XML:xml:lang;;The <code>xml:lang</code> attribute in no namespace is only allowed in HTML document.
 in XML:xmlns;;The <code>xmlns</code> attribute in the <code>null</code> namespace is not allowed in XHTML document. The document is non-conforming.
+xml:lang not allowed;;The <code>xml:lang</code> attribute is only allowed when the <code>lang</code> attribute is specified.
 boolean:invalid;;Attribute value <code><var>{@}</var></code> is not allowed. It must be an empty string or a string <code><var>{local-name}</var></code>.
 char:syntax error;;The attribute value must be exactly one character.
 charref in charset;;A character reference cannot be used to represent a character encoding name.
@@ -169,7 +171,7 @@ datetime:bad second;;Second number is out of range.
 datetime:bad timezone hour;;Hour number of the timezone component is out of range.
 datetime:bad timezone minute;;Minute number of the timezone component is out of range.
 datetime:syntax error;;The attribute value is not a datetime.
-dateortime:syntax error;;The attribute value is not a date or time.
+dateortime:syntax error;;The value is not a date or time.
 enumerated:invalid;;This attribute only allow a limited set of values and the specified value <code><var>{@}</var></code> is not one of them.
 enumerated:invalid:http-equiv:content-type;attribute-value-error;Character encoding declaration syntax <code class="html bad example">&lt;meta http-equiv="Content-Type" content="text/html; charset=<var>charset-name</var>"&gt;</code> is obsolete.
 enumerated:non-conforming;;Attribute value <code><var>{@}</var></code> is not allowed.
@@ -210,6 +212,7 @@ window name:empty;;Browsing context name must not be empty.
 window name:reserved;;Browsing context name <code><var>{value}</var></code> is reserved.
 word not allowed;;The word <code><var>{value}</var></code> is not allowed in this attribute.
 XML 1.0 NCName:syntax error;;The specified value is not a legal XML Namespaces 1.0 <code>NCName</code>.
+xml:lang ne lang;;The value of the <code>xml:lang</code> attribute is different from the value of the <code>lang</code> attribute.
 cell overlapping;;Cell slot (<var>{text}</var>) is filled by multiple cells.
 colspan creates column with no anchored cell;;This <code>colspan</code> attribute results in creating a table column that does not contain any cell anchored to it.
 column with no anchored cell;;This column has no anchored cell.
@@ -241,7 +244,7 @@ syntax error:iriref3987;;The specified value is syntactically not an IRI referen
 syntax error:rdfuriref;;The specified value is syntactically not an RDF URI reference.
 syntax error:uri2396;;The specified value is syntactically not a URI according to RFC 2396.
 syntax error:uri3986;;The specified value is syntactically not a URI.
-URL:address format;;URL host address format <code><var>{value}</var></code> is not supported by the conformance checker.
+URL:address format;;URL host address format <code><var>{text}</var></code> is not defined.
 URL:default port;;Default port number should be omitted.
 URL:dot-segment;;A dot-segment (<code>.</code> or <code>..</code>) occurs in an absolute reference.
 URL:empty host;;The host component of the URL is empty.

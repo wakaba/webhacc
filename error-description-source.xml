@@ -256,6 +256,22 @@
   <d:message xml:lang="en">Attribute value must be quoted by <code>"</code>
   or <code>'</code> if it contains a <code>"</code>, <code>'</code>, or
   <code>=</code> character.</d:message>
+  <d:desc xml:lang="en">
+    <p>In an unquoted attribute value, a character <code>"</code>
+    (<code>U+0022</code> <code class="charname">QUOTATION MARK</code>),
+    <code>'</code> (<code>U+0026</code> 
+    <code class="charname">APOSTROPHE</code>), or <code>=</code>
+    (<code>U+003D</code> <code class="charname">EQUAL SIGN</code>)
+    is contained.  These characters are not allowed in unquoted attribute
+    values, since they are used to quote attribute values or to separate
+    attribute name and value.</p>
+
+    <p>This error is also raised if one try to use empty attribute
+    value like <code class="html bad example">&lt;foo bar= baz=></code>;
+    in this example, <code class="html bad example">baz=</code> is
+    treated as an invalid attribute value for the attribute
+    <code class="html bad example">bar</code>, not as another attribute.</p>
+  </d:desc>
 </d:item>
 
 <d:item name="bare ero"
@@ -503,6 +519,32 @@
 <d:item name="end tag attribute"
     modules="HTML::Parser">
   <d:message xml:lang="en">End tag cannot have attributes.</d:message>
+  <d:message xml:lang="ja">終了タグに属性が指定されています。</d:message>
+</d:item>
+
+<d:item name="empty unquoted attribute value"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">Attribute value is not specified.</d:message>
+  <d:message xml:lang="ja">属性値が指定されていません。</d:message>
+  <d:desc xml:lang="en">
+    <p>The attribute value is not specified after the <code>=</code>
+    (<code>U+003C</code> <code class="charname">EQUAL SIGN</code>)
+    character.</p>
+
+    <p>When an attribute value is empty, the <code>=</code> character after
+    the attribute name must be specified as:</p>
+
+    <p><code class="html example">&lt;foo bar></code></p>
+
+    <p>Instead, quotation marks can be used to explicitly represent that
+    the attribute value is empty, as:</p>
+
+    <p><code class="html example">&lt;foo bar=""></code></p>
+
+    <p>... or like:</p>
+
+    <p><code class="html example">&lt;foo bar=''></code></p>
+  </d:desc>
 </d:item>
 
 <d:item name="invalid character reference"
@@ -1619,19 +1661,31 @@ p {
 <d:item name="attribute not defined"
     modules="ContentChecker">
   <d:message xml:lang="en">This attribute is not defined.</d:message>
+  <d:desc xml:lang="en">
+    <p>The attribute is not one of attributes allowed for the element
+    in the latest version of relevant specifications.</p>
+
+    <p>The attribute cannot be used.</p>
+
+    <dl>
+    <dt><code>autosubmit</code> attribute (<code>menu</code> element)</dt>
+      <dd>The attribute was part of HTML5 draft but then dropped.
+      Similar functionality can be implemented by scripts.</dd>
+    </dl>
+  </d:desc>
 </d:item>
 
 <d:item name="in HTML:xml:lang"
-    class="attribute-error"
     modules="ContentChecker::XML">
-  <d:message xml:lang="en">The <code>xml:lang</code> attribute is not 
-  allowed in HTML document.</d:message>
+  <d:message xml:lang="en">The <code>xml:lang</code> attribute in HTML
+  document is ignored.</d:message>
   <d:desc xml:lang="en">
-    <p>The <code>xml:lang</code> attribute is not allowed in
-    HTML document.  The document is non-conforming.</p>
+    <p>The <code>xml:lang</code> attribute does not have an effect in
+    HTML document.</p>
 
-    <p>Use of the <code>xml:lang</code> attribute is conforming
-    <em>only</em> in XML documents.</p>
+    <p>The <code>xml:lang</code> attribute is only applicable to XML
+    documents.  In HTML document, it is only allowed to ease migration
+    from XML.</p>
 
     <p>To specify natural language information in HTML document,
     use <code>lang</code> attribute instead.</p>
@@ -1663,27 +1717,18 @@ p {
   </d:desc>
 </d:item>
 
-<d:item name="in XML:lang"
-    modules="ContentChecker::HTML">
-  <d:message xml:lang="en">The <code>lang</code> attribute is not 
-  allowed in XML document.</d:message>
-  <d:desc>
-    <p>The HTML <code>lang</code> attribute is not allowed in
-    XML document.  The document is non-conforming.</p>
-
-    <p>The <code>lang</code> attribute in <code>null</code>
-    namespace for HTML elements is conforming <em>only</em> in
-    HTML documents.</p>
-
-    <p>To specify natural language information in XML document,
-    use <code>xml:lang</code> attribute instead.</p>
-  </d:desc>
-</d:item>
-
 <d:item name="in XML:noscript"
     modules="ContentChecker::HTML">
   <d:message xml:lang="en">A <code>noscript</code> element cannot be 
   used in XML document.</d:message>
+</d:item>
+
+<d:item name="in XML:xml:lang"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">The <code>xml:lang</code> attribute in no namespace
+  is only allowed in HTML document.</d:message>
+  <d:message xml:lang="ja">名前空間に属さない <code>xml:lang</code> 
+  属性が認められているのは HTML 文書中だけです。</d:message>
 </d:item>
 
 <d:item name="in XML:xmlns"
@@ -1698,6 +1743,14 @@ p {
     <p>This error should not occur in conformance-checking of
     static documents.</p>
   </d:desc>
+</d:item>
+
+<d:item name="xml:lang not allowed"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">The <code>xml:lang</code> attribute is only allowed
+  when the <code>lang</code> attribute is specified.</d:message>
+  <d:message xml:lang="ja"><code>xml:lang</code> 属性を指定できるのは
+  <code>lang</code> 属性が指定されている時だけです。</d:message>
 </d:item>
 
 </section>
@@ -1906,8 +1959,7 @@ p {
 
 <d:item name="dateortime:syntax error"
     modules="ContentChecker::HTML">
-  <d:message xml:lang="en">The attribute value is not a date or
-  time.</d:message>
+  <d:message xml:lang="en">The value is not a date or time.</d:message>
 </d:item>
 
 <d:item name="enumerated:invalid"
@@ -2244,6 +2296,57 @@ p {
     modules="RDFXML">
   <d:message xml:lang="en">The specified value is not a legal XML Namespaces
   1.0 <code>NCName</code>.</d:message>
+</d:item>
+
+<d:item name="xml:lang ne lang"
+    modules="ContentChecker::XML ContentChecker::HTML">
+  <d:message xml:lang="en">The value of the <code>xml:lang</code> attribute
+  is different from the value of the <code>lang</code> attribute.</d:message>
+  <d:message xml:lang="ja"><code>xml:lang</code> 属性の値が <code>lang</code>
+  属性の値と異なります。</d:message>
+  <d:desc xml:lang="en">
+    <p>The value of the <code>xml:lang</code> attribute (either the
+    <code>lang</code> attribute in the <code>xml</code> (i.e.
+    <code>http://www.w3.org/XML/1998/namespace</code>) namespace, or
+    the <code>xml:lang</code> attribute in no namespace) for the element has
+    different value than that of the <code>lang</code> attribute in no
+    namespace.</p>
+
+    <p>For historical reason, there are two attributes applicable to HTML
+    elements to specify language information of an element: <code>lang</code>
+    and <code>xml:lang</code>.  In HTML documents, only <code>lang</code>
+    attribute in no namespace is allowed and take effect; the
+    <code>xml:lang</code> attribute in no namespace is ignored in HTML
+    documents.  In XHTML documents, both <code>lang</code> and
+    <code>xml:lang</code> attributes are allowed.</p>
+
+    <p>In general, <em>only the <code>lang</code> attribute</em> need to be
+    specified for an element.</p>
+
+    <p>If both <code>lang</code> and <code>xml:lang</code> attributes are
+    specified on the same element, their values must be the same value.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p><code>xml:lang</code> 属性 (<code>xml</code> (=
+    <code>http://www.w3.org/XML/1998/namespace</code>) 名前空間の
+    <code>lang</code> 属性や名前空間に属さない 
+    <code>xml:lang</code> 属性) の値が同じ要素の名前空間に属さない
+    <code>lang</code> 属性の値と異なっています。</p>
+
+    <p>歴史的な理由により、 HTML 要素の言語指定のための属性は 
+    <code>lang</code> と <code>xml:lang</code> の2つがあります。 HTML
+    文書では名前空間に属さない <code>lang</code> 属性だけが認められており、
+    かつ効力があります。名前空間に属さない
+    <code>xml:lang</code> 属性は HTML 文書では無視されます。 XHTML 文書では
+    <code>lang</code> 属性も <code>xml:lang</code> 属性も認められています。</p>
+
+    <p>通常、要素の言語情報は <em><code>lang</code> 
+    属性だけ</em>を使って指定すれば十分です。</p>
+
+    <p><code>lang</code> 属性と <code>xml:lang</code> 
+    属性の両方を同じ要素に指定する場合、
+    両者の値は同じでなければなりません。</p>
+  </d:desc>
 </d:item>
 
 </section>
@@ -3895,6 +3998,6 @@ p {
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2008/08/30 05:32:51 $ -->
+<!-- $Date: 2008/08/30 16:10:07 $ -->
 </body>
 </html>
