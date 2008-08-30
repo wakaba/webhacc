@@ -1,5 +1,10 @@
 2008-08-30  Wakaba  <wakaba@suika.fam.cx>
 
+	* Result.pm (add_error): Don't raise an error even if the
+	end position is after the end of the string.
+
+2008-08-30  Wakaba  <wakaba@suika.fam.cx>
+
 	* Result.pm (add_error): Support for |value|-segment marking.
 
 2008-08-22  Wakaba  <wakaba@suika.fam.cx>

@@ -177,7 +177,8 @@ sub add_error ($%) {
       $out->text (substr $opt{value}, $opt{pos_start},
                       $opt{pos_end} - $opt{pos_start} + 1);
       $out->end_tag ('mark');
-      $out->text (substr $opt{value}, $opt{pos_end} + 1);
+      $out->text (substr $opt{value}, $opt{pos_end} + 1)
+          if $opt{pos_end} < length $opt{value};
       $out->end_tag ('code');
     } elsif ($opt{value_mark_end}) {
       $out->start_tag ('code');
