@@ -234,6 +234,10 @@ mark {
   background-color: #ffff4d;
 }
 
+mark:empty:after {
+  content: " ";
+}
+
 /* Tab navigation */
 
 body[data-scripted] {
@@ -827,6 +831,6 @@ Copyright 2007-2008 Wakaba <w@suika.fam.cx>.
 This library is free software; you can redistribute it
 and/or modify it under the same terms as Perl itself.
 
-$Date: 2008/08/16 13:09:08 $
+$Date: 2008/08/30 05:32:51 $
 
 */

@@ -2506,8 +2506,7 @@ p {
 <d:item name="URL:address format"
     modules="URIChecker">
   <d:message xml:lang="en">URL host address format
-  <code><var>{value}</var></code> is not supported by the
-  conformance checker.</d:message>
+  <code><var>{text}</var></code> is not defined.</d:message>
 </d:item>
 
 <d:item name="URL:default port"
@@ -3896,6 +3895,6 @@ p {
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2008/08/29 13:46:58 $ -->
+<!-- $Date: 2008/08/30 05:32:51 $ -->
 </body>
 </html>

@@ -1,3 +1,10 @@
+2008-08-30  Wakaba  <wakaba@suika.fam.cx>
+
+	* cc-style.css: Rule for empty |mark| elements is added.
+
+	* error-description-source.xml: Error message for
+	unknown address type error is updated.
+
 2008-08-29  Wakaba  <wakaba@suika.fam.cx>
 
 	* error-description-source.xml: Error types added for IMTChecker.

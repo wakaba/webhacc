@@ -170,7 +170,36 @@ sub add_error ($%) {
 
   if (defined $opt{value}) {
     $out->html (' ');
-    $out->code ($opt{value});
+    if (defined $opt{pos_start}) {
+      $out->start_tag ('code');
+      $out->text (substr $opt{value}, 0, $opt{pos_start});
+      $out->start_tag ('mark');
+      $out->text (substr $opt{value}, $opt{pos_start},
+                      $opt{pos_end} - $opt{pos_start} + 1);
+      $out->end_tag ('mark');
+      $out->text (substr $opt{value}, $opt{pos_end} + 1);
+      $out->end_tag ('code');
+    } elsif ($opt{value_mark_end}) {
+      $out->start_tag ('code');
+      $out->text ($opt{value});
+      $out->start_tag ('mark');
+      $out->end_tag ('mark');
+      $out->end_tag ('code');
+    } elsif (defined $opt{value_mark}) {
+      $out->start_tag ('code');
+      for (split /($opt{value_mark})/, $opt{value}) {
+        if (/$opt{value_mark}/) {
+          $out->start_tag ('mark');
+          $out->text ($_);
+          $out->end_tag ('mark');
+        } else {
+          $out->text ($_);
+        }
+      }
+      $out->end_tag ('code');
+    } else {
+      $out->code ($opt{value});
+    }
     $has_location = 1;
   }
 
