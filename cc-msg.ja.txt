@@ -52,6 +52,8 @@ unclosed DOCTYPE;;The <code>DOCTYPE</code> is not closed by a <code>&gt;</code> 
 unclosed PUBLIC literal;;The public identifier literal is not closed by a quotation mark.
 unclosed SYSTEM literal;;The system identifier literal is not closed by a quotation mark.
 unclosed tag;;Tag is not closed by a <code>&gt;</code> character.
+after after frameset;;<code>html</code> 要素が閉じられた後に開始タグ <code>&lt;<var>{text}</var>&gt;</code> があります。
+after after frameset:/;;<code>html</code> 要素が閉じられた後に終了タグ <code>&lt;/<var>{text}</var>&gt;</code> があります。
 after body;;Start tag <code>&lt;<var>{text}</var>&gt;</code> is not allowed after the <code>body</code> is closed.
 after body:/;;End tag <code>&lt;/<var>{text}</var>&gt;</code> is not allowed after the <code>body</code> is closed.
 after body:#text;;Non‐white‐space characters are not allowed after the <code>body</code> is closed.
@@ -118,7 +120,7 @@ element not allowed:head noscript;;This element is not allowed in a <code>noscri
 element not allowed:head style;;A <code>style</code> element with <code>scoped</code> attribute is not allowed in the <code>head</code> element.
 element not allowed:head title;;There is another <code>title</code> element.
 element not allowed:minus;;This element is not allowed in this context.
-element not allowed:meta charset;;The character encoding declaration must be the first element in the <code>head</code> element.
+element not allowed:meta charset;;文字符号化宣言が <code>head</code> 要素の最初の子要素ではありません。
 element not allowed:metadata;;This element is not allowed where metadata content is expected.
 element not allowed:phrasing;;This element is not allowed where phrasing content is expected.
 element not allowed:root;;This element is not allowed as the root element of a document.
@@ -128,7 +130,7 @@ element not allowed:text;;This element is not allowed in this context.
 element not allowed:atom|content;;This element is not allowed in an Atom <code>content</code> element.
 element not allowed:atom|PersonConstruct;;This element is not allowed in Person construct.
 element not allowed:atom|TextConstruct;;This element is not allowed in Text construct.
-element not defined;;This element is not defined.
+element not defined;;この要素は定義されていません。
 no significant content;;No significant content is contained in this element.
 no significant content before;;There is no significant content before this element.
 no significant content at the end;;No significant content is contained at the end of this element.
@@ -141,7 +143,7 @@ attribute missing:name|http-equiv;;For a <code>meta</code> element with the <cod
 attribute missing:name|http-equiv|charset;;For a <code>meta</code> element, exactly one of <code>name</code>, <code>http-equiv</code>, and <code>charset</code> attributes must be specified.
 attribute not allowed;;Attribute <code><var>{local-name}</var></code> is not allowed for <code><var>{element-local-name}</var></code> element.
 attribute not allowed:ismap;;The <code>ismap</code> attribute may only be used for the image contained in an <code>a</code> element.
-attribute not defined;;This attribute is not defined.
+attribute not defined;;この属性は定義されていません。
 in HTML:xml:lang;;The <code>xml:lang</code> attribute in HTML document is ignored.
 in XML:charset;;The <code>charset</code> attribute is not allowed in XML document.
 in XML:noscript;;A <code>noscript</code> element cannot be used in XML document.
@@ -178,7 +180,8 @@ enumerated:non-conforming;;Attribute value <code><var>{@}</var></code> is not al
 duplicate http-equiv;;There is another pragma <code><var>{value}</var></code>.
 duplicate ID;attribute-value-error;This identifier has already been assigned to another element.
 duplicate token;;The token <code><var>{value}</var></code> appears in the attribute value twice.
-empty attribute value;;The attribute value must not be empty.
+empty attribute value;;属性値が空です。
+empty style sheet title;;<code>title</code> 属性の値が空です。
 float:out of range;;The specified value is out of range.
 float:syntax error;;The attribute value is not a real number.
 fragment points itself;;A fragment identifier references the element itself.
@@ -227,7 +230,7 @@ IMT:composite;;The specified media type is a composite type, which is not allowe
 IMT:limited use subtype;;An Internet Media Type whose intended usage is limited use, <code><var>{value}</var></code> is used.
 IMT:syntax error;;The specified value is not an Internet Media Type.
 IMT:obsolete parameter;;An obsolete parameter <code><var>{value}</var></code> is used.
-IMT:obsolete subtype;;An obsolete Internet Media Type <code><var>{value}</var></code> is used.
+IMT:obsolete subtype;;廃止されたインターネット媒体型 <code><var>{value}</var></code> が使われています。
 IMT:parameter missing;;Parameter <code><var>{text}</var></code> have to be specified for the Internet Media Type <code><var>{value}</var></code>.
 IMT:parameter not allowed;;Parameter <code><var>{value}</var></code> is not allowed for this Internet Media Type.
 IMT:private subtype;;Use of a private Internet Media Type <code><var>{value}</var></code> is not encouraged.
@@ -393,7 +396,7 @@ xmlStandalone;;XML <code lang="en">standalone</code>
 ... with BOM;; (<code class="charname" lang="en"><abbr title="BYTE ORDER MARK">BOM</abbr></code> つき)
 URL;;<abbr title="統一資源所在子">URL</abbr>
 URLs;;<abbr title="統一資源所在子">URL</abbr>
-Container Node;;\xE3\x81\x93の文書を含む節点
+Container Node;;この文書を含む節点
 Table Element;;表要素
 Base URL;;基底 URL
 Internet Media Type;;インターネット媒体型
@@ -408,7 +411,7 @@ bytes;;バイト
 Explicit entries;;明示的項目
 Fallback entries;;滑り止め項目
 Opportunistic caching namespace;;日和見的キャッシュ化名前空間
-Fallback entry;;滑り止め項目
+Fallback entry;;滑り止\xE3\x82\x81項目
 Online whitelist;;オンライン・ホワイトリスト
 No entry;;項目なし
 Subject;;主語
@@ -420,10 +423,10 @@ Line #;;<var>{text}</var> 行
 column #;;<var>{text}</var> 列
 Index #;;索引 #<var>{text}</var>
 Unknown location;;位置不明
-(Unknown);;(不明)
+(unknown);;(不明)
 Description;;説明
 Table #;;表 #<var>{text}</var> の構造
-Subdocument #;;部\xE5\x88\x86文書 #<var>{text}</var>
+Subdocument #;;部分文書 #<var>{text}</var>
 Sub #;;部分 #<var>{text}</var>
 ...;;〜
 Score;;得点
@@ -443,10 +446,10 @@ No transfer error found.;;転送プロトコルの頭部に誤りは見つかり
 No parse error found.;;構文解析中に誤りは見つかりませんでした。
 No structural error found.;;構造上の誤りは見つかりませんでした。
 This checker is work in progress.;; <p><strong>重要</strong>: この適合性検査サービスは<em>開発中</em>です。 この結果は<em>間違い</em>かもしれません。</p> 
-Conformance is conforming;;この文書に適合性に関わる誤りは見つかりませんで\xE3\x81\x97た。
+Conformance is conforming;;この文書に適合性に関わる誤りは見つかりませんでした。
 Conformance is should-error;;この文書は<strong>おそらく<em>不</em>適合</strong>ですが、 稀に適合している場合もあります。適合性検査器はこの文書が稀な場合に該当するかどうか判定できません。
 Conformance is non-conforming;;この文書は<strong><em>不</em>適合</strong>です。
-Conformance is uncertain;;適合性検査器はこの文書が適合するかどうか判定できませんでした。 この文書は適合性検査器が対応していない機能を使っています。 この文書は適合しているかもしれませんし、していないかもしれません。
+Conformance is uncertain;;適合性検査器はこの文書が適合するかどうか判定できませんでした。 この文書は適合性検査器が対応していない機能を使っています。 この文書は適合しているかもしれません\xE3\x81\x97、していないかもしれません。
 Error level m;;<a href="../error-description#Error-level-m" rel="help"><em class="rfc2119" title="REQUIRED">必須</em>級の誤り</a>
 Error level s;;<a href="../error-description#Error-level-s" rel="help"><em class="rfc2119" title="RECOMMENDED">推奨</em>級の誤り</a>
 Error level w;;<a href="../error-description#Error-level-w" rel="help">警告</a>

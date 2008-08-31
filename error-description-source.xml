@@ -760,6 +760,24 @@ p {
 <section id="html5-parse-errors">
 <h2>HTML5 Parse Errors in Tree Construction Stage</h2>
 
+<d:item name="after after frameset"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">There is a start tag
+  <code>&lt;<var>{text}</var>></code> is after the <code>html</code> element
+  is closed.</d:message>
+  <d:message xml:lang="ja"><code>html</code> 要素が閉じられた後に開始タグ
+  <code>&lt;<var>{text}</var>></code> があります。</d:message>
+</d:item>
+
+<d:item name="after after frameset:/"
+    modules="HTML::Parser">
+  <d:message xml:lang="en">There is an end tag
+  <code>&lt;/<var>{text}</var>></code> is after the <code>html</code> element
+  is closed.</d:message>
+  <d:message xml:lang="ja"><code>html</code> 要素が閉じられた後に終了タグ
+  <code>&lt;/<var>{text}</var>></code> があります。</d:message>
+</d:item>
+
 <d:item name="after body"
     modules="HTML::Parser">
   <d:message xml:lang="en">Start tag <code>&lt;<var>{text}</var>></code> is
@@ -1452,8 +1470,23 @@ p {
 
 <d:item name="element not allowed:meta charset"
     modules="ContentChecker::HTML">
-  <d:message xml:lang="en">The character encoding declaration must be the
-  first element in the <code>head</code> element.</d:message>
+  <d:message xml:lang="en">The character encoding declaration is not the
+  first child element in the <code>head</code> element.</d:message>
+  <d:message xml:lang="ja">文字符号化宣言が <code>head</code> 
+  要素の最初の子要素ではありません。</d:message>
+  <d:desc xml:lang="en">
+    <p>The character encoding declaration
+    (<code class="html example">&lt;meta charset="<var>...</var>"></code> or
+    <code class="html example">&lt;meta http-equiv=Content-Type content="text/html; charset=<var>...</var>"></code>
+    must be the first child element in the <code>head</code> element.</p>
+
+    <p>The character encoding declaration have to occur near the beginning
+    of the document to ensure that Web browsers can be determine the
+    character encoding of the document.</p>
+
+    <p>The <code>title</code> element and other metadata elements must
+    appear after any character encoding declaration is processed.</p>
+  </d:desc>
 </d:item>
 
 <d:item name="element not allowed:metadata"
@@ -1537,6 +1570,22 @@ p {
 <d:item name="element not defined"
     modules="ContentChecker">
   <d:message xml:lang="en">This element is not defined.</d:message>
+  <d:message xml:lang="ja">この要素は定義されていません。</d:message>
+  <d:desc xml:lang="en">
+    <p>The element is not one of elements allowed
+    in the latest version of relevant specifications.</p>
+
+    <p>The element cannot be used.</p>
+
+    <dl class="switch">
+    <dt><code>event-source</code> element</dt>
+        <dd>The element was renamed as <em><code>eventsource</code>
+        element</em> (no hyphen).</dd>
+    <dt><code>m</code> element</dt>
+        <dd>The element was renamed as <em><code>mark</code>
+        element</em>.</dd>
+    </dl>
+  </d:desc>
 </d:item>
 
 <d:item name="no significant content"
@@ -1661,16 +1710,41 @@ p {
 <d:item name="attribute not defined"
     modules="ContentChecker">
   <d:message xml:lang="en">This attribute is not defined.</d:message>
+  <d:message xml:lang="ja">この属性は定義されていません。</d:message>
   <d:desc xml:lang="en">
     <p>The attribute is not one of attributes allowed for the element
     in the latest version of relevant specifications.</p>
 
     <p>The attribute cannot be used.</p>
 
-    <dl>
+    <dl class="switch">
+    <dt><code>align</code> attribute (various HTML elements)</dt>
+    <dt><code>border</code> attribute (various HTML elements)</dt>
+      <dd>These attributes are no longer part of HTML.  You can use CSS
+      properties to control the presentation of the element.</dd>
     <dt><code>autosubmit</code> attribute (<code>menu</code> element)</dt>
       <dd>The attribute was part of HTML5 draft but then dropped.
       Similar functionality can be implemented by scripts.</dd>
+    <dt><code>language</code> attribute (<code>script</code> element)</dt>
+      <dd>The attribute is no longer the standard way to specify the
+      scripting language.  If you are using JavaScript, then no explicit
+      specification of the scripting language is necessary, so you can
+      write the element like:
+        <p><code class="html example code">&lt;script><br/><!--
+        --> /* JavaScript code */<br/><!--
+        -->&lt;/script></code></p>
+      If you are using different scripting language from JavaScript, or 
+      you want to declare the scripting language explicitly, you should
+      use the <code>type</code> attribute, as follows:
+        <dl class="switch">
+        <dt>JavaScript</dt>
+          <dd>Use
+          <code class="html example">&lt;script type="text/javascript"></code>.</dd>
+        <dt>VBScript</dt>
+          <dd>Use
+          <code class="html example">&lt;script type="text/vbscript"></code>.</dd>
+        </dl>
+      </dd>
     </dl>
   </d:desc>
 </d:item>
@@ -2037,7 +2111,24 @@ p {
 
 <d:item name="empty attribute value"
     modules="ContentChecker::HTML">
-  <d:message xml:lang="en">The attribute value must not be empty.</d:message>
+  <d:message xml:lang="en">The attribute value is empty.</d:message>
+  <d:message xml:lang="ja">属性値が空です。</d:message>
+</d:item>
+
+<d:item name="empty style sheet title"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">The value of the <code>title</code> attribute
+  is empty.</d:message>
+  <d:message xml:lang="ja"><code>title</code> 属性の値が空です。</d:message>
+  <d:desc xml:lang="en">
+    <p>The <code>title</code> attribute value of the <code>link</code>
+    element that defines an alternate style sheet is an empty value.</p>
+
+    <p>A <code>link</code> element whose <code>rel</code> attribute
+    is <code>alternate stylesheet</code> defines an alternate style sheet.
+    An alternate style sheet must be associated with a name using the
+    <code>title</code> attribute.  The name cannot be empty.</p>
+  </d:desc>
 </d:item>
 
 <d:item name="float:out of range"
@@ -2465,23 +2556,26 @@ p {
     modules="IMTChecker">
   <d:message xml:lang="en">An obsolete Internet Media Type
   <code><var>{value}</var></code> is used.</d:message>
-  <d:item xml:lang="en">
-    <p>The specified Internet Media Type is registered with status
-    of <i>OBSOLETE</i>.</p>
+  <d:message xml:lang="ja">廃止されたインターネット媒体型
+  <code><var>{value}</var></code> が使われています。</d:message>
+  <d:desc xml:lang="en">
+    <p>The specified Internet Media Type is registered with its intended
+    usage as <i>OBSOLETE</i>.</p>
     
     <dl class="swtich">
     <dt>Media type <code>text/ecmascript</code></dt>
       <dd>Media type <code>text/ecmascript</code> is obsoleted in
       favor of <code>application/ecmascript</code>.  Note that
-      <code>text/javascript</code> would be better alternative
-      for many cases.</dd>
+      <em><code>text/javascript</code></em> would be the better alternative
+      in many cases.</dd>
     <dt>Media type <code>text/javascript</code></dt>
       <dd>Media type <code>text/javascript</code> is obsoleted by 
       <abbr>IETF</abbr> with backward incompatible alternate
       <code>application/javascript</code> for architectural 
-      purity.<!-- @@ ref? -->  Realist may ignore this warning.</dd>
+      purity.<!-- @@ ref? -->  Those who prefer reality to academic
+      purity <em>may ignore</em> this warning.</dd>
     </dl>
-  </d:item>
+  </d:desc>
 </d:item>
 
 <d:item name="IMT:parameter missing"
@@ -3782,7 +3876,7 @@ p {
   <d:text xml:lang="ja">位置不明</d:text>
 </d:cat>
 
-<d:cat name="(Unknown)">
+<d:cat name="(unknown)">
   <d:text xml:lang="en">(Unknown)</d:text>
   <d:text xml:lang="ja">(不明)</d:text>
 </d:cat>
@@ -3998,6 +4092,6 @@ p {
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2008/08/30 16:10:07 $ -->
+<!-- $Date: 2008/08/31 13:28:12 $ -->
 </body>
 </html>

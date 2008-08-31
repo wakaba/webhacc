@@ -577,6 +577,14 @@ p {
 <section id="html5-parse-errors">
 <h2>HTML5 Parse Errors in Tree Construction Stage</h2>
 
+<div class="section" id="after-after-frameset"><h3>There is a start tag
+  <code>&lt;<var>{text}</var>&gt;</code> is after the <code>html</code> element
+  is closed.</h3></div>
+
+<div class="section" id="after-after-frameset:/"><h3>There is an end tag
+  <code>&lt;/<var>{text}</var>&gt;</code> is after the <code>html</code> element
+  is closed.</h3></div>
+
 <div class="section" id="after-body"><h3>Start tag <code>&lt;<var>{text}</var>&gt;</code> is
   not allowed after the <code>body</code> is closed.</h3></div>
 
@@ -1044,8 +1052,20 @@ p {
 <div class="section" id="element-not-allowed:minus"><h3>This element is not allowed in this
   context.</h3></div>
 
-<div class="section" id="element-not-allowed:meta-charset"><h3>The character encoding declaration must be the
-  first element in the <code>head</code> element.</h3></div>
+<div class="section" id="element-not-allowed:meta-charset"><h3>The character encoding declaration is not the
+  first child element in the <code>head</code> element.</h3>
+    <p>The character encoding declaration
+    (<code class="html example">&lt;meta charset="<var>...</var>"&gt;</code> or
+    <code class="html example">&lt;meta http-equiv=Content-Type content="text/html; charset=<var>...</var>"&gt;</code>
+    must be the first child element in the <code>head</code> element.</p>
+
+    <p>The character encoding declaration have to occur near the beginning
+    of the document to ensure that Web browsers can be determine the
+    character encoding of the document.</p>
+
+    <p>The <code>title</code> element and other metadata elements must
+    appear after any character encoding declaration is processed.</p>
+  </div>
 
 <div class="section" id="element-not-allowed:metadata"><h3>This element is not allowed where metadata
   content is expected.</h3></div>
@@ -1099,7 +1119,21 @@ p {
 <div class="section" id="element-not-allowed:atom|TextConstruct"><h3>This element is not allowed in Text
   construct.</h3></div>
 
-<div class="section" id="element-not-defined"><h3>This element is not defined.</h3></div>
+<div class="section" id="element-not-defined"><h3>This element is not defined.</h3>
+    <p>The element is not one of elements allowed
+    in the latest version of relevant specifications.</p>
+
+    <p>The element cannot be used.</p>
+
+    <dl class="switch">
+    <dt><code>event-source</code> element</dt>
+        <dd>The element was renamed as <em><code>eventsource</code>
+        element</em> (no hyphen).</dd>
+    <dt><code>m</code> element</dt>
+        <dd>The element was renamed as <em><code>mark</code>
+        element</em>.</dd>
+    </dl>
+  </div>
 
 <div class="section" id="no-significant-content"><h3>No significant content is contained
   in this element.</h3></div>
@@ -1187,10 +1221,34 @@ p {
 
     <p>The attribute cannot be used.</p>
 
-    <dl>
+    <dl class="switch">
+    <dt><code>align</code> attribute (various HTML elements)</dt>
+    <dt><code>border</code> attribute (various HTML elements)</dt>
+      <dd>These attributes are no longer part of HTML.  You can use CSS
+      properties to control the presentation of the element.</dd>
     <dt><code>autosubmit</code> attribute (<code>menu</code> element)</dt>
       <dd>The attribute was part of HTML5 draft but then dropped.
       Similar functionality can be implemented by scripts.</dd>
+    <dt><code>language</code> attribute (<code>script</code> element)</dt>
+      <dd>The attribute is no longer the standard way to specify the
+      scripting language.  If you are using JavaScript, then no explicit
+      specification of the scripting language is necessary, so you can
+      write the element like:
+        <p><code class="html example code">&lt;script&gt;<br><!--
+        --> /* JavaScript code */<br><!--
+        -->&lt;/script&gt;</code></p>
+      If you are using different scripting language from JavaScript, or 
+      you want to declare the scripting language explicitly, you should
+      use the <code>type</code> attribute, as follows:
+        <dl class="switch">
+        <dt>JavaScript</dt>
+          <dd>Use
+          <code class="html example">&lt;script type="text/javascript"&gt;</code>.</dd>
+        <dt>VBScript</dt>
+          <dd>Use
+          <code class="html example">&lt;script type="text/vbscript"&gt;</code>.</dd>
+        </dl>
+      </dd>
     </dl>
   </div>
 
@@ -1435,7 +1493,18 @@ p {
 <div class="section" id="duplicate-token"><h3>The token <code><var>{value}</var></code>
   appears in the attribute value twice.</h3></div>
 
-<div class="section" id="empty-attribute-value"><h3>The attribute value must not be empty.</h3></div>
+<div class="section" id="empty-attribute-value"><h3>The attribute value is empty.</h3></div>
+
+<div class="section" id="empty-style-sheet-title"><h3>The value of the <code>title</code> attribute
+  is empty.</h3>
+    <p>The <code>title</code> attribute value of the <code>link</code>
+    element that defines an alternate style sheet is an empty value.</p>
+
+    <p>A <code>link</code> element whose <code>rel</code> attribute
+    is <code>alternate stylesheet</code> defines an alternate style sheet.
+    An alternate style sheet must be associated with a name using the
+    <code>title</code> attribute.  The name cannot be empty.</p>
+  </div>
 
 <div class="section" id="float:out-of-range"><h3>The specified value is out of range.</h3></div>
 
@@ -1685,7 +1754,24 @@ p {
   <code><var>{value}</var></code> is used.</h3></div>
 
 <div class="section" id="IMT:obsolete-subtype"><h3>An obsolete Internet Media Type
-  <code><var>{value}</var></code> is used.</h3></div>
+  <code><var>{value}</var></code> is used.</h3>
+    <p>The specified Internet Media Type is registered with its intended
+    usage as <i>OBSOLETE</i>.</p>
+    
+    <dl class="swtich">
+    <dt>Media type <code>text/ecmascript</code></dt>
+      <dd>Media type <code>text/ecmascript</code> is obsoleted in
+      favor of <code>application/ecmascript</code>.  Note that
+      <em><code>text/javascript</code></em> would be the better alternative
+      in many cases.</dd>
+    <dt>Media type <code>text/javascript</code></dt>
+      <dd>Media type <code>text/javascript</code> is obsoleted by 
+      <abbr>IETF</abbr> with backward incompatible alternate
+      <code>application/javascript</code> for architectural 
+      purity.<!-- @@ ref? -->  Those who prefer reality to academic
+      purity <em>may ignore</em> this warning.</dd>
+    </dl>
+  </div>
 
 <div class="section" id="IMT:parameter-missing"><h3>Parameter <code><var>{text}</var></code> have to
   be specified for the Internet Media Type
@@ -2471,6 +2557,6 @@ p {
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2008/08/30 16:10:07 $ -->
+<!-- $Date: 2008/08/31 13:28:12 $ -->
 </body>
 </html>

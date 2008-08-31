@@ -578,6 +578,12 @@ p {
 <section id="html5-parse-errors">
 <h2>HTML5 Parse Errors in Tree Construction Stage</h2>
 
+<div class="section" id="after-after-frameset"><h3><code>html</code> 要素が閉じられた後に開始タグ
+  <code>&lt;<var>{text}</var>&gt;</code> があります。</h3></div>
+
+<div class="section" id="after-after-frameset:/"><h3><code>html</code> 要素が閉じられた後に終了タグ
+  <code>&lt;/<var>{text}</var>&gt;</code> があります。</h3></div>
+
 <div class="section" id="after-body"><h3>Start tag <code>&lt;<var>{text}</var>&gt;</code> is
   not allowed after the <code>body</code> is closed.</h3></div>
 
@@ -1045,8 +1051,20 @@ p {
 <div class="section" id="element-not-allowed:minus"><h3>This element is not allowed in this
   context.</h3></div>
 
-<div class="section" id="element-not-allowed:meta-charset"><h3>The character encoding declaration must be the
-  first element in the <code>head</code> element.</h3></div>
+<div class="section" id="element-not-allowed:meta-charset"><h3>文字符号化宣言が <code>head</code> 
+  要素の最初の子要素ではありません。</h3>
+    <p>The character encoding declaration
+    (<code class="html example">&lt;meta charset="<var>...</var>"&gt;</code> or
+    <code class="html example">&lt;meta http-equiv=Content-Type content="text/html; charset=<var>...</var>"&gt;</code>
+    must be the first child element in the <code>head</code> element.</p>
+
+    <p>The character encoding declaration have to occur near the beginning
+    of the document to ensure that Web browsers can be determine the
+    character encoding of the document.</p>
+
+    <p>The <code>title</code> element and other metadata elements must
+    appear after any character encoding declaration is processed.</p>
+  </div>
 
 <div class="section" id="element-not-allowed:metadata"><h3>This element is not allowed where metadata
   content is expected.</h3></div>
@@ -1100,7 +1118,21 @@ p {
 <div class="section" id="element-not-allowed:atom|TextConstruct"><h3>This element is not allowed in Text
   construct.</h3></div>
 
-<div class="section" id="element-not-defined"><h3>This element is not defined.</h3></div>
+<div class="section" id="element-not-defined"><h3>この要素は定義されていません。</h3>
+    <p>The element is not one of elements allowed
+    in the latest version of relevant specifications.</p>
+
+    <p>The element cannot be used.</p>
+
+    <dl class="switch">
+    <dt><code>event-source</code> element</dt>
+        <dd>The element was renamed as <em><code>eventsource</code>
+        element</em> (no hyphen).</dd>
+    <dt><code>m</code> element</dt>
+        <dd>The element was renamed as <em><code>mark</code>
+        element</em>.</dd>
+    </dl>
+  </div>
 
 <div class="section" id="no-significant-content"><h3>No significant content is contained
   in this element.</h3></div>
@@ -1182,16 +1214,40 @@ p {
 <div class="section" id="attribute-not-allowed:ismap"><h3>The <code>ismap</code> attribute may only be
   used for the image contained in an <code>a</code> element.</h3></div>
 
-<div class="section" id="attribute-not-defined"><h3>This attribute is not defined.</h3>
+<div class="section" id="attribute-not-defined"><h3>この属性は定義されていません。</h3>
     <p>The attribute is not one of attributes allowed for the element
     in the latest version of relevant specifications.</p>
 
     <p>The attribute cannot be used.</p>
 
-    <dl>
+    <dl class="switch">
+    <dt><code>align</code> attribute (various HTML elements)</dt>
+    <dt><code>border</code> attribute (various HTML elements)</dt>
+      <dd>These attributes are no longer part of HTML.  You can use CSS
+      properties to control the presentation of the element.</dd>
     <dt><code>autosubmit</code> attribute (<code>menu</code> element)</dt>
       <dd>The attribute was part of HTML5 draft but then dropped.
       Similar functionality can be implemented by scripts.</dd>
+    <dt><code>language</code> attribute (<code>script</code> element)</dt>
+      <dd>The attribute is no longer the standard way to specify the
+      scripting language.  If you are using JavaScript, then no explicit
+      specification of the scripting language is necessary, so you can
+      write the element like:
+        <p><code class="html example code">&lt;script&gt;<br><!--
+        --> /* JavaScript code */<br><!--
+        -->&lt;/script&gt;</code></p>
+      If you are using different scripting language from JavaScript, or 
+      you want to declare the scripting language explicitly, you should
+      use the <code>type</code> attribute, as follows:
+        <dl class="switch">
+        <dt>JavaScript</dt>
+          <dd>Use
+          <code class="html example">&lt;script type="text/javascript"&gt;</code>.</dd>
+        <dt>VBScript</dt>
+          <dd>Use
+          <code class="html example">&lt;script type="text/vbscript"&gt;</code>.</dd>
+        </dl>
+      </dd>
     </dl>
   </div>
 
@@ -1233,7 +1289,7 @@ p {
 <div class="section" id="in-XML:noscript"><h3>A <code>noscript</code> element cannot be 
   used in XML document.</h3></div>
 
-<div class="section" id="in-XML:xml:lang"><h3>名前空間に属さな\xE3\x81\x84 <code>xml:lang</code> 
+<div class="section" id="in-XML:xml:lang"><h3>名前空間に属さない <code>xml:lang</code> 
   属性が認められているのは HTML 文書中だけです。</h3></div>
 
 <div class="section" id="in-XML:xmlns"><h3>The <code>xmlns</code> attribute 
@@ -1436,7 +1492,17 @@ p {
 <div class="section" id="duplicate-token"><h3>The token <code><var>{value}</var></code>
   appears in the attribute value twice.</h3></div>
 
-<div class="section" id="empty-attribute-value"><h3>The attribute value must not be empty.</h3></div>
+<div class="section" id="empty-attribute-value"><h3>属性値が空です。</h3></div>
+
+<div class="section" id="empty-style-sheet-title"><h3><code>title</code> 属性の値が空です。</h3>
+    <p>The <code>title</code> attribute value of the <code>link</code>
+    element that defines an alternate style sheet is an empty value.</p>
+
+    <p>A <code>link</code> element whose <code>rel</code> attribute
+    is <code>alternate stylesheet</code> defines an alternate style sheet.
+    An alternate style sheet must be associated with a name using the
+    <code>title</code> attribute.  The name cannot be empty.</p>
+  </div>
 
 <div class="section" id="float:out-of-range"><h3>The specified value is out of range.</h3></div>
 
@@ -1604,7 +1670,7 @@ p {
     文書では名前空間に属さない <code>lang</code> 属性だけが認められており、
     かつ効力があります。名前空間に属さない
     <code>xml:lang</code> 属性は HTML 文書では無視されます。 XHTML 文書では
-    <code>lang</code> 属\xE6\x80\xA7も <code>xml:lang</code> 属性も認められています。</p>
+    <code>lang</code> 属性も <code>xml:lang</code> 属性も認められています。</p>
 
     <p>通常、要素の言語情報は <em><code>lang</code> 
     属性だけ</em>を使って指定すれば十分です。</p>
@@ -1684,8 +1750,25 @@ p {
 <div class="section" id="IMT:obsolete-parameter"><h3>An obsolete parameter
   <code><var>{value}</var></code> is used.</h3></div>
 
-<div class="section" id="IMT:obsolete-subtype"><h3>An obsolete Internet Media Type
-  <code><var>{value}</var></code> is used.</h3></div>
+<div class="section" id="IMT:obsolete-subtype"><h3>廃止されたインターネット媒体型
+  <code><var>{value}</var></code> が使われています。</h3>
+    <p>The specified Internet Media Type is registered with its intended
+    usage as <i>OBSOLETE</i>.</p>
+    
+    <dl class="swtich">
+    <dt>Media type <code>text/ecmascript</code></dt>
+      <dd>Media type <code>text/ecmascript</code> is obsoleted in
+      favor of <code>application/ecmascript</code>.  Note that
+      <em><code>text/javascript</code></em> would be the better alternative
+      in many cases.</dd>
+    <dt>Media type <code>text/javascript</code></dt>
+      <dd>Media type <code>text/javascript</code> is obsoleted by 
+      <abbr>IETF</abbr> with backward incompatible alternate
+      <code>application/javascript</code> for architectural 
+      purity.<!-- @@ ref? -->  Those who prefer reality to academic
+      purity <em>may ignore</em> this warning.</dd>
+    </dl>
+  </div>
 
 <div class="section" id="IMT:parameter-missing"><h3>Parameter <code><var>{text}</var></code> have to
   be specified for the Internet Media Type
@@ -2468,6 +2551,6 @@ p {
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2008/08/30 16:10:07 $ -->
+<!-- $Date: 2008/08/31 13:28:12 $ -->
 </body>
 </html>

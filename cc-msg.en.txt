@@ -52,6 +52,8 @@ unclosed DOCTYPE;;The <code>DOCTYPE</code> is not closed by a <code>&gt;</code> 
 unclosed PUBLIC literal;;The public identifier literal is not closed by a quotation mark.
 unclosed SYSTEM literal;;The system identifier literal is not closed by a quotation mark.
 unclosed tag;;Tag is not closed by a <code>&gt;</code> character.
+after after frameset;;There is a start tag <code>&lt;<var>{text}</var>&gt;</code> is after the <code>html</code> element is closed.
+after after frameset:/;;There is an end tag <code>&lt;/<var>{text}</var>&gt;</code> is after the <code>html</code> element is closed.
 after body;;Start tag <code>&lt;<var>{text}</var>&gt;</code> is not allowed after the <code>body</code> is closed.
 after body:/;;End tag <code>&lt;/<var>{text}</var>&gt;</code> is not allowed after the <code>body</code> is closed.
 after body:#text;;Non‐white‐space characters are not allowed after the <code>body</code> is closed.
@@ -118,7 +120,7 @@ element not allowed:head noscript;;This element is not allowed in a <code>noscri
 element not allowed:head style;;A <code>style</code> element with <code>scoped</code> attribute is not allowed in the <code>head</code> element.
 element not allowed:head title;;There is another <code>title</code> element.
 element not allowed:minus;;This element is not allowed in this context.
-element not allowed:meta charset;;The character encoding declaration must be the first element in the <code>head</code> element.
+element not allowed:meta charset;;The character encoding declaration is not the first child element in the <code>head</code> element.
 element not allowed:metadata;;This element is not allowed where metadata content is expected.
 element not allowed:phrasing;;This element is not allowed where phrasing content is expected.
 element not allowed:root;;This element is not allowed as the root element of a document.
@@ -178,7 +180,8 @@ enumerated:non-conforming;;Attribute value <code><var>{@}</var></code> is not al
 duplicate http-equiv;;There is another pragma <code><var>{value}</var></code>.
 duplicate ID;attribute-value-error;This identifier has already been assigned to another element.
 duplicate token;;The token <code><var>{value}</var></code> appears in the attribute value twice.
-empty attribute value;;The attribute value must not be empty.
+empty attribute value;;The attribute value is empty.
+empty style sheet title;;The value of the <code>title</code> attribute is empty.
 float:out of range;;The specified value is out of range.
 float:syntax error;;The attribute value is not a real number.
 fragment points itself;;A fragment identifier references the element itself.
@@ -420,7 +423,7 @@ Line #;;Line <var>{text}</var>
 column #;;column <var>{text}</var>
 Index #;;Index <var>{text}</var>
 Unknown location;;Unknown location
-(Unknown);;(Unknown)
+(unknown);;(Unknown)
 Description;;Description
 Table #;;Structure of Table #<var>{text}</var>
 Subdocument #;;Subdocument #<var>{text}</var>
