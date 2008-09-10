@@ -235,7 +235,8 @@ sub add_error ($%) {
   ## Error message
   my $error_type_text = $opt{type};
   $out->nl_text ($error_type_text, node => $opt{node}, text => $opt{text},
-                 value => $opt{value});
+                 value => $opt{value}, char => $opt{char},
+                 octets => $opt{octets});
   
   ## Link to a long description
 

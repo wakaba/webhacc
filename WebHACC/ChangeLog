@@ -1,3 +1,14 @@
+2008-09-10  Wakaba  <wakaba@suika.fam.cx>
+
+	* Output.pm (nl_text): Support for |<var>{octets}</var>|,
+	|<var>{char}</var>|, and |<var>{char:hexref}</var>|
+	macros.
+	(generate_input_section): More charsets are added
+	to the list of charsets.
+
+	* Result.pm: Pass |char| and |octets| arguments
+	to |nl_text|.
+
 2008-08-30  Wakaba  <wakaba@suika.fam.cx>
 
 	* Result.pm (add_error): Don't raise an error even if the

@@ -1,6 +1,10 @@
 WebHACC:Title;;WebHACC (β)
 WebHACC:Heading;; <a href="../error-description#WebHACC:Heading" rel="help"><abbr title="Web Hypertext Application Conformance Checker (β)"><img alt="WebHACC" src="../icons/title"></abbr></a> 
-m:illegal-octets-error;error-category-charset;An illegal octet in the input stream.
+fallback-char-error;;Octet sequence <code><var>{octets}</var></code> is not an allowed representation of the character <code><var>{char}</var></code> — a character reference <code><var>{char:hexref}</var></code> should be used instead.
+fallback-unassigned-error;;No character is assigned to octet sequence <code><var>{octets}</var></code>.
+illegal-octets-error;;Octet sequence <code><var>{octets}</var></code> is illegal.
+invalid-state-error;;The input stream is broken.
+unassigned-code-point-error;;No character is assigned to octet sequence <code><var>{octets}</var></code>.
 disallowed character encoding;;Character encoding <code><var>{text}</var></code> is not allowed for <abbr>HTML</abbr> document.
 bad character encoding;;Character encoding <code><var>{text}</var></code> should not be used for <abbr>HTML</abbr> document.
 non-utf-8 character encoding;;Use of UTF-8 is encouraged (this document is encoded in <code><var>{text}</var></code>).
@@ -9,7 +13,7 @@ no character encoding declaration;;There is no character encoding declaration.
 non ascii superset;;No character encoding metadata is found in lower‐level protocol nor is there <abbr>BOM</abbr>, while character encoding <code><var>{text}</var></code> is not a superset of <abbr>ASCII</abbr>.
 sniffing:chardet;;Character encoding of this document is sniffed as <code><var>{text}</var></code> (Sniffed because no explicit specification for the character encoding of this document is found in the transfer procotol headers).
 sniffing:default;;Character encoding of this document is defaulted to <code><var>{text}</var></code> because no explicit specification for the character encoding of this document is found in the transfer procotol headers.
-chardecode:fallback;;Since no decoder for the document character encoding is found, decoder for the character encoding <code><var>{text}</var></code> is used. Checking results might be <em>wrong</em>.
+chardecode:fallback;;Results might be <em>wrong</em>, since the conformance checker cannot find an appropriate decoder for the character encoding used for the document.
 chardecode:no error;;Conformance error checking for the character encoding <code><var>{text}</var></code> is not supported.
 charset label:matching;;Sniffed character encoding <code><var>{text}</var></code> is same as the character encoding specified in the character encoding declaration. This is <em>not</em> an error.
 charset label detected;;While parsing the document as <code><var>{text}</var></code>, a character encoding declaration specifying a different character encoding is found. The document is reparsed.
@@ -95,6 +99,7 @@ not first start tag;parse-error;This <code>&lt;html&gt;</code> tag is not the fi
 not HTML5;parse-error;This document is written in an old version of HTML.
 start tag not allowed;parse-error;Start tag <code>&lt;<var>{text}</var>&gt;</code> is not allowed here.
 unmatched end tag;parse-error;Element <code><var>{text}</var></code> is not opened.
+XSLT-compat;;The <code>DOCTYPE</code> legacy string is used.
 basehref after URL attribute;;The <code>base</code> element with the <code>href</code> attribute specified cannot be placed after any attribute with a URL.
 basetarget after hyperlink;;The <code>base</code> element with the <code>target</code> attribute specified cannot be placed after any element that defines a hyperlink.
 character not allowed;;Data character is not allowed in this context.

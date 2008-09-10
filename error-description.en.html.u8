@@ -32,7 +32,27 @@
 <section id="character-encoding-layer">
 <h2>Character Encoding Layer Errors</h2>
 
-<div class="section" id="illegal-octets-error"><h3>An illegal octet in the input stream.</h3></div>
+<div class="section" id="fallback-char-error"><h3>Octet sequence <code><var>{octets}</var></code>
+  is not an allowed representation of the character
+  <code><var>{char}</var></code> — character reference
+  <code><var>{char:hexref}</var></code> should be used instead.</h3></div>
+
+<div class="section" id="fallback-unassigned-error"><h3>No character is assigned to octet sequence
+  <code><var>{octets}</var></code>.</h3></div>
+
+<div class="section" id="illegal-octets-error"><h3>Octet sequence <code><var>{octets}</var></code>
+  is illegal.</h3></div>
+
+<div class="section" id="invalid-state-error"><h3>The input stream is broken.</h3>
+    <p>The input stream is encoded in <code>ISO-2022-JP</code>
+    or its variant but is partially broken.</p>
+
+    <p>Note that an <code>ISO-2022-JP</code> stream must end in the ASCII
+    state.</p>
+  </div>
+
+<div class="section" id="unassigned-code-point-error"><h3>No character is assigned to octet sequence
+  <code><var>{octets}</var></code>.</h3></div>
 </section>
 
 <section id="html5-character-encoding">
@@ -121,10 +141,32 @@
   for the character encoding of this document is found in the transfer
   procotol headers.</h3></div>
 
-<div class="section" id="chardecode:fallback"><h3>Since no decoder for the document character
-  encoding is found, decoder for the character encoding
-  <code><var>{text}</var></code> is used.  Checking results might be
-  <em>wrong</em>.</h3></div>
+<div class="section" id="chardecode:fallback"><h3>Results might be <em>wrong</em>, since the
+  conformance checker cannot find an appropriate decoder for the character
+  encoding used for the document.</h3>
+    <p>The conformance checker cannot find an appropriate decoder for
+    the character encoding used to encode characters in the document.</p>
+
+    <p>This error is raised if:</p>
+    <ul>
+    <li>the conformance checker cannot find any decoder for the character
+    encoding in use, but it knows that the encoding is similar to another
+    character encoding, such that it uses the decoder for that character
+    encoding, and therefore some octets might be interpreted incorrectly,
+    or,</li>
+    <li>the conformance checker find a decoder for the character encoding
+    in use, but it does not know whether the decoder is conforming to the
+    relevant specification or not, and therefore some octets might be
+    interpreted incorrectly.</li>
+    </ul>
+
+    <p>In either case, the result shown by the conformance checker might
+    contain wrong errors caused by errorneous decoder or might not contain 
+    errors that should be raised if an appropriate decoder is used.</p>
+
+    <!-- TODO: add advise that either install relevant modules or 
+         join the developmenet of the modules... -->
+  </div>
 
 <div class="section" id="chardecode:no-error"><h3>Conformance error checking for the character
   encoding <code><var>{text}</var></code> is not supported.</h3></div>
@@ -861,6 +903,22 @@ p {
     <!-- keygen -->
     <!-- command, event-source, nest, source -->
     </dl>
+  </div>
+
+<div class="section" id="XSLT-compat"><h3>The <code>DOCTYPE</code> legacy string is
+  used.</h3>
+    <p>The <code>DOCTYPE</code> with the <code>DOCTYPE</code> legacy
+    string, i.e.
+    <code class="html bad example">&lt;!DOCTYPE HTML PUBLIC "XSLT-compat"&gt;</code>
+    is used.</p>
+
+    <p>The <code>DOCTYPE</code> legacy string should not be used for documents
+    generated from XSLT transformation process.  It is allowed only to enable
+    to use XSLT style sheets with the HTML output mode, which does not
+    support generation of the <code>DOCTYPE</code> with no <code>PUBLIC</code>
+    identifier.  For other purposes, the <code>DOCTYPE</code> legacy
+    string, i.e. <code class="html bad example">PUBLIC "XSLT-compat"</code>,
+    is useless and should not be used.</p>
   </div>
 
 </section>
@@ -2557,6 +2615,6 @@ p {
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2008/08/31 13:28:12 $ -->
+<!-- $Date: 2008/09/10 10:22:59 $ -->
 </body>
 </html>

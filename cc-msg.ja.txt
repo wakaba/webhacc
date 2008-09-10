@@ -1,6 +1,10 @@
 WebHACC:Title;;WebHACC (β)
 WebHACC:Heading;; <a href="../error-description#WebHACC:Heading" rel="help"><abbr title="Web ハイパーテキスト応用適合性検査器 (β)"><img alt="WebHACC" src="../icons/title"></abbr></a> 
-m:illegal-octets-error;error-category-charset;An illegal octet in the input stream.
+fallback-char-error;;Octet sequence <code><var>{octets}</var></code> is not an allowed representation of the character <code><var>{char}</var></code> — character reference <code><var>{char:hexref}</var></code> should be used instead.
+fallback-unassigned-error;;No character is assigned to octet sequence <code><var>{octets}</var></code>.
+illegal-octets-error;;Octet sequence <code><var>{octets}</var></code> is illegal.
+invalid-state-error;;The input stream is broken.
+unassigned-code-point-error;;No character is assigned to octet sequence <code><var>{octets}</var></code>.
 disallowed character encoding;;Character encoding <code><var>{text}</var></code> is not allowed for <abbr>HTML</abbr> document.
 bad character encoding;;Character encoding <code><var>{text}</var></code> should not be used for <abbr>HTML</abbr> document.
 non-utf-8 character encoding;;Use of UTF-8 is encouraged (this document is encoded in <code><var>{text}</var></code>).
@@ -9,7 +13,7 @@ no character encoding declaration;;There is no character encoding declaration.
 non ascii superset;;No character encoding metadata is found in lower‐level protocol nor is there <abbr>BOM</abbr>, while character encoding <code><var>{text}</var></code> is not a superset of <abbr>ASCII</abbr>.
 sniffing:chardet;;Character encoding of this document is sniffed as <code><var>{text}</var></code> (Sniffed because no explicit specification for the character encoding of this document is found in the transfer procotol headers).
 sniffing:default;;Character encoding of this document is defaulted to <code><var>{text}</var></code> because no explicit specification for the character encoding of this document is found in the transfer procotol headers.
-chardecode:fallback;;Since no decoder for the document character encoding is found, decoder for the character encoding <code><var>{text}</var></code> is used. Checking results might be <em>wrong</em>.
+chardecode:fallback;;Results might be <em>wrong</em>, since the conformance checker cannot find an appropriate decoder for the character encoding used for the document.
 chardecode:no error;;Conformance error checking for the character encoding <code><var>{text}</var></code> is not supported.
 charset label:matching;;Sniffed character encoding <code><var>{text}</var></code> is same as the character encoding specified in the character encoding declaration. This is <em>not</em> an error.
 charset label detected;;While parsing the document as <code><var>{text}</var></code>, a character encoding declaration specifying a different character encoding is found. The document is reparsed.
@@ -95,6 +99,7 @@ not first start tag;parse-error;This <code>&lt;html&gt;</code> tag is not the fi
 not HTML5;parse-error;This document is written in an old version of HTML.
 start tag not allowed;parse-error;Start tag <code>&lt;<var>{text}</var>&gt;</code> is not allowed here.
 unmatched end tag;parse-error;Element <code><var>{text}</var></code> is not opened.
+XSLT-compat;;<code>DOCTYPE</code> 遺物文字列が使われています。
 basehref after URL attribute;;The <code>base</code> element with the <code>href</code> attribute specified cannot be placed after any attribute with a URL.
 basetarget after hyperlink;;The <code>base</code> element with the <code>target</code> attribute specified cannot be placed after any element that defines a hyperlink.
 character not allowed;;Data character is not allowed in this context.
@@ -374,7 +379,7 @@ Tree;;木
 Document;;文書
 Document Structure;;文書構造
 Structure;;構造
-Reformatted Document Source;;再整形した文書のソース
+Reformatted Document Source;;再整形し\xE3\x81\x9F文書のソース
 Reformatted;;再整形
 RDF Triples;;<abbr lang="en">RDF</abbr> 三項組
 RDF;;<abbr lang="en">RDF</abbr>
@@ -411,7 +416,7 @@ bytes;;バイト
 Explicit entries;;明示的項目
 Fallback entries;;滑り止め項目
 Opportunistic caching namespace;;日和見的キャッシュ化名前空間
-Fallback entry;;滑り止\xE3\x82\x81項目
+Fallback entry;;滑り止め項目
 Online whitelist;;オンライン・ホワイトリスト
 No entry;;項目なし
 Subject;;主語
@@ -429,7 +434,7 @@ Table #;;表 #<var>{text}</var> の構造
 Subdocument #;;部分文書 #<var>{text}</var>
 Sub #;;部分 #<var>{text}</var>
 ...;;〜
-Score;;得点
+Score;;\xE5\xBE\x97点
 Subtotal;;小計
 Total;;合計
 Main document;;主文書
@@ -447,9 +452,9 @@ No parse error found.;;構文解析中に誤りは見つかりませんでした
 No structural error found.;;構造上の誤りは見つかりませんでした。
 This checker is work in progress.;; <p><strong>重要</strong>: この適合性検査サービスは<em>開発中</em>です。 この結果は<em>間違い</em>かもしれません。</p> 
 Conformance is conforming;;この文書に適合性に関わる誤りは見つかりませんでした。
-Conformance is should-error;;この文書は<strong>おそらく<em>不</em>適合</strong>ですが、 稀に適合している場合もあります。適合性検査器はこの文書が稀な場合に該当するかどうか判定できません。
+Conformance is should-error;;この文書は<strong>おそらく<em>\xE4\xB8\x8D</em>適合</strong>ですが、 稀に適合している場合もあります。適合性検査器はこの文書が稀な場合に該当するかどうか判定できません。
 Conformance is non-conforming;;この文書は<strong><em>不</em>適合</strong>です。
-Conformance is uncertain;;適合性検査器はこの文書が適合するかどうか判定できませんでした。 この文書は適合性検査器が対応していない機能を使っています。 この文書は適合しているかもしれません\xE3\x81\x97、していないかもしれません。
+Conformance is uncertain;;適合性検査器はこの文書が適合するかどうか判定できませんでした。 この文書は適合性検査器が対応していない機能を使っています。 この文書は適合しているかもしれませんし、していないかもしれません。
 Error level m;;<a href="../error-description#Error-level-m" rel="help"><em class="rfc2119" title="REQUIRED">必須</em>級の誤り</a>
 Error level s;;<a href="../error-description#Error-level-s" rel="help"><em class="rfc2119" title="RECOMMENDED">推奨</em>級の誤り</a>
 Error level w;;<a href="../error-description#Error-level-w" rel="help">警告</a>

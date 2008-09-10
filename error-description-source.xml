@@ -56,8 +56,45 @@
 <section id="character-encoding-layer">
 <h2>Character Encoding Layer Errors</h2>
 
-<d:item name="illegal-octets-error" class="error-category-charset" level="m">
-  <d:message xml:lang="en">An illegal octet in the input stream.</d:message>
+<d:item name="fallback-char-error"
+    modules="Charset::DecodeHandle">
+  <d:message xml:lang="en">Octet sequence <code><var>{octets}</var></code>
+  is not an allowed representation of the character
+  <code><var>{char}</var></code> &#x2014; character reference
+  <code><var>{char:hexref}</var></code> should be used instead.</d:message>
+  <!-- HTML5 parse error -->
+</d:item>
+
+<d:item name="fallback-unassigned-error"
+    modules="Charset::DecodeHandle">
+  <d:message xml:lang="en">No character is assigned to octet sequence
+  <code><var>{octets}</var></code>.</d:message>
+  <!-- HTML5 parse error -->
+</d:item>
+
+<d:item name="illegal-octets-error"
+    modules="Charset::DecodeHandle">
+  <d:message xml:lang="en">Octet sequence <code><var>{octets}</var></code>
+  is illegal.</d:message>
+</d:item>
+
+<d:item name="invalid-state-error"
+    modules="Charset::DecodeHandle::ISO2022JP">
+  <!-- TODO: more user-friendly error message is desired... -->
+  <d:message xml:lang="en">The input stream is broken.</d:message>
+  <d:desc xml:lang="en">
+    <p>The input stream is encoded in <code>ISO-2022-JP</code>
+    or its variant but is partially broken.</p>
+
+    <p>Note that an <code>ISO-2022-JP</code> stream must end in the ASCII
+    state.</p>
+  </d:desc>
+</d:item>
+
+<d:item name="unassigned-code-point-error"
+    modules="Charset::DecodeHandle">
+  <d:message xml:lang="en">No character is assigned to octet sequence
+  <code><var>{octets}</var></code>.</d:message>
 </d:item>
 </section>
 
@@ -177,10 +214,33 @@
 
 <d:item name="chardecode:fallback"
     modules="HTML::Parser">
-  <d:message xml:lang="en">Since no decoder for the document character
-  encoding is found, decoder for the character encoding
-  <code><var>{text}</var></code> is used.  Checking results might be
-  <em>wrong</em>.</d:message>
+  <d:message xml:lang="en">Results might be <em>wrong</em>, since the
+  conformance checker cannot find an appropriate decoder for the character
+  encoding used for the document.</d:message>
+  <d:desc xml:lang="en">
+    <p>The conformance checker cannot find an appropriate decoder for
+    the character encoding used to encode characters in the document.</p>
+
+    <p>This error is raised if:</p>
+    <ul>
+    <li>the conformance checker cannot find any decoder for the character
+    encoding in use, but it knows that the encoding is similar to another
+    character encoding, such that it uses the decoder for that character
+    encoding, and therefore some octets might be interpreted incorrectly,
+    or,</li>
+    <li>the conformance checker find a decoder for the character encoding
+    in use, but it does not know whether the decoder is conforming to the
+    relevant specification or not, and therefore some octets might be
+    interpreted incorrectly.</li>
+    </ul>
+
+    <p>In either case, the result shown by the conformance checker might
+    contain wrong errors caused by errorneous decoder or might not contain 
+    errors that should be raised if an appropriate decoder is used.</p>
+
+    <!-- TODO: add advise that either install relevant modules or 
+         join the developmenet of the modules... -->
+  </d:desc>
 </d:item>
 
 <d:item name="chardecode:no error"
@@ -1198,6 +1258,28 @@ p {
     <!-- keygen -->
     <!-- command, event-source, nest, source -->
     </dl>
+  </d:desc>
+</d:item>
+
+<d:item name="XSLT-compat" 
+    modules="HTML::Parser">
+  <d:message xml:lang="en">The <code>DOCTYPE</code> legacy string is
+  used.</d:message>
+  <d:message xml:lang="ja"><code>DOCTYPE</code>
+  遺物文字列が使われています。</d:message>
+  <d:desc xml:lang="en">
+    <p>The <code>DOCTYPE</code> with the <code>DOCTYPE</code> legacy
+    string, i.e.
+    <code class="html bad example">&lt;!DOCTYPE HTML PUBLIC "XSLT-compat"></code>
+    is used.</p>
+
+    <p>The <code>DOCTYPE</code> legacy string should not be used for documents
+    generated from XSLT transformation process.  It is allowed only to enable
+    to use XSLT style sheets with the HTML output mode, which does not
+    support generation of the <code>DOCTYPE</code> with no <code>PUBLIC</code>
+    identifier.  For other purposes, the <code>DOCTYPE</code> legacy
+    string, i.e. <code class="html bad example">PUBLIC "XSLT-compat"</code>,
+    is useless and should not be used.</p>
   </d:desc>
 </d:item>
 
@@ -4092,6 +4174,6 @@ p {
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2008/08/31 13:28:12 $ -->
+<!-- $Date: 2008/09/10 10:22:59 $ -->
 </body>
 </html>

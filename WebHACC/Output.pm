@@ -449,6 +449,23 @@ sub nl_text ($$;%) {
       $msg =~ s{<var>{value}</var>}{
         defined $opt{value} ? $htescape->($opt{value}) : ''
       }ge;
+      $msg =~ s{<var>{octets}</var>}{
+        if (defined $opt{octets}) {
+          join ', ', map {sprintf '0x%02X', ord $_} split //, ${$opt{octets}};
+        } else {
+          '';
+        }
+      }ge;
+      $msg =~ s{<var>{char}</var>}{
+        defined $opt{char} ? $htescape->(${$opt{char}}) : ''
+      }ge;
+      $msg =~ s{<var>{char:hexref}</var>}{
+        if (defined $opt{char}) {
+          join '', map {sprintf '&amp;#x%02X;', ord $_} split //, ${$opt{char}};
+        } else {
+          '';
+        }
+      }ge;
       $msg =~ s{<var>{local-name}</var>}{
         UNIVERSAL::can ($node, 'manakai_local_name')
             ? $htescape->($node->manakai_local_name) : ''
@@ -564,23 +581,75 @@ sub generate_input_section ($$) {
         {label => 'Japanese charsets', options => [
           {value => 'Windows-31J'},
           {value => 'Shift_JIS'},
+          {value => 'x-sjis'},
           {value => 'EUC-JP'},
+          {value => 'x-euc-jp'},
           {value => 'ISO-2022-JP'},
+          {value => 'ISO-2022-JP-1'},
+          {value => 'ISO-2022-JP-2'},
         ]},
-        {label => 'European charsets', options => [
+        {label => 'Latin charsets', options => [
+          {value => 'Windows-1250'},
           {value => 'Windows-1252'},
+          {value => 'Windows-1254'},
+          {value => 'Windows-1257'},
+          {value => 'Windows-1258'},
           {value => 'ISO-8859-1'},
+          {value => 'ISO-8859-2'},
+          {value => 'ISO-8859-3'},
+          {value => 'ISO-8859-4'},
+          {value => 'ISO-8859-9'},
+          {value => 'ISO-8859-10'},
+          {value => 'ISO-8859-13'},
+          {value => 'ISO-8859-14'},
+          {value => 'ISO-8859-15'},
+          {value => 'ISO-8859-16'},
           {value => 'US-ASCII'},
         ]},
-        {label => 'Asian charsets', options => [
+        {label => 'Greek charsets', options => [
+          {value => 'Windows-1253'},
+          {value => 'ISO-8859-7'},
+        ]},
+        {label => 'Cyrillic charsets', options => [
+          {value => 'Windows-1251'},
+          {value => 'ISO-8859-5'},
+        ]},
+        {label => 'Arabic charsets', options => [
+          {value => 'Windows-1256'},
+          {value => 'ISO-8859-6'},
+        ]},
+        {label => 'Hebrew charsets', options => [
+          {value => 'Windows-1255'},
+          {value => 'ISO-8859-8'},
+        ]},
+        {label => 'Thai charsets', options => [
           {value => 'Windows-874'},
           {value => 'ISO-8859-11'},
           {value => 'TIS-620'},
         ]},
+        {label => 'Chinese charsets', options => [
+          {value => 'Big5'},
+          {value => 'x-x-big5'},
+          {value => 'Big5-HKSCS'},
+          {value => 'GBK'},
+          {value => 'GB2312'},
+          {value => 'GB_2312-80'},
+          {value => 'ISO-2022-CN'},
+          {value => 'ISO-2022-CN-EXT'},
+        ]},
+        {label => 'Korean charsets', options => [
+          {value => 'Windows-949'},
+          {value => 'EUC-KR'},
+          {value => 'KS_C_5601-1987'},
+          {value => 'ISO-2022-KR'},
+        ]},
         {label => 'Unicode charsets', options => [
           {value => 'UTF-8'},
           {value => 'UTF-8n'},
-        ]},
+          {value => 'UTF-16'}, 
+          {value => 'UTF-16BE'},
+          {value => 'UTF-16LE'},
+       ]},
       ], name => 'charset',
       selected => scalar $cgi->get_parameter ('charset'));
       $out->end_tag ('label');
