@@ -321,8 +321,9 @@ sub generate_result_section ($) {
        target => 'parse-errors', score_base => 10,
        parent_status => $maindoc_status},
       {label => 'Char L.', status => $self->{layers}->{charset},
-       score_base => 10,
+       target => 'parse-errors', score_base => 10,
        parent_status => $maindoc_status},
+      ## TODO: char semantics layer
       {label => 'Syntax L.', status => $self->{layers}->{syntax},
        target => 'parse-errors', score_base => 20,
        parent_status => $maindoc_status},

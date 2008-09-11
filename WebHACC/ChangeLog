@@ -1,3 +1,8 @@
+2008-09-11  Wakaba  <wakaba@suika.fam.cx>
+
+	* Result.pm (generate_result_section): Initial
+	support for the charset layer.
+
 2008-09-10  Wakaba  <wakaba@suika.fam.cx>
 
 	* Output.pm (nl_text): Support for |<var>{octets}</var>|,

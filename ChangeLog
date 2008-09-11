@@ -1,3 +1,8 @@
+2008-09-11  Wakaba  <wakaba@suika.fam.cx>
+
+	* error-description-source.xml: Unicode checker
+	errors are added.
+
 2008-09-10  Wakaba  <wakaba@suika.fam.cx>
 
 	* error-description-source.xml: Encoding layer errors added.

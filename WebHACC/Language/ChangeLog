@@ -1,3 +1,7 @@
+2008-09-11  Wakaba  <wakaba@suika.fam.cx>
+
+	* HTML.pm: Support for the Unicode character checking.
+
 2008-08-17  Wakaba  <wakaba@suika.fam.cx>
 
 	* CacheManifest.pm (generate_structure_dump_section): Support

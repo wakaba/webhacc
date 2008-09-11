@@ -19,6 +19,11 @@ charset label:matching;;Sniffed character encoding <code><var>{text}</var></code
 charset label detected;;While parsing the document as <code><var>{text}</var></code>, a character encoding declaration specifying a different character encoding is found. The document is reparsed.
 NULL;;The <code class="charname">NULL</code> character is not allowed.
 control char;;Code point <code><var>{text}</var></code> is not allowed.
+nonchar;;Noncharacter <code><var>{text}</var></code> is found in the input stream.
+unicode deprecated;;Use of character <code><var>{text}</var></code> is deprecated.
+unicode discouraged;;Use of character <code><var>{text}</var></code> is discouraged.
+unicode not preferred;;Code point <code><var>{text}</var></code> is not the preferred representation of that character.
+unicode should;;Character <code><var>{text}</var></code> should not be used in many cases.
 bad attribute name;;Attribute name cannot contain characters <code>"</code>, <code>'</code>, and <code>=</code>.
 bad attribute value;;Attribute value must be quoted by <code>"</code> or <code>'</code> if it contains a <code>"</code>, <code>'</code>, or <code>=</code> character.
 bare ero;;The <code>&amp;</code> character must be escaped as <code class="html example">&amp;amp;</code>.
@@ -379,7 +384,7 @@ Tree;;木
 Document;;文書
 Document Structure;;文書構造
 Structure;;構造
-Reformatted Document Source;;再整形し\xE3\x81\x9F文書のソース
+Reformatted Document Source;;再整形した文書のソース
 Reformatted;;再整形
 RDF Triples;;<abbr lang="en">RDF</abbr> 三項組
 RDF;;<abbr lang="en">RDF</abbr>
@@ -434,7 +439,7 @@ Table #;;表 #<var>{text}</var> の構造
 Subdocument #;;部分文書 #<var>{text}</var>
 Sub #;;部分 #<var>{text}</var>
 ...;;〜
-Score;;\xE5\xBE\x97点
+Score;;得点
 Subtotal;;小計
 Total;;合計
 Main document;;主文書
@@ -452,9 +457,9 @@ No parse error found.;;構文解析中に誤りは見つかりませんでした
 No structural error found.;;構造上の誤りは見つかりませんでした。
 This checker is work in progress.;; <p><strong>重要</strong>: この適合性検査サービスは<em>開発中</em>です。 この結果は<em>間違い</em>かもしれません。</p> 
 Conformance is conforming;;この文書に適合性に関わる誤りは見つかりませんでした。
-Conformance is should-error;;この文書は<strong>おそらく<em>\xE4\xB8\x8D</em>適合</strong>ですが、 稀に適合している場合もあります。適合性検査器はこの文書が稀な場合に該当するかどうか判定できません。
+Conformance is should-error;;この文書は<strong>おそらく<em>不</em>適合</strong>ですが、 稀に適合している場合もあります。適合性検査器はこの文書が稀な場合に該当するかどうか判定できません。
 Conformance is non-conforming;;この文書は<strong><em>不</em>適合</strong>です。
-Conformance is uncertain;;適合性検査器はこの文書が適合するかどうか判定できませんでした。 この文書は適合性検査器が対応していない機能を使っています。 この文書は適合しているかもしれませんし、していないかもしれません。
+Conformance is uncertain;;適合性検査器はこの文書が適合するかどうか判定できませんでした。 この文書は適合性検査器が対応していない機能を使っています。 この文書は適合しているかもしれませんし、していないか\xE3\x82\x82しれません。
 Error level m;;<a href="../error-description#Error-level-m" rel="help"><em class="rfc2119" title="REQUIRED">必須</em>級の誤り</a>
 Error level s;;<a href="../error-description#Error-level-s" rel="help"><em class="rfc2119" title="RECOMMENDED">推奨</em>級の誤り</a>
 Error level w;;<a href="../error-description#Error-level-w" rel="help">警告</a>

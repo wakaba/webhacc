@@ -287,17 +287,62 @@
     </ul>
   </d:desc>
 </d:item>
+</section>
+
+<section id="character-set-layer">
+<h2>Coded Character Set Layer Errors</h2>
 
 <d:item name="NULL"
     modules="HTML::Parser">
+  <!-- HTML5 Parse Error -->
   <d:message xml:lang="en">The <code class="charname">NULL</code> character
   is not allowed.</d:message>
 </d:item>
 
 <d:item name="control char"
     modules="HTML::Parser">
+  <!-- HTML5 Parse Error -->
   <d:message xml:lang="en">Code point <code><var>{text}</var></code> is
   not allowed.</d:message>
+</d:item>
+
+<d:item name="nonchar"
+    modules="Charset::UnicodeChecker">
+  <d:message xml:lang="en">Noncharacter <code><var>{text}</var></code>
+  is found in the input stream.</d:message>
+  <d:desc xml:lang="en">
+    <p>Noncharacter code points are used in the input stream.</p>
+
+    <p>Noncharacter code points are reserved for internal processings.
+    Their use for information interchanges are forbidden.</p>
+
+    <p>In addition, they are not allowed in HTML document.</p>
+    <!-- "permanently undefined Unicode characters" in HTML5. -->
+  </d:desc>
+</d:item>
+
+<d:item name="unicode deprecated"
+    modules="Charset::UnicodeChecker">
+  <d:message xml:lang="en">Use of character <code><var>{text}</var></code>
+  is deprecated.</d:message>
+</d:item>
+
+<d:item name="unicode discouraged"
+    modules="Charset::UnicodeChecker">
+  <d:message xml:lang="en">Use of character <code><var>{text}</var></code>
+  is discouraged.</d:message>
+</d:item>
+
+<d:item name="unicode not preferred"
+    modules="Charset::UnicodeChecker">
+  <d:message xml:lang="en">Code point <code><var>{text}</var></code>
+  is not the preferred representation of that character.</d:message>
+</d:item>
+
+<d:item name="unicode should"
+    modules="Charset::UnicodeChecker">
+  <d:message xml:lang="en">Character <code><var>{text}</var></code>
+  should not be used in many cases.</d:message>
 </d:item>
 
 </section>
@@ -4174,6 +4219,6 @@ p {
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2008/09/10 10:22:59 $ -->
+<!-- $Date: 2008/09/11 09:13:57 $ -->
 </body>
 </html>

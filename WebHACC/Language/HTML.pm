@@ -14,8 +14,6 @@ sub generate_syntax_error_section ($) {
   require Encode;
   require Whatpm::HTML;
   
-  $self->result->layer_uncertain ('charset');
-
   my $out = $self->output;
   $out->start_section (role => 'parse-errors');
   $out->start_error_list (role => 'parse-errors');
@@ -38,6 +36,12 @@ sub generate_syntax_error_section ($) {
     }
   };
 
+  $self->result->layer_applicable ('charset');
+  my $char_checker = sub ($) {
+    require Whatpm::Charset::UnicodeChecker;
+    return Whatpm::Charset::UnicodeChecker->new_handle ($_[0]);
+  }; # $char_checker
+
   my $dom = Message::DOM::DOMImplementation->new;
   my $doc = $dom->create_document;
   my $el;
@@ -52,7 +56,7 @@ sub generate_syntax_error_section ($) {
     
     $el = $doc->create_element_ns
         ('http://www.w3.org/1999/xhtml', [undef, $inner_html_element]);
-    Whatpm::HTML->set_inner_html ($el, $$t, $onerror);
+    Whatpm::HTML->set_inner_html ($el, $$t, $onerror, $char_checker);
 
     $self->{structure} = $el;
     $self->{_structure_root} = $doc;
@@ -61,11 +65,12 @@ sub generate_syntax_error_section ($) {
         ## reference.
   } else {
     if ($input->{is_char_string}) {
-      Whatpm::HTML->parse_char_string ($input->{s} => $doc, $onerror);
+      Whatpm::HTML->parse_char_string ($input->{s} => $doc,
+                                       $onerror, $char_checker);
     } else {
       $self->result->layer_applicable ('encode');
       Whatpm::HTML->parse_byte_string
-          ($input->{charset}, $input->{s} => $doc, $onerror);
+          ($input->{charset}, $input->{s} => $doc, $onerror, $char_checker);
     }
 
     $self->{structure} = $doc;

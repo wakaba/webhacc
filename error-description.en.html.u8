@@ -203,12 +203,39 @@
     <li>Use <code>UTF-8</code>.</li>
     </ul>
   </div>
+</section>
+
+<section id="character-set-layer">
+<h2>Coded Character Set Layer Errors</h2>
 
 <div class="section" id="NULL"><h3>The <code class="charname">NULL</code> character
   is not allowed.</h3></div>
 
 <div class="section" id="control-char"><h3>Code point <code><var>{text}</var></code> is
   not allowed.</h3></div>
+
+<div class="section" id="nonchar"><h3>Noncharacter <code><var>{text}</var></code>
+  is found in the input stream.</h3>
+    <p>Noncharacter code points are used in the input stream.</p>
+
+    <p>Noncharacter code points are reserved for internal processings.
+    Their use for information interchanges are forbidden.</p>
+
+    <p>In addition, they are not allowed in HTML document.</p>
+    <!-- "permanently undefined Unicode characters" in HTML5. -->
+  </div>
+
+<div class="section" id="unicode-deprecated"><h3>Use of character <code><var>{text}</var></code>
+  is deprecated.</h3></div>
+
+<div class="section" id="unicode-discouraged"><h3>Use of character <code><var>{text}</var></code>
+  is discouraged.</h3></div>
+
+<div class="section" id="unicode-not-preferred"><h3>Code point <code><var>{text}</var></code>
+  is not the preferred representation of that character.</h3></div>
+
+<div class="section" id="unicode-should"><h3>Character <code><var>{text}</var></code>
+  should not be used in many cases.</h3></div>
 
 </section>
 
@@ -2615,6 +2642,6 @@ p {
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2008/09/10 10:22:59 $ -->
+<!-- $Date: 2008/09/11 09:13:57 $ -->
 </body>
 </html>
