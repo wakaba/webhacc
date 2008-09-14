@@ -117,6 +117,8 @@ sub add_error ($%) {
       $column = $opt{column};
     }
   }
+  $line += $opt{line_diff} || 0 if defined $line;
+  $column += $opt{column_diff} || 0 if defined $column;
   $line = $line - 1 || 1
       if defined $line and not (defined $column and $column > 0);
 

@@ -1,5 +1,10 @@
 2008-09-14  Wakaba  <wakaba@suika.fam.cx>
 
+	* Result.pm (add_error): Support for |line_diff| and |column_diff|
+	parameters.
+
+2008-09-14  Wakaba  <wakaba@suika.fam.cx>
+
 	* Output.pm (generate_input_section): Set |tabindex=0| to |details|
 	header, to make the header focusable.
 
