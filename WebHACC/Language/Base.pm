@@ -115,9 +115,11 @@ sub generate_source_string_section ($) {
 
     my $t = '';
     while (1) {
-      my $c = $char_stream->getc;
-      last unless defined $c;
-      $t .= $c;
+      if ($char_stream->read ($t, 1024, length $t)) {
+        #
+      } else {
+        last;
+      }
     }
     $s = \$t;
     ## TODO: Output for each line, don't concat all of lines.

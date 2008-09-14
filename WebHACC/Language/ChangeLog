@@ -1,3 +1,8 @@
+2008-09-14  Wakaba  <wakaba@suika.fam.cx>
+
+	* Base.pm (generate_source_string_section): Use |read|
+	instead of |getc|.
+
 2008-09-11  Wakaba  <wakaba@suika.fam.cx>
 
 	* HTML.pm: Support for the Unicode character checking.
