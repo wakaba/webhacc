@@ -1319,9 +1319,10 @@ p {
     is used.</p>
 
     <p>The <code>DOCTYPE</code> legacy string should not be used for documents
-    generated from XSLT transformation process.  It is allowed only to enable
-    to use XSLT style sheets with the HTML output mode, which does not
-    support generation of the <code>DOCTYPE</code> with no <code>PUBLIC</code>
+    <em>not</em> generated from XSLT transformation process.  It is allowed
+    only to enable to use XSLT style sheets with the HTML output mode, which
+    does not support generation of the <code>DOCTYPE</code> with no
+    <code>PUBLIC</code>
     identifier.  For other purposes, the <code>DOCTYPE</code> legacy
     string, i.e. <code class="html bad example">PUBLIC "XSLT-compat"</code>,
     is useless and should not be used.</p>
@@ -4219,6 +4220,6 @@ p {
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2008/09/11 09:13:57 $ -->
+<!-- $Date: 2008/09/14 03:09:23 $ -->
 </body>
 </html>

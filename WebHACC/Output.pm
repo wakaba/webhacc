@@ -538,7 +538,7 @@ sub generate_input_section ($$) {
   my $options = sub ($) {
     my $context = shift;
 
-    $out->html (q[<div class="details default"><p class=legend onclick="nextSibling.style.display = nextSibling.style.display == 'block' ? 'none' : 'block'; parentNode.className = nextSibling.style.display == 'none' ? 'details' : 'details open'">]);
+    $out->html (q[<div class="details default"><p class=legend onclick="nextSibling.style.display = nextSibling.style.display == 'block' ? 'none' : 'block'; parentNode.className = nextSibling.style.display == 'none' ? 'details' : 'details open'" tabindex=0>]);
     $out->nl_text (q[Options]);
     $out->start_tag ('div');
 
