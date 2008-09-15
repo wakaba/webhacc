@@ -1,3 +1,8 @@
+2008-09-15  Wakaba  <wakaba@suika.fam.cx>
+
+	* error-description-source.xml: "control char" errors are now
+	handled by UnicodeChecker module.  New "non unicode" error added.
+
 2008-09-11  Wakaba  <wakaba@suika.fam.cx>
 
 	* error-description-source.xml: Unicode checker

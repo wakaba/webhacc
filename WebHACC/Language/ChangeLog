@@ -1,3 +1,7 @@
+2008-09-15  Wakaba  <wakaba@suika.fam.cx>
+
+	* HTML.pm: Set the mode of the UnicodeChecker as HTML5.
+
 2008-09-14  Wakaba  <wakaba@suika.fam.cx>
 
 	* Base.pm (generate_source_string_section): Use |read|

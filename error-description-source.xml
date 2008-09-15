@@ -300,7 +300,7 @@
 </d:item>
 
 <d:item name="control char"
-    modules="HTML::Parser">
+    modules="Charset::UnicodeChecker">
   <!-- HTML5 Parse Error -->
   <d:message xml:lang="en">Code point <code><var>{text}</var></code> is
   not allowed.</d:message>
@@ -319,6 +319,12 @@
     <p>In addition, they are not allowed in HTML document.</p>
     <!-- "permanently undefined Unicode characters" in HTML5. -->
   </d:desc>
+</d:item>
+
+<d:item name="non unicode"
+    modules="Charset::UnicodeChecker">
+  <d:message xml:lang="en">Character <code><var>{text}</var></code> is not
+  a Unicode character.</d:message>
 </d:item>
 
 <d:item name="unicode deprecated"
@@ -4220,6 +4226,6 @@ p {
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2008/09/14 03:09:23 $ -->
+<!-- $Date: 2008/09/15 07:20:40 $ -->
 </body>
 </html>

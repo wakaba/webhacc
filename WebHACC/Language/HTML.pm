@@ -39,7 +39,7 @@ sub generate_syntax_error_section ($) {
   $self->result->layer_applicable ('charset');
   my $char_checker = sub ($) {
     require Whatpm::Charset::UnicodeChecker;
-    return Whatpm::Charset::UnicodeChecker->new_handle ($_[0]);
+    return Whatpm::Charset::UnicodeChecker->new_handle ($_[0], 'html5');
   }; # $char_checker
 
   my $dom = Message::DOM::DOMImplementation->new;
