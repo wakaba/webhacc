@@ -1,5 +1,9 @@
 2008-09-15  Wakaba  <wakaba@suika.fam.cx>
 
+	* CSS.pm: Support for Firefox3's new 'width' values.
+
+2008-09-15  Wakaba  <wakaba@suika.fam.cx>
+
 	* HTML.pm: Set the mode of the UnicodeChecker as HTML5.
 
 2008-09-14  Wakaba  <wakaba@suika.fam.cx>

@@ -149,6 +149,11 @@ sub get_css_parser () {
   $p->{prop_value}->{position}->{$_} = 1 for qw/
     absolute fixed relative static
   /;
+  for (qw/-moz-max-content -moz-min-content -moz-fit-content -moz-available/) {
+    $p->{prop_value}->{width}->{$_} = 1;
+    $p->{prop_value}->{'min-width'}->{$_} = 1;
+    $p->{prop_value}->{'max-width'}->{$_} = 1;
+  }
   $p->{prop_value}->{float}->{$_} = 1 for qw/
     left right none
   /;
