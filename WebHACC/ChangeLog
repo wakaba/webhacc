@@ -1,3 +1,8 @@
+2008-09-15  Wakaba  <wakaba@suika.fam.cx>
+
+	* Output.pm ($htescape, $htescape_value): Commented out
+	redundant things for now.
+
 2008-09-14  Wakaba  <wakaba@suika.fam.cx>
 
 	* Result.pm (add_error): Support for |line_diff| and |column_diff|

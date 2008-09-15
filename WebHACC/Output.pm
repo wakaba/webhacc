@@ -8,11 +8,11 @@ my $htescape = sub ($) {
   my $s = $_[0];
   $s =~ s/&/&amp;/g;
   $s =~ s/</&lt;/g;
-  $s =~ s/>/&gt;/g;
+#  $s =~ s/>/&gt;/g;
   $s =~ s/"/&quot;/g;
-  $s =~ s{([\x00-\x09\x0B-\x1F\x7F-\xA0\x{FEFF}\x{FFFC}-\x{FFFF}])}{
-    sprintf '<var>U+%04X</var>', ord $1;
-  }ge;
+#  $s =~ s{([\x00-\x09\x0B-\x1F\x7F-\xA0\x{FEFF}\x{FFFC}-\x{FFFF}])}{
+#    sprintf '<var>U+%04X</var>', ord $1;
+#  }ge;
   return $s;
 };
 
@@ -20,7 +20,7 @@ my $htescape_value = sub ($) {
   my $s = $_[0];
   $s =~ s/&/&amp;/g;
   $s =~ s/</&lt;/g;
-  $s =~ s/>/&gt;/g;
+#  $s =~ s/>/&gt;/g;
   $s =~ s/"/&quot;/g;
   return $s;
 };
@@ -68,49 +68,49 @@ sub has_error ($;$) {
 } # has_error
 
 sub set_utf8 ($) {
-  binmode shift->{handle}, ':utf8';
+  binmode $_[0]->{handle}, ':utf8';
 } # set_utf8
 
 sub set_flush ($) {
-  shift->{handle}->autoflush (1);
+  $_[0]->{handle}->autoflush (1);
 } # set_flush
 
 sub unset_flush ($) {
-  shift->{handle}->autoflush (0);
+  $_[0]->{handle}->autoflush (0);
 } # unset_flush
 
 sub html ($$) {
-  shift->{handle}->print (shift);
+  $_[0]->{handle}->print ($_[1]);
 } # html
 
 sub text ($$) {
-  shift->html ($htescape->(shift));
+  $_[0]->{handle}->print ($htescape->($_[1]));
 } # text
 
 sub url ($$%) {
   my ($self, $url, %opt) = @_;
-  $self->html (q[<code class=uri>&lt;]);
+  $self->{handle}->print (q[<code class=uri>&lt;]);
   $self->link ($url, %opt, url => $url);
-  $self->html (q[></code>]);
+  $self->{handle}->print (q[></code>]);
 } # url
 
 sub start_tag ($$%) {
   my ($self, $tag_name, %opt) = @_;
-  $self->html ('<' . $htescape_value->($tag_name)); # escape for safety
+  $self->{handle}->print ('<' . $tag_name);
   if (exists $opt{id}) {
     my $id = $self->input->id_prefix . $opt{id};
-    $self->html (' id="' . $htescape_value->($id) . '"');
+    $self->{handle}->print (' id="' . $htescape_value->($id) . '"');
     delete $opt{id};
   }
-  for (keys %opt) {    # for safety
-    $self->html (' ' . $htescape_value->($_) . '="' .
-                 $htescape_value->($opt{$_}) . '"');
+  for (keys %opt) {
+    $self->{handle}->print
+        (' ' . $_ . '="' . $htescape_value->($opt{$_}) . '"');
   }
-  $self->html ('>');
+  $self->{handle}->print ('>');
 } # start_tag
 
 sub end_tag ($$) {
-  shift->html ('</' . $htescape_value->(shift) . '>');
+  $_[0]->{handle}->print ('</' . $_[1] . '>');
 } # end_tag
 
 sub start_section ($%) {
@@ -271,25 +271,24 @@ sub add_source_to_parse_error_list ($$) {
 } # add_source_to_parse_error_list
 
 sub start_code_block ($) {
-  shift->html ('<pre><code>');
+  $_[0]->{handle}->print ('<pre><code>');
 } # start_code_block
 
 sub end_code_block ($) {
-  shift->html ('</code></pre>');
+  $_[0]->{handle}->print ('</code></pre>');
 } # end_code_block
 
 sub code ($$;%) {
   my ($self, $content, %opt) = @_;
   $self->start_tag ('code', %opt);
   $self->text ($content);
-  $self->html ('</code>');
+  $self->{handle}->print ('</code>');
 } # code
 
 sub script ($$;%) {
   my ($self, $content, %opt) = @_;
   $self->start_tag ('script', %opt);
-  $self->html ($content);
-  $self->html ('</script>');
+  $self->{handle}->print ($content . '</script>');
 } # script
 
 sub dt ($$;%) {
@@ -310,9 +309,9 @@ sub select ($$%) {
   while (@options) {
     my $opt = shift @options;
     if ($opt->{options}) {
-      $self->html ('<optgroup label="');
+      $self->{handle}->print ('<optgroup label="');
       $self->nl_text ($opt->{label});
-      $self->html ('">');
+      $self->{handle}->print ('">');
       unshift @options, @{$opt->{options}}, {end_options => 1};
     } elsif ($opt->{end_options}) {
       $self->end_tag ('optgroup');
@@ -330,22 +329,21 @@ sub select ($$%) {
 sub link ($$%) {
   my ($self, $content, %opt) = @_;
   $self->start_tag ('a', %opt, href => $opt{url});
-  $self->text ($content);
-  $self->html ('</a>');
+  $self->{handle}->print ($htescape->($content) . '</a>');
 } # link
 
 sub xref ($$%) {
   my ($self, $content, %opt) = @_;
-  $self->html ('<a href="#' . $htescape->($self->input->id_prefix . $opt{target}) . '">');
+  $self->{handle}->print
+      ('<a href="#' . $htescape->($self->input->id_prefix . $opt{target}) . '">');
   $self->nl_text ($content, text => $opt{text});
-  $self->html ('</a>');
+  $self->{handle}->print ('</a>');
 } # xref
 
 sub xref_text ($$%) {
   my ($self, $content, %opt) = @_;
   $self->html ('<a href="#' . $htescape->($self->input->id_prefix . $opt{target}) . '">');
-  $self->text ($content);
-  $self->html ('</a>');
+  $self->{handle}->print ($htescape->($content) . '</a>');
 } # xref
 
 sub link_to_webhacc ($$%) {
@@ -404,7 +402,7 @@ sub node_link ($$) {
     $self->xref_text ($get_node_path->($node),
                       target => 'node-' . refaddr $node);
   } else {
-    $self->html ($get_object_path->($node));
+    $self->{handle}->print ($get_object_path->($node));
   }
 } # node_link
 
@@ -475,27 +473,27 @@ sub nl_text ($$;%) {
             ? $htescape->($node->owner_element->manakai_local_name) : ''
       }ge;
     }
-    $self->html ($msg);
+    $self->{handle}->print ($msg);
   } else {
-    $self->text ($type);
+    $self->{handle}->print ($htescape->($type));
   }
 } # nl_text
 
 }
 
 sub nav_list ($) {
-  my $self = shift;
-  $self->html (q[<ul class="navigation" id="nav-items">]);
-  for (@{$self->{nav}}) {
-    $self->html (qq[<li><a href="#@{[$htescape->($_->[0])]}">]);
-    $self->nl_text ($_->[1], text => $_->[2]);
-    $self->html ('</a>');
-  }
-  $self->html ('</ul>');
+#  my $self = shift;
+#  $self->html (q[<ul class="navigation" id="nav-items">]);
+#  for (@{$self->{nav}}) {
+#    $self->html (qq[<li><a href="#@{[$htescape->($_->[0])]}">]);
+#    $self->nl_text ($_->[1], text => $_->[2]);
+#    $self->html ('</a>');
+#  }
+#  $self->html ('</ul>');
 } # nav_list
 
 sub http_header ($) {
-  shift->html (qq[Content-Type: text/html; charset=utf-8\n\n]);
+  $_[0]->{handle}->print (qq[Content-Type: text/html; charset=utf-8\n\n]);
 } # http_header
 
 sub http_error ($$) {
@@ -504,23 +502,24 @@ sub http_error ($$) {
   my $text = {
     404 => 'Not Found',
   }->{$code};
-  $self->html (qq[Status: $code $text\nContent-Type: text/html ; charset=us-ascii\n\n$code $text]);
+  $self->{handle}->print
+      (qq[Status: $code $text\nContent-Type: text/html ; charset=us-ascii\n\n$code $text]);
 } # http_error
 
 sub html_header ($) {
   my $self = shift;
-  $self->html (q[<!DOCTYPE html>]);
+  $self->{handle}->print (q[<!DOCTYPE html>]);
   $self->start_tag ('html', lang => $self->{primary_language});
-  $self->html (q[<head><title>]);
+  $self->{handle}->print (q[<head><title>]);
   $self->nl_text (q[WebHACC:Title]);
-  $self->html (q[</title>
+  $self->{handle}->print (q[</title>
 <link rel="stylesheet" href="../cc-style.css" type="text/css">
 <script src="../cc-script.js"></script>
 </head>
 <body onclick=" return onbodyclick (event) " onload=" onbodyload () ">
 <h1>]);
   $self->nl_text (q[WebHACC:Heading]);
-  $self->html (q[</h1><script> insertNavSections () </script>]);
+  $self->{handle}->print (q[</h1><script> insertNavSections () </script>]);
 } # html_header
 
 sub generate_input_section ($$) {
@@ -538,7 +537,7 @@ sub generate_input_section ($$) {
   my $options = sub ($) {
     my $context = shift;
 
-    $out->html (q[<div class="details default"><p class=legend onclick="nextSibling.style.display = nextSibling.style.display == 'block' ? 'none' : 'block'; parentNode.className = nextSibling.style.display == 'none' ? 'details' : 'details open'" tabindex=0>]);
+    $out->{handle}->print (q[<div class="details default"><p class=legend onclick="nextSibling.style.display = nextSibling.style.display == 'block' ? 'none' : 'block'; parentNode.className = nextSibling.style.display == 'none' ? 'details' : 'details open'" tabindex=0>]);
     $out->nl_text (q[Options]);
     $out->start_tag ('div');
 
@@ -665,7 +664,7 @@ sub generate_input_section ($$) {
       $out->end_tag ('label');
     }
 
-    $out->html (q[</div></div>]);
+    $out->{handle}->print (q[</div></div>]);
   }; # $options
 
   $out->start_section (id => 'input', title => 'Input');
