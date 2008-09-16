@@ -3287,6 +3287,24 @@ p {
   a <code>,</code> character or a <code>]</code> character.</d:message>
 </d:item>
 
+<d:item name="argument after variadic"
+    modules="WebIDL::Checker">
+  <d:message xml:lang="en">An argument is specified after an argument
+  with <code>Variadic</code> extended attribute is seen.</d:message>
+</d:item>
+
+<d:item name="attr not readonly"
+    modules="WebIDL::Checker">
+  <d:message xml:lang="en">Extended attribute <code><var>{text}</var></code> is
+  specified for an attribute that is not read-only.</d:message>
+</d:item>
+
+<d:item name="attr type not interface"
+    modules="WebIDL::Checker">
+  <d:message xml:lang="en">Extended attribute <code><var>{text}</var></code>
+  is specified for an attribute whose type is not an interface.</d:message>
+</d:item>
+
 <d:item name="before exception member"
     modules="WebIDL::Parser">
   <d:message xml:lang="en">An unknown construct is found where an exception
@@ -3347,6 +3365,66 @@ p {
     modules="WebIDL::Parser">
   <d:message xml:lang="en">No identifier is specified in an extended 
   attribute assignment.</d:message>
+</d:item>
+
+<d:item name="const value out of range"
+    modules="WebIDL::Checker">
+  <d:message xml:lang="en">The specified value <code><var>{value}</var></code>
+  is outside of the range of the type for the constant,
+  <code><var>{text}</var></code>.</d:message>
+</d:item>
+
+<d:item name="const type mismatch"
+    modules="WebIDL::Checker">
+  <d:message xml:lang="en">The type of the value,
+  <code><var>{value}</var></code>, is different from the type of the constant,
+  <code><var>{text}</var></code>.</d:message>
+</d:item>
+
+<d:item name="duplicate accessor"
+    modules="WebIDL::Checker">
+  <d:message xml:lang="en">Extended attribute <code><var>{text}</var></code>
+  is already specified for another operation in the same interface.</d:message>
+</d:item>
+
+<d:item name="duplicate constructor name"
+    modules="WebIDL::Checker">
+  <d:message xml:lang="en">Constructor name <code><var>{value}</var></code>
+  specified by extended attribute <code><var>{text}</var></code> is already
+  used for an interface.</d:message>
+</d:item>
+
+<d:item name="duplicate member"
+    modules="WebIDL::Checker">
+  <d:message xml:lang="en">Name <code><var>{text}</var></code> is
+  already used.</d:message>
+</d:item>
+
+<d:item name="duplicate qname"
+    modules="WebIDL::Checker">
+  <d:message xml:lang="en">Qualified name <code><var>{text}</var></code> is
+  already used.</d:message>
+</d:item>
+
+<d:item name="duplicate xattr"
+    modules="WebIDL::Checker">
+  <d:message xml:lang="en">Extended attribute <code><var>{text}</var></code>
+  is already specified.</d:message>
+</d:item>
+
+<d:item name="exception not defined"
+    modules="WebIDL::Checker">
+  <d:message xml:lang="en">Exception <code><var>{text}</var></code> is
+  not defined in the fragment.</d:message>
+  <!-- {text} is unqualified name when it appears in an extended attribute,
+       or absolute scoped name otherwise. -->
+</d:item>
+
+<d:item name="interface not defined"
+    modules="WebIDL::Checker">
+  <d:message xml:lang="en">Interface <code><var>{text}</var></code> is
+  not defined in the fragment.</d:message>
+  <!-- {text} is absolute scoped name. -->
 </d:item>
 
 <d:item name="no arguments in"
@@ -3416,6 +3494,31 @@ p {
   definition or member.</d:message>
 </d:item>
 
+<d:item name="non-module definition"
+    modules="WebIDL::Checker">
+  <d:message xml:lang="en">This definition is not part of any
+  module.</d:message>
+</d:item>
+
+<d:item name="not boxable type"
+    modules="WebIDL::Checker">
+  <d:message xml:lang="en">Type <code><var>{text}</var></code> cannot be
+  used in <code>valuetype</code>.</d:message>
+</d:item>
+
+<d:item name="premature end of webidl"
+    modules="WebIDL::Parser">
+  <d:message xml:lang="en">The WebIDL fragment ends before all the blocks
+  are closed by <code>};</code> sequences.</d:message>
+</d:item>
+
+<d:item name="referenced attr not defined"
+    modules="WebIDL::Checker">
+  <d:message xml:lang="en">Attribute <code><var>{value}</var></code> is
+  not defined in the interface specified for the attribute to which
+  extended attribute <code><var>{text}</var></code> is set.</d:message>
+</d:item>
+
 <d:item name="scoped name"
     modules="WebIDL::Parser">
   <d:message xml:lang="en">A scoped name is expected here.</d:message>
@@ -3427,11 +3530,81 @@ p {
   an identifier or a <code>DOMString</code> keyword.</d:message>
 </d:item>
 
+<d:item name="type not defined"
+    modules="WebIDL::Checker">
+  <d:message xml:lang="en">Type <code><var>{text}</var></code> is not 
+  defined.</d:message>
+</d:item>
+
+<d:item name="typedef ignored"
+    modules="WebIDL::Checker">
+  <d:message xml:lang="en"><code>typedef</code> of name <code>DOMString</code>
+  is ignored.</d:message>
+</d:item>
+
+<d:item name="unknown xattr"
+    modules="WebIDL::Checker">
+  <d:message xml:lang="en">An unknown extended attribute 
+  <code><var>{text}</var></code> is used.</d:message>
+</d:item>
+
 <d:item name="valuetype DOMString"
     modules="WebIDL::Parser">
   <d:message xml:lang="en">The <code>valuetype</code> definition does
   not define <code>DOMString</code> as
   <code>sequence&lt;unsigned short></code>.</d:message>
+</d:item>
+
+<d:item name="valuetype ignored"
+    modules="WebIDL::Checker">
+  <d:message xml:lang="en"><code>valuetype</code> of name
+  <code>DOMString</code> is ignored.</d:message>
+</d:item>
+
+<d:item name="wrong signature accessor"
+    modules="WebIDL::Checker">
+  <d:message xml:lang="en">The operation cannot be used as accessor operation
+  of <code><var>{text}</var></code>, since its signature different from
+  the expected one.</d:message>
+</d:item>
+
+<d:item name="xattr arglist not allowed"
+    modules="WebIDL::Checker">
+  <d:message xml:lang="en">Use of an argument list for extended attribute
+  <code><var>{text}</var></code> is not allowed.</d:message>
+</d:item>
+
+<d:item name="xattr for wrong type"
+    modules="WebIDL::Checker">
+  <d:message xml:lang="en">Extended attribute <code><var>{text}</var></code>
+  is not applicable for an attribute whose type is not
+  <code>DOMString</code>.</d:message>
+  <!-- Null or Undefined -->
+</d:item>
+
+<d:item name="xattr id missing"
+    modules="WebIDL::Checker">
+  <d:message xml:lang="en">The identifier for extended attribute
+  <code><var>{text}</var></code> is not specified.</d:message>
+</d:item>
+
+<d:item name="xattr id not allowed"
+    modules="WebIDL::Checker">
+  <d:message xml:lang="en">Use of an identifier for extended attribute
+  <code><var>{text}</var></code> is not allowed.</d:message>
+</d:item>
+
+<d:item name="xattr id value not allowed"
+    modules="WebIDL::Checker">
+  <d:message xml:lang="en">The identifier <code><var>{value}</var></code> is
+  not an allowed value for extended attribute
+  <code><var>{text}</var></code>.</d:message>
+</d:item>
+
+<d:item name="xattr not applicable"
+    modules="WebIDL::Checker">
+  <d:message xml:lang="en">Extended attribute <code><var>{text}</var></code>
+  is not applicable to this kind of object.</d:message>
 </d:item>
 
 </section>
@@ -4404,6 +4577,6 @@ p {
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2008/09/16 13:08:25 $ -->
+<!-- $Date: 2008/09/16 14:00:20 $ -->
 </body>
 </html>
