@@ -1,3 +1,7 @@
+2008-09-16  Wakaba  <wakaba@suika.fam.cx>
+
+	* error-description-source.xml: WebIDL parser errors are added.
+
 2008-09-15  Wakaba  <wakaba@suika.fam.cx>
 
 	* error-description-source.xml: "control char" errors are now

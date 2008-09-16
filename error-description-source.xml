@@ -3258,6 +3258,184 @@ p {
 
 </section>
 
+<section id="webidl-errors">
+<h2>WebIDL Errors</h2>
+
+<d:item name="after argument"
+    modules="WebIDL::Parser">
+  <d:message xml:lang="en">An argument name is not followed by a
+  <code>,</code> character or a <code>)</code> character.</d:message>
+</d:item>
+
+<d:item name="after exception name"
+    modules="WebIDL::Parser">
+  <d:message xml:lang="en">An exception name is not followed by a
+  <code>,</code> character or a <code>)</code> character.</d:message>
+</d:item>
+
+<d:item name="after unsigned"
+    modules="WebIDL::Parser">
+  <d:message xml:lang="en">The token after the <code>unsigned</code>
+  keyword is not <code>short</code> or <code>long</code>.</d:message>
+  <d:message xml:lang="en">キーワード <code>unsigned</code> の後の字句が
+  <code>short</code> か <code>long</code> ではありません。</d:message>
+</d:item>
+
+<d:item name="after xattr"
+    modules="WebIDL::Parser">
+  <d:message xml:lang="en">An extended attribute is not followed by 
+  a <code>,</code> character or a <code>]</code> character.</d:message>
+</d:item>
+
+<d:item name="before exception member"
+    modules="WebIDL::Parser">
+  <d:message xml:lang="en">An unknown construct is found where an exception
+  member or a <code>}</code> character is expected.</d:message>
+</d:item>
+
+<d:item name="before interface member"
+    modules="WebIDL::Parser">
+  <d:message xml:lang="en">An unknown construct is found where an interface
+  member or a <code>}</code> character is expected.</d:message>
+</d:item>
+
+<d:item name="before webidl block"
+    modules="WebIDL::Parser">
+  <d:message xml:lang="en">An identifier for the <code><var>{text}</var></code>
+  is not followed by a <code>{</code> character.</d:message>
+</d:item>
+
+<d:item name="before webidl def"
+    modules="WebIDL::Parser">
+  <d:message xml:lang="en">An unknown construct is found after an
+  extended attribute list (where a <code>Definition</code> is
+  expected).</d:message>
+</d:item>
+
+<d:item name="before webidl defs"
+    modules="WebIDL::Parser">
+  <d:message xml:lang="en">An unknown construct is found where a
+  <code>Definition</code> (optionally preceded by an extended attribute list)
+  is expected.</d:message>
+</d:item>
+
+<d:item name="before webidl type"
+    modules="WebIDL::Parser">
+  <d:message xml:lang="en">The type for <code><var>{text}</var></code> is
+  not specified.</d:message>
+</d:item>
+
+<d:item name="before webidl type:argument"
+    modules="WebIDL::Parser">
+  <d:message xml:lang="en">The type for an argument is not
+  specified.</d:message>
+</d:item>
+
+<d:item name="before webidl type:exception member"
+    modules="WebIDL::Parser">
+  <d:message xml:lang="en">The type for an exception member is not
+  specified.</d:message>
+</d:item>
+
+<d:item name="before xattr"
+    modules="WebIDL::Parser">
+  <d:message xml:lang="en">No extended attribute is specified after
+  a <code>[</code> character.</d:message>
+</d:item>
+
+<d:item name="before xattrarg"
+    modules="WebIDL::Parser">
+  <d:message xml:lang="en">No identifier is specified in an extended 
+  attribute assignment.</d:message>
+</d:item>
+
+<d:item name="no arguments in"
+    modules="WebIDL::Parser">
+  <d:message xml:lang="en">No <code>in</code> keyword for an argument is
+  found.</d:message>
+</d:item>
+
+<d:item name="no arguments lparen"
+    modules="WebIDL::Parser">
+  <d:message xml:lang="en">No <code>(</code> character for an argument
+  list is found.</d:message>
+</d:item>
+
+<d:item name="no raises lparen"
+    modules="WebIDL::Parser">
+  <d:message xml:lang="en">A <code>raises</code> (or <code>getraises</code>
+  or <code>setraises</code>) keyword is not followed by a <code>(</code>
+  character.</d:message>
+</d:item>
+
+<d:item name="no sequence gt"
+    modules="WebIDL::Parser">
+  <d:message xml:lang="en">A <code>sequence&lt;></code> type is not
+  terminated by a <code>&gt;</code> character.</d:message>
+</d:item>
+
+<d:item name="no sequence lt"
+    modules="WebIDL::Parser">
+  <d:message xml:lang="en">Keyword <code>sequence</code> is not followed
+  by a <code>&lt;</code> character.</d:message>
+</d:item>
+
+<d:item name="no sequence type"
+    modules="WebIDL::Parser">
+  <d:message xml:lang="en">No type is specified in
+  <code>sequence&lt;></code>.</d:message>
+</d:item>
+
+<d:item name="no webidl identifier"
+    modules="WebIDL::Parser">
+  <d:message xml:lang="en">No identifier is specified for the
+  <code><var>{text}</var></code>.</d:message>
+</d:item>
+
+<d:item name="no webidl identifier:argument"
+    modules="WebIDL::Parser">
+  <d:message xml:lang="en">No identifier is specified for the
+  argument.</d:message>
+</d:item>
+
+<d:item name="no webidl identifier:exception member"
+    modules="WebIDL::Parser">
+  <d:message xml:lang="en">No identifier is specified for the
+  exception member.</d:message>
+</d:item>
+
+<d:item name="no webidl identifier:operation"
+    modules="WebIDL::Parser">
+  <d:message xml:lang="en">No identifier is specified for the
+  operation.</d:message>
+</d:item>
+
+<d:item name="no webidl semicolon"
+    modules="WebIDL::Parser">
+  <d:message xml:lang="en">No semicolon is found at the end of the
+  definition or member.</d:message>
+</d:item>
+
+<d:item name="scoped name"
+    modules="WebIDL::Parser">
+  <d:message xml:lang="en">A scoped name is expected here.</d:message>
+</d:item>
+
+<d:item name="scoped name:dcolon"
+    modules="WebIDL::Parser">
+  <d:message xml:lang="en">A <code>::</code> token is not followed by
+  an identifier or a <code>DOMString</code> keyword.</d:message>
+</d:item>
+
+<d:item name="valuetype DOMString"
+    modules="WebIDL::Parser">
+  <d:message xml:lang="en">The <code>valuetype</code> definition does
+  not define <code>DOMString</code> as
+  <code>sequence&lt;unsigned short></code>.</d:message>
+</d:item>
+
+</section>
+
 <section id="information">
 <h2>Stability Information</h2>
 
@@ -4226,6 +4404,6 @@ p {
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2008/09/15 07:20:40 $ -->
+<!-- $Date: 2008/09/16 13:08:25 $ -->
 </body>
 </html>
