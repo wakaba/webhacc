@@ -561,6 +561,7 @@ sub generate_input_section ($$) {
       {value => 'application/atom+xml'},
       {value => 'text/cache-manifest'},
       {value => 'text/css'},
+      {value => 'text/x-css-inline'},
       {value => 'text/x-h2h'},
       {value => 'text/html'},
       {value => 'text/x-webidl'},

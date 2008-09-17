@@ -1,3 +1,7 @@
+2008-09-17  Wakaba  <wakaba@suika.fam.cx>
+
+	* Output.pm: Support for the |text/x-css-inline| type is added.
+
 2008-09-15  Wakaba  <wakaba@suika.fam.cx>
 
 	* Output.pm ($htescape, $htescape_value): Commented out

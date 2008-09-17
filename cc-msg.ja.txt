@@ -20,6 +20,7 @@ charset label detected;;While parsing the document as <code><var>{text}</var></c
 NULL;;The <code class="charname">NULL</code> character is not allowed.
 control char;;Code point <code><var>{text}</var></code> is not allowed.
 nonchar;;Noncharacter <code><var>{text}</var></code> is found in the input stream.
+non unicode;;Character <code><var>{text}</var></code> is not a Unicode character.
 unicode deprecated;;Use of character <code><var>{text}</var></code> is deprecated.
 unicode discouraged;;Use of character <code><var>{text}</var></code> is discouraged.
 unicode not preferred;;Code point <code><var>{text}</var></code> is not the preferred representation of that character.
@@ -317,6 +318,61 @@ duplicate oc namespace;;This oppotunistic caching namespace is already specified
 no fallback entry URL;;Fallback entry URL is missing.
 not manifest;;This document is not a cache manifest.
 same as manifest URL;;This URL is same as the manifest URL.
+after argument;;An argument name is not followed by a <code>,</code> character or a <code>)</code> character.
+after exception name;;An exception name is not followed by a <code>,</code> character or a <code>)</code> character.
+after unsigned;;The token after the <code>unsigned</code> keyword is not <code>short</code> or <code>long</code>.
+after xattr;;An extended attribute is not followed by a <code>,</code> character or a <code>]</code> character.
+argument after variadic;;An argument is specified after an argument with <code>Variadic</code> extended attribute is seen.
+attr not readonly;;Extended attribute <code><var>{text}</var></code> is specified for an attribute that is not read-only.
+attr type not interface;;Extended attribute <code><var>{text}</var></code> is specified for an attribute whose type is not an interface.
+before exception member;;An unknown construct is found where an exception member or a <code>}</code> character is expected.
+before interface member;;An unknown construct is found where an interface member or a <code>}</code> character is expected.
+before webidl block;;An identifier for the <code><var>{text}</var></code> is not followed by a <code>{</code> character.
+before webidl def;;An unknown construct is found after an extended attribute list (where a <code>Definition</code> is expected).
+before webidl defs;;An unknown construct is found where a <code>Definition</code> (optionally preceded by an extended attribute list) is expected.
+before webidl type;;The type for <code><var>{text}</var></code> is not specified.
+before webidl type:argument;;The type for an argument is not specified.
+before webidl type:exception member;;The type for an exception member is not specified.
+before xattr;;No extended attribute is specified after a <code>[</code> character.
+before xattrarg;;No identifier is specified in an extended attribute assignment.
+const value out of range;;The specified value <code><var>{value}</var></code> is outside of the range of the type for the constant, <code><var>{text}</var></code>.
+const type mismatch;;The type of the value, <code><var>{value}</var></code>, is different from the type of the constant, <code><var>{text}</var></code>.
+duplicate accessor;;Extended attribute <code><var>{text}</var></code> is already specified for another operation in the same interface.
+duplicate constructor name;;Constructor name <code><var>{value}</var></code> specified by extended attribute <code><var>{text}</var></code> is already used for an interface.
+duplicate member;;Name <code><var>{text}</var></code> is already used.
+duplicate qname;;Qualified name <code><var>{text}</var></code> is already used.
+duplicate xattr;;Extended attribute <code><var>{text}</var></code> is already specified.
+exception not defined;;Exception <code><var>{text}</var></code> is not defined in the fragment.
+interface not defined;;Interface <code><var>{text}</var></code> is not defined in the fragment.
+no arguments in;;No <code>in</code> keyword for an argument is found.
+no arguments lparen;;No <code>(</code> character for an argument list is found.
+no raises lparen;;A <code>raises</code> (or <code>getraises</code> or <code>setraises</code>) keyword is not followed by a <code>(</code> character.
+no sequence gt;;A <code>sequence&lt;&gt;</code> type is not terminated by a <code>&gt;</code> character.
+no sequence lt;;Keyword <code>sequence</code> is not followed by a <code>&lt;</code> character.
+no sequence type;;No type is specified in <code>sequence&lt;&gt;</code>.
+no webidl identifier;;No identifier is specified for the <code><var>{text}</var></code>.
+no webidl identifier:argument;;No identifier is specified for the argument.
+no webidl identifier:exception member;;No identifier is specified for the exception member.
+no webidl identifier:operation;;No identifier is specified for the operation.
+no webidl semicolon;;No semicolon is found at the end of the definition or member.
+non-module definition;;This definition is not part of any module.
+not boxable type;;Type <code><var>{text}</var></code> cannot be used in <code>valuetype</code>.
+premature end of webidl;;The WebIDL fragment ends before all the blocks are closed by <code>};</code> sequences.
+referenced attr not defined;;Attribute <code><var>{value}</var></code> is not defined in the interface specified for the attribute to which extended attribute <code><var>{text}</var></code> is set.
+scoped name;;A scoped name is expected here.
+scoped name:dcolon;;A <code>::</code> token is not followed by an identifier or a <code>DOMString</code> keyword.
+type not defined;;Type <code><var>{text}</var></code> is not defined.
+typedef ignored;;<code>typedef</code> of name <code>DOMString</code> is ignored.
+unknown xattr;;An unknown extended attribute <code><var>{text}</var></code> is used.
+valuetype DOMString;;The <code>valuetype</code> definition does not define <code>DOMString</code> as <code>sequence&lt;unsigned short&gt;</code>.
+valuetype ignored;;<code>valuetype</code> of name <code>DOMString</code> is ignored.
+wrong signature accessor;;The operation cannot be used as accessor operation of <code><var>{text}</var></code>, since its signature different from the expected one.
+xattr arglist not allowed;;Use of an argument list for extended attribute <code><var>{text}</var></code> is not allowed.
+xattr for wrong type;;Extended attribute <code><var>{text}</var></code> is not applicable for an attribute whose type is not <code>DOMString</code>.
+xattr id missing;;The identifier for extended attribute <code><var>{text}</var></code> is not specified.
+xattr id not allowed;;Use of an identifier for extended attribute <code><var>{text}</var></code> is not allowed.
+xattr id value not allowed;;The identifier <code><var>{value}</var></code> is not an allowed value for extended attribute <code><var>{text}</var></code>.
+xattr not applicable;;Extended attribute <code><var>{text}</var></code> is not applicable to this kind of object.
 deprecated:attr;;This attribute is deprecated.
 deprecated:element;;This element is deprecated.
 status:cr:element;;This element is in the <strong>call for implementation</strong> stage.
@@ -459,7 +515,7 @@ This checker is work in progress.;; <p><strong>重要</strong>: この適合性�
 Conformance is conforming;;この文書に適合性に関わる誤りは見つかりませんでした。
 Conformance is should-error;;この文書は<strong>おそらく<em>不</em>適合</strong>ですが、 稀に適合している場合もあります。適合性検査器はこの文書が稀な場合に該当するかどうか判定できません。
 Conformance is non-conforming;;この文書は<strong><em>不</em>適合</strong>です。
-Conformance is uncertain;;適合性検査器はこの文書が適合するかどうか判定できませんでした。 この文書は適合性検査器が対応していない機能を使っています。 この文書は適合しているかもしれませんし、していないか\xE3\x82\x82しれません。
+Conformance is uncertain;;適合性検査器はこの文書が適合するかどうか判定できませんでした。 この文書は適合性検査器が対応していない機能を使っています。 この文書は適合しているかもしれませんし、していないかもしれません。
 Error level m;;<a href="../error-description#Error-level-m" rel="help"><em class="rfc2119" title="REQUIRED">必須</em>級の誤り</a>
 Error level s;;<a href="../error-description#Error-level-s" rel="help"><em class="rfc2119" title="RECOMMENDED">推奨</em>級の誤り</a>
 Error level w;;<a href="../error-description#Error-level-w" rel="help">警告</a>

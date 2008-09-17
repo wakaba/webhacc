@@ -78,6 +78,7 @@ sub check_and_print ($$$) {
   my $checker_class = {
     'text/cache-manifest' => 'WebHACC::Language::CacheManifest',
     'text/css' => 'WebHACC::Language::CSS',
+    'text/x-css-inline' => 'WebHACC::Language::CSSInline',
     'text/html' => 'WebHACC::Language::HTML',
     'text/x-h2h' => 'WebHACC::Language::H2H',
     'text/x-webidl' => 'WebHACC::Language::WebIDL',
@@ -151,4 +152,4 @@ and/or modify it under the same terms as Perl itself.
 
 =cut
 
-## $Date: 2008/09/15 14:34:58 $
+## $Date: 2008/09/17 03:56:43 $

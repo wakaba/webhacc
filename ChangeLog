@@ -1,3 +1,11 @@
+2008-09-17  Wakaba  <wakaba@suika.fam.cx>
+
+	* cc.cgi: Support for |text/x-css-inline| type is added.
+
+2008-09-17  Wakaba  <wakaba@suika.fam.cx>
+
+	* standards.en.html: Updated.
+
 2008-09-16  Wakaba  <wakaba@suika.fam.cx>
 
 	* error-description-source.xml: WebIDL checker errors are added.

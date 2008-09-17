@@ -16,11 +16,17 @@
 </thead>
 <tbody>
 <tr><th scope=row><a href="#html"><abbr title="Hypertext Markup Language">HTML</abbr></a>
-<td><a href="http://whatwg.org/html5">5 (Editor's Draft)</a>
-<td>Partially
-<tr><th scope=row><a href="#atom">Atom</a>
-<td><abbr>RFC</abbr></td>
-<td>Partially
+<td rowspan=2><a href="http://whatwg.org/html5">HTML5 Draft Recommendation</a>
+<td rowspan=2>Most parts
+
+<tr><th><a href="#html">XHTML</a>
+
+<tr><th rowspan=2><a href="#atom">Atom</a>
+<td><a href="urn:ietf:rfc:4287">Atom 1.0 <abbr>RFC</abbr></a>
+<td><!-- Full -->
+
+<tr><td><a href="urn:ietf:rfc:4685">Atom Threading 1.0 <abbr>RFC</abbr></a>
+
 <tr><th scope=row rowspan=2><abbr title="Extensible Markup Language">XML</abbr>
 <td>1.0 Fourth Edition
 <td>Tentative
@@ -32,15 +38,35 @@ Namespaces
 <td>Tentative
 <tr><td>1.1 First Edition
 <td>Tentative
+
 <tr>
-<th scope=row><a href="#css"><abbr title="Cascading Style Sheets">CSS</abbr></a>
-<td>2.1
-<td>Most part
+<th rowspan=2><a href="#css"><abbr title="Cascading Style Sheets">CSS</abbr></a>
+<td><a href="http://www.w3.org/TR/2007/CR-CSS21-20070719/">CSS 2.1
+Candidate Recommendation</a>
+<td>Most parts
+
+<tr>
+<td><a href="http://www.w3.org/TR/2008/WD-css3-color-20080721/">CSS Color
+Level 3 <abbr title="Last Call Working Draft">LCWD</abbr></a>
+<td>Most parts
+
 <tr>
 <th scope=row>Selectors
 <td>3
 <td><!-- Full -->
 </tbody>
+
+<tbody>
+<tr><th><a href="#cache-manifest">Cache Manifest</a>
+<td><a href="http://www.whatwg.org/specs/web-apps/current-work/#manifests">HTML5
+Draft Recommendation</a>
+<td><!-- Full -->
+
+<tr><th><a href="#webidl">WebIDL</a>
+<td><a href="http://dev.w3.org/cvsweb/~checkout~/2006/webapi/WebIDL/Overview.html?rev=1.96&amp;content-type=text/html;%20charset=utf-8">Editor's
+Draft 1.96</a>
+<td><!-- Full -->
+
 <tbody>
 <tr><th scope=row><abbr title="Hypertext Transfer Protocol">HTTP</abbr>
 <td>
@@ -191,10 +217,24 @@ applied.
   <td colspan=2>Same as <code>div</code> [HTML5]
   </table>
 </ul>
+
+<p id=cache-manifest>The 
+<a href="http://www.whatwg.org/specs/web-apps/current-work/#manifests">cache
+manifest syntax</a> is also supported.
 </div>
 
 <div class=section id=atom>
 <h2>Atom</h2>
+
+<p><a href="urn:ietf:rfc:4287">Atom 1.0</a> and 
+<a href="urn:ietf:rfc:4685">Atom Threading 1.0</a> are supported.
+
+<p>However, conformance to some <em class=rfc2119>SHOULD</em>-level
+requirements, as well as some informational guidelines, are currently
+not checked.  In addition, whether an email-address or a Base64
+encoding is correct or not is not checked either.
+
+<p>Use of XML digital signature and encryption is not supported.
 
 <p>The current implementation assumes that there are following 
 requirements:</p>
@@ -215,8 +255,15 @@ conformance of the content of an element.
 
 <p>CSS @namespace and Selectors Level 3 are fully implemented.</p>
 
-<p>CSS 2.1 and CSS Color Level 3 are partially
-implemented.</p>
+<p>Most of <a href="http://www.w3.org/TR/2007/CR-CSS21-20070719/">CSS 2.1
+(<time datetime=2007-07-19>19 July 2007</time> Candidate Recommendation)</a>
+is implemented.
+<!-- @@ TODO: What is missing? -->
+
+<p>Most of <a href="http://www.w3.org/TR/2008/WD-css3-color-20080721/">CSS 
+Color Module Level 3 (<time datetime=2008-07-21>21 July 2008</time> Last
+Call Working Draft)</a> is implemented.
+<!-- @@ TODO: What is missing? -->
 
 <p>Since the <abbr title="Cascading Style Sheets">CSS</abbr> 2.1
 specification is sometimes ambigious or disagree with browsers,
@@ -238,6 +285,14 @@ Note that it may also contain zero or more comment and/or processing
 instruction nodes.</li>
 </ul>
 
+</div>
+
+<div class=section id=webidl>
+<h2>WebIDL</h2>
+
+<p><a href="http://dev.w3.org/cvsweb/~checkout~/2006/webapi/WebIDL/Overview.html?rev=1.96&amp;content-type=text/html;%20charset=utf-8">WebIDL
+Editor's Draft revision 1.96 (<time datetime=2008-09-03>3 September 
+2008</time>)</a> is implemented.</p>
 </div>
 
 </body>

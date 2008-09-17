@@ -226,6 +226,9 @@
     <!-- "permanently undefined Unicode characters" in HTML5. -->
   </div>
 
+<div class="section" id="non-unicode"><h3>Character <code><var>{text}</var></code> is not
+  a Unicode character.</h3></div>
+
 <div class="section" id="unicode-deprecated"><h3>Use of character <code><var>{text}</var></code>
   is deprecated.</h3></div>
 
@@ -777,7 +780,7 @@ p {
 <div class="section" id="in-noscript:#eof"><h3>A <code>noscript</code> element is not closed
   before the end of file.</h3></div>
 
-<div class="section" id="in-noscript:#text"><h3>Non‐white\xE2\x80\x90space characters are not allowed
+<div class="section" id="in-noscript:#text"><h3>Non‐white‐space characters are not allowed
   in a <code>noscript</code> element in the <code>head</code>
   element.</h3></div>
 
@@ -939,9 +942,10 @@ p {
     is used.</p>
 
     <p>The <code>DOCTYPE</code> legacy string should not be used for documents
-    generated from XSLT transformation process.  It is allowed only to enable
-    to use XSLT style sheets with the HTML output mode, which does not
-    support generation of the <code>DOCTYPE</code> with no <code>PUBLIC</code>
+    <em>not</em> generated from XSLT transformation process.  It is allowed
+    only to enable to use XSLT style sheets with the HTML output mode, which
+    does not support generation of the <code>DOCTYPE</code> with no
+    <code>PUBLIC</code>
     identifier.  For other purposes, the <code>DOCTYPE</code> legacy
     string, i.e. <code class="html bad example">PUBLIC "XSLT-compat"</code>,
     is useless and should not be used.</p>
@@ -986,7 +990,7 @@ p {
 <div class="section" id="character-not-allowed:empty"><h3>Non‐white‐space characters are not allowed in
   an empty element.</h3></div>
 
-<div class="section" id="character-not-allowed:atom|PersonConstruct"><h3>Non‐white\xE2\x80\x90space characters are not allowed in
+<div class="section" id="character-not-allowed:atom|PersonConstruct"><h3>Non‐white‐space characters are not allowed in
   Person construct.</h3></div>
 
 <div class="section" id="character-not-allowed:atom|TextConstruct"><h3>Non‐white‐space characters are not allowed in
@@ -2157,6 +2161,186 @@ p {
 
 </section>
 
+<section id="webidl-errors">
+<h2>WebIDL Errors</h2>
+
+<div class="section" id="after-argument"><h3>An argument name is not followed by a
+  <code>,</code> character or a <code>)</code> character.</h3></div>
+
+<div class="section" id="after-exception-name"><h3>An exception name is not followed by a
+  <code>,</code> character or a <code>)</code> character.</h3></div>
+
+<div class="section" id="after-unsigned"><h3>The token after the <code>unsigned</code>
+  keyword is not <code>short</code> or <code>long</code>.</h3></div>
+
+<div class="section" id="after-xattr"><h3>An extended attribute is not followed by 
+  a <code>,</code> character or a <code>]</code> character.</h3></div>
+
+<div class="section" id="argument-after-variadic"><h3>An argument is specified after an argument
+  with <code>Variadic</code> extended attribute is seen.</h3></div>
+
+<div class="section" id="attr-not-readonly"><h3>Extended attribute <code><var>{text}</var></code> is
+  specified for an attribute that is not read-only.</h3></div>
+
+<div class="section" id="attr-type-not-interface"><h3>Extended attribute <code><var>{text}</var></code>
+  is specified for an attribute whose type is not an interface.</h3></div>
+
+<div class="section" id="before-exception-member"><h3>An unknown construct is found where an exception
+  member or a <code>}</code> character is expected.</h3></div>
+
+<div class="section" id="before-interface-member"><h3>An unknown construct is found where an interface
+  member or a <code>}</code> character is expected.</h3></div>
+
+<div class="section" id="before-webidl-block"><h3>An identifier for the <code><var>{text}</var></code>
+  is not followed by a <code>{</code> character.</h3></div>
+
+<div class="section" id="before-webidl-def"><h3>An unknown construct is found after an
+  extended attribute list (where a <code>Definition</code> is
+  expected).</h3></div>
+
+<div class="section" id="before-webidl-defs"><h3>An unknown construct is found where a
+  <code>Definition</code> (optionally preceded by an extended attribute list)
+  is expected.</h3></div>
+
+<div class="section" id="before-webidl-type"><h3>The type for <code><var>{text}</var></code> is
+  not specified.</h3></div>
+
+<div class="section" id="before-webidl-type:argument"><h3>The type for an argument is not
+  specified.</h3></div>
+
+<div class="section" id="before-webidl-type:exception-member"><h3>The type for an exception member is not
+  specified.</h3></div>
+
+<div class="section" id="before-xattr"><h3>No extended attribute is specified after
+  a <code>[</code> character.</h3></div>
+
+<div class="section" id="before-xattrarg"><h3>No identifier is specified in an extended 
+  attribute assignment.</h3></div>
+
+<div class="section" id="const-value-out-of-range"><h3>The specified value <code><var>{value}</var></code>
+  is outside of the range of the type for the constant,
+  <code><var>{text}</var></code>.</h3></div>
+
+<div class="section" id="const-type-mismatch"><h3>The type of the value,
+  <code><var>{value}</var></code>, is different from the type of the constant,
+  <code><var>{text}</var></code>.</h3></div>
+
+<div class="section" id="duplicate-accessor"><h3>Extended attribute <code><var>{text}</var></code>
+  is already specified for another operation in the same interface.</h3></div>
+
+<div class="section" id="duplicate-constructor-name"><h3>Constructor name <code><var>{value}</var></code>
+  specified by extended attribute <code><var>{text}</var></code> is already
+  used for an interface.</h3></div>
+
+<div class="section" id="duplicate-member"><h3>Name <code><var>{text}</var></code> is
+  already used.</h3></div>
+
+<div class="section" id="duplicate-qname"><h3>Qualified name <code><var>{text}</var></code> is
+  already used.</h3></div>
+
+<div class="section" id="duplicate-xattr"><h3>Extended attribute <code><var>{text}</var></code>
+  is already specified.</h3></div>
+
+<div class="section" id="exception-not-defined"><h3>Exception <code><var>{text}</var></code> is
+  not defined in the fragment.</h3></div>
+
+<div class="section" id="interface-not-defined"><h3>Interface <code><var>{text}</var></code> is
+  not defined in the fragment.</h3></div>
+
+<div class="section" id="no-arguments-in"><h3>No <code>in</code> keyword for an argument is
+  found.</h3></div>
+
+<div class="section" id="no-arguments-lparen"><h3>No <code>(</code> character for an argument
+  list is found.</h3></div>
+
+<div class="section" id="no-raises-lparen"><h3>A <code>raises</code> (or <code>getraises</code>
+  or <code>setraises</code>) keyword is not followed by a <code>(</code>
+  character.</h3></div>
+
+<div class="section" id="no-sequence-gt"><h3>A <code>sequence&lt;&gt;</code> type is not
+  terminated by a <code>&gt;</code> character.</h3></div>
+
+<div class="section" id="no-sequence-lt"><h3>Keyword <code>sequence</code> is not followed
+  by a <code>&lt;</code> character.</h3></div>
+
+<div class="section" id="no-sequence-type"><h3>No type is specified in
+  <code>sequence&lt;&gt;</code>.</h3></div>
+
+<div class="section" id="no-webidl-identifier"><h3>No identifier is specified for the
+  <code><var>{text}</var></code>.</h3></div>
+
+<div class="section" id="no-webidl-identifier:argument"><h3>No identifier is specified for the
+  argument.</h3></div>
+
+<div class="section" id="no-webidl-identifier:exception-member"><h3>No identifier is specified for the
+  exception member.</h3></div>
+
+<div class="section" id="no-webidl-identifier:operation"><h3>No identifier is specified for the
+  operation.</h3></div>
+
+<div class="section" id="no-webidl-semicolon"><h3>No semicolon is found at the end of the
+  definition or member.</h3></div>
+
+<div class="section" id="non-module-definition"><h3>This definition is not part of any
+  module.</h3></div>
+
+<div class="section" id="not-boxable-type"><h3>Type <code><var>{text}</var></code> cannot be
+  used in <code>valuetype</code>.</h3></div>
+
+<div class="section" id="premature-end-of-webidl"><h3>The WebIDL fragment ends before all the blocks
+  are closed by <code>};</code> sequences.</h3></div>
+
+<div class="section" id="referenced-attr-not-defined"><h3>Attribute <code><var>{value}</var></code> is
+  not defined in the interface specified for the attribute to which
+  extended attribute <code><var>{text}</var></code> is set.</h3></div>
+
+<div class="section" id="scoped-name"><h3>A scoped name is expected here.</h3></div>
+
+<div class="section" id="scoped-name:dcolon"><h3>A <code>::</code> token is not followed by
+  an identifier or a <code>DOMString</code> keyword.</h3></div>
+
+<div class="section" id="type-not-defined"><h3>Type <code><var>{text}</var></code> is not 
+  defined.</h3></div>
+
+<div class="section" id="typedef-ignored"><h3><code>typedef</code> of name <code>DOMString</code>
+  is ignored.</h3></div>
+
+<div class="section" id="unknown-xattr"><h3>An unknown extended attribute 
+  <code><var>{text}</var></code> is used.</h3></div>
+
+<div class="section" id="valuetype-DOMString"><h3>The <code>valuetype</code> definition does
+  not define <code>DOMString</code> as
+  <code>sequence&lt;unsigned short&gt;</code>.</h3></div>
+
+<div class="section" id="valuetype-ignored"><h3><code>valuetype</code> of name
+  <code>DOMString</code> is ignored.</h3></div>
+
+<div class="section" id="wrong-signature-accessor"><h3>The operation cannot be used as accessor operation
+  of <code><var>{text}</var></code>, since its signature different from
+  the expected one.</h3></div>
+
+<div class="section" id="xattr-arglist-not-allowed"><h3>Use of an argument list for extended attribute
+  <code><var>{text}</var></code> is not allowed.</h3></div>
+
+<div class="section" id="xattr-for-wrong-type"><h3>Extended attribute <code><var>{text}</var></code>
+  is not applicable for an attribute whose type is not
+  <code>DOMString</code>.</h3></div>
+
+<div class="section" id="xattr-id-missing"><h3>The identifier for extended attribute
+  <code><var>{text}</var></code> is not specified.</h3></div>
+
+<div class="section" id="xattr-id-not-allowed"><h3>Use of an identifier for extended attribute
+  <code><var>{text}</var></code> is not allowed.</h3></div>
+
+<div class="section" id="xattr-id-value-not-allowed"><h3>The identifier <code><var>{value}</var></code> is
+  not an allowed value for extended attribute
+  <code><var>{text}</var></code>.</h3></div>
+
+<div class="section" id="xattr-not-applicable"><h3>Extended attribute <code><var>{text}</var></code>
+  is not applicable to this kind of object.</h3></div>
+
+</section>
+
 <section id="information">
 <h2>Stability Information</h2>
 
@@ -2381,7 +2565,7 @@ p {
   <code>content</code> element with <code>type</code>
   <code><var>{text}</var></code> is not supported.</h3></div>
 
-<div class="section" id="help-not-available"><h3>これ以上の詳しい情報はあり\xE3\x81\xBEせん。</h3>
+<div class="section" id="help-not-available"><h3>これ以上の詳しい情報はありません。</h3>
     <p>これについての詳しい情報はありません。</p>
   </div>
 
@@ -2636,6 +2820,6 @@ p {
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2008/09/11 09:13:57 $ -->
+<!-- $Date: 2008/09/17 03:56:43 $ -->
 </body>
 </html>
