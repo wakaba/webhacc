@@ -1985,6 +1985,14 @@ p {
   represent a character encoding name.</d:message>
 </d:item>
 
+<d:item name="charset:not ascii compat"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">Characeter encoding <code><var>{value}</var></code>
+  is not ASCII compatible.</d:message>
+  <d:message xml:lang="ja">文字符号化 <code><var>{value}</var></code>
+  は ASCII 互換ではありません。</d:message>
+</d:item>
+
 <d:item name="charset:not preferred"
     modules="ContentChecker::HTML">
   <d:message xml:lang="en">Character encoding name
@@ -3747,75 +3755,261 @@ p {
 <h2>Language Tag Errors</h2>
 
 <d:item name="langtag:extension:duplication"
-    modules="LangTag">
+    modules="LangTag::RFC4646::Parser">
   <d:message xml:lang="en">There is another extension subtag
   <code><var>{value}</var></code>.</d:message>
 </d:item>
 
+<d:item name="langtag:extension:order"
+    modules="LangTag::RFC4646::Order">
+  <d:message xml:lang="en">Extension subtag <code><var>{value}</var></code>
+  is placed after subtag <code><var>{text}</var></code>.</d:message>
+</d:item>
+
+<d:item name="langtag:extension:unknown"
+    modules="LangTag::RFC4646::Checker">
+  <d:message xml:lang="en">Extension <code><var>{value}</var></code> is not
+  defined when the conformance checker is written.</d:message>
+</d:item>
+
+<d:item name="langtag:extlang:case"
+    modules="LangTag::RFC4646::Checker">
+  <d:message xml:lang="en">Extended language subtag
+  <code><var>{value}</var></code> is not in the preferred form, i.e. in 
+  lowercase.</d:message>
+</d:item>
+
+<d:item name="langtag:extlang:deprecated"
+    modules="LangTag::RFC4646::Checker">
+  <d:message xml:lang="en">Use of extended language subtag
+  <code><var>{value}</var></code> is deprecated<!-- in favor of {text} (might
+  be undef) -->.</d:message>
+</d:item>
+
+<d:item name="langtag:extlang:prefix"
+    modules="LangTag::RFC4646::Checker">
+  <d:message xml:lang="en">Extended language subtag
+  <code><var>{text}</var></code> is not allowed in the combination with this
+  language (and extended language) subtag(s).</d:message>
+</d:item>
+
+<d:item name="langtag:extlang:invalid"
+    modules="LangTag::RFC4646::Checker">
+  <d:message xml:lang="en">Extended language subtag 
+  <code><var>{text}</var></code> is not registered.</d:message>
+</d:item>
+
+<d:item name="langtag:grandfathered:case"
+    modules="LangTag::RFC4646::Checker">
+  <d:message xml:lang="en">Language tag <code><var>{value}</var></code> is
+  not in the preferred case combination.</d:message>
+</d:item>
+
+<d:item name="langtag:grandfathered:deprecated"
+    modules="LangTag::RFC4646::Checker">
+  <d:message xml:lang="en">Use of language tag
+  <code><var>{value}</var></code> is deprecated<!-- in favor of {text} (might
+  be undef) -->.</d:message>
+</d:item>
+
+<d:item name="langtag:grandfathered:invalid"
+    modules="LangTag::RFC4646::Checker">
+  <d:message xml:lang="en">Language tag <code><var>{value}</var></code> is
+  not a combination of RFC 4646 subtags and is not a registered grandfathered
+  tag.</d:message>
+</d:item>
+
 <d:item name="langtag:illegal"
-    modules="LangTag">
+    modules="LangTag::RFC4646::Parser LangTag::RFC3066::Checker">
   <d:message xml:lang="en">Subtag <code><var>{value}</var></code> is 
   syntactically invalid.</d:message>
 </d:item>
 
 <d:item name="langtag:language:case"
-    modules="LangTag">
+    modules="LangTag::RFC4646::Checker LangTag::RFC3066::Checker">
   <d:message xml:lang="en">It is a good practice to represent ISO 639-1
   language code <code><var>{value}</var></code> in lowercase.</d:message>
 </d:item>
 
+<d:item name="langtag:language:deprecated"
+    modules="LangTag::RFC4646::Checker">
+  <d:message xml:lang="en">Use of language subtag
+  <code><var>{value}</var></code> is deprecated<!-- in favor of {text} (might
+  be undef) -->.</d:message>
+</d:item>
+
+<d:item name="langtag:language:invalid"
+    modules="LangTag::RFC4646::Checker">
+  <d:message xml:lang="en">Language subtag <code><var>{value}</var></code>
+  is not registered.</d:message>
+</d:item>
+
 <d:item name="langtag:language:mul"
-    modules="LangTag">
+    modules="LangTag::RFC4646::Checker LangTag::RFC3066::Checker">
   <d:message xml:lang="en">Langauge tag <code>mul</code> should not be
   used.</d:message>
 </d:item>
 
 <d:item name="langtag:language:nosemantics"
-    modules="LangTag">
+    modules="LangTag::RFC3066::Checker">
   <d:message xml:lang="en">No semantics is defined for language subtag
   <code><var>{value}</var></code>.</d:message>
 </d:item>
 
+<d:item name="langtag:language:private"
+    modules="LangTag::RFC4646::Checker">
+  <d:message xml:lang="en">Language subtag <code><var>{value}</var></code>
+  is a private use code.</d:message>
+</d:item>
+
 <d:item name="langtag:language:syntax"
-    modules="LangTag">
+    modules="LangTag::RFC4646::Parser">
   <d:message xml:lang="en">The language subtag <code><var>{value}</var></code>
   is syntactically invalid.</d:message>
 </d:item>
 
 <d:item name="langtag:language:und"
-    modules="LangTag">
+    modules="LangTag::RFC4646::Checker LangTag::RFC3066::Checker">
   <d:message xml:lang="en">Langauge tag <code>und</code> should not be
   used.</d:message>
 </d:item>
 
 <d:item name="langtag:private"
-    modules="LangTag">
+    modules="LangTag::RFC3066::Checker">
   <d:message xml:lang="en">It would be better if a private use language
   tag (<code><var>{value}</var></code>) is not used.</d:message>
 </d:item>
 
+<d:item name="langtag:privateuse"
+    modules="LangTag::RFC4646::Checker">
+  <d:message xml:lang="en">Private use subtag <code><var>{value}</var></code>
+  is used.</d:message>
+</d:item>
+
+<d:item name="langtag:privateuse:case"
+    modules="LangTag::RFC4646::Checker">
+  <d:message xml:lang="en">Subtag <code><var>{value}</var></code> is not 
+  represented in the preferred case format.</d:message>
+</d:item>
+
 <d:item name="langtag:privateuse:syntax"
-    modules="LangTag">
+    modules="LangTag::RFC4646::Parser">
   <d:message xml:lang="en">Private use subtag <code><var>{value}</var></code>
   is syntactically invalid.</d:message>
 </d:item>
 
+<d:item name="langtag:redundant:case"
+    modules="LangTag::RFC4646::Checker">
+  <d:message xml:lang="en">Language tag <code><var>{value}</var></code> is
+  not in the preferred case combination.</d:message>
+</d:item>
+
+<d:item name="langtag:redundant:deprecated"
+    modules="LangTag::RFC4646::Checker">
+  <d:message xml:lang="en">Use of language tag
+  <code><var>{value}</var></code> is deprecated<!-- in favor of {text} (might
+  be undef) -->.</d:message>
+</d:item>
+
 <d:item name="langtag:region:case"
-    modules="LangTag">
+    modules="LangTag::RFC4646::Checker LangTag::RFC3066::Checker">
   <d:message xml:lang="en">It is a good practice to represent ISO 3166
   country code <code><var>{value}</var></code> in uppercase.</d:message>
 </d:item>
 
+<d:item name="langtag:region:deprecated"
+    modules="LangTag::RFC4646::Checker">
+  <d:message xml:lang="en">Use of region subtag
+  <code><var>{value}</var></code> is deprecated<!-- in favor of {text} (might
+  be undef) -->.</d:message>
+</d:item>
+
 <d:item name="langtag:region:nosemantics"
-    modules="LangTag">
+    modules="LangTag::RFC3066::Checker">
   <d:message xml:lang="en">No semantics is defined for region subtag
   <code><var>{value}</var></code>.</d:message>
 </d:item>
 
+<d:item name="langtag:region:invalid"
+    modules="LangTag::RFC4646::Checker">
+  <d:message xml:lang="en">Region subtag <code><var>{value}</var></code>
+  is not registered.</d:message>
+</d:item>
+
 <d:item name="langtag:region:private"
-    modules="LangTag">
+    modules="LangTag::RFC4646::Checker LangTag::RFC3066::Checker">
   <d:message xml:lang="en">Use of private use country code
   <code><var>{value}</var></code> is not allowed.</d:message>
+</d:item>
+
+<d:item name="langtag:script:case"
+    modules="LangTag::RFC4646::Checker">
+  <d:message xml:lang="en">Script subtag <code><var>{value}</var></code> is 
+  not in the preferred form, i.e. titlecase.</d:message>
+</d:item>
+
+<d:item name="langtag:script:deprecated"
+    modules="LangTag::RFC4646::Checker">
+  <d:message xml:lang="en">Use of script subtag
+  <code><var>{value}</var></code> is deprecated<!-- in favor of {text} (might
+  be undef) -->.</d:message>
+</d:item>
+
+<d:item name="langtag:script:invalid"
+    modules="LangTag::RFC4646::Checker">
+  <d:message xml:lang="en">Script subtag <code><var>{value}</var></code>
+  is not registered.</d:message>
+</d:item>
+
+<d:item name="langtag:script:private"
+    modules="LangTag::RFC4646::Checker">
+  <d:message xml:lang="en">Script subtag <code><var>{value}</var></code>
+  is a private use code.</d:message>
+</d:item>
+
+<d:item name="langtag:script:suppress"
+    modules="LangTag::RFC4646::Checker">
+  <d:message xml:lang="en">Script subtag <code><var>{value}</var></code>
+  should be suppressed when the language subtag is
+  <code><var>{text}</var></code>.</d:message>
+</d:item>
+
+<d:item name="langtag:variant:case"
+    modules="LangTag::RFC4646::Checker">
+  <d:message xml:lang="en">Variant subtag <code><var>{value}</var></code> is
+  not in the preferred form, i.e. lowercase.</d:message>
+</d:item>
+
+<d:item name="langtag:variant:combination"
+    modules="LangTag::RFC4646::Combination">
+  <d:message xml:lang="en">Variant subtag <code><var>{text}</var></code> might
+  not be meaningful when it is used in combination with
+  <code><var>{value}</var></code>.</d:message>
+</d:item>
+
+<d:item name="langtag:variant:deprecated"
+    modules="LangTag::RFC4646::Checker">
+  <d:message xml:lang="en">Use of variant subtag
+  <code><var>{value}</var></code> is deprecated<!-- in favor of {text} (might
+  be undef) -->.</d:message>
+</d:item>
+
+<d:item name="langtag:variant:duplication"
+    modules="LangTag::RFC4646::Checker">
+  <d:message xml:lang="en">Variant subtag <code><var>{value}</var></code>
+  is specified twice.</d:message>
+</d:item>
+
+<d:item name="langtag:variant:invalid"
+    modules="LangTag::RFC4646::Checker">
+  <d:message xml:lang="en">Variant subtag <code><var>{value}</var></code>
+  is not registered.</d:message>
+</d:item>
+
+<d:item name="langtag:variant:prefix"
+    modules="LangTag::RFC4646::Checker">
+  <d:message xml:lang="en">Variant subtag <code><var>{value}</var></code>
+  cannot be used in this context.</d:message>
 </d:item>
 
 </section>
@@ -4577,6 +4771,6 @@ p {
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2008/09/16 14:00:20 $ -->
+<!-- $Date: 2008/09/20 04:47:35 $ -->
 </body>
 </html>

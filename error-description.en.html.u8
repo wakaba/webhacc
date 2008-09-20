@@ -1410,6 +1410,9 @@ p {
 <div class="section" id="charref-in-charset"><h3>A character reference cannot be used to
   represent a character encoding name.</h3></div>
 
+<div class="section" id="charset:not-ascii-compat"><h3>Characeter encoding <code><var>{value}</var></code>
+  is not ASCII compatible.</h3></div>
+
 <div class="section" id="charset:not-preferred"><h3>Character encoding name
   <code><var>{value}</var></code> is not the preferred name of that
   character encoding.</h3></div>
@@ -2446,17 +2449,59 @@ p {
 <div class="section" id="langtag:extension:duplication"><h3>There is another extension subtag
   <code><var>{value}</var></code>.</h3></div>
 
+<div class="section" id="langtag:extension:order"><h3>Extension subtag <code><var>{value}</var></code>
+  is placed after subtag <code><var>{text}</var></code>.</h3></div>
+
+<div class="section" id="langtag:extension:unknown"><h3>Extension <code><var>{value}</var></code> is not
+  defined when the conformance checker is written.</h3></div>
+
+<div class="section" id="langtag:extlang:case"><h3>Extended language subtag
+  <code><var>{value}</var></code> is not in the preferred form, i.e. in 
+  lowercase.</h3></div>
+
+<div class="section" id="langtag:extlang:deprecated"><h3>Use of extended language subtag
+  <code><var>{value}</var></code> is deprecated<!-- in favor of {text} (might
+  be undef) -->.</h3></div>
+
+<div class="section" id="langtag:extlang:prefix"><h3>Extended language subtag
+  <code><var>{text}</var></code> is not allowed in the combination with this
+  language (and extended language) subtag(s).</h3></div>
+
+<div class="section" id="langtag:extlang:invalid"><h3>Extended language subtag 
+  <code><var>{text}</var></code> is not registered.</h3></div>
+
+<div class="section" id="langtag:grandfathered:case"><h3>Language tag <code><var>{value}</var></code> is
+  not in the preferred case combination.</h3></div>
+
+<div class="section" id="langtag:grandfathered:deprecated"><h3>Use of language tag
+  <code><var>{value}</var></code> is deprecated<!-- in favor of {text} (might
+  be undef) -->.</h3></div>
+
+<div class="section" id="langtag:grandfathered:invalid"><h3>Language tag <code><var>{value}</var></code> is
+  not a combination of RFC 4646 subtags and is not a registered grandfathered
+  tag.</h3></div>
+
 <div class="section" id="langtag:illegal"><h3>Subtag <code><var>{value}</var></code> is 
   syntactically invalid.</h3></div>
 
 <div class="section" id="langtag:language:case"><h3>It is a good practice to represent ISO 639-1
   language code <code><var>{value}</var></code> in lowercase.</h3></div>
 
+<div class="section" id="langtag:language:deprecated"><h3>Use of language subtag
+  <code><var>{value}</var></code> is deprecated<!-- in favor of {text} (might
+  be undef) -->.</h3></div>
+
+<div class="section" id="langtag:language:invalid"><h3>Language subtag <code><var>{value}</var></code>
+  is not registered.</h3></div>
+
 <div class="section" id="langtag:language:mul"><h3>Langauge tag <code>mul</code> should not be
   used.</h3></div>
 
 <div class="section" id="langtag:language:nosemantics"><h3>No semantics is defined for language subtag
   <code><var>{value}</var></code>.</h3></div>
+
+<div class="section" id="langtag:language:private"><h3>Language subtag <code><var>{value}</var></code>
+  is a private use code.</h3></div>
 
 <div class="section" id="langtag:language:syntax"><h3>The language subtag <code><var>{value}</var></code>
   is syntactically invalid.</h3></div>
@@ -2467,17 +2512,74 @@ p {
 <div class="section" id="langtag:private"><h3>It would be better if a private use language
   tag (<code><var>{value}</var></code>) is not used.</h3></div>
 
+<div class="section" id="langtag:privateuse"><h3>Private use subtag <code><var>{value}</var></code>
+  is used.</h3></div>
+
+<div class="section" id="langtag:privateuse:case"><h3>Subtag <code><var>{value}</var></code> is not 
+  represented in the preferred case format.</h3></div>
+
 <div class="section" id="langtag:privateuse:syntax"><h3>Private use subtag <code><var>{value}</var></code>
   is syntactically invalid.</h3></div>
+
+<div class="section" id="langtag:redundant:case"><h3>Language tag <code><var>{value}</var></code> is
+  not in the preferred case combination.</h3></div>
+
+<div class="section" id="langtag:redundant:deprecated"><h3>Use of language tag
+  <code><var>{value}</var></code> is deprecated<!-- in favor of {text} (might
+  be undef) -->.</h3></div>
 
 <div class="section" id="langtag:region:case"><h3>It is a good practice to represent ISO 3166
   country code <code><var>{value}</var></code> in uppercase.</h3></div>
 
+<div class="section" id="langtag:region:deprecated"><h3>Use of region subtag
+  <code><var>{value}</var></code> is deprecated<!-- in favor of {text} (might
+  be undef) -->.</h3></div>
+
 <div class="section" id="langtag:region:nosemantics"><h3>No semantics is defined for region subtag
   <code><var>{value}</var></code>.</h3></div>
 
+<div class="section" id="langtag:region:invalid"><h3>Region subtag <code><var>{value}</var></code>
+  is not registered.</h3></div>
+
 <div class="section" id="langtag:region:private"><h3>Use of private use country code
   <code><var>{value}</var></code> is not allowed.</h3></div>
+
+<div class="section" id="langtag:script:case"><h3>Script subtag <code><var>{value}</var></code> is 
+  not in the preferred form, i.e. titlecase.</h3></div>
+
+<div class="section" id="langtag:script:deprecated"><h3>Use of script subtag
+  <code><var>{value}</var></code> is deprecated<!-- in favor of {text} (might
+  be undef) -->.</h3></div>
+
+<div class="section" id="langtag:script:invalid"><h3>Script subtag <code><var>{value}</var></code>
+  is not registered.</h3></div>
+
+<div class="section" id="langtag:script:private"><h3>Script subtag <code><var>{value}</var></code>
+  is a private use code.</h3></div>
+
+<div class="section" id="langtag:script:suppress"><h3>Script subtag <code><var>{value}</var></code>
+  should be suppressed when the language subtag is
+  <code><var>{text}</var></code>.</h3></div>
+
+<div class="section" id="langtag:variant:case"><h3>Variant subtag <code><var>{value}</var></code> is
+  not in the preferred form, i.e. lowercase.</h3></div>
+
+<div class="section" id="langtag:variant:combination"><h3>Variant subtag <code><var>{text}</var></code> might
+  not be meaningful when it is used in combination with
+  <code><var>{value}</var></code>.</h3></div>
+
+<div class="section" id="langtag:variant:deprecated"><h3>Use of variant subtag
+  <code><var>{value}</var></code> is deprecated<!-- in favor of {text} (might
+  be undef) -->.</h3></div>
+
+<div class="section" id="langtag:variant:duplication"><h3>Variant subtag <code><var>{value}</var></code>
+  is specified twice.</h3></div>
+
+<div class="section" id="langtag:variant:invalid"><h3>Variant subtag <code><var>{value}</var></code>
+  is not registered.</h3></div>
+
+<div class="section" id="langtag:variant:prefix"><h3>Variant subtag <code><var>{value}</var></code>
+  cannot be used in this context.</h3></div>
 
 </section>
 
@@ -2826,6 +2928,6 @@ p {
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2008/09/17 03:56:43 $ -->
+<!-- $Date: 2008/09/20 04:47:35 $ -->
 </body>
 </html>

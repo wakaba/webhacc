@@ -1,3 +1,8 @@
+2008-09-20  Wakaba  <wakaba@suika.fam.cx>
+
+	* error-description-source.xml: New error for accept-charset="".
+	New errors for RFC 4646 errors.
+
 2008-09-17  Wakaba  <wakaba@suika.fam.cx>
 
 	* cc.cgi: Support for |text/x-css-inline| type is added.

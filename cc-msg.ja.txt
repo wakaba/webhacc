@@ -164,6 +164,7 @@ xml:lang not allowed;;<code>xml:lang</code> 属性を指定できるのは <code
 boolean:invalid;;Attribute value <code><var>{@}</var></code> is not allowed. It must be an empty string or a string <code><var>{local-name}</var></code>.
 char:syntax error;;The attribute value must be exactly one character.
 charref in charset;;A character reference cannot be used to represent a character encoding name.
+charset:not ascii compat;;文字符号化 <code><var>{value}</var></code> は ASCII 互換ではありません。
 charset:not preferred;;Character encoding name <code><var>{value}</var></code> is not the preferred name of that character encoding.
 charset:not registered;;Character encoding name <code><var>{value}</var></code> is not a registered name.
 charset:private;;Character encoding name <code><var>{value}</var></code> is a private name.
@@ -384,17 +385,46 @@ status:lc:attr;;This attribute is in the <strong>last call for comments</strong>
 status:wd:attr;;This attribute is documented in a <strong>working draft</strong>.
 status:non-standard:attr;;This attribute is <strong>not part of any standard</strong> the conformance checker knows.
 langtag:extension:duplication;;There is another extension subtag <code><var>{value}</var></code>.
+langtag:extension:order;;Extension subtag <code><var>{value}</var></code> is placed after subtag <code><var>{text}</var></code>.
+langtag:extension:unknown;;Extension <code><var>{value}</var></code> is not defined when the conformance checker is written.
+langtag:extlang:case;;Extended language subtag <code><var>{value}</var></code> is not in the preferred form, i.e. in lowercase.
+langtag:extlang:deprecated;;Use of extended language subtag <code><var>{value}</var></code> is deprecated<!-- in favor of {text} (might be undef) -->.
+langtag:extlang:prefix;;Extended language subtag <code><var>{text}</var></code> is not allowed in the combination with this language (and extended language) subtag(s).
+langtag:extlang:invalid;;Extended language subtag <code><var>{text}</var></code> is not registered.
+langtag:grandfathered:case;;Language tag <code><var>{value}</var></code> is not in the preferred case combination.
+langtag:grandfathered:deprecated;;Use of language tag <code><var>{value}</var></code> is deprecated<!-- in favor of {text} (might be undef) -->.
+langtag:grandfathered:invalid;;Language tag <code><var>{value}</var></code> is not a combination of RFC 4646 subtags and is not a registered grandfathered tag.
 langtag:illegal;;Subtag <code><var>{value}</var></code> is syntactically invalid.
 langtag:language:case;;It is a good practice to represent ISO 639-1 language code <code><var>{value}</var></code> in lowercase.
+langtag:language:deprecated;;Use of language subtag <code><var>{value}</var></code> is deprecated<!-- in favor of {text} (might be undef) -->.
+langtag:language:invalid;;Language subtag <code><var>{value}</var></code> is not registered.
 langtag:language:mul;;Langauge tag <code>mul</code> should not be used.
 langtag:language:nosemantics;;No semantics is defined for language subtag <code><var>{value}</var></code>.
+langtag:language:private;;Language subtag <code><var>{value}</var></code> is a private use code.
 langtag:language:syntax;;The language subtag <code><var>{value}</var></code> is syntactically invalid.
 langtag:language:und;;Langauge tag <code>und</code> should not be used.
 langtag:private;;It would be better if a private use language tag (<code><var>{value}</var></code>) is not used.
+langtag:privateuse;;Private use subtag <code><var>{value}</var></code> is used.
+langtag:privateuse:case;;Subtag <code><var>{value}</var></code> is not represented in the preferred case format.
 langtag:privateuse:syntax;;Private use subtag <code><var>{value}</var></code> is syntactically invalid.
+langtag:redundant:case;;Language tag <code><var>{value}</var></code> is not in the preferred case combination.
+langtag:redundant:deprecated;;Use of language tag <code><var>{value}</var></code> is deprecated<!-- in favor of {text} (might be undef) -->.
 langtag:region:case;;It is a good practice to represent ISO 3166 country code <code><var>{value}</var></code> in uppercase.
+langtag:region:deprecated;;Use of region subtag <code><var>{value}</var></code> is deprecated<!-- in favor of {text} (might be undef) -->.
 langtag:region:nosemantics;;No semantics is defined for region subtag <code><var>{value}</var></code>.
+langtag:region:invalid;;Region subtag <code><var>{value}</var></code> is not registered.
 langtag:region:private;;Use of private use country code <code><var>{value}</var></code> is not allowed.
+langtag:script:case;;Script subtag <code><var>{value}</var></code> is not in the preferred form, i.e. titlecase.
+langtag:script:deprecated;;Use of script subtag <code><var>{value}</var></code> is deprecated<!-- in favor of {text} (might be undef) -->.
+langtag:script:invalid;;Script subtag <code><var>{value}</var></code> is not registered.
+langtag:script:private;;Script subtag <code><var>{value}</var></code> is a private use code.
+langtag:script:suppress;;Script subtag <code><var>{value}</var></code> should be suppressed when the language subtag is <code><var>{text}</var></code>.
+langtag:variant:case;;Variant subtag <code><var>{value}</var></code> is not in the preferred form, i.e. lowercase.
+langtag:variant:combination;;Variant subtag <code><var>{text}</var></code> might not be meaningful when it is used in combination with <code><var>{value}</var></code>.
+langtag:variant:deprecated;;Use of variant subtag <code><var>{value}</var></code> is deprecated<!-- in favor of {text} (might be undef) -->.
+langtag:variant:duplication;;Variant subtag <code><var>{value}</var></code> is specified twice.
+langtag:variant:invalid;;Variant subtag <code><var>{value}</var></code> is not registered.
+langtag:variant:prefix;;Variant subtag <code><var>{value}</var></code> cannot be used in this context.
 bad rdf namespace;;The namespace URI of an element that represents an RDF concept must be <code>http://www.w3.org/1999/02/22-rdf-syntax-ns#</code>.
 duplicate rdf id;;The specified value is already used as an ID.
 duplicate unqualified attr;;Both unqualified attribute and namespace‐qualified RDF attribute are specified, which is not allowed.
