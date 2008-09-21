@@ -28,7 +28,8 @@ sub generate_syntax_error_section ($) {
 
     if ($opt{type} eq 'chardecode:no error') {
       $self->result->layer_uncertain ('encode');
-    } elsif ($opt{type} eq 'chardecode:fallback') {
+    } elsif ($opt{type} eq 'chardecode:fallback' or
+             $opt{type} eq 'charset:not supported') {
       $self->result->layer_uncertain ('charset');
       $self->result->layer_uncertain ('syntax');
       $self->result->layer_uncertain ('structure');
@@ -78,6 +79,9 @@ sub generate_syntax_error_section ($) {
   $doc->manakai_charset ($input->{official_charset})
       if defined $input->{official_charset};
 
+  ## TODO: We need to issue some warning if media type/charset is
+  ## explicitly overridden by the user.
+
   $doc->document_uri ($input->url);
   $doc->manakai_entity_base_uri ($input->{base_uri});
 
@@ -89,8 +93,16 @@ sub generate_syntax_error_section ($) {
 
 sub source_charset ($) {
   my $self = shift;
-  return $self->input->{charset} || ($self->{structure}->owner_document || $self->{structure})->input_encoding;
-  ## TODO: Can we always use input_encoding?
+  return (($self->{structure}->owner_document || $self->{structure})->input_encoding || $self->input->{charset});
+  ## TODO: We need some way to get the source charset reliably.  The
+  ## |input_encoding| DOM attribute might be intentionally left blank
+  ## when the input is the direct input form, but even that case the
+  ## charset information should be useful because the input string
+  ## might be a byte sequence.  In addition, the |input_encoding| does
+  ## not reflect the fallback encoding in use.  On the contrary, the
+  ## |{charset}| property of the |input| object is always the value
+  ## from the lower-level protocol and that might be ignored by the
+  ## HTML sniffer.
 } # source_charset
 
 1;

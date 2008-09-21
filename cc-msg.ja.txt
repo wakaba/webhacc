@@ -5,6 +5,7 @@ fallback-unassigned-error;;No character is assigned to octet sequence <code><var
 illegal-octets-error;;Octet sequence <code><var>{octets}</var></code> is illegal.
 invalid-state-error;;The input stream is broken.
 unassigned-code-point-error;;No character is assigned to octet sequence <code><var>{octets}</var></code>.
+charset:not supported;;Character encoding <code><var>{value}</var></code> is not supported and the explicit character encoding specification is ignored. The result of the conformance checking might be <em>wrong</em>.
 disallowed character encoding;;Character encoding <code><var>{text}</var></code> is not allowed for <abbr>HTML</abbr> document.
 bad character encoding;;Character encoding <code><var>{text}</var></code> should not be used for <abbr>HTML</abbr> document.
 non-utf-8 character encoding;;Use of UTF-8 is encouraged (this document is encoded in <code><var>{text}</var></code>).

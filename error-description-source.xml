@@ -101,6 +101,14 @@
 <section id="html5-character-encoding">
 <h2>HTML5 Character Encoding Errors</h2>
 
+<d:item name="charset:not supported"
+    modules="HTML::Parser::Sniffer">
+  <d:message xml:lang="en">Character encoding <code><var>{value}</var></code>
+  is not supported and the explicit character encoding specification is
+  ignored.  The result of the conformance checking might be
+  <em>wrong</em>.</d:message>
+</d:item>
+
 <d:item name="disallowed character encoding"
     modules="ContentChecker">
   <d:message xml:lang="en">Character encoding <code><var>{text}</var></code>
@@ -4771,6 +4779,6 @@ p {
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2008/09/20 04:47:35 $ -->
+<!-- $Date: 2008/09/21 05:09:35 $ -->
 </body>
 </html>

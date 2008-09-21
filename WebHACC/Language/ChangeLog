@@ -1,3 +1,9 @@
+2008-09-21  Wakaba  <wakaba@suika.fam.cx>
+
+	* HTML.pm (generate_syntax_error_section): Now |charset:not
+	supported| is also an error that might invalidate the validation
+	result.
+
 2008-09-17  Wakaba  <wakaba@suika.fam.cx>
 
 	* CSSInline.pm: New module.
