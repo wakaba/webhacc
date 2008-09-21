@@ -1,5 +1,9 @@
 2008-09-21  Wakaba  <wakaba@suika.fam.cx>
 
+	* cc-about.en.html: Bookmarklet added.
+
+2008-09-21  Wakaba  <wakaba@suika.fam.cx>
+
 	* error-description-source.xml: An error for non-supported
 	charset="" parameter is added.
 
