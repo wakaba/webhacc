@@ -170,27 +170,31 @@ sub add_error ($%) {
     $has_location = 1;
   }
 
-  if (defined $opt{value}) {
+  if (not defined $opt{valueref} and defined $opt{value}) {
+    $opt{valueref} = \($opt{value});
+  }
+
+  if (defined $opt{valueref}) {
     $out->html (' ');
     if (defined $opt{pos_start}) {
       $out->start_tag ('code');
-      $out->text (substr $opt{value}, 0, $opt{pos_start});
+      $out->text (substr ${$opt{valueref}}, 0, $opt{pos_start});
       $out->start_tag ('mark');
-      $out->text (substr $opt{value}, $opt{pos_start},
-                      $opt{pos_end} - $opt{pos_start} + 1);
+      $out->text (substr ${$opt{valueref}}, $opt{pos_start},
+                      $opt{pos_end} - $opt{pos_start});
       $out->end_tag ('mark');
-      $out->text (substr $opt{value}, $opt{pos_end} + 1)
-          if $opt{pos_end} < length $opt{value};
+      $out->text (substr ${$opt{valueref}}, $opt{pos_end})
+          if $opt{pos_end} < length ${$opt{valueref}};
       $out->end_tag ('code');
     } elsif ($opt{value_mark_end}) {
       $out->start_tag ('code');
-      $out->text ($opt{value});
+      $out->text (${$opt{valueref}});
       $out->start_tag ('mark');
       $out->end_tag ('mark');
       $out->end_tag ('code');
     } elsif (defined $opt{value_mark}) {
       $out->start_tag ('code');
-      for (split /($opt{value_mark})/, $opt{value}) {
+      for (split /($opt{value_mark})/, ${$opt{valueref}}) {
         if (/$opt{value_mark}/) {
           $out->start_tag ('mark');
           $out->text ($_);
@@ -201,7 +205,7 @@ sub add_error ($%) {
       }
       $out->end_tag ('code');
     } else {
-      $out->code ($opt{value});
+      $out->code (${$opt{valueref}});
     }
     $has_location = 1;
   }
@@ -237,7 +241,7 @@ sub add_error ($%) {
   ## Error message
   my $error_type_text = $opt{type};
   $out->nl_text ($error_type_text, node => $opt{node}, text => $opt{text},
-                 value => $opt{value}, char => $opt{char},
+                 value => ${$opt{valueref} or \''}, char => $opt{char},
                  octets => $opt{octets});
   
   ## Link to a long description

@@ -3,7 +3,9 @@
 use strict;
 
 use lib qw[/home/httpd/html/www/markup/html/whatpm
-           /home/wakaba/work/manakai2/lib];
+           /home/wakaba/work/manakai2/lib
+           /home/httpd/html/regexp/lib
+          ];
 use CGI::Carp qw[fatalsToBrowser];
 
   require WebHACC::Input;
@@ -81,6 +83,7 @@ sub check_and_print ($$$) {
     'text/x-css-inline' => 'WebHACC::Language::CSSInline',
     'text/html' => 'WebHACC::Language::HTML',
     'text/x-h2h' => 'WebHACC::Language::H2H',
+    'text/x-regexp-js' => 'WebHACC::Language::RegExpJS',
     'text/x-webidl' => 'WebHACC::Language::WebIDL',
 
     'text/xml' => 'WebHACC::Language::XML',
@@ -152,4 +155,4 @@ and/or modify it under the same terms as Perl itself.
 
 =cut
 
-## $Date: 2008/09/17 03:56:43 $
+## $Date: 2008/12/11 03:22:56 $

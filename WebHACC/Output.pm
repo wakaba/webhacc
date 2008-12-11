@@ -564,6 +564,7 @@ sub generate_input_section ($$) {
       {value => 'text/x-css-inline'},
       {value => 'text/x-h2h'},
       {value => 'text/html'},
+      {value => 'text/x-regexp-js'},
       {value => 'text/x-webidl'},
       {value => 'application/xhtml+xml'},
       {value => 'application/xml'},

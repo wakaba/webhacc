@@ -1,3 +1,15 @@
+2008-12-11  Wakaba  <wakaba@suika.fam.cx>
+
+	* Output.pm (generate_input_section): Added support for JavaScript
+	regular expressions.
+
+2008-12-10  Wakaba  <wakaba@suika.fam.cx>
+
+	* Result.pm: Added support for |valueref| parameter of an error.
+	|pos_end| should point the (intercharacter) position where the
+	highlighted substring ends, not the character before the position,
+	otherwise empty substring cannot be represented well.
+
 2008-09-17  Wakaba  <wakaba@suika.fam.cx>
 
 	* Output.pm: Support for the |text/x-css-inline| type is added.

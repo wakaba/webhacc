@@ -35,8 +35,6 @@ bare nero;;The decimal representation of the code position of a character must b
 bare hcro;;The hexadecimal representation of the code position of a character must be specified after <code>&amp;#x</code>.
 bogus comment;;String <code>&lt;!</code> is not followed by <code>--</code>.
 bogus end tag;;String <code>&lt;/</code> is not followed by tag name.
-C1 character reference;;Character reference to <code><var>{text}</var></code> is not allowed.
-CR character reference;;Character reference to <code>U+000D</code> (<code class="charname">CARRIAGE RETURN</code>) is not allowed.
 dash in comment;;There is a <code>--</code> sequence in a comment.
 duplicate attribute;;There are two attributes with name <code><var>{text}</var></code>.
 empty start tag;;Empty start tag (<code>&lt;&gt;</code>) is not allowed.
@@ -123,7 +121,7 @@ element not allowed;;This element is not allowed in this context.
 element not allowed:area;;An <code>area</code> element cannot be used outside of a <code>map</code> element.
 element not allowed:base;;There is another <code>base</code> element.
 element not allowed:datatemplate;;In a <code>datatemplate</code> element, only <code>rule</code> elements are allowed.
-element not allowed:details legend;;In a <code>details</code> element, only at the beginning of the element a <code>lengend</code> element may be used.
+element not allowed:details legend;;In a <code>details</code> or <code>fieldset</code> element, only at the beginning of the element a <code>legend</code> element may be used.
 element not allowed:empty;;Elements are not allowed in an empty element.
 element not allowed:figure legend;;In a <code>figure</code> element, only at the beginning or only at the end of the element a <code>lengend</code> element may be used.
 element not allowed:flow;;This element is not allowed where flow content is expected.
@@ -143,6 +141,7 @@ element not allowed:atom|content;;This element is not allowed in an Atom <code>c
 element not allowed:atom|PersonConstruct;;This element is not allowed in Person construct.
 element not allowed:atom|TextConstruct;;This element is not allowed in Text construct.
 element not defined;;この要素は定義されていません。
+multiple labelable fae;;More than one labelable form-associated element is associated to a <code>label</code> element.
 no significant content;;No significant content is contained in this element.
 no significant content before;;There is no significant content before this element.
 no significant content at the end;;No significant content is contained at the end of this element.
@@ -156,11 +155,14 @@ attribute missing:name|http-equiv|charset;;For a <code>meta</code> element, exac
 attribute not allowed;;Attribute <code><var>{local-name}</var></code> is not allowed for <code><var>{element-local-name}</var></code> element.
 attribute not allowed:ismap;;The <code>ismap</code> attribute may only be used for the image contained in an <code>a</code> element.
 attribute not defined;;この属性は定義されていません。
+_charset_ value;;The <code>value</code> attribute cannot be specified to an <code>input</code> element whose <code>type</code> is <code>hidden</code> and <code>name</code> is <code>_charset_</code>.
 in HTML:xml:lang;;The <code>xml:lang</code> attribute in HTML document is ignored.
 in XML:charset;;The <code>charset</code> attribute is not allowed in XML document.
 in XML:noscript;;A <code>noscript</code> element cannot be used in XML document.
 in XML:xml:lang;;名前空間に属さない <code>xml:lang</code> 属性が認められているのは HTML 文書中だけです。
 in XML:xmlns;;The <code>xmlns</code> attribute in the <code>null</code> namespace is not allowed in XHTML document. The document is non-conforming.
+input attr not applicable;;This attribute is not applied to an <code>input</code> element whose <code>type</code> is <code><var>{text}</var></code>.
+non-ol li value;;The <code>value</code> attribute cannot be specified to a <code>li</code> element whose parent element is not an <code>ol</code> element.
 xml:lang not allowed;;<code>xml:lang</code> 属性を指定できるのは <code>lang</code> 属性が指定されている時だけです。
 boolean:invalid;;Attribute value <code><var>{@}</var></code> is not allowed. It must be an empty string or a string <code><var>{local-name}</var></code>.
 char:syntax error;;The attribute value must be exactly one character.
@@ -177,22 +179,26 @@ coords:number lt 6;;The <code>coords</code> attribute have to contain more than 
 coords:number not even;;The <code>coords</code> attribute have to contain even number of numbers (specified: <code><var>{text}</var></code>).
 coords:out of range;;The specified value <code><var>{value}</var></code> is out of range.
 coords:syntax error;;The specified value is not valid.
-datetime:bad year;;Year number is out of range.
-datetime:bad month;;Month number is out of range.
-datetime:bad day;;Day number is out of range.
-datetime:bad hour;;Hour number is out of range.
-datetime:bad minute;;Minute number is out of range.
-datetime:bad second;;Second number is out of range.
-datetime:bad timezone hour;;Hour number of the timezone component is out of range.
-datetime:bad timezone minute;;Minute number of the timezone component is out of range.
-datetime:syntax error;;The attribute value is not a datetime.
-dateortime:syntax error;;The value is not a date or time.
+datetime:bad year;;年の値が値域外です。
+datetime:bad month;;月の値が値域外です。
+datetime:bad day;;日の値が値域外です。
+datetime:bad hour;;時の値が値域外です。
+datetime:bad minute;;分の値が値域外です。
+datetime:bad second;;秒の値が値域外です。
+datetime:bad timezone hour;;時間帯の部分の時の値が値域外です。
+datetime:bad timezone minute;;時間帯の部分の分の値が値域外です。
+datetime:syntax error;;値が日時ではありません。
+dateortime:syntax error;;値が日付か時刻ではありません。
+empty form name;;フォーム名が空です。
 enumerated:invalid;;This attribute only allow a limited set of values and the specified value <code><var>{@}</var></code> is not one of them.
 enumerated:invalid:http-equiv:content-type;attribute-value-error;Character encoding declaration syntax <code class="html bad example">&lt;meta http-equiv="Content-Type" content="text/html; charset=<var>charset-name</var>"&gt;</code> is obsolete.
 enumerated:non-conforming;;Attribute value <code><var>{@}</var></code> is not allowed.
+duplicate form name;;Form name <code><var>{value}</var></code> is already used for another element.
 duplicate http-equiv;;There is another pragma <code><var>{value}</var></code>.
 duplicate ID;attribute-value-error;This identifier has already been assigned to another element.
 duplicate token;;The token <code><var>{value}</var></code> appears in the attribute value twice.
+empty anchor image alt;;The <code>alt</code> attribute value is empty.
+empty area alt;;<code>alt</code> 属性値が空です。
 empty attribute value;;属性値が空です。
 empty style sheet title;;<code>title</code> 属性の値が空です。
 float:out of range;;The specified value is out of range.
@@ -212,8 +218,9 @@ mismatched charset name not checked;;Whether the specified character encoding na
 mode:syntax error;;The attribute value is not a valid mode name.
 nninteger:out of range;;The specified value is out of range.
 nninteger:syntax error;;The attribute value is not a non‐negative integer.
-no referenced map;;The <code>usemap</code> attribute references no image map.
-no referenced menu;;The <code>contextmenu</code> attribute references no menu.
+no referenced form;;The element referneced by the <code>form</code> attribute is not a <code>form</code> element, or no element is found.
+no referenced map;;The element referneced by the <code>usemap</code> attribute is not a <code>map</code> element, or no element is found.
+no referenced menu;;The element referneced by the <code>contextmenu</code> attribute is not a <code>menu</code> element, or no element is found.
 no referenced header cell;;There is no table header cell whose <code>id</code> is <code><var>{value}</var></code> in the same table.
 refresh:syntax error;;the specified value is not a valid as part of a <code>Refresh</code> pragma.
 repeat:syntax error;;The attribute value is not an integer or a string <code>template</code>.
@@ -224,6 +231,7 @@ link type:proposed;;Link type <code><var>{value}</var></code> is proposed but no
 sizes:syntax error;;The specified value <code><var>{value}</var></code> is not a valid value.
 space in ID;;White space characters are not allowed in the <code>id</code> attribute.
 template:not template;;The node referenced by the <code>template</code> attribute is not a template.
+value too long;;The <code>value</code> attribute value is longer than the value of the <code>maxlength</code> attribute.
 window name:empty;;Browsing context name must not be empty.
 window name:reserved;;Browsing context name <code><var>{value}</var></code> is reserved.
 word not allowed;;The word <code><var>{value}</var></code> is not allowed in this attribute.
@@ -320,6 +328,36 @@ duplicate oc namespace;;This oppotunistic caching namespace is already specified
 no fallback entry URL;;Fallback entry URL is missing.
 not manifest;;This document is not a cache manifest.
 same as manifest URL;;This URL is same as the manifest URL.
+Quantifier unexpected on zero-length expression;;Quantifier unexpected on zero-length expression.
+Sequence (?%.*s...) not implemented;;Sequence <code>(?<var>{text}</var><var>...</var>)</code> is not implemented by Perl.
+Sequence (?#... not terminated;;Sequence <code>(?#<var>...</var></code> is not terminated by <code>)</code>.
+(?p{}) is deprecated -- use (??{});;<code>(?p{<var>...</var>})</code> is obsolete.
+Sequence (?{...}) not terminated or not {}-balanced;;Sequence <code>(?{<var>...</var>})</code> is not terminated or <code>{<var>...</var>}</code> is not balanced.
+Switch condition not recognized;;Switch condition is not recognized.
+Switch (?(condition)... contains too many branches;;Switch <code>(?(<var>condition</var>)<var>...</var>|<var>...</var><mark>|...</mark>)</code> contains too many branches.
+Unknown switch condition (?(%.2s;;An unknown switch condition <code>(?(<var>{text}</var></code> is used.
+Sequence (? incomplete;;Sequence <code>(?<var>...</var></code> is incomplete.
+Useless (?%s%s) -- %suse /%s modifier;;Modifier <code>(?<var>{text}</var>)</code> <em>in</em> a regular expression has no effect.
+Sequence (?%.*s...) not recognized;;An unknown sequence <code>(?<var>{text}</var><var>...</var>)</code> is used.
+Unmatched (;;A <code>(<var>...</var></code> sequence is not terminated by <code>)</code>.
+Unmatched );;An unmatched <code>)</code> is found.
+Can't do {n,m} with n > m;;Quantifier <code>{<var>n</var>,<var>m</var>}</code> cannot be <span class="math"><var>n</var> &gt; <var>m</var></span>.
+%s matches null string many times;;<code><var>{text}</var></code> matches the empty string too many times.
+Nested quantifiers;;Quantifiers cannot be nested.
+Unmatched [;;A character class <code>[<var>...</var></code> is not terminated by <code>]</code>.
+Quantifier follows nothing;;Quantifier follows nothing.
+Missing braces on \%s{};;A <code>\<var>{text}</var></code> sequence is not followed by <code>{<var>...</var>}</code>.
+Missing right brace on \%s{};;A <code>\<var>{text}</var>{<var>...</var></code> is not terminated by <code>}</code>.
+Reference to nonexistent group;;A nonexistent group is referenced.
+Trailing \;;A <code>\</code> character is not followed by another character,
+Unrecognized escape \%s passed through;;An unknown escape <code>\<var>{text}</var></code> is used.
+Unrecognized escape \%s in character class passed through;;An unknown escape <code>\<var>{text}</var></code> is used in a character class.
+POSIX class [:%s:] unknown;;An unknown POSIX character class <code>[:<var>{text}</var>:]</code> is used.
+POSIX syntax [%s %s] belongs inside character classes;;A POSIX syntax <code>[<var>{text}</var><var>...</var><var>{text}</var>]</code> is used outside of character classes.
+Empty \%s{};;An escape <code>\<var>{text}</var>{}</code> is empty.
+False [] range "%s-%s";;An escape that represents a character class cannot be used in range <code><var>{text}</var></code>.
+Invalid [] range "%s-%s";;Character range <code><var>{text}</var></code> is invalid.
+Octal escape is obsolete;;Octal escape is used.
 after argument;;An argument name is not followed by a <code>,</code> character or a <code>)</code> character.
 after exception name;;An exception name is not followed by a <code>,</code> character or a <code>)</code> character.
 after unsigned;;The token after the <code>unsigned</code> keyword is not <code>short</code> or <code>long</code>.

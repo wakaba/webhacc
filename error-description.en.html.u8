@@ -443,13 +443,6 @@
     </p>
   </div>
 
-<div class="section" id="C1-character-reference"><h3>Character reference to
-  <code><var>{text}</var></code> is not allowed.</h3></div>
-
-<div class="section" id="CR-character-reference"><h3>Character reference to
-  <code>U+000D</code> (<code class="charname">CARRIAGE RETURN</code>)
-  is not allowed.</h3></div>
-
 <div class="section" id="dash-in-comment"><h3>There is a <code>--</code> sequence
   in a comment.</h3>
     <p>There is a <code>-</code> (<code>U+002D</code>
@@ -1116,8 +1109,8 @@ p {
 <div class="section" id="element-not-allowed:datatemplate"><h3>In a <code>datatemplate</code> element, only
   <code>rule</code> elements are allowed.</h3></div>
 
-<div class="section" id="element-not-allowed:details-legend"><h3>In a <code>details</code> element, only at the
-  beginning of the element a <code>lengend</code> element
+<div class="section" id="element-not-allowed:details-legend"><h3>In a <code>details</code> or <code>fieldset</code>
+  element, only at the beginning of the element a <code>legend</code> element
   may be used.</h3></div>
 
 <div class="section" id="element-not-allowed:empty"><h3>Elements are not allowed in an empty
@@ -1228,6 +1221,9 @@ p {
         element</em>.</dd>
     </dl>
   </div>
+
+<div class="section" id="multiple-labelable-fae"><h3>More than one labelable form-associated element
+  is associated to a <code>label</code> element.</h3></div>
 
 <div class="section" id="no-significant-content"><h3>No significant content is contained
   in this element.</h3></div>
@@ -1346,6 +1342,11 @@ p {
     </dl>
   </div>
 
+<div class="section" id="_charset_-value"><h3>The <code>value</code> attribute cannot be 
+  specified to an <code>input</code> element whose <code>type</code>
+  is <code>hidden</code> and <code>name</code> is
+  <code>_charset_</code>.</h3></div>
+
 <div class="section" id="in-HTML:xml:lang"><h3>The <code>xml:lang</code> attribute in HTML
   document is ignored.</h3>
     <p>The <code>xml:lang</code> attribute does not have an effect in
@@ -1396,6 +1397,14 @@ p {
     <p>This error should not occur in conformance-checking of
     static documents.</p>
   </div>
+
+<div class="section" id="input-attr-not-applicable"><h3>This attribute is not applied to an 
+  <code>input</code> element whose <code>type</code> is 
+  <code><var>{text}</var></code>.</h3></div>
+
+<div class="section" id="non-ol-li-value"><h3>The <code>value</code> attribute cannot be 
+  specified to a <code>li</code> element whose parent element is
+  not an <code>ol</code> element.</h3></div>
 
 <div class="section" id="xml:lang-not-allowed"><h3>The <code>xml:lang</code> attribute is only allowed
   when the <code>lang</code> attribute is specified.</h3></div>
@@ -1533,9 +1542,11 @@ p {
 <div class="section" id="datetime:bad-timezone-minute"><h3>Minute number of the timezone component is out of
   range.</h3></div>
 
-<div class="section" id="datetime:syntax-error"><h3>The attribute value is not a datetime.</h3></div>
+<div class="section" id="datetime:syntax-error"><h3>The value is not a datetime.</h3></div>
 
 <div class="section" id="dateortime:syntax-error"><h3>The value is not a date or time.</h3></div>
+
+<div class="section" id="empty-form-name"><h3>Form name is empty.</h3></div>
 
 <div class="section" id="enumerated:invalid"><h3>This attribute only allow a limited set of 
   values and the specified value <code><var>{@}</var></code> is not one 
@@ -1581,6 +1592,9 @@ p {
 <div class="section" id="enumerated:non-conforming"><h3>Attribute value <code><var>{@}</var></code>
   is not allowed.</h3></div>
 
+<div class="section" id="duplicate-form-name"><h3>Form name <code><var>{value}</var></code> is already
+  used for another element.</h3></div>
+
 <div class="section" id="duplicate-http-equiv"><h3>There is another pragma
   <code><var>{value}</var></code>.</h3></div>
 
@@ -1589,6 +1603,29 @@ p {
 
 <div class="section" id="duplicate-token"><h3>The token <code><var>{value}</var></code>
   appears in the attribute value twice.</h3></div>
+
+<div class="section" id="empty-anchor-image-alt"><h3>The <code>alt</code> attribute value is 
+  empty.</h3></div>
+
+<div class="section" id="empty-area-alt"><h3>The <code>alt</code> attribute value is
+  empty.</h3>
+    <p>The value of the <code>alt</code> attribute of an <code>area</code>
+    element is an empty value.</p>
+
+    <p>In general, the <code>alt</code> attribute value cannot be empty.
+    It must provide an alternative text for the hyperlink represented by
+    the <code>area</code> element.  The alternative text is to be used
+    when the Web browser cannot display the image, or is configured not
+    to display images.</p>
+
+    <p>As an exception, the <code>alt</code> attribute may be left blank
+    if the same image map (i.e. the ancestor <code>map</code> element)
+    contains another <code>area</code> element whose <code>href</code>
+    attribute references the same resource as the <code>href</code>
+    attribute of the <code>area</code> element in question, and the other
+    <code>area</code> element has an <code>alt</code> attribute with
+    non‐empty value.</p>
+  </div>
 
 <div class="section" id="empty-attribute-value"><h3>The attribute value is empty.</h3></div>
 
@@ -1685,11 +1722,17 @@ p {
 <div class="section" id="nninteger:syntax-error"><h3>The attribute value is not a non‐negative
   integer.</h3></div>
 
-<div class="section" id="no-referenced-map"><h3>The <code>usemap</code> attribute references
-  no image map.</h3></div>
+<div class="section" id="no-referenced-form"><h3>The element referneced by the <code>form</code>
+  attribute is not a <code>form</code> element, or no element is
+  found.</h3></div>
 
-<div class="section" id="no-referenced-menu"><h3>The <code>contextmenu</code> attribute references
-  no menu.</h3></div>
+<div class="section" id="no-referenced-map"><h3>The element referneced by the <code>usemap</code>
+  attribute is not a <code>map</code> element, or no element is
+  found.</h3></div>
+
+<div class="section" id="no-referenced-menu"><h3>The element referneced by the
+  <code>contextmenu</code> attribute is not a <code>menu</code> element, or
+  no element is found.</h3></div>
 
 <div class="section" id="no-referenced-header-cell"><h3>There is no table header cell whose <code>id</code>
   is <code><var>{value}</var></code> in the same table.</h3></div>
@@ -1744,6 +1787,9 @@ p {
 
 <div class="section" id="template:not-template"><h3>The node referenced by the <code>template</code>
   attribute is not a template.</h3></div>
+
+<div class="section" id="value-too-long"><h3>The <code>value</code> attribute value is longer
+  than the value of the <code>maxlength</code> attribute.</h3></div>
 
 <div class="section" id="window-name:empty"><h3>Browsing context name must not be empty.</h3></div>
 
@@ -2169,6 +2215,110 @@ p {
   </div>
 
 <div class="section" id="same-as-manifest-URL"><h3>This URL is same as the manifest URL.</h3></div>
+
+</section>
+
+<section id="regexp-errors">
+<h2>Regular Expression Errors</h2>
+
+<!-- Errors in this section are sorted by
+Regexp::Parser::Diagnostics's order, then followed by the
+Regexp::Parser::JavaScript's extension. -->
+
+<!-- TODO: mark fatal errors as such -->
+
+<div class="section" id="Quantifier-unexpected-on-zero-length-expression"><h3>Quantifier unexpected on zero-length
+  expression.</h3></div>
+
+<div class="section" id="Sequence-(?%.*s...)-not-implemented"><h3>Sequence
+  <code>(?<var>{text}</var><var>...</var>)</code> is not implemented
+  by Perl.</h3></div>
+
+<div class="section" id="Sequence-(?#...-not-terminated"><h3>Sequence <code>(?#<var>...</var></code> is
+  not terminated by <code>)</code>.</h3></div>
+
+<div class="section" id="(?p{})-is-deprecated----use-(??{})"><h3><code>(?p{<var>...</var>})</code> is
+  obsolete.</h3>
+    <p><code>(?p{})</code> is obsolete.  It was deprecated in
+    Perl 5.8 and is <em>no longer supported</em> in Perl 5.10.</p>
+
+    <p>You can use <code>(??{<var>...</var>})</code> instead.</p>
+  </div>
+
+<div class="section" id="Sequence-(?{...})-not-terminated-or-not-{}-balanced"><h3>Sequence <code>(?{<var>...</var>})</code>
+  is not terminated or <code>{<var>...</var>}</code> is not
+  balanced.</h3></div>
+
+<div class="section" id="Switch-condition-not-recognized"><h3>Switch condition is not recognized.</h3></div>
+
+<div class="section" id="Switch-(?(condition)...-contains-too-many-branches"><h3>Switch
+  <code>(?(<var>condition</var>)<var>...</var>|<var>...</var><mark>|...</mark>)</code>
+  contains too many branches.</h3></div>
+
+<div class="section" id="Unknown-switch-condition-(?(%.2s"><h3>An unknown switch condition
+  <code>(?(<var>{text}</var></code> is used.</h3></div>
+
+<div class="section" id="Sequence-(?-incomplete"><h3>Sequence <code>(?<var>...</var></code> is
+  incomplete.</h3></div>
+
+<div class="section" id="Useless-(?%s%s)----%suse-/%s-modifier"><h3>Modifier <code>(?<var>{text}</var>)</code>
+  <em>in</em> a regular expression has no effect.</h3></div>
+
+<div class="section" id="Sequence-(?%.*s...)-not-recognized"><h3>An unknown sequence
+  <code>(?<var>{text}</var><var>...</var>)</code> is used.</h3></div>
+
+<div class="section" id="Unmatched-("><h3>A <code>(<var>...</var></code> sequence
+  is not terminated by <code>)</code>.</h3></div>
+
+<div class="section" id="Unmatched-)"><h3>An unmatched <code>)</code> is found.</h3></div>
+
+<div class="section" id="Can't-do-{n,m}-with-n-&gt;-m"><h3>Quantifier <code>{<var>n</var>,<var>m</var>}</code>
+  cannot be <span class="math"><var>n</var> &gt; <var>m</var></span>.</h3></div>
+
+<div class="section" id="%s-matches-null-string-many-times"><h3><code><var>{text}</var></code> matches
+  the empty string too many times.</h3></div>
+
+<div class="section" id="Nested-quantifiers"><h3>Quantifiers cannot be nested.</h3></div>
+
+<div class="section" id="Unmatched-["><h3>A character class <code>[<var>...</var></code>
+  is not terminated by <code>]</code>.</h3></div>
+
+<div class="section" id="Quantifier-follows-nothing"><h3>Quantifier follows nothing.</h3></div>
+
+<div class="section" id="Missing-braces-on-\%s{}"><h3>A <code>\<var>{text}</var></code> sequence
+  is not followed by <code>{<var>...</var>}</code>.</h3></div>
+
+<div class="section" id="Missing-right-brace-on-\%s{}"><h3>A <code>\<var>{text}</var>{<var>...</var></code>
+  is not terminated by <code>}</code>.</h3></div>
+
+<div class="section" id="Reference-to-nonexistent-group"><h3>A nonexistent group is referenced.</h3></div>
+
+<div class="section" id="Trailing-\"><h3>A <code>\</code> character is not followed by
+  another character,</h3></div>
+
+<div class="section" id="Unrecognized-escape-\%s-passed-through"><h3>An unknown escape <code>\<var>{text}</var></code>
+  is used.</h3></div>
+
+<div class="section" id="Unrecognized-escape-\%s-in-character-class-passed-through"><h3>An unknown escape <code>\<var>{text}</var></code>
+  is used in a character class.</h3></div>
+
+<div class="section" id="POSIX-class-[:%s:]-unknown"><h3>An unknown POSIX character class
+  <code>[:<var>{text}</var>:]</code> is used.</h3></div>
+
+<div class="section" id="POSIX-syntax-[%s-%s]-belongs-inside-character-classes"><h3>A POSIX syntax
+  <code>[<var>{text}</var><var>...</var><var>{text}</var>]</code> is used
+  outside of character classes.</h3></div>
+
+<div class="section" id="Empty-\%s{}"><h3>An escape <code>\<var>{text}</var>{}</code>
+  is empty.</h3></div>
+
+<div class="section" id="False-[]-range-&quot;%s-%s&quot;"><h3>An escape that represents a character
+  class cannot be used in range <code><var>{text}</var></code>.</h3></div>
+
+<div class="section" id="Invalid-[]-range-&quot;%s-%s&quot;"><h3>Character range <code><var>{text}</var></code>
+  is invalid.</h3></div>
+
+<div class="section" id="Octal-escape-is-obsolete"><h3>Octal escape is used.</h3></div>
 
 </section>
 
@@ -2933,6 +3083,6 @@ p {
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2008/09/21 05:09:35 $ -->
+<!-- $Date: 2008/12/11 03:22:56 $ -->
 </body>
 </html>

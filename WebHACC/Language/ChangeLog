@@ -1,3 +1,7 @@
+2008-12-11  Wakaba  <wakaba@suika.fam.cx>
+
+	* RegExpJS.pm: New module.
+
 2008-09-21  Wakaba  <wakaba@suika.fam.cx>
 
 	* HTML.pm (generate_syntax_error_section): Now |charset:not

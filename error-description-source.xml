@@ -580,19 +580,6 @@
   </d:desc>
 </d:item>
 
-<d:item name="C1 character reference"
-    modules="HTML::Parser">
-  <d:message xml:lang="en">Character reference to
-  <code><var>{text}</var></code> is not allowed.</d:message>
-</d:item>
-
-<d:item name="CR character reference"
-    modules="HTML::Parser">
-  <d:message xml:lang="en">Character reference to
-  <code>U+000D</code> (<code class="charname">CARRIAGE RETURN</code>)
-  is not allowed.</d:message>
-</d:item>
-
 <d:item name="dash in comment"
     modules="HTML::Parser">
   <d:message xml:lang="en">There is a <code>--</code> sequence
@@ -670,6 +657,9 @@
     modules="HTML::Parser">
   <d:message xml:lang="en">Character reference to
   <code><var>{text}</var></code> is not allowed.</d:message>
+  <!-- Control characters, CR character, DEL character, C1 characters,
+       noncharacter code points, surrogate code points, non-Unicode
+       characters -->
 </d:item>
 
 <d:item name="nestc"
@@ -1555,8 +1545,8 @@ p {
 
 <d:item name="element not allowed:details legend"
     modules="ContentChecker::HTML">
-  <d:message xml:lang="en">In a <code>details</code> element, only at the
-  beginning of the element a <code>lengend</code> element
+  <d:message xml:lang="en">In a <code>details</code> or <code>fieldset</code>
+  element, only at the beginning of the element a <code>legend</code> element
   may be used.</d:message>
 </d:item>
 
@@ -1730,6 +1720,14 @@ p {
   </d:desc>
 </d:item>
 
+<d:item name="multiple labelable fae"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">More than one labelable form-associated element
+  is associated to a <code>label</code> element.</d:message>
+  <!-- for="" with descendant form control, or more than one descendant
+  form controls -->
+</d:item>
+
 <d:item name="no significant content"
     modules="ContentChecker::HTML">
   <d:message xml:lang="en">No significant content is contained
@@ -1891,6 +1889,14 @@ p {
   </d:desc>
 </d:item>
 
+<d:item name="_charset_ value"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">The <code>value</code> attribute cannot be 
+  specified to an <code>input</code> element whose <code>type</code>
+  is <code>hidden</code> and <code>name</code> is
+  <code>_charset_</code>.</d:message> 
+</d:item>
+
 <d:item name="in HTML:xml:lang"
     modules="ContentChecker::XML">
   <d:message xml:lang="en">The <code>xml:lang</code> attribute in HTML
@@ -1959,6 +1965,20 @@ p {
     <p>This error should not occur in conformance-checking of
     static documents.</p>
   </d:desc>
+</d:item>
+
+<d:item name="input attr not applicable"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">This attribute is not applied to an 
+  <code>input</code> element whose <code>type</code> is 
+  <code><var>{text}</var></code>.</d:message>
+</d:item>
+
+<d:item name="non-ol li value"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">The <code>value</code> attribute cannot be 
+  specified to a <code>li</code> element whose parent element is
+  not an <code>ol</code> element.</d:message>
 </d:item>
 
 <d:item name="xml:lang not allowed"
@@ -2137,53 +2157,69 @@ p {
 <d:item name="datetime:bad year"
     modules="ContentChecker::HTML">
   <d:message xml:lang="en">Year number is out of range.</d:message>
+  <d:message xml:lang="ja">年の値が値域外です。</d:message>
 </d:item>
 
 <d:item name="datetime:bad month"
     modules="ContentChecker::HTML">
   <d:message xml:lang="en">Month number is out of range.</d:message>
+  <d:message xml:lang="ja">月の値が値域外です。</d:message>
 </d:item>
 
 <d:item name="datetime:bad day"
     modules="ContentChecker::HTML">
   <d:message xml:lang="en">Day number is out of range.</d:message>
+  <d:message xml:lang="ja">日の値が値域外です。</d:message>
 </d:item>
 
 <d:item name="datetime:bad hour"
     modules="ContentChecker::HTML">
   <d:message xml:lang="en">Hour number is out of range.</d:message>
+  <d:message xml:lang="ja">時の値が値域外です。</d:message>
 </d:item>
 
 <d:item name="datetime:bad minute"
     modules="ContentChecker::HTML">
   <d:message xml:lang="en">Minute number is out of range.</d:message>
+  <d:message xml:lang="ja">分の値が値域外です。</d:message>
 </d:item>
 
 <d:item name="datetime:bad second"
     modules="ContentChecker::HTML">
   <d:message xml:lang="en">Second number is out of range.</d:message>
+  <d:message xml:lang="ja">秒の値が値域外です。</d:message>
 </d:item>
 
 <d:item name="datetime:bad timezone hour"
     modules="ContentChecker::HTML">
   <d:message xml:lang="en">Hour number of the timezone component is out of
   range.</d:message>
+  <d:message xml:lang="ja">時間帯の部分の時の値が値域外です。</d:message>
 </d:item>
 
 <d:item name="datetime:bad timezone minute"
     modules="ContentChecker::HTML">
   <d:message xml:lang="en">Minute number of the timezone component is out of
   range.</d:message>
+  <d:message xml:lang="ja">時間帯の部分の分の値が値域外です。</d:message>
 </d:item>
 
 <d:item name="datetime:syntax error"
     modules="ContentChecker::HTML">
-  <d:message xml:lang="en">The attribute value is not a datetime.</d:message>
+  <d:message xml:lang="en">The value is not a datetime.</d:message>
+  <d:message xml:lang="ja">値が日時ではありません。</d:message>
 </d:item>
 
 <d:item name="dateortime:syntax error"
     modules="ContentChecker::HTML">
   <d:message xml:lang="en">The value is not a date or time.</d:message>
+  <d:message xml:lang="ja">値が日付か時刻ではありません。</d:message>
+</d:item>
+
+<d:item name="empty form name"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">Form name is empty.</d:message>
+  <d:message xml:lang="ja">フォーム名が空です。</d:message>
 </d:item>
 
 <d:item name="enumerated:invalid"
@@ -2239,6 +2275,12 @@ p {
   is not allowed.</d:message>
 </d:item>
 
+<d:item name="duplicate form name"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">Form name <code><var>{value}</var></code> is already
+  used for another element.</d:message>
+</d:item>
+
 <d:item name="duplicate http-equiv"
     modules="ContentChecker::HTML">
   <d:message xml:lang="en">There is another pragma
@@ -2257,6 +2299,38 @@ p {
     modules="ContentChecker::HTML HTML::Table">
   <d:message xml:lang="en">The token <code><var>{value}</var></code>
   appears in the attribute value twice.</d:message>
+</d:item>
+
+<d:item name="empty anchor image alt"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">The <code>alt</code> attribute value is 
+  empty.</d:message>
+  <!-- input type=image -->
+</d:item>
+
+<d:item name="empty area alt"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">The <code>alt</code> attribute value is
+  empty.</d:message>
+  <d:message xml:lang="ja"><code>alt</code> 属性値が空です。</d:message>
+  <d:desc xml:lang="en">
+    <p>The value of the <code>alt</code> attribute of an <code>area</code>
+    element is an empty value.</p>
+
+    <p>In general, the <code>alt</code> attribute value cannot be empty.
+    It must provide an alternative text for the hyperlink represented by
+    the <code>area</code> element.  The alternative text is to be used
+    when the Web browser cannot display the image, or is configured not
+    to display images.</p>
+
+    <p>As an exception, the <code>alt</code> attribute may be left blank
+    if the same image map (i.e. the ancestor <code>map</code> element)
+    contains another <code>area</code> element whose <code>href</code>
+    attribute references the same resource as the <code>href</code>
+    attribute of the <code>area</code> element in question, and the other
+    <code>area</code> element has an <code>alt</code> attribute with
+    non‐empty value.</p>
+  </d:desc>
 </d:item>
 
 <d:item name="empty attribute value"
@@ -2290,6 +2364,8 @@ p {
     modules="ContentChecker::HTML">
   <d:message xml:lang="en">The attribute value is not a real
   number.</d:message>
+  <!-- a valid floating point number, or a valid floating point number
+  or "any" (step attribute) -->
 </d:item>
 
 <d:item name="fragment points itself"
@@ -2418,16 +2494,25 @@ p {
   integer.</d:message>
 </d:item>
 
+<d:item name="no referenced form"
+    modules="ContentChecker">
+  <d:message xml:lang="en">The element referneced by the <code>form</code>
+  attribute is not a <code>form</code> element, or no element is
+  found.</d:message>
+</d:item>
+
 <d:item name="no referenced map"
     modules="ContentChecker">
-  <d:message xml:lang="en">The <code>usemap</code> attribute references
-  no image map.</d:message>
+  <d:message xml:lang="en">The element referneced by the <code>usemap</code>
+  attribute is not a <code>map</code> element, or no element is
+  found.</d:message>
 </d:item>
 
 <d:item name="no referenced menu"
     modules="ContentChecker">
-  <d:message xml:lang="en">The <code>contextmenu</code> attribute references
-  no menu.</d:message>
+  <d:message xml:lang="en">The element referneced by the
+  <code>contextmenu</code> attribute is not a <code>menu</code> element, or
+  no element is found.</d:message>
 </d:item>
 
 <d:item name="no referenced header cell"
@@ -2514,6 +2599,12 @@ p {
     modules="ContentChecker ContentChecker::HTML">
   <d:message xml:lang="en">The node referenced by the <code>template</code>
   attribute is not a template.</d:message>
+</d:item>
+
+<d:item name="value too long"
+    modules="ContentChecker::HTML">
+  <d:message xml:lang="en">The <code>value</code> attribute value is longer
+  than the value of the <code>maxlength</code> attribute.</d:message>
 </d:item>
 
 <d:item name="window name:empty"
@@ -3270,6 +3361,206 @@ p {
 <d:item name="same as manifest URL"
     modules="CacheManifest">
   <d:message xml:lang="en">This URL is same as the manifest URL.</d:message>
+</d:item>
+
+</section>
+
+<section id="regexp-errors">
+<h2>Regular Expression Errors</h2>
+
+<!-- Errors in this section are sorted by
+Regexp::Parser::Diagnostics's order, then followed by the
+Regexp::Parser::JavaScript's extension. -->
+
+<!-- TODO: mark fatal errors as such -->
+
+<d:item name="Quantifier unexpected on zero-length expression"
+    modules="Regexp::Parser::Perl58 Regexp::Parser::JavaScript">
+  <d:message xml:lang="en">Quantifier unexpected on zero-length
+  expression.</d:message>
+  <!-- e.g. (?{})* -->
+</d:item>
+
+<d:item name="Sequence (?%.*s...) not implemented"
+    modules="Regexp::Parser::Perl58">
+  <d:message xml:lang="en">Sequence
+  <code>(?<var>{text}</var><var>...</var>)</code> is not implemented
+  by Perl.</d:message>
+</d:item>
+
+<d:item name="Sequence (?#... not terminated"
+    modules="Regexp::Parser::Perl58">
+  <d:message xml:lang="en">Sequence <code>(?#<var>...</var></code> is
+  not terminated by <code>)</code>.</d:message>
+</d:item>
+
+<d:item name="(?p{}) is deprecated -- use (??{})"
+    modules="Regexp::Parser::Perl58">
+  <d:message xml:lang="en"><code>(?p{<var>...</var>})</code> is
+  obsolete.</d:message>
+  <d:desc xml:lang="en">
+    <p><code>(?p{})</code> is obsolete.  It was deprecated in
+    Perl 5.8 and is <em>no longer supported</em> in Perl 5.10.</p>
+
+    <p>You can use <code>(??{<var>...</var>})</code> instead.</p>
+  </d:desc>
+</d:item>
+
+<d:item name="Sequence (?{...}) not terminated or not {}-balanced"
+    modules="Regexp::Parser::Perl58">
+  <d:message xml:lang="en">Sequence <code>(?{<var>...</var>})</code>
+  is not terminated or <code>{<var>...</var>}</code> is not
+  balanced.</d:message>
+</d:item>
+
+<d:item name="Switch condition not recognized"
+    modules="Regexp::Parser::Perl58">
+  <d:message xml:lang="en">Switch condition is not recognized.</d:message>
+</d:item>
+
+<d:item name="Switch (?(condition)... contains too many branches"
+    modules="Regexp::Parser::Perl58">
+  <d:message xml:lang="en">Switch
+  <code>(?(<var>condition</var>)<var>...</var>|<var>...</var><mark>|...</mark>)</code>
+  contains too many branches.</d:message>
+</d:item>
+
+<d:item name="Unknown switch condition (?(%.2s"
+    modules="Regexp::Parser::Perl58">
+  <d:message xml:lang="en">An unknown switch condition
+  <code>(?(<var>{text}</var></code> is used.</d:message>
+</d:item>
+
+<d:item name="Sequence (? incomplete"
+    modules="Regexp::Parser::Perl58 Regexp::Parser::JavaScript">
+  <d:message xml:lang="en">Sequence <code>(?<var>...</var></code> is
+  incomplete.</d:message>
+</d:item>
+
+<d:item name="Useless (?%s%s) -- %suse /%s modifier"
+    modules="Regexp::Parser::Perl58">
+  <d:message xml:lang="en">Modifier <code>(?<var>{text}</var>)</code>
+  <em>in</em> a regular expression has no effect.</d:message>
+</d:item>
+
+<d:item name="Sequence (?%.*s...) not recognized"
+    modules="Regexp::Parser::Perl58 Regexp::Parser::JavaScript">
+  <d:message xml:lang="en">An unknown sequence
+  <code>(?<var>{text}</var><var>...</var>)</code> is used.</d:message>
+</d:item>
+
+<d:item name="Unmatched ("
+    modules="Regexp::Parser::Perl58 Regexp::Parser::JavaScript">
+  <d:message xml:lang="en">A <code>(<var>...</var></code> sequence
+  is not terminated by <code>)</code>.</d:message>
+</d:item>
+
+<d:item name="Unmatched )"
+    modules="Regexp::Parser::Perl58 Regexp::Parser::JavaScript">
+  <d:message xml:lang="en">An unmatched <code>)</code> is found.</d:message>
+</d:item>
+
+<d:item name="Can't do {n,m} with n > m"
+    modules="Regexp::Parser::Perl58 Regexp::Parser::JavaScript">
+  <d:message xml:lang="en">Quantifier <code>{<var>n</var>,<var>m</var>}</code>
+  cannot be <span class="math"><var>n</var> > <var>m</var></span>.</d:message>
+</d:item>
+
+<d:item name="%s matches null string many times"
+    modules="Regexp::Parser::Perl58 Regexp::Parser::JavaScript">
+  <d:message xml:lang="en"><code><var>{text}</var></code> matches
+  the empty string too many times.</d:message>
+  <!-- e.g. ()+ -->
+</d:item>
+
+<d:item name="Nested quantifiers"
+    modules="Regexp::Parser::Perl58 Regexp::Parser::JavaScript">
+  <d:message xml:lang="en">Quantifiers cannot be nested.</d:message>
+  <!-- e.g. a++ -->
+</d:item>
+
+<d:item name="Unmatched ["
+    modules="Regexp::Parser::Perl58 Regexp::Parser::JavaScript">
+  <d:message xml:lang="en">A character class <code>[<var>...</var></code>
+  is not terminated by <code>]</code>.</d:message>
+</d:item>
+
+<d:item name="Quantifier follows nothing"
+    modules="Regexp::Parser::Perl58 Regexp::Parser::JavaScript">
+  <d:message xml:lang="en">Quantifier follows nothing.</d:message>
+</d:item>
+
+<d:item name="Missing braces on \%s{}"
+    modules="Regexp::Parser::Perl58">
+  <d:message xml:lang="en">A <code>\<var>{text}</var></code> sequence
+  is not followed by <code>{<var>...</var>}</code>.</d:message>
+</d:item>
+
+<d:item name="Missing right brace on \%s{}"
+    modules="Regexp::Parser::Perl58">
+  <d:message xml:lang="en">A <code>\<var>{text}</var>{<var>...</var></code>
+  is not terminated by <code>}</code>.</d:message>
+</d:item>
+
+<d:item name="Reference to nonexistent group"
+    modules="Regexp::Parser::Perl58 Regexp::Parser::JavaScript">
+  <d:message xml:lang="en">A nonexistent group is referenced.</d:message>
+</d:item>
+
+<d:item name="Trailing \"
+    modules="Regexp::Parser::Perl58 Regexp::Parser::JavaScript">
+  <d:message xml:lang="en">A <code>\</code> character is not followed by
+  another character,</d:message>
+</d:item>
+
+<d:item name="Unrecognized escape \%s passed through"
+    modules="Regexp::Parser::Perl58 Regexp::Parser::JavaScript">
+  <d:message xml:lang="en">An unknown escape <code>\<var>{text}</var></code>
+  is used.</d:message>
+</d:item>
+
+<d:item name="Unrecognized escape \%s in character class passed through"
+    modules="Regexp::Parser::Perl58 Regexp::Parser::JavaScript">
+  <d:message xml:lang="en">An unknown escape <code>\<var>{text}</var></code>
+  is used in a character class.</d:message>
+</d:item>
+
+<d:item name="POSIX class [:%s:] unknown"
+    modules="Regexp::Parser::Perl58">
+  <d:message xml:lang="en">An unknown POSIX character class
+  <code>[:<var>{text}</var>:]</code> is used.</d:message>
+</d:item>
+
+<d:item name="POSIX syntax [%s %s] belongs inside character classes"
+    modules="Regexp::Parser::Perl58">
+  <d:message xml:lang="en">A POSIX syntax
+  <code>[<var>{text}</var><var>...</var><var>{text}</var>]</code> is used
+  outside of character classes.</d:message>
+  <!-- [= =] and [. .] should raise different error in fact -->
+</d:item>
+
+<d:item name="Empty \%s{}"
+    modules="Regexp::Parser::Perl58">
+  <d:message xml:lang="en">An escape <code>\<var>{text}</var>{}</code>
+  is empty.</d:message>
+</d:item>
+
+<d:item name='False [] range "%s-%s"'
+    modules="Regexp::Parser::Perl58 Regexp::Parser::JavaScript">
+  <d:message xml:lang="en">An escape that represents a character
+  class cannot be used in range <code><var>{text}</var></code>.</d:message>
+</d:item>
+
+<d:item name='Invalid [] range "%s-%s"'
+    modules="Regexp::Parser::Perl58 Regexp::Parser::JavaScript">
+  <d:message xml:lang="en">Character range <code><var>{text}</var></code>
+  is invalid.</d:message>
+  <!-- n-m where n > m -->
+</d:item>
+
+<d:item name="Octal escape is obsolete"
+    modules="Regexp::Parser::JavaScript">
+  <d:message xml:lang="en">Octal escape is used.</d:message>
 </d:item>
 
 </section>
@@ -4779,6 +5070,6 @@ p {
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2008/09/21 05:09:35 $ -->
+<!-- $Date: 2008/12/11 03:22:56 $ -->
 </body>
 </html>

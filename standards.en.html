@@ -111,7 +111,8 @@ applied.
 
   <div class="note memo">
   <p>These definitions are updated version of their original definitions
-  in previous versions of HTML4.
+  in previous versions of HTML (i.e. HTML 2.x, HTML4, Web Forms 2.0,
+  or early drafts of HTML5).
   </div>
 
   <p>For each row in the table below, if an attribute (i.e. an
@@ -141,18 +142,32 @@ applied.
   <th scope=row>Value
   <tbody>
   <tr><td><code>body</code><td><code>background</code>
-  <td>Same as <code>img</code> <code>src</code> [HTML5]
+  <td>Syntactically same as <code>img</code> <code>src</code> [HTML5]
   <tr><td><code>img</code><td><code>longdesc</code>
-  <td>Same as <code>img</code> <code>src</code> [HTML5]
+  <td>Syntactically same as <code>img</code> <code>src</code> [HTML5]
 
   <tr><td><code>input</code><td><code>accept-charset</code>
   <td>Same as <code>accept-charset</code> attribute of the
   <code>form</code> element [HTML5]
 
+  <tr><td><code>input</code> (<code>type</code> attribute is in Image Button
+  state)
+  <td><code>usemap</code>
+  <td>Syntactically same as <code>img</code> <code>usemap</code> [HTML5]
+  <!-- This definition is necessary, since HTML5 definition for usemap=""
+  has changed after <input usemap> is dropped. -->
+
   <tr><td><code>object</code><td><code>classid</code> or <code>codebase</code>
-  <td>Same as <code>img</code> <code>src</code> [HTML5]
-  <tr><td><code>object</code><td><code>archive
+  <td>Syntactically same as <code>img</code> <code>src</code> [HTML5]
+
+  <tr><td><code>head</code><td><code>profile</code>
   <td>Same as <code>a</code> <code>ping</code> [HTML5]
+  <!-- This definition is necessary, since HTML5 defnition for attributes
+  with URLs has changed after profile="" is dropped. -->
+
+  <tr><td><code>object</code><td><code>archive</code>
+  <td>Same as <code>a</code> <code>ping</code> [HTML5]
+
   <tr><td><code>object</code><td><code>codetype</code>
   <td>Same as <code>object</code> <code>type</code> [HTML5]
   <tr><td><code>param</code><td><code>type</code>
@@ -162,8 +177,18 @@ applied.
   <code>h6</code>, or <code>p</code>
   <td><code>align</code>
   <td>Enumerated attribute [HTML5]
+
   <tr><td><code>img</code> or <code>object</code><td><code>align</code>
   <td>Enumerated attribute [HTML5]
+
+  <tr><td><code>input</code> (<code>type</code> attribute is in
+  Image Button state)
+  <td><code>align</code>
+  <td>Enumerated attribute [HTML5], where keywords are: <code>top</code>,
+  <code>middle</code>, <code>bottom</code>, <code>left</code>,
+  <code>right</code><!-- Same as HTML4 Transitional DTD definition.  See
+  also comment below. -->
+
   <tr><td><code>br</code><td><code>clear</code>
   <td>Enumerated attribute [HTML5]
   <tr><td><code>param</code><td><code>valuetype</code>
@@ -173,6 +198,12 @@ applied.
   <tr><td><code>ul</code>, <code>ol</code>, <code>dir</code>,
   <code>menu</code>, or <code>dl</code><td><code>compact</code>
   <td>Boolean attribute [HTML5]
+
+  <tr><td><code>input</code> (<code>type</code> attribute is in Image
+  Button<!-- @@ ref --> state)
+  <td><code>ismap</code>
+  <td>Boolean attribute [HTML5]
+
   <tr><td><code>table</code><td><code>frame</code> or <code>rules</code>
   <td>Enumerated attribute [HTML5]
   <tr><td><code>td</code><td><code>scope</code>
@@ -182,6 +213,12 @@ applied.
   <code>colgroup</code>, <code>col</code>, <code>tr</code>, <code>td</code>,
   or <code>th</code><td><code>align</code> or <code>valign</code>
   <td>Enumerated attribute [HTML5]
+
+  <tr><td><code>input</code> (<code>type</code> attribute is in
+  Image Button<!-- @@ ref --> or Submit Button<!-- @@ ref --> state)
+  <td><code>replace</code>
+  <td>Enumerated attribute [HTML5]
+
   <tr><td><code>link</code><td><code>target</code>
   <td>Valid browsing context name or keyword [HTML5]
   <tr id=html-meta-scheme><td><code>meta</code><td><code>schema</code>
@@ -222,6 +259,40 @@ applied.
   <td colspan=2>Same as <code>div</code> [HTML5]
   </table>
 </ul>
+
+<p>For an <code>input</code> element whose <code>type</code> attribute
+is <code>add</code>, <code>remove</code>, <code>move-up</code>, or
+<code>move-down</code> (ASCII case-insensitive<!-- ref -->) [WF2],
+attributes that is not allowed for an <code>input</code> element whose
+<code>type</code> attribute is in the Button state<!-- ref --> <em
+class=rfc2119>MUST NOT</em> be specified.<!-- Whether an attribute is
+applicable or not is normatively defined in the table in the Appendix
+B of the Web Forms 2.0 specification.  However, there is no clause
+that states that use of an attribute that is not applied is
+non-conforming.  Note that the <code>template</code> attribute, which
+is applied to the <code>add</code> attribute according to Web Forms
+2.0, is defined as a global attribute (with different semantics and
+syntax) by HTML5 as part of the data template feature. -->
+
+<p>The <code>inputmode</code> attribute applies to an
+<code>input</code> element in Text, E-mail, URL, or Password<!-- @@
+refs --> state.  The <code>replace</code> attribute applies to an
+<code>input</code> element in Image Button or Submit Button<!-- @@
+refs --> state.<!-- In WF2 normative table, but no MUST NOT there. -->
+The <code>usemap</code> attribute applies to an <code>input</code>
+element in Image Button<!-- @@ ref --> state.<!-- In HTML5 prior to
+r997, usemap="" MAY be specified to an input element with Image (now
+Image Button) state, but Image state was not defined yet and there
+were no "MUST NOT".-->  The <code>align</code> attribute applies to an
+<code>input</code> element in Image Button state.<!-- In HTML4, to
+which state(s) this attribute is applied is not defined at all.  In
+addition, the reference to the definition of the attribute is linked
+to a wrong place (align attribute of p element and so on).  In HTML
+2.x, DTD comment implies that this attribute applies to type=image.
+In HTML 2.0, this attribute is only explained for type=image in the
+prose.  --> Any of these attributes <em class=rfc2119>MUST NOT</em> be
+specified for an <code>input</code> element whose <code>type</code>
+attribute is in a state where the attribute does not apply.
 
 <p id=cache-manifest>The 
 <a href="http://www.whatwg.org/specs/web-apps/current-work/#manifests">cache

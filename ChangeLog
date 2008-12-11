@@ -1,3 +1,10 @@
+2008-12-11  Wakaba  <wakaba@suika.fam.cx>
+
+	* error-description-source.en.xml: Added descriptions for errors
+	from Regexp::Parser and Regexp::Parser::JavaScript modules.
+
+	* cc.cgi: Added support for JavaScript regular expressions.
+
 2008-09-21  Wakaba  <wakaba@suika.fam.cx>
 
 	* cc-about.en.html: Bookmarklet added.
