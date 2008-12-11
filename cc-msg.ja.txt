@@ -561,6 +561,8 @@ Unknown location;;位置不明
 (unknown);;(不明)
 Description;;説明
 Table #;;表 #<var>{text}</var> の構造
+Graph;;グラフ
+Regexp #;;正規表現 #<var>{text}</var>
 Subdocument #;;部分文書 #<var>{text}</var>
 Sub #;;部分 #<var>{text}</var>
 ...;;〜

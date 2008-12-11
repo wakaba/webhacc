@@ -3033,6 +3033,10 @@ Regexp::Parser::JavaScript's extension. -->
 
 
 
+
+
+
+
 <div class="section" id="Error-level-m"><h3><a href="../error-description#Error-level-m" rel="help"><em class="rfc2119" title="REQUIRED">必須</em>級の誤り</a></h3>
     <p>A violation to a hard requirement of the specification.
     The document is non‐conforming.</p>
@@ -3074,6 +3078,6 @@ Regexp::Parser::JavaScript's extension. -->
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2008/12/11 03:22:56 $ -->
+<!-- $Date: 2008/12/11 05:11:11 $ -->
 </body>
 </html>

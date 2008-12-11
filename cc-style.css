@@ -809,11 +809,14 @@ aside.help > *:last-child {
   margin-bottom: 0;
 }
 
-/* Used instead of XHR for HTML documents */
 iframe {
   margin: 0;
   border-style: none;
   padding: 0;
+}
+
+/* Used instead of XHR for HTML documents */
+iframe.ajax {
   width: 0;
   height: 0;
 }
@@ -831,6 +834,6 @@ Copyright 2007-2008 Wakaba <w@suika.fam.cx>.
 This library is free software; you can redistribute it
 and/or modify it under the same terms as Perl itself.
 
-$Date: 2008/08/30 05:32:51 $
+$Date: 2008/12/11 05:11:11 $
 
 */

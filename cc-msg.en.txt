@@ -561,6 +561,8 @@ Unknown location;;Unknown location
 (unknown);;(Unknown)
 Description;;Description
 Table #;;Structure of Table #<var>{text}</var>
+Graph;;Graph
+Regexp #;;Regexp #<var>{text}</var>
 Subdocument #;;Subdocument #<var>{text}</var>
 Sub #;;Sub #<var>{text}</var>
 ...;;..

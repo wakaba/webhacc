@@ -227,6 +227,7 @@ function showHelp (id, context) {
 function loadHelp (url, code) {
   document.webhaccHelp = null;
   var iframe = document.createElement ('iframe');
+  iframe.className = 'ajax';
   var iframecode = function () {
     var doc;
     var docel;
@@ -379,4 +380,4 @@ function onbodyload () {
   }
 } // onbodyload
 
-// $Date: 2008/08/16 13:09:08 $
+// $Date: 2008/12/11 05:11:11 $

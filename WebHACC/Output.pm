@@ -182,15 +182,17 @@ sub start_section ($%) {
       my $st = $opt{short_title} || $opt{title};
       push @{$self->{nav}},
           [$id => $st => $opt{text}] if $self->{section_rank} == 2;
-      
-      $self->start_tag ('script');
-      $self->html (qq[ addSectionLink ('$id', ']);
-      $self->nl_text ($st, text => $opt{text});
-      if (defined $opt{parent_id}) {
-        $self->html (q[', '] . $opt{parent_id});
+
+      unless ($opt{notab}) {
+        $self->start_tag ('script');
+        $self->html (qq[ addSectionLink ('$id', ']);
+        $self->nl_text ($st, text => $opt{text});
+        if (defined $opt{parent_id}) {
+          $self->html (q[', '] . $opt{parent_id});
+        }
+        $self->html (q[') ]);
+        $self->end_tag ('script');
       }
-      $self->html (q[') ]);
-      $self->end_tag ('script');
     }
   } else {
     $self->html ('>');

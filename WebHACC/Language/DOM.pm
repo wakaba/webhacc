@@ -253,7 +253,8 @@ sub generate_table_section ($) {
     $index = $index ? $index . '.' . $i : $i;
     $out->start_section (id => 'table-' . $i,
                          title => 'Table #',
-                         text => $index);
+                         text => $index,
+                         notab => 1);
 
     $out->start_tag ('dl');
     $out->dt ('Table Element');

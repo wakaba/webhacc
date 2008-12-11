@@ -1,5 +1,21 @@
 2008-12-11  Wakaba  <wakaba@suika.fam.cx>
 
+	* cc-about.en.html: Added links to Regexp modules.
+
+	* cc-script.js: Adds a class name to |iframe| element used instead
+	of XHR such that non-Ajax |iframe| element can be distinguished by
+	style sheets.
+
+	* cc-style.css: Displays non-Ajax |iframe| element.
+
+	* error-description-source.en.xml: Added catalog entries for
+	regexp graph sections.
+
+	* standards.en.html: s/WDCC/WebHACC/g.  Added a subsection on
+	regular expressions.
+
+2008-12-11  Wakaba  <wakaba@suika.fam.cx>
+
 	* error-description-source.en.xml: Added descriptions for errors
 	from Regexp::Parser and Regexp::Parser::JavaScript modules.
 

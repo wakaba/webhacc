@@ -1,14 +1,19 @@
 <!DOCTYPE HTML>
 <html lang=en>
 <head>
-<title>Standards Supported by Web Documenet Conformance Checker</title>
+<title>WebHACC &mdash; Supported Standards</title>
 <link rel=stylesheet href=cc-style>
 </head>
 <body>
-<h1>Standards Supported by Web Document Conformance Checker</h1>
 
-<div class=section id=summary>
-<h2>Summary</h2>
+<h1><a href="cc/"><abbr title="Web Hypertext Application Conformance
+Checker"><img src="icons/title" alt="WebHACC"></abbr></a></h1>
+
+<div class=section id=standards>
+<h2>Supported Standards</h2>
+
+<p>The table below summarizes Web standards supported by WebHACC.  See
+following subsections for more details.
 
 <table>
 <thead>
@@ -73,10 +78,9 @@ Draft 1.96</a>
 <td>Tentative (no validation)
 </tbody>
 </table>
-</div>
 
 <div class=section id=dom>
-<h2><abbr title="Document Object Model">DOM</abbr></h2>
+<h3><abbr title="Document Object Model">DOM</abbr></h3>
 
 <p>The current implementation assumes that there are following 
 requirements:</p>
@@ -90,7 +94,7 @@ specification.</span></li>
 </div>
 
 <div class=section id=html>
-<h2><abbr title="Hypertext Markup Language">HTML</abbr></h2>
+<h3><abbr title="Hypertext Markup Language">HTML</abbr></h3>
 
 <p>HTML5 is partially implemented.</p>
 
@@ -300,7 +304,7 @@ manifest syntax</a> is also supported.
 </div>
 
 <div class=section id=atom>
-<h2>Atom</h2>
+<h3>Atom</h3>
 
 <p><a href="urn:ietf:rfc:4287">Atom 1.0</a> and 
 <a href="urn:ietf:rfc:4685">Atom Threading 1.0</a> are supported.
@@ -327,7 +331,7 @@ conformance of the content of an element.
 </div>
 
 <div class=section id=css>
-<h2><abbr title="Cascading Style Sheets">CSS</abbr></h2>
+<h3><abbr title="Cascading Style Sheets">CSS</abbr></h3>
 
 <p>CSS @namespace and Selectors Level 3 are fully implemented.</p>
 
@@ -363,12 +367,28 @@ instruction nodes.</li>
 
 </div>
 
+<div class=section id=regexp>
+<h3>Regular expressions</h3>
+
+<p>Regular expression defined in ECMAScript Third Edition Section
+15.10.1 is implemented, with the addition of the support for obsolete
+octal escape notation commonly supported by Web browsers.
+
+<p>To identify ECMAScript regular expressions, the Internet Media Type
+<a
+href="http://suika.fam.cx/%7Ewakaba/wiki/sw/n/text+x-regexp-js"><code>text/x-regexp-js</code></a>
+is used.
+
+</div>
+
 <div class=section id=webidl>
-<h2>WebIDL</h2>
+<h3>WebIDL</h3>
 
 <p><a href="http://dev.w3.org/cvsweb/~checkout~/2006/webapi/WebIDL/Overview.html?rev=1.96&amp;content-type=text/html;%20charset=utf-8">WebIDL
 Editor's Draft revision 1.96 (<time datetime=2008-09-03>3 September 
 2008</time>)</a> is implemented.</p>
+</div>
+
 </div>
 
 </body>

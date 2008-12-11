@@ -4869,6 +4869,16 @@ Regexp::Parser::JavaScript's extension. -->
   <d:text xml:lang="ja">表 #<var>{text}</var> の構造</d:text>
 </d:cat>
 
+<d:cat name="Graph">
+  <d:text xml:lang="en">Graph</d:text>
+  <d:text xml:lang="ja">グラフ</d:text>
+</d:cat>
+
+<d:cat name="Regexp #">
+  <d:text xml:lang="en">Regexp #<var>{text}</var></d:text>
+  <d:text xml:lang="ja">正規表現 #<var>{text}</var></d:text>
+</d:cat>
+
 <d:cat name="Subdocument #">
   <d:text xml:lang="en">Subdocument #<var>{text}</var></d:text>
   <d:text xml:lang="ja">部分文書 #<var>{text}</var></d:text>
@@ -5070,6 +5080,6 @@ Regexp::Parser::JavaScript's extension. -->
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2008/12/11 03:22:56 $ -->
+<!-- $Date: 2008/12/11 05:11:11 $ -->
 </body>
 </html>
