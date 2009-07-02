@@ -1,3 +1,8 @@
+2009-07-03  Wakaba  <wakaba@suika.fam.cx>
+
+	* standards.en.html: Removed tentative definitions that are now
+	convered by the HTML5 specification (HTML5 revision 3183).
+
 2008-12-11  Wakaba  <wakaba@suika.fam.cx>
 
 	* cc-about.en.html: Added links to Regexp modules.

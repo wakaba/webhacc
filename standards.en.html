@@ -101,15 +101,6 @@ specification.</span></li>
 <p>In addition, the current implementation assumes that there are following 
 requirements:</p>
 <ul>
-<li>Any attribute in the HTML namespace which is not defined by the
-HTML5 specification (including Web Forms 2.0 specification) 
-<em class=rfc2119>MUST NOT</em> be used.</li>
-<li>For an element in the HTML namespace, any attribute in the null namespace
-(or per‐element partition) <em class=rfc2119>MUST NOT</em> be used
-unless it is allowed by the HTML5 specification (including Web Forms 2.0
-specification).</li>
-<li class=ed>@@ Forms elements: ...
-
 <li>For the attribute not defined in HTML5, the following definitions are
 applied.
 
@@ -218,10 +209,14 @@ applied.
   or <code>th</code><td><code>align</code> or <code>valign</code>
   <td>Enumerated attribute [HTML5]
 
+  <tr><td><code>form</code>
+  <td rowspan=3><code>replace</code>
+  <td rowspan=3>Enumerated attribute [HTML5]
+
   <tr><td><code>input</code> (<code>type</code> attribute is in
   Image Button<!-- @@ ref --> or Submit Button<!-- @@ ref --> state)
-  <td><code>replace</code>
-  <td>Enumerated attribute [HTML5]
+
+  <tr><td><code>button</code>
 
   <tr><td><code>link</code><td><code>target</code>
   <td>Valid browsing context name or keyword [HTML5]
@@ -249,6 +244,13 @@ applied.
   <td rowspan=2>Same as <code>script</code> <code>charset</code> [HTML5],
   syntactically
   <tr id=html-link-charset><td><code>link</code>
+
+<tr id=html-textarea-pattern><td><code>textarea</code><td><code>pattern</code>
+<td>Same as <code>input</code> <code>pattern</code>.
+
+<tr id=html-form-accept><td><code>form</code><td><code>accept</code>
+<td>Same as <code>input</code> <code>accept</code>.
+
   </table>
 <li>Any value <em class=rfc2119>MAY</em> be specified to the
 <code>version</code> attribute of an <code>html</code> element.
