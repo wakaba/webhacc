@@ -1,4 +1,5 @@
 Options +ExecCGI +MultiViews
+AddType text/html .cgi
 AddHandler cgi-script .cgi
 
 AddCharset utf-8 .xml
