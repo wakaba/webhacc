@@ -1,9 +1,9 @@
 #!/usr/bin/perl
 use strict;
+use warnings;
 use encoding 'us-ascii', STDOUT => 'utf-8';
-
-use lib qw[/home/httpd/html/www/markup/html/whatpm
-           /home/wakaba/work/manakai2/lib];
+use Path::Class;
+use lib glob file (__FILE__)->dir->subdir ('modules')->subdir ('*')->subdir ('lib');
 
 my $HTML_NS = q<http://www.w3.org/1999/xhtml>;
 my $SRC_NS = q<http://suika.fam.cx/~wakaba/archive/2007/wdcc-desc/>;
