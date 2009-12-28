@@ -3,6 +3,7 @@
 use strict;
 use warnings;
 use Path::Class;
+use lib file (__FILE__)->dir->subdir ('lib')->stringify;
 use lib glob file (__FILE__)->dir->subdir ('modules')->subdir ('*')->subdir ('lib');
 use CGI::Carp qw[fatalsToBrowser];
 
