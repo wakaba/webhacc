@@ -1,11 +1,9 @@
 #!/usr/bin/perl
 # -d:DProf
 use strict;
-
-use lib qw[/home/httpd/html/www/markup/html/whatpm
-           /home/wakaba/work/manakai2/lib
-           /home/httpd/html/regexp/lib
-          ];
+use warnings;
+use Path::Class;
+use lib glob file (__FILE__)->dir->subdir ('modules')->subdir ('*')->subdir ('lib');
 use CGI::Carp qw[fatalsToBrowser];
 
   require WebHACC::Input;
