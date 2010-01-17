@@ -1,5 +1,7 @@
 package WebHACC::Output;
 use strict;
+use warnings;
+our $VERSION = '1.0';
 
 require IO::Handle;
 use Scalar::Util qw/refaddr/;
@@ -566,6 +568,7 @@ sub generate_input_section ($$) {
       {value => 'text/x-css-inline'},
       {value => 'text/x-h2h'},
       {value => 'text/html'},
+      {value => 'text/html-sandboxed'},
       {value => 'text/x-regexp-js'},
       {value => 'text/x-webidl'},
       {value => 'application/xhtml+xml'},
@@ -753,3 +756,16 @@ sub encode_url_component ($$) {
 } # encode_url_component
 
 1;
+
+=head1 AUTHOR
+
+Wakaba <w@suika.fam.cx>.
+
+=head1 LICENSE
+
+Copyright 2007-2010 Wakaba <w@suika.fam.cx>
+
+This library is free software; you can redistribute it
+and/or modify it under the same terms as Perl itself.
+
+=cut

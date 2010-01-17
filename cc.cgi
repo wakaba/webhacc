@@ -80,11 +80,15 @@ sub check_and_print ($$$) {
     'text/cache-manifest' => 'WebHACC::Language::CacheManifest',
     'text/css' => 'WebHACC::Language::CSS',
     'text/x-css-inline' => 'WebHACC::Language::CSSInline',
-    'text/html' => 'WebHACC::Language::HTML',
     'text/x-h2h' => 'WebHACC::Language::H2H',
     'text/x-regexp-js' => 'WebHACC::Language::RegExpJS',
     'text/x-webidl' => 'WebHACC::Language::WebIDL',
+    
+    ## HTML MIME types
+    'text/html' => 'WebHACC::Language::HTML',
+    'text/html-sandboxed' => 'WebHACC::Language::HTML',
 
+    ## XML MIME types
     'text/xml' => 'WebHACC::Language::XML',
     'application/atom+xml' => 'WebHACC::Language::XML',
     'application/rss+xml' => 'WebHACC::Language::XML',
@@ -94,7 +98,8 @@ sub check_and_print ($$$) {
     ## TODO: Should we make all XML MIME Types fall
     ## into this category?
 
-    ## NOTE: This type has different model from normal XML types.
+    ## NOTE: 'application/rdf+xml' media type has different processing
+    ## model from normal XML types.
     'application/rdf+xml' => 'WebHACC::Language::XML',
   }->{$input->{media_type}} || 'WebHACC::Language::Default';
 
@@ -147,11 +152,9 @@ Wakaba <w@suika.fam.cx>.
 
 =head1 LICENSE
 
-Copyright 2007-2008 Wakaba <w@suika.fam.cx>
+Copyright 2007-2010 Wakaba <w@suika.fam.cx>
 
 This library is free software; you can redistribute it
 and/or modify it under the same terms as Perl itself.
 
 =cut
-
-## $Date: 2008/12/11 03:22:56 $
