@@ -209,6 +209,24 @@ applied.
   or <code>th</code><td><code>align</code> or <code>valign</code>
   <td>Enumerated attribute [HTML5]
 
+  <tr><td><code>colgroup</code>
+  <td><td>width</code>
+  <td>Possible values as per HTML 4.01 [HTML4]
+
+  <tr><td><code>ul</code>
+  <td><code>type</code>
+  <td>Enumerated attribute [HTML5]
+
+  <tr><td><code>ol</code>
+  <td><code>type</code>
+  <td>One of <code>1</code>, <code>a</code>, <code>A</code>,
+  <code>i</code>, or <code>I</code>
+
+  <tr><td><code>li</code>
+  <td><code>type</code>
+  <td>One of <code>ul</code> and <code>ol</code> element's
+  <code>type</code> attribute's valid values
+
   <tr><td><code>form</code>
   <td rowspan=3><code>replace</code>
   <td rowspan=3>Enumerated attribute [HTML5]
@@ -251,6 +269,25 @@ applied.
 <tr id=html-form-accept><td><code>form</code><td><code>accept</code>
 <td>Same as <code>input</code> <code>accept</code>.
 
+  <tr id=html-a-shape><td><code>a</code>
+  <td><code>shape</code>
+  <td>Same as <code>area</code> <code>shape</code>.
+  
+  <tr id=html-a-coords><td><code>a</code>
+  <td><code>coords</code>
+  <td>Same as <code>area</code> <code>coords</code>, except that
+  number and value range of comma-separated values included in the
+  attribute value is not restricted if <code>shape</code> attribute
+  is not specified on the same element.
+
+  <tr id=html-font-color><td><code>font</code> or <code>basefont</code>
+  <td><td>color</code>
+  <td>Possible values as per HTML 4.01 [HTML4]
+
+  <tr id=html-font-size><td><code>font</code> or <code>basefont</code>
+  <td><td>size</code>
+  <td>Possible values as per HTML 4.01 [HTML4]
+
   </table>
 <li>Any value <em class=rfc2119>MAY</em> be specified to the
 <code>version</code> attribute of an <code>html</code> element.
@@ -261,8 +298,13 @@ applied.
   <tr><th scope=row>Element<th scope=row>Content Model
   <th scope=row>Allowed Context
   <tbody>
+
   <tr><th scope=col><code>center</code>
   <td colspan=2>Same as <code>div</code> [HTML5]
+
+  <tr><th scope=col><code>dir</code>
+  <td colspan=2>Same as <code>ul</code> [HTML5]
+
   </table>
 </ul>
 
@@ -329,6 +371,15 @@ specification.</li>
 <li>Inter-element whitespace [HTML5], processing instructions, and
 comments <em class=rfc2119>MUST</em> be ignored for the purpose of 
 conformance of the content of an element.
+
+<li>When an attribute value is required to be a “MIME media type”,
+or the attribute in question is <code>type</code> of an
+<code>in-reply-to</code> element in the Atom Threading 1.0 namespace
+[<a href="http://tools.ietf.org/html/rfc4685">RFC 4685</a>], the
+attribute value <em class=rfc2119>MUST</em> be a <a
+href="http://www.whatwg.org/specs/web-apps/current-work/complete.html#valid-mime-type">valid
+MIME type</a> [WA1].
+
 </ul>
 </div>
 
