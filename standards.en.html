@@ -21,7 +21,7 @@ following subsections for more details.
 </thead>
 <tbody>
 <tr><th scope=row><a href="#html"><abbr title="Hypertext Markup Language">HTML</abbr></a>
-<td rowspan=2><a href="http://whatwg.org/html5">HTML5 Draft Recommendation</a>
+<td rowspan=2><a href="http://whatwg.org/c">Web Applications 1.0</a>
 <td rowspan=2>Most parts
 
 <tr><th><a href="#html">XHTML</a>
@@ -63,14 +63,13 @@ Level 3 <abbr title="Last Call Working Draft">LCWD</abbr></a>
 
 <tbody>
 <tr><th><a href="#cache-manifest">Cache Manifest</a>
-<td><a href="http://www.whatwg.org/specs/web-apps/current-work/#manifests">HTML5
-Draft Recommendation</a>
+<td><a href="http://whatwg.org/c#manifests">Web Applications 1.0</a>
 <td><!-- Full -->
 
 <tr><th><a href="#webidl">WebIDL</a>
 <td><a href="http://dev.w3.org/cvsweb/~checkout~/2006/webapi/WebIDL/Overview.html?rev=1.96&amp;content-type=text/html;%20charset=utf-8">Editor's
 Draft 1.96</a>
-<td><!-- Full -->
+<td>Out of date!<!-- Full -->
 
 <tbody>
 <tr><th scope=row><abbr title="Hypertext Transfer Protocol">HTTP</abbr>
@@ -96,255 +95,18 @@ specification.</span></li>
 <div class=section id=html>
 <h3><abbr title="Hypertext Markup Language">HTML</abbr></h3>
 
-<p>HTML5 is partially implemented.</p>
+<p>Conformance checking as per the <a href="http://whatwg.org/c">Web
+Applications 1.0</a> (including HTML5) specification and the <a
+href="http://suika.fam.cx/www/markup/html/exts/manakai-obsvocab">manakai's
+Conformance Checking Guideline for Obsolete HTML Elements and
+Attributes</a> is supported, except for a few newer features such as
+Microdata and <code>device</code> (those features will be implemented
+later).
 
-<p>In addition, the current implementation assumes that there are following 
-requirements:</p>
-<ul>
-<li>For the attribute not defined in HTML5, the following definitions are
-applied.
-
-  <div class="note memo">
-  <p>These definitions are updated version of their original definitions
-  in previous versions of HTML (i.e. HTML 2.x, HTML4, Web Forms 2.0,
-  or early drafts of HTML5).
-  </div>
-
-  <p>For each row in the table below, if an attribute (i.e. an
-  <code>Attr</code> node) met the following conditions, then the
-  <code>value</code> attribute value of the node <em class=rfc2119>MUST</em>
-  be valid with regard to the constraints shown in the <q>Value</q>
-  cell of the row.  The conditions are:
-    <ul>
-    <li>There is an owner element (i.e. the <code>Element</code> node
-    pointed by the <code>ownerElement</code> attribute of the 
-    <code>Attr</code> node).
-    <li>The <code>namespaceURI</code> attribute value of the owner element
-    is <code>http://www.w3.org/1999/xhtml</code>.
-    <li>The <code>manakaiLocalName</code> attribute value [@@ TODO: ref]
-    of the owner element is equal to the value in the <q>Element</q> cell
-    of the row.
-    <li>The <code>namespaceURI</code> attribute value of the <code>Attr</code>
-    node is <code>null</code>.
-    <li>The <code>manakaiLocalName</code> attribute value of the
-    <code>Attr</code> node is equal to the value in the <q>Attribute</q>
-    cell of the row.
-    </ul>
-
-  <table>
-  <thead>
-  <tr><th scope=row>Element<th scope=row>Attribute
-  <th scope=row>Value
-  <tbody>
-  <tr><td><code>body</code><td><code>background</code>
-  <td>Syntactically same as <code>img</code> <code>src</code> [HTML5]
-  <tr><td><code>img</code><td><code>longdesc</code>
-  <td>Syntactically same as <code>img</code> <code>src</code> [HTML5]
-
-  <tr><td><code>input</code><td><code>accept-charset</code>
-  <td>Same as <code>accept-charset</code> attribute of the
-  <code>form</code> element [HTML5]
-
-  <tr><td><code>input</code> (<code>type</code> attribute is in Image Button
-  state)
-  <td><code>usemap</code>
-  <td>Syntactically same as <code>img</code> <code>usemap</code> [HTML5]
-  <!-- This definition is necessary, since HTML5 definition for usemap=""
-  has changed after <input usemap> is dropped. -->
-
-  <tr><td><code>object</code><td><code>classid</code> or <code>codebase</code>
-  <td>Syntactically same as <code>img</code> <code>src</code> [HTML5]
-
-  <tr><td><code>head</code><td><code>profile</code>
-  <td>Same as <code>a</code> <code>ping</code> [HTML5]
-  <!-- This definition is necessary, since HTML5 defnition for attributes
-  with URLs has changed after profile="" is dropped. -->
-
-  <tr><td><code>object</code><td><code>archive</code>
-  <td>Same as <code>a</code> <code>ping</code> [HTML5]
-
-  <tr><td><code>object</code><td><code>codetype</code>
-  <td>Same as <code>object</code> <code>type</code> [HTML5]
-  <tr><td><code>param</code><td><code>type</code>
-  <td>Same as <code>object</code> <code>type</code> [HTML5]
-  <tr><td><code>address</code>, <code>div</code>, <code>h1</code>,
-  <code>h2</code>, <code>h3</code>, <code>h4</code>, <code>h5</code>,
-  <code>h6</code>, or <code>p</code>
-  <td><code>align</code>
-  <td>Enumerated attribute [HTML5]
-
-  <tr><td><code>img</code> or <code>object</code><td><code>align</code>
-  <td>Enumerated attribute [HTML5]
-
-  <tr><td><code>input</code> (<code>type</code> attribute is in
-  Image Button state)
-  <td><code>align</code>
-  <td>Enumerated attribute [HTML5], where keywords are: <code>top</code>,
-  <code>middle</code>, <code>bottom</code>, <code>left</code>,
-  <code>right</code><!-- Same as HTML4 Transitional DTD definition.  See
-  also comment below. -->
-
-  <tr><td><code>br</code><td><code>clear</code>
-  <td>Enumerated attribute [HTML5]
-  <tr><td><code>param</code><td><code>valuetype</code>
-  <td>Enumerated attribute [HTML5]
-  <tr><td><code>pre</code><td><code>width</code>
-  <td>Valid non-negative integer [HTML5]
-  <tr><td><code>ul</code>, <code>ol</code>, <code>dir</code>,
-  <code>menu</code>, or <code>dl</code><td><code>compact</code>
-  <td>Boolean attribute [HTML5]
-
-  <tr><td><code>input</code> (<code>type</code> attribute is in Image
-  Button<!-- @@ ref --> state)
-  <td><code>ismap</code>
-  <td>Boolean attribute [HTML5]
-
-  <tr><td><code>table</code><td><code>frame</code> or <code>rules</code>
-  <td>Enumerated attribute [HTML5]
-  <tr><td><code>td</code><td><code>scope</code>
-  <td>Same as <code>scope</code> attribute of the <code>th</code> element
-  [HTML5]
-  <tr><td><code>tbody</code>, <code>thead</code>, <code>tfoot</code>,
-  <code>colgroup</code>, <code>col</code>, <code>tr</code>, <code>td</code>,
-  or <code>th</code><td><code>align</code> or <code>valign</code>
-  <td>Enumerated attribute [HTML5]
-
-  <tr><td><code>colgroup</code>
-  <td><td>width</code>
-  <td>Possible values as per HTML 4.01 [HTML4]
-
-  <tr><td><code>ul</code>
-  <td><code>type</code>
-  <td>Enumerated attribute [HTML5]
-
-  <tr><td><code>ol</code>
-  <td><code>type</code>
-  <td>One of <code>1</code>, <code>a</code>, <code>A</code>,
-  <code>i</code>, or <code>I</code>
-
-  <tr><td><code>li</code>
-  <td><code>type</code>
-  <td>One of <code>ul</code> and <code>ol</code> element's
-  <code>type</code> attribute's valid values
-
-  <tr><td><code>form</code>
-  <td rowspan=3><code>replace</code>
-  <td rowspan=3>Enumerated attribute [HTML5]
-
-  <tr><td><code>input</code> (<code>type</code> attribute is in
-  Image Button<!-- @@ ref --> or Submit Button<!-- @@ ref --> state)
-
-  <tr><td><code>button</code>
-
-  <tr><td><code>link</code><td><code>target</code>
-  <td>Valid browsing context name or keyword [HTML5]
-  <tr id=html-meta-scheme><td><code>meta</code><td><code>schema</code>
-  <td>Any string
-  <!--
-    NOTE: According to HTML4, values for the |scheme| attribute
-    depend on |name| attribute and |profile| of |head|.  Otherwise
-    it is "cdata".  The only profile with any scheme value defined
-    is <http://dublincore.org/documents/dcq-html/> (and those
-    references that profile; see
-    <http://suika.fam.cx/gate/2005/sw/scheme#anchor-55> for more
-    information).
-  -->
-  <tr id=html-rev><td><code>a</code> or <code>link</code><td><code>rev</code>
-  <td>Unordered set of unique space-separated tokens [HTML5]
-  (where any word is allowed)
-  <tr id=html-table-cellpadding><td rowspan=2><code>table</code>
-  <td><code>cellpadding</code>
-  <td rowspan=2>A non-negative integer [HTML5] or a non-negative integer
-  [HTML5] followed by a <code>%</code> character
-  <tr id=html-table-cellspacing><td><code>cellspacing</code>
-  <tr id=html-a-charset><td><code>a</code>
-  <td rowspan=2><code>charset</code>
-  <td rowspan=2>Same as <code>script</code> <code>charset</code> [HTML5],
-  syntactically
-  <tr id=html-link-charset><td><code>link</code>
-
-<tr id=html-textarea-pattern><td><code>textarea</code><td><code>pattern</code>
-<td>Same as <code>input</code> <code>pattern</code>.
-
-<tr id=html-form-accept><td><code>form</code><td><code>accept</code>
-<td>Same as <code>input</code> <code>accept</code>.
-
-  <tr id=html-a-shape><td><code>a</code>
-  <td><code>shape</code>
-  <td>Same as <code>area</code> <code>shape</code>.
-  
-  <tr id=html-a-coords><td><code>a</code>
-  <td><code>coords</code>
-  <td>Same as <code>area</code> <code>coords</code>, except that
-  number and value range of comma-separated values included in the
-  attribute value is not restricted if <code>shape</code> attribute
-  is not specified on the same element.
-
-  <tr id=html-font-color><td><code>font</code> or <code>basefont</code>
-  <td><td>color</code>
-  <td>Possible values as per HTML 4.01 [HTML4]
-
-  <tr id=html-font-size><td><code>font</code> or <code>basefont</code>
-  <td><td>size</code>
-  <td>Possible values as per HTML 4.01 [HTML4]
-
-  </table>
-<li>Any value <em class=rfc2119>MAY</em> be specified to the
-<code>version</code> attribute of an <code>html</code> element.
-<li>@@ elements ...
-
-  <table>
-  <thead>
-  <tr><th scope=row>Element<th scope=row>Content Model
-  <th scope=row>Allowed Context
-  <tbody>
-
-  <tr><th scope=col><code>center</code>
-  <td colspan=2>Same as <code>div</code> [HTML5]
-
-  <tr><th scope=col><code>dir</code>
-  <td colspan=2>Same as <code>ul</code> [HTML5]
-
-  </table>
-</ul>
-
-<p>For an <code>input</code> element whose <code>type</code> attribute
-is <code>add</code>, <code>remove</code>, <code>move-up</code>, or
-<code>move-down</code> (ASCII case-insensitive<!-- ref -->) [WF2],
-attributes that is not allowed for an <code>input</code> element whose
-<code>type</code> attribute is in the Button state<!-- ref --> <em
-class=rfc2119>MUST NOT</em> be specified.<!-- Whether an attribute is
-applicable or not is normatively defined in the table in the Appendix
-B of the Web Forms 2.0 specification.  However, there is no clause
-that states that use of an attribute that is not applied is
-non-conforming.  Note that the <code>template</code> attribute, which
-is applied to the <code>add</code> attribute according to Web Forms
-2.0, is defined as a global attribute (with different semantics and
-syntax) by HTML5 as part of the data template feature. -->
-
-<p>The <code>inputmode</code> attribute applies to an
-<code>input</code> element in Text, E-mail, URL, or Password<!-- @@
-refs --> state.  The <code>replace</code> attribute applies to an
-<code>input</code> element in Image Button or Submit Button<!-- @@
-refs --> state.<!-- In WF2 normative table, but no MUST NOT there. -->
-The <code>usemap</code> attribute applies to an <code>input</code>
-element in Image Button<!-- @@ ref --> state.<!-- In HTML5 prior to
-r997, usemap="" MAY be specified to an input element with Image (now
-Image Button) state, but Image state was not defined yet and there
-were no "MUST NOT".-->  The <code>align</code> attribute applies to an
-<code>input</code> element in Image Button state.<!-- In HTML4, to
-which state(s) this attribute is applied is not defined at all.  In
-addition, the reference to the definition of the attribute is linked
-to a wrong place (align attribute of p element and so on).  In HTML
-2.x, DTD comment implies that this attribute applies to type=image.
-In HTML 2.0, this attribute is only explained for type=image in the
-prose.  --> Any of these attributes <em class=rfc2119>MUST NOT</em> be
-specified for an <code>input</code> element whose <code>type</code>
-attribute is in a state where the attribute does not apply.
-
-<p id=cache-manifest>The 
-<a href="http://www.whatwg.org/specs/web-apps/current-work/#manifests">cache
+<p id=cache-manifest>The <a
+href="http://www.whatwg.org/specs/web-apps/current-work/#manifests">cache
 manifest syntax</a> is also supported.
+
 </div>
 
 <div class=section id=atom>
@@ -440,6 +202,9 @@ is used.
 <p><a href="http://dev.w3.org/cvsweb/~checkout~/2006/webapi/WebIDL/Overview.html?rev=1.96&amp;content-type=text/html;%20charset=utf-8">WebIDL
 Editor's Draft revision 1.96 (<time datetime=2008-09-03>3 September 
 2008</time>)</a> is implemented.</p>
+
+<p><strong>THIS VERSION IS OUT OF DATE!</strong>
+
 </div>
 
 </div>
