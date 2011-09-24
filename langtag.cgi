@@ -32,8 +32,39 @@ print qq{<!DOCTYPE HTML>
 </div>
 };
 
-my $parsed4646 = Whatpm::LangTag->parse_rfc4646_tag ($tag);
-my $parsed5646 = Whatpm::LangTag->parse_rfc5646_tag ($tag);
+my @error4646;
+my @error5646;
+
+my $parsed4646 = Whatpm::LangTag->parse_rfc4646_tag ($tag, sub {
+  push @error4646, {@_};
+});
+my $parsed5646 = Whatpm::LangTag->parse_rfc5646_tag ($tag, sub {
+  push @error5646, {@_};
+});
+my $result4646 = Whatpm::LangTag->check_rfc4646_parsed_tag ($parsed4646, sub {
+  push @error4646, {@_};
+});
+my $result5646 = Whatpm::LangTag->check_rfc5646_parsed_tag ($parsed5646, sub {
+  push @error5646, {@_};
+});
+
+$result4646->{conforming} = 1;
+for (@error4646) {
+  if ($_->{level} eq 'm') {
+    delete $result4646->{conforming};
+  } elsif ($_->{level} eq 's' and $result4646->{conforming}) {
+    $result4646->{conforming} = '';
+  }
+}
+
+$result5646->{conforming} = 1;
+for (@error5646) {
+  if ($_->{level} eq 'm') {
+    delete $result5646->{conforming};
+  } elsif ($_->{level} eq 's' and $result5646->{conforming}) {
+    $result5646->{conforming} = '';
+  }
+}
 
 sub value ($) {
   if (not defined $_[0]) {
@@ -150,6 +181,76 @@ print qq{
       <th>Grandfathered
       <td>@{[value $parsed5646->{grandfathered}]}
       <td>@{[value $parsed4646->{grandfathered}]}
+  <tfoot>
+    <tr>
+      <th>Well-formed?
+      <td>@{[$result5646->{well_formed} ? 'Yes' : 'No']}
+      <td>@{[$result4646->{well_formed} ? 'Yes' : 'No']}
+    <tr>
+      <th>Valid?
+      <td>@{[$result5646->{valid} ? 'Yes' : 'No']}
+      <td>@{[$result4646->{valid} ? 'Yes' : 'No']}
+    <tr>
+      <th>Conforming?
+      <td>@{[$result5646->{conforming} ? 'Yes' : defined $result5646->{conforming} ? 'Maybe no' : 'No']}
+      <td>@{[$result4646->{conforming} ? 'Yes' : defined $result4646->{conforming} ? 'Maybe no' : 'No']}
 </table>
+</div>
+
+<div class=section id=parse-errors>
+<h2>Parse errors</h2>
+
+<div class=section id=parse-errors-5646>
+<h3>RFC 5646 errors</h3>
+
+<ul>
+};
+
+for my $error (@error5646) {
+  print qq{<li class="error-level-@{[htescape $error->{level}]}">};
+  print htescape $error->{type};
+  if (defined $error->{text}) {
+    print qq{ (};
+    print htescape $error->{text};
+    print qq{)};
+  }
+  if (defined $error->{value}) {
+    print qq{ (};
+    print value $error->{value};
+    print qq{)};
+  }
+}
+
+print qq{
+</ul>
+
+</div>
+
+<div class=section id=parse-errors-4646>
+<h3>RFC 4646 errors</h3>
+
+<ul>
+};
+
+for my $error (@error4646) {
+  print qq{<li class="error-level-@{[htescape $error->{level}]}">};
+  print htescape $error->{type};
+  if (defined $error->{text}) {
+    print qq{ (};
+    print htescape $error->{text};
+    print qq{)};
+  }
+  if (defined $error->{value}) {
+    print qq{ (};
+    print value $error->{value};
+    print qq{)};
+  }
+}
+
+print qq{
+</ul>
+
+</div>
+
 </div>
 };
