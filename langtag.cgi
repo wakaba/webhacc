@@ -14,8 +14,26 @@ my $cgi = Message::CGI::HTTP->new;
 
 my $tag = decode 'utf-8', ($cgi->get_parameter ('tag') // '');
 
-print "Content-Type: text/html; charset=utf-8\n\n";
+  require WebHACC::Output;
+  my $out = WebHACC::Output->new;
+  $out->handle (*STDOUT);
+  $out->set_utf8;
+
+  ## TODO: We need real conneg support...
+  my $primary_language = 'en';
+  if ($ENV{HTTP_ACCEPT_LANGUAGE} =~ /ja/) {
+    $primary_language = 'ja';
+  }
+  $out->load_text_catalog ($primary_language);
+
+  $out->http_header;
+
+  require WebHACC::Result;
+  my $result = WebHACC::Result->new;
+  $result->output ($out);
+
 print qq{<!DOCTYPE HTML>
+<html lang="@{[htescape $primary_language]}">
 <title>Language Tag: "@{[htescape $tag]}"</title>
 <link rel=stylesheet href="http://suika.fam.cx/gate/2007/html/cc-style">
 
@@ -24,7 +42,7 @@ print qq{<!DOCTYPE HTML>
 <div class=section id=input>
 <h2>Input</h2>
 
-<form action=langtag accept-charset=utf-8 method=get>
+<form action="" accept-charset=utf-8 method=get>
   <label><strong>Language tag</strong>:
   <input name=tag value="@{[htescape $tag]}"></label>
   <input type=submit value="Show">
@@ -32,6 +50,8 @@ print qq{<!DOCTYPE HTML>
 </div>
 };
 
+my @error1766;
+my @error3066;
 my @error4646;
 my @error5646;
 
@@ -66,6 +86,26 @@ for (@error5646) {
   }
 }
 
+my $result3066 = {conforming => 1};
+Whatpm::LangTag->check_rfc3066_tag ($tag, sub {
+  push @error3066, {@_};
+  if ($error3066[-1]->{level} eq 'm') {
+    delete $result3066->{conforming};
+  } elsif ($error3066[-1]->{level} eq 's' and $result3066->{conforming}) {
+    $result3066->{conforming} = '';
+  }
+});
+
+my $result1766 = {conforming => 1};
+Whatpm::LangTag->check_rfc1766_tag ($tag, sub {
+  push @error1766, {@_};
+  if ($error1766[-1]->{level} eq 'm') {
+    delete $result1766->{conforming};
+  } elsif ($error1766[-1]->{level} eq 's' and $result1766->{conforming}) {
+    $result1766->{conforming} = '';
+  }
+});
+
 sub value ($) {
   if (not defined $_[0]) {
     return '(not defined)';
@@ -86,6 +126,8 @@ print qq{
       <th>
       <th>RFC 5646
       <th>RFC 4646
+      <th>RFC 3066
+      <th>RFC 1766
   <tbody>
     <tr>
       <th>Language
@@ -194,61 +236,71 @@ print qq{
       <th>Conforming?
       <td>@{[$result5646->{conforming} ? 'Yes' : defined $result5646->{conforming} ? 'Maybe no' : 'No']}
       <td>@{[$result4646->{conforming} ? 'Yes' : defined $result4646->{conforming} ? 'Maybe no' : 'No']}
+      <td>@{[$result3066->{conforming} ? 'Yes' : defined $result3066->{conforming} ? 'Maybe no' : 'No']}
+      <td>@{[$result1766->{conforming} ? 'Yes' : defined $result1766->{conforming} ? 'Maybe no' : 'No']}
 </table>
 </div>
 
-<div class=section id=parse-errors>
+<div class="section errors" id=parse-errors>
 <h2>Parse errors</h2>
 
 <div class=section id=parse-errors-5646>
 <h3>RFC 5646 errors</h3>
 
-<ul>
+<dl>
 };
 
 for my $error (@error5646) {
-  print qq{<li class="error-level-@{[htescape $error->{level}]}">};
-  print htescape $error->{type};
-  if (defined $error->{text}) {
-    print qq{ (};
-    print htescape $error->{text};
-    print qq{)};
-  }
-  if (defined $error->{value}) {
-    print qq{ (};
-    print value $error->{value};
-    print qq{)};
-  }
+  $result->add_error (%$error);
 }
 
 print qq{
-</ul>
+</dl>
 
 </div>
 
 <div class=section id=parse-errors-4646>
 <h3>RFC 4646 errors</h3>
 
-<ul>
+<dl>
 };
 
 for my $error (@error4646) {
-  print qq{<li class="error-level-@{[htescape $error->{level}]}">};
-  print htescape $error->{type};
-  if (defined $error->{text}) {
-    print qq{ (};
-    print htescape $error->{text};
-    print qq{)};
-  }
-  if (defined $error->{value}) {
-    print qq{ (};
-    print value $error->{value};
-    print qq{)};
-  }
+  $result->add_error (%$error);
 }
 
 print qq{
-</ul>
+</dl>
+
+</div>
+
+<div class=section id=parse-errors-3066>
+<h3>RFC 3066 errors</h3>
+
+<dl>
+};
+
+for my $error (@error3066) {
+  $result->add_error (%$error);
+}
+
+print qq{
+</dl>
+
+</div>
+
+<div class=section id=parse-errors-1766>
+<h3>RFC 1766 errors</h3>
+
+<dl>
+};
+
+for my $error (@error1766) {
+  $result->add_error (%$error);
+}
+
+print qq{
+</dl>
 
 </div>
 

@@ -33,6 +33,17 @@ sub parent_result ($;$) {
   return $_[0]->{parent_result};
 } # parent_result
 
+sub error_description_path ($;$) {
+  if (@_ > 1)  {
+    if (defined $_[1]) {
+      $_[0]->{error_description_path} = $_[1];
+    } else {
+      delete $_[0]->{error_description_path};
+    }
+  }
+  return $_[0]->{error_description_path} || '../error-description';
+} # error_description_path
+
 sub layer_applicable ($$) {
   my $self = shift;
   my $layer = shift;
@@ -250,7 +261,7 @@ sub add_error ($%) {
   $fragment =~ tr/ /-/;
   $fragment = $out->encode_url_component ($fragment);
   $out->text (' [');
-  $out->start_tag ('a', href => '../error-description#' . $fragment,
+  $out->start_tag ('a', href => $self->error_description_path . '#' . $fragment,
                    rel => 'help');
   $out->nl_text ('Description');
   $out->end_tag ('a');

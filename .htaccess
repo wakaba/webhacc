@@ -2,7 +2,12 @@ Options +ExecCGI +MultiViews
 AddType text/html .cgi
 AddHandler cgi-script .cgi
 
-AddCharset utf-8 .xml
+AddType text/html .html
+
+AddLanguage ja .ja
+AddLanguage en .en
+
+AddCharset utf-8 .xml .u8
 
 Redirect permanent /gate/2007/html/cc-interface.en.html http://suika.fam.cx/gate/2007/html/cc/
 Redirect permanent /gate/2007/html/cc-interface.en http://suika.fam.cx/gate/2007/html/cc/
@@ -10,3 +15,5 @@ Redirect permanent /gate/2007/html/cc-interface http://suika.fam.cx/gate/2007/ht
 
 Redirect gone /gate/2007/html/cc-todo.txt
 Redirect gone /gate/2007/html/cc-todo
+
+## License: Public Domain.
