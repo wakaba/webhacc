@@ -4056,7 +4056,9 @@ Regexp::Parser::JavaScript's extension. -->
 <d:item name="langtag:extension:duplication"
     modules="LangTag::Parser">
   <d:message xml:lang="en">There is another extension subtag
-  <code><var>{value}</var></code>.</d:message>
+  <code><var>{value}</var></code> in the same language tag.
+  A language tag extension can be used only once in
+  the tag.</d:message>
 </d:item>
 
 <d:item name="langtag:extension:order"
@@ -4081,15 +4083,24 @@ Regexp::Parser::JavaScript's extension. -->
 <d:item name="langtag:extlang:deprecated"
     modules="LangTag::Checker">
   <d:message xml:lang="en">Use of extended language subtag
-  <code><var>{value}</var></code> is deprecated<!-- in favor of {text} (might
-  be undef) -->.</d:message>
+  <code><var>{value}</var></code> is deprecated<!-- in favor of {text}
+  language subtag (might be undef) -->.</d:message>
 </d:item>
 
 <d:item name="langtag:extlang:prefix"
     modules="LangTag::Checker">
   <d:message xml:lang="en">Extended language subtag
   <code><var>{text}</var></code> is not allowed in the combination with this
-  language (and extended language) subtag(s).</d:message>
+  language (and extended language) subtag(s).  It must be used
+  with <code><var>{value}</var></code>.</d:message>
+</d:item>
+
+<d:item name="langtag:extlang:preferred"
+    modules="LangTag::Checker">
+  <d:message xml:lang="en">The language subtag and the extended language
+  subtag <code><var>{value}</var></code> should be replaced by the
+  language subtag <code><var>{text}</var></code>.  Use of extended
+  language subtags is not recommended in general.</d:message>
 </d:item>
 
 <d:item name="langtag:extlang:invalid"
@@ -4109,6 +4120,13 @@ Regexp::Parser::JavaScript's extension. -->
   <d:message xml:lang="en">Use of language tag
   <code><var>{value}</var></code> is deprecated<!-- in favor of {text} (might
   be undef) -->.</d:message>
+</d:item>
+
+<d:item name="langtag:grandfathered:i-default"
+    modules="LangTag::Checker">
+  <d:message xml:lang="en">Language tag <code><var>i-default</var></code> 
+  should not be used unless it is really necessary for some 
+  reason.</d:message>
 </d:item>
 
 <d:item name="langtag:grandfathered:invalid"
@@ -4143,10 +4161,16 @@ Regexp::Parser::JavaScript's extension. -->
   is not registered.</d:message>
 </d:item>
 
+<d:item name="langtag:language:mis"
+    modules="LangTag::Checker">
+  <d:message xml:lang="en">Langauge subtag <code>mis</code> should not be
+  used.</d:message>
+</d:item>
+
 <d:item name="langtag:language:mul"
     modules="LangTag::Checker">
-  <d:message xml:lang="en">Langauge tag <code>mul</code> should not be
-  used.</d:message>
+  <d:message xml:lang="en">Langauge subtag <code>mul</code> should not be
+  used unless it is really necessary.</d:message>
 </d:item>
 
 <d:item name="langtag:language:nosemantics"
@@ -4164,13 +4188,14 @@ Regexp::Parser::JavaScript's extension. -->
 <d:item name="langtag:language:syntax"
     modules="LangTag::Parser">
   <d:message xml:lang="en">The language subtag <code><var>{value}</var></code>
-  is syntactically invalid.</d:message>
+  is syntactically invalid.  Language subtag must contain one or more
+  basic latin characters.</d:message>
 </d:item>
 
 <d:item name="langtag:language:und"
     modules="LangTag::Checker">
   <d:message xml:lang="en">Langauge tag <code>und</code> should not be
-  used.</d:message>
+  used unless it is really necessary.</d:message>
 </d:item>
 
 <d:item name="langtag:private"
@@ -4296,7 +4321,7 @@ Regexp::Parser::JavaScript's extension. -->
 <d:item name="langtag:variant:duplication"
     modules="LangTag::Checker">
   <d:message xml:lang="en">Variant subtag <code><var>{value}</var></code>
-  is specified twice.</d:message>
+  is specified twice in the same language tag.</d:message>
 </d:item>
 
 <d:item name="langtag:variant:invalid"
@@ -4305,10 +4330,17 @@ Regexp::Parser::JavaScript's extension. -->
   is not registered.</d:message>
 </d:item>
 
+<d:item name="langtag:variant:order"
+    modules="LangTag::Checker">
+  <d:message xml:lang="en">Variant subtag <code><var>{value}</var></code>
+  should be placed <em>after</em> <code><var>{text}</var></code>.</d:message>
+</d:item>
+
 <d:item name="langtag:variant:prefix"
     modules="LangTag::Checker">
   <d:message xml:lang="en">Variant subtag <code><var>{value}</var></code>
-  cannot be used in this context.</d:message>
+  cannot be used in this context.  It must be preceded by 
+  <code><var>{text}</var></code></d:message>
 </d:item>
 
 </section>

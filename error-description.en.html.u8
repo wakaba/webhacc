@@ -2272,7 +2272,7 @@ Regexp::Parser::JavaScript's extension. -->
 
 <div class="section" id="Unmatched-)"><h3>An unmatched <code>)</code> is found.</h3></div>
 
-<div class="section" id="Can't-do-{n,m}-with-n-&gt;-m"><h3>Quantifier <code>{<var>n</var>,<var>m</var>}</code>
+<div class="section" id="Can't-do-{n,m}-with-n->-m"><h3>Quantifier <code>{<var>n</var>,<var>m</var>}</code>
   cannot be <span class="math"><var>n</var> &gt; <var>m</var></span>.</h3></div>
 
 <div class="section" id="%s-matches-null-string-many-times"><h3><code><var>{text}</var></code> matches
@@ -2602,7 +2602,9 @@ Regexp::Parser::JavaScript's extension. -->
 <h2>Language Tag Errors</h2>
 
 <div class="section" id="langtag:extension:duplication"><h3>There is another extension subtag
-  <code><var>{value}</var></code>.</h3></div>
+  <code><var>{value}</var></code> in the same language tag.
+  A language tag extension can be used only once in
+  the tag.</h3></div>
 
 <div class="section" id="langtag:extension:order"><h3>Extension subtag <code><var>{value}</var></code>
   is placed after subtag <code><var>{text}</var></code>.</h3></div>
@@ -2615,12 +2617,18 @@ Regexp::Parser::JavaScript's extension. -->
   lowercase.</h3></div>
 
 <div class="section" id="langtag:extlang:deprecated"><h3>Use of extended language subtag
-  <code><var>{value}</var></code> is deprecated<!-- in favor of {text} (might
-  be undef) -->.</h3></div>
+  <code><var>{value}</var></code> is deprecated<!-- in favor of {text}
+  language subtag (might be undef) -->.</h3></div>
 
 <div class="section" id="langtag:extlang:prefix"><h3>Extended language subtag
   <code><var>{text}</var></code> is not allowed in the combination with this
-  language (and extended language) subtag(s).</h3></div>
+  language (and extended language) subtag(s).  It must be used
+  with <code><var>{value}</var></code>.</h3></div>
+
+<div class="section" id="langtag:extlang:preferred"><h3>The language subtag and the extended language
+  subtag <code><var>{value}</var></code> should be replaced by the
+  language subtag <code><var>{text}</var></code>.  Use of extended
+  language subtags is not recommended in general.</h3></div>
 
 <div class="section" id="langtag:extlang:invalid"><h3>Extended language subtag 
   <code><var>{text}</var></code> is not registered.</h3></div>
@@ -2631,6 +2639,10 @@ Regexp::Parser::JavaScript's extension. -->
 <div class="section" id="langtag:grandfathered:deprecated"><h3>Use of language tag
   <code><var>{value}</var></code> is deprecated<!-- in favor of {text} (might
   be undef) -->.</h3></div>
+
+<div class="section" id="langtag:grandfathered:i-default"><h3>Language tag <code><var>i-default</var></code> 
+  should not be used unless it is really necessary for some 
+  reason.</h3></div>
 
 <div class="section" id="langtag:grandfathered:invalid"><h3>Language tag <code><var>{value}</var></code> is
   not a combination of RFC 4646 subtags and is not a registered grandfathered
@@ -2649,8 +2661,11 @@ Regexp::Parser::JavaScript's extension. -->
 <div class="section" id="langtag:language:invalid"><h3>Language subtag <code><var>{value}</var></code>
   is not registered.</h3></div>
 
-<div class="section" id="langtag:language:mul"><h3>Langauge tag <code>mul</code> should not be
+<div class="section" id="langtag:language:mis"><h3>Langauge subtag <code>mis</code> should not be
   used.</h3></div>
+
+<div class="section" id="langtag:language:mul"><h3>Langauge subtag <code>mul</code> should not be
+  used unless it is really necessary.</h3></div>
 
 <div class="section" id="langtag:language:nosemantics"><h3>No semantics is defined for language subtag
   <code><var>{value}</var></code>.</h3></div>
@@ -2659,10 +2674,11 @@ Regexp::Parser::JavaScript's extension. -->
   is a private use code.</h3></div>
 
 <div class="section" id="langtag:language:syntax"><h3>The language subtag <code><var>{value}</var></code>
-  is syntactically invalid.</h3></div>
+  is syntactically invalid.  Language subtag must contain one or more
+  basic latin characters.</h3></div>
 
 <div class="section" id="langtag:language:und"><h3>Langauge tag <code>und</code> should not be
-  used.</h3></div>
+  used unless it is really necessary.</h3></div>
 
 <div class="section" id="langtag:private"><h3>It would be better if a private use language
   tag (<code><var>{value}</var></code>) is not used.</h3></div>
@@ -2728,13 +2744,17 @@ Regexp::Parser::JavaScript's extension. -->
   be undef) -->.</h3></div>
 
 <div class="section" id="langtag:variant:duplication"><h3>Variant subtag <code><var>{value}</var></code>
-  is specified twice.</h3></div>
+  is specified twice in the same language tag.</h3></div>
 
 <div class="section" id="langtag:variant:invalid"><h3>Variant subtag <code><var>{value}</var></code>
   is not registered.</h3></div>
 
+<div class="section" id="langtag:variant:order"><h3>Variant subtag <code><var>{value}</var></code>
+  should be placed <em>after</em> <code><var>{text}</var></code>.</h3></div>
+
 <div class="section" id="langtag:variant:prefix"><h3>Variant subtag <code><var>{value}</var></code>
-  cannot be used in this context.</h3></div>
+  cannot be used in this context.  It must be preceded by 
+  <code><var>{text}</var></code></h3></div>
 
 </section>
 
