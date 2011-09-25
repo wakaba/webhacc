@@ -422,7 +422,7 @@ sub load_text_catalog ($$) {
   $lang = 'en' unless -f $file_name;
   $self->{primary_language} = $lang;
   
-  open my $file, '<:utf8', $file_name or die "$0: $file_name: $!";
+  open my $file, '<:encoding(utf-8)', $file_name or die "$0: $file_name: $!";
   while (<$file>) {
     if (s/^([^;]+);([^;]*);//) {
       my ($type, $cls, $msg) = ($1, $2, $_);

@@ -569,6 +569,7 @@ Subject;;Subject
 Predicate;;Predicate
 Object;;Object
 Language tag;;Language tag
+Specify language tag;;Specify your favorite language tag here!
 Subtag:language;;Language
 Subtag:extlang;;Exteneded language
 Subtag:script;;Script

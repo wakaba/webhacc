@@ -4955,6 +4955,11 @@ Regexp::Parser::JavaScript's extension. -->
   <d:text xml:lang="ja">言語タグ</d:text>
 </d:cat>
 
+<d:cat name="Specify language tag">
+  <d:text xml:lang="en">Specify your favorite language tag here!</d:text>
+  <d:text xml:lang="ja">好きな言語タグをここに書きましょうw</d:text>
+</d:cat>
+
 <d:cat name="Subtag:language">
   <d:text xml:lang="en">Language</d:text>
   <d:text xml:lang="ja">言語</d:text>

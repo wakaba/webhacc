@@ -3124,6 +3124,8 @@ Regexp::Parser::JavaScript's extension. -->
 
 
 
+
+
 <div class="section" id="Error-level-m"><h3><a href="../error-description#Error-level-m" rel="help"><em class="rfc2119" title="REQUIRED">必須</em>レベルの誤り</a></h3>
     <p>仕様書の固い要件に対する違反です。文書は不適合です。</p>
   </div>

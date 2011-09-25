@@ -569,6 +569,7 @@ Subject;;主語
 Predicate;;述語
 Object;;目的語
 Language tag;;言語タグ
+Specify language tag;;好きな言語タグをここに書きましょうw
 Subtag:language;;言語
 Subtag:extlang;;拡張言語
 Subtag:script;;用字系

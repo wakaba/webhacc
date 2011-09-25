@@ -49,6 +49,7 @@ print qq{
 };
 
 $out->start_tag ('h1');
+$out->nl_text (q[WebHACC:Heading]);
 $out->nl_text ('Language tag');
 $out->end_tag ('h1');
 
@@ -226,10 +227,17 @@ for my $flag (
   $out->start_tag ('th');
   $out->nl_text ($flag->[1]);
   for ( 
-    $result5646,
-    $result4646,
-    $result3066,
-    $result1766,
+    ($flag->[0] eq 'conforming' ? 
+      (
+        $result5646,
+        $result4646,
+        $result3066,
+        $result1766,
+      ) : (
+        $result5646,
+        $result4646,
+      )
+    )
   ) {
     if ($_->{$flag->[0]}) {
       $out->start_tag ('td');
