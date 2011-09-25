@@ -499,6 +499,24 @@ dd.manifest-fallbacks > p + p:before {
   content: "\21B3  ";
 }
 
+/* Language tag descriptions */
+
+.section.langtag-component {
+  display: inline-block;
+  width: 13em;
+  min-height: 13em;
+  vertical-align: top;
+}
+
+.langtag-component dl {
+  margin-top: 0.3em;
+  margin-bottom: 0.3em;
+}
+
+.langtag-component dt {
+  font-weight: normal;
+}
+
 /* Errors */
 
 .errors dt {
@@ -829,11 +847,9 @@ body[data-scripted] a[rel~=help] {
 
 /*
 
-Copyright 2007-2008 Wakaba <w@suika.fam.cx>.
+Copyright 2007-2011 Wakaba <w@suika.fam.cx>.
 
-This library is free software; you can redistribute it
-and/or modify it under the same terms as Perl itself.
-
-$Date: 2008/12/11 05:11:11 $
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
 
 */

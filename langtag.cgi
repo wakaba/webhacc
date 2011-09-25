@@ -35,7 +35,7 @@ my $tag = decode 'utf-8', ($cgi->get_parameter ('tag') // '');
 print qq{<!DOCTYPE HTML>
 <html lang="@{[htescape $primary_language]}">
 <title>Language Tag: "@{[htescape $tag]}"</title>
-<link rel=stylesheet href="http://suika.fam.cx/gate/2007/html/cc-style">
+<link rel=stylesheet href="../cc-style">
 
 <h1>Language Tag</h1>
 
@@ -304,5 +304,103 @@ print qq{
 
 </div>
 
+</div>
+};
+
+print qq{
+<div class=section id=registry-data>
+<h2>Registry data</h2>
+};
+
+for my $spec (
+  ['rfc4646', $parsed4646],
+  ['rfc5646', $parsed5646],
+) {
+  $out->start_section (title => 'Registry data:' . $spec->[0]);
+
+  my $method = 'tag_registry_data_' . $spec->[0];
+
+  for my $component (
+    (defined $spec->[1]->{language}
+         ? (['language', $spec->[1]->{language}]) : ()),
+    (map { ['extlang', $_] } @{$spec->[1]->{extlang}}),
+    (defined $spec->[1]->{script}
+         ? (['script', $spec->[1]->{script}]) : ()),
+    (defined $spec->[1]->{region}
+         ? (['region', $spec->[1]->{region}]) : ()),
+    (map { ['variant', $_] } @{$spec->[1]->{variant}}),
+    (map { ['extension', $_->[0]] } @{$spec->[1]->{extension}}),
+    (defined $spec->[1]->{grandfathered}
+         ? (['grandfathered', $spec->[1]->{grandfathered}]) : ()),
+    ['redundant', $tag],
+  ) {
+    my $def = Whatpm::LangTag->$method ($component->[0] => $component->[1]);
+    next if not $def and $component->[0] eq 'redundant';
+
+    $out->start_tag ('div', class => 'section langtag-component');
+    $out->start_tag ('dl');
+    $out->start_tag ('dt');
+    $out->nl_text ('Subtag:' . 'language');
+    $out->start_tag ('dd');
+    $out->code ($component->[1]);
+    
+    $out->start_tag ('dt');
+    $out->nl_text ('Registered date');
+    $out->start_tag ('dd');
+    if ($def->{_added}) {
+      $out->start_tag ('time');
+      $out->text ($def->{_added});
+      $out->end_tag ('time');
+    } else {
+      $out->nl_text ('Not registered');
+    }
+    
+    if ($def->{_deprecated} or $def->{_preferred}) {
+      $out->start_tag ('dt');
+      $out->nl_text ('Deprecated');
+      $out->start_tag ('dd');
+      $out->nl_text ($def->{_deprecated} ? 'Yes' : 'No');
+      if ($def->{_preferred}) {
+        $out->start_tag ('dd');
+        $out->nl_text ('->');
+        $out->nl_text (' ');
+        if ($component->[0] =~ /lang|redundant|grandfathered/) {
+          ## _preferred should not contain any & or ; or #
+          $out->start_tag ('a', href => '?tag=' . $def->{_preferred});
+          $out->code ($def->{_preferred});
+          $out->end_tag ('a');
+        } else {
+          $out->code ($def->{_preferred});
+        }
+      }
+    }
+
+    if ($def->{_macro}) {
+      $out->start_tag ('dt');
+      $out->nl_text ('Macrolanguage');
+      $out->start_tag ('dd');
+      ## _macro should not contain any & or ; or #
+      $out->start_tag ('a', href => '?tag=' . $def->{_macro});
+      $out->code ($def->{_macro});
+      $out->end_tag ('a');
+    }
+    
+    if (@{$def->{Description} or []} or @{$def->{Comments} or []}) {
+      $out->start_tag ('dt');
+      $out->nl_text ('Description');
+      for (@{$def->{Description} or []}, @{$def->{Comments} or []}) {
+        $out->start_tag ('dd');
+        $out->text ($_);
+      }
+    }
+    
+    $out->end_tag ('dl');
+    $out->end_tag ('div');
+  } # $component
+
+  $out->end_section;
+}
+
+print qq{
 </div>
 };
