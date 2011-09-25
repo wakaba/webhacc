@@ -2631,7 +2631,16 @@ Regexp::Parser::JavaScript's extension. -->
   language subtags is not recommended in general.</h3></div>
 
 <div class="section" id="langtag:extlang:invalid"><h3>Extended language subtag 
-  <code><var>{text}</var></code> is not registered.</h3></div>
+  <code><var>{value}</var></code> is not registered.</h3>
+    <p>As the extended language subtag, only IANA-registered 
+    strings can be used.  The specified extended language subtag
+    is not registered at the time of construction of the
+    language tag database used by the conformance checker.</p>
+    <p>In addition, second and third slots of the extended language
+    subtags are reserved and not currently used at all.
+    You can only specify at most one extended language subtag
+    in a language tag.</p>
+  </div>
 
 <div class="section" id="langtag:grandfathered:case"><h3>Language tag <code><var>{value}</var></code> is
   not in the preferred case combination.</h3></div>
@@ -2649,7 +2658,13 @@ Regexp::Parser::JavaScript's extension. -->
   tag.</h3></div>
 
 <div class="section" id="langtag:illegal"><h3>Subtag <code><var>{value}</var></code> is 
-  syntactically invalid.</h3></div>
+  syntactically invalid.</h3>
+    <p>Primary language subtag, which represents the language (in
+    narrower sense), has to be a string of two or three basic
+    latin characters (<code>a</code>-<code>z</code>), or has to
+    be prefixed by <code>x-</code> if it represents a language not
+    registered to IANA.</p>
+  </div>
 
 <div class="section" id="langtag:language:case"><h3>It is a good practice to represent ISO 639-1
   language code <code><var>{value}</var></code> in lowercase.</h3></div>
@@ -3063,6 +3078,62 @@ Regexp::Parser::JavaScript's extension. -->
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="section" id="Error-level-m"><h3><a href="../error-description#Error-level-m" rel="help"><em class="rfc2119">MUST</em>‐level
         error</a></h3>
     <p>A violation to a hard requirement of the specification.
@@ -3099,7 +3170,7 @@ Regexp::Parser::JavaScript's extension. -->
 <section id="license">
 <h2>License of This Document</h2>
 
-<p>Copyright <time>2007</time>‐<time>2008</time>
+<p>Copyright <time>2007</time>‐<time>2011</time>
 <a href="http://suika.fam.cx/~wakaba/who?" rel="author" xml:lang="ja">Wakaba</a>
 <code class="mail">&lt;<a href="mailto:w@suika.fam.cx">w@suika.fam.cx</a>&gt;</code>.</p>
 
@@ -3107,6 +3178,5 @@ Regexp::Parser::JavaScript's extension. -->
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2008/12/11 05:11:11 $ -->
 </body>
 </html>

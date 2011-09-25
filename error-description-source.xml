@@ -4106,7 +4106,26 @@ Regexp::Parser::JavaScript's extension. -->
 <d:item name="langtag:extlang:invalid"
     modules="LangTag::Checker">
   <d:message xml:lang="en">Extended language subtag 
-  <code><var>{text}</var></code> is not registered.</d:message>
+  <code><var>{value}</var></code> is not registered.</d:message>
+  <d:message xml:lang="ja">拡張言語部分タグ
+  <code><var>{value}</var></code> は登録されていません。</d:message>
+  <d:desc xml:lang="en">
+    <p>As the extended language subtag, only IANA-registered 
+    strings can be used.  The specified extended language subtag
+    is not registered at the time of construction of the
+    language tag database used by the conformance checker.</p>
+    <p>In addition, second and third slots of the extended language
+    subtags are reserved and not currently used at all.
+    You can only specify at most one extended language subtag
+    in a language tag.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>拡張言語部分タグには IANA に登録された文字列しか使えません。
+    指定された文字列は適合性検査器の言語タグ・データベースの構築の時点で
+    IANA に登録されていませんでした。</p>
+    <p>また、拡張言語部分タグの2つ目と3つ目は現在使われていません。
+    拡張言語部分タグは1つの言語タグの中で1つだけ指定できます。</p>
+  </d:desc>
 </d:item>
 
 <d:item name="langtag:grandfathered:case"
@@ -4140,6 +4159,21 @@ Regexp::Parser::JavaScript's extension. -->
     modules="LangTag::Parser LangTag::Checker">
   <d:message xml:lang="en">Subtag <code><var>{value}</var></code> is 
   syntactically invalid.</d:message>
+  <d:message xml:lang="ja">部分タグ <code><var>{value}</var></code> 
+  は構文的に正しくありません。</d:message>
+  <d:desc xml:lang="en">
+    <p>Primary language subtag, which represents the language (in
+    narrower sense), has to be a string of two or three basic
+    latin characters (<code>a</code>-<code>z</code>), or has to
+    be prefixed by <code>x-</code> if it represents a language not
+    registered to IANA.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>一次言語部分タグ (狭義の言語を表す部分) 
+    は2文字か3文字の基本ラテン文字 (<code>a</code>&#x301C;<code>z</code>) 
+    の列である必要があります。 IANA に登録されていない言語を表したいなら 
+    <code>x-</code> をはじめにつける必要があります。</p>
+  </d:desc>
 </d:item>
 
 <d:item name="langtag:language:case"
@@ -4584,6 +4618,26 @@ Regexp::Parser::JavaScript's extension. -->
       頭部</d:text>
 </d:cat>
 
+<d:cat name="Errors">
+  <d:text xml:lang="en">Errors</d:text>
+  <d:text xml:lang="ja">誤り</d:text>
+</d:cat>
+
+<d:cat name="Well-formed">
+  <d:text xml:lang="en">Well-formed</d:text>
+  <d:text xml:lang="ja">整形式</d:text>
+</d:cat>
+
+<d:cat name="Valid">
+  <d:text xml:lang="en">Valid</d:text>
+  <d:text xml:lang="ja">妥当</d:text>
+</d:cat>
+
+<d:cat name="Conforming">
+  <d:text xml:lang="en">Conforming</d:text>
+  <d:text xml:lang="ja">適合</d:text>
+</d:cat>
+
 <d:cat name="Parse Errors Section">
   <d:text xml:lang="en">Parse Errors</d:text>
   <d:text xml:lang="ja">構文誤り</d:text>
@@ -4592,6 +4646,11 @@ Regexp::Parser::JavaScript's extension. -->
 <d:cat name="Parse Errors">
   <d:text xml:lang="en">Parse Errors</d:text>
   <d:text xml:lang="ja">構文誤り</d:text>
+</d:cat>
+
+<d:cat name="No error found">
+  <d:text xml:lang="en">No error found.</d:text>
+  <d:text xml:lang="ja">誤りは見つかりませんでした。</d:text>
 </d:cat>
 
 <d:cat name="Document Source">
@@ -4679,9 +4738,44 @@ Regexp::Parser::JavaScript's extension. -->
   <d:text xml:lang="ja">転送誤り</d:text>
 </d:cat>
 
+<d:cat name="Registry data">
+  <d:text xml:lang="en">Registry data</d:text>
+  <d:text xml:lang="ja">登録簿データ</d:text>
+</d:cat>
+
+<d:cat name="Registered date">
+  <d:text xml:lang="en">Registered date</d:text>
+  <d:text xml:lang="ja">登録日</d:text>
+</d:cat>
+
+<d:cat name="Not registered">
+  <d:text xml:lang="en">Not registered</d:text>
+  <d:text xml:lang="ja">未登録</d:text>
+</d:cat>
+
 <d:cat name="Result">
   <d:text xml:lang="en">Result</d:text>
   <d:text xml:lang="ja">結果</d:text>
+</d:cat>
+
+<d:cat name="Yes">
+  <d:text xml:lang="en">Yes</d:text>
+  <d:text xml:lang="ja">はい</d:text>
+</d:cat>
+
+<d:cat name="No">
+  <d:text xml:lang="en">No</d:text>
+  <d:text xml:lang="ja">いいえ</d:text>
+</d:cat>
+
+<d:cat name="Maybe no">
+  <d:text xml:lang="en">Maybe no</d:text>
+  <d:text xml:lang="ja">たぶんいいえ</d:text>
+</d:cat>
+
+<d:cat name="Deprecated">
+  <d:text xml:lang="en">Deprecated</d:text>
+  <d:text xml:lang="ja">非推奨</d:text>
 </d:cat>
 
 <d:cat name="manakaiCompatMode:quirks">
@@ -4856,6 +4950,66 @@ Regexp::Parser::JavaScript's extension. -->
   <d:text xml:lang="ja">目的語</d:text>
 </d:cat>
 
+<d:cat name="Language tag">
+  <d:text xml:lang="en">Language tag</d:text>
+  <d:text xml:lang="ja">言語タグ</d:text>
+</d:cat>
+
+<d:cat name="Subtag:language">
+  <d:text xml:lang="en">Language</d:text>
+  <d:text xml:lang="ja">言語</d:text>
+</d:cat>
+
+<d:cat name="Subtag:extlang">
+  <d:text xml:lang="en">Exteneded language</d:text>
+  <d:text xml:lang="ja">拡張言語</d:text>
+</d:cat>
+
+<d:cat name="Subtag:script">
+  <d:text xml:lang="en">Script</d:text>
+  <d:text xml:lang="ja">用字系</d:text>
+</d:cat>
+
+<d:cat name="Subtag:region">
+  <d:text xml:lang="en">Region</d:text>
+  <d:text xml:lang="ja">地域</d:text>
+</d:cat>
+
+<d:cat name="Subtag:variant">
+  <d:text xml:lang="en">Variant</d:text>
+  <d:text xml:lang="ja">異体</d:text>
+</d:cat>
+
+<d:cat name="Subtag:extension">
+  <d:text xml:lang="en">Extension</d:text>
+  <d:text xml:lang="ja">拡張</d:text>
+</d:cat>
+
+<d:cat name="Subtag:privateuse">
+  <d:text xml:lang="en">Private use</d:text>
+  <d:text xml:lang="ja">私用</d:text>
+</d:cat>
+
+<d:cat name="Subtag:illegal">
+  <d:text xml:lang="en">Illegal (broken)</d:text>
+  <d:text xml:lang="ja">不正 (壊れている)</d:text>
+</d:cat>
+
+<d:cat name="Subtag:grandfathered">
+  <d:text xml:lang="en">Grandfathered</d:text>
+  <d:text xml:lang="ja">祖父化</d:text>
+</d:cat>
+
+<d:cat name="Macrolanguage">
+  <d:text xml:lang="en">Macrolanguage</d:text>
+  <d:text xml:lang="ja">マクロ言語</d:text>
+</d:cat>
+
+<d:cat name="Parse result">
+  <d:text xml:lang="en">Parse result</d:text>
+  <d:text xml:lang="ja">構文解析結果</d:text>
+</d:cat>
+
 <d:cat name="character">
   <d:text xml:lang="en">character</d:text>
   <d:text xml:lang="ja">文字</d:text>
@@ -4891,6 +5045,21 @@ Regexp::Parser::JavaScript's extension. -->
   <d:text xml:lang="ja">(不明)</d:text>
 </d:cat>
 
+<d:cat name="(none)">
+  <d:text xml:lang="en">(None)</d:text>
+  <d:text xml:lang="ja">(なし)</d:text>
+</d:cat>
+
+<d:cat name="(undef)">
+  <d:text xml:lang="en">(Not defined)</d:text>
+  <d:text xml:lang="ja">(未定義)</d:text>
+</d:cat>
+
+<d:cat name="(empty)">
+  <d:text xml:lang="en">(Empty string)</d:text>
+  <d:text xml:lang="ja">(空文字列)</d:text>
+</d:cat>
+
 <d:cat name="Description">
   <d:text xml:lang="en">Description</d:text>
   <d:text xml:lang="ja">説明</d:text>
@@ -4922,8 +5091,13 @@ Regexp::Parser::JavaScript's extension. -->
 </d:cat>
 
 <d:cat name="...">
-  <d:text xml:lang="en">..</d:text><!-- TODO: figure hyphen? -->
+  <d:text xml:lang="en">-</d:text>
   <d:text xml:lang="ja">〜</d:text>
+</d:cat>
+
+<d:cat name="->">
+  <d:text xml:lang="en">→</d:text>
+  <d:text xml:lang="ja">→</d:text>
 </d:cat>
 
 <d:cat name="Score">
@@ -5051,21 +5225,29 @@ Regexp::Parser::JavaScript's extension. -->
 <d:cat name="Error level m">
   <d:text xml:lang="en"><a href="../error-description#Error-level-m" rel="help"><em class="rfc2119">MUST</em>‐level
         error</a></d:text>
-  <d:text xml:lang="ja"><a href="../error-description#Error-level-m" rel="help"><em class="rfc2119" title="REQUIRED">必須</em>級の誤り</a></d:text>
+  <d:text xml:lang="ja"><a href="../error-description#Error-level-m" rel="help"><em class="rfc2119" title="REQUIRED">必須</em>レベルの誤り</a></d:text>
   <d:desc xml:lang="en">
     <p>A violation to a hard requirement of the specification.
     The document is non‐conforming.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>仕様書の固い要件に対する違反です。文書は不適合です。</p>
   </d:desc>
 </d:cat>
 
 <d:cat name="Error level s">
   <d:text xml:lang="en"><a href="../error-description#Error-level-s" rel="help"><em class="rfc2119">SHOULD</em>‐level
         error</a></d:text>
-  <d:text xml:lang="ja"><a href="../error-description#Error-level-s" rel="help"><em class="rfc2119" title="RECOMMENDED">推奨</em>級の誤り</a></d:text>
+  <d:text xml:lang="ja"><a href="../error-description#Error-level-s" rel="help"><em class="rfc2119" title="RECOMMENDED">推奨</em>レベルの誤り</a></d:text>
   <d:desc xml:lang="en">
     <p>A violation to a requirement of the specification.
     The violation might be legitimize in some case.  Otherwise,
     the document is non‐conforming.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>仕様書の要件に対する違反です。
+    場合によっては違反してもよい正当な理由があるかもしれませんが、
+    そうでなければ文書は不適合です。</p>
   </d:desc>
 </d:cat>
 
@@ -5104,7 +5286,7 @@ Regexp::Parser::JavaScript's extension. -->
 <section id="license">
 <h2>License of This Document</h2>
 
-<p>Copyright <time>2007</time>‐<time>2008</time>
+<p>Copyright <time>2007</time>‐<time>2011</time>
 <a href="http://suika.fam.cx/~wakaba/who?" rel="author" xml:lang="ja">Wakaba</a>
 <code class="mail">&lt;<a href="mailto:w@suika.fam.cx">w@suika.fam.cx</a>></code>.</p>
 
@@ -5112,6 +5294,5 @@ Regexp::Parser::JavaScript's extension. -->
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2008/12/11 05:11:11 $ -->
 </body>
 </html>

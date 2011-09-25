@@ -430,7 +430,7 @@ langtag:extlang:case;;Extended language subtag <code><var>{value}</var></code> i
 langtag:extlang:deprecated;;Use of extended language subtag <code><var>{value}</var></code> is deprecated<!-- in favor of {text} language subtag (might be undef) -->.
 langtag:extlang:prefix;;Extended language subtag <code><var>{text}</var></code> is not allowed in the combination with this language (and extended language) subtag(s). It must be used with <code><var>{value}</var></code>.
 langtag:extlang:preferred;;The language subtag and the extended language subtag <code><var>{value}</var></code> should be replaced by the language subtag <code><var>{text}</var></code>. Use of extended language subtags is not recommended in general.
-langtag:extlang:invalid;;Extended language subtag <code><var>{text}</var></code> is not registered.
+langtag:extlang:invalid;;Extended language subtag <code><var>{value}</var></code> is not registered.
 langtag:grandfathered:case;;Language tag <code><var>{value}</var></code> is not in the preferred case combination.
 langtag:grandfathered:deprecated;;Use of language tag <code><var>{value}</var></code> is deprecated<!-- in favor of {text} (might be undef) -->.
 langtag:grandfathered:i-default;;Language tag <code><var>i-default</var></code> should not be used unless it is really necessary for some reason.
@@ -502,8 +502,13 @@ Check;;Check
 Setting innerHTML;;Setting <code>innerHTML</code> of HTML element
 Information;;Information
 HTTP Header;;<abbr title="Hypertext Transfer Protocol">HTTP</abbr> Header
+Errors;;Errors
+Well-formed;;Well-formed
+Valid;;Valid
+Conforming;;Conforming
 Parse Errors Section;;Parse Errors
 Parse Errors;;Parse Errors
+No error found;;No error found.
 Document Source;;Document Source
 Source;;Source
 Tables Section;;Structure of Tables
@@ -521,7 +526,14 @@ Structural Errors;;Structural Errors
 Struct. Errors;;Struct. Errors
 Transfer Errors;;Transfer Errors
 Trans. Errors;;Trans. Errors
+Registry data;;Registry data
+Registered date;;Registered date
+Not registered;;Not registered
 Result;;Result
+Yes;;Yes
+No;;No
+Maybe no;;Maybe no
+Deprecated;;Deprecated
 manakaiCompatMode:quirks;;Quirks Mode
 manakaiCompatMode:limited quirks;;Limited Quirks Mode
 manakaiCompatMode:no quirks;;No Quirks Mode
@@ -556,6 +568,18 @@ No entry;;No entry
 Subject;;Subject
 Predicate;;Predicate
 Object;;Object
+Language tag;;Language tag
+Subtag:language;;Language
+Subtag:extlang;;Exteneded language
+Subtag:script;;Script
+Subtag:region;;Region
+Subtag:variant;;Variant
+Subtag:extension;;Extension
+Subtag:privateuse;;Private use
+Subtag:illegal;;Illegal (broken)
+Subtag:grandfathered;;Grandfathered
+Macrolanguage;;Macrolanguage
+Parse result;;Parse result
 character;;character
 characters;;characters
 Line #;;Line <var>{text}</var>
@@ -563,13 +587,17 @@ column #;;column <var>{text}</var>
 Index #;;Index <var>{text}</var>
 Unknown location;;Unknown location
 (unknown);;(Unknown)
+(none);;(None)
+(undef);;(Not defined)
+(empty);;(Empty string)
 Description;;Description
 Table #;;Structure of Table #<var>{text}</var>
 Graph;;Graph
 Regexp #;;Regexp #<var>{text}</var>
 Subdocument #;;Subdocument #<var>{text}</var>
 Sub #;;Sub #<var>{text}</var>
-...;;..
+...;;-
+->;;→
 Score;;Score
 Subtotal;;Subtotal
 Total;;Total

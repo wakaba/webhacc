@@ -430,12 +430,12 @@ langtag:extlang:case;;Extended language subtag <code><var>{value}</var></code> i
 langtag:extlang:deprecated;;Use of extended language subtag <code><var>{value}</var></code> is deprecated<!-- in favor of {text} language subtag (might be undef) -->.
 langtag:extlang:prefix;;Extended language subtag <code><var>{text}</var></code> is not allowed in the combination with this language (and extended language) subtag(s). It must be used with <code><var>{value}</var></code>.
 langtag:extlang:preferred;;The language subtag and the extended language subtag <code><var>{value}</var></code> should be replaced by the language subtag <code><var>{text}</var></code>. Use of extended language subtags is not recommended in general.
-langtag:extlang:invalid;;Extended language subtag <code><var>{text}</var></code> is not registered.
+langtag:extlang:invalid;;拡張言語部分タグ <code><var>{value}</var></code> は登録されていません。
 langtag:grandfathered:case;;Language tag <code><var>{value}</var></code> is not in the preferred case combination.
 langtag:grandfathered:deprecated;;Use of language tag <code><var>{value}</var></code> is deprecated<!-- in favor of {text} (might be undef) -->.
 langtag:grandfathered:i-default;;Language tag <code><var>i-default</var></code> should not be used unless it is really necessary for some reason.
 langtag:grandfathered:invalid;;Language tag <code><var>{value}</var></code> is not a combination of RFC 4646 subtags and is not a registered grandfathered tag.
-langtag:illegal;;Subtag <code><var>{value}</var></code> is syntactically invalid.
+langtag:illegal;;部分タグ <code><var>{value}</var></code> は構文的に正しくありません。
 langtag:language:case;;It is a good practice to represent ISO 639-1 language code <code><var>{value}</var></code> in lowercase.
 langtag:language:deprecated;;Use of language subtag <code><var>{value}</var></code> is deprecated<!-- in favor of {text} (might be undef) -->.
 langtag:language:invalid;;Language subtag <code><var>{value}</var></code> is not registered.
@@ -502,8 +502,13 @@ Check;;検査
 Setting innerHTML;;<code>innerHTML</code> に値を設定する HTML 要素
 Information;;情報
 HTTP Header;;<abbr lang="en" title="Hypertext Transfer Protocol">HTTP</abbr> 頭部
+Errors;;誤り
+Well-formed;;整形式
+Valid;;妥当
+Conforming;;適合
 Parse Errors Section;;構文誤り
 Parse Errors;;構文誤り
+No error found;;誤りは見つかりませんでした。
 Document Source;;文書のソース
 Source;;ソース
 Tables Section;;表の構造
@@ -521,7 +526,14 @@ Structural Errors;;構造的誤り
 Struct. Errors;;構造誤り
 Transfer Errors;;転送誤り
 Trans. Errors;;転送誤り
+Registry data;;登録簿データ
+Registered date;;登録日
+Not registered;;未登録
 Result;;結果
+Yes;;はい
+No;;いいえ
+Maybe no;;たぶんいいえ
+Deprecated;;非推奨
 manakaiCompatMode:quirks;;奇癖モード
 manakaiCompatMode:limited quirks;;限定奇癖モード
 manakaiCompatMode:no quirks;;無奇癖モード
@@ -556,6 +568,18 @@ No entry;;項目なし
 Subject;;主語
 Predicate;;述語
 Object;;目的語
+Language tag;;言語タグ
+Subtag:language;;言語
+Subtag:extlang;;拡張言語
+Subtag:script;;用字系
+Subtag:region;;地域
+Subtag:variant;;異体
+Subtag:extension;;拡張
+Subtag:privateuse;;私用
+Subtag:illegal;;不正 (壊れている)
+Subtag:grandfathered;;祖父化
+Macrolanguage;;マクロ言語
+Parse result;;構文解析結果
 character;;文字
 characters;;文字
 Line #;;<var>{text}</var> 行
@@ -563,6 +587,9 @@ column #;;<var>{text}</var> 列
 Index #;;索引 #<var>{text}</var>
 Unknown location;;位置不明
 (unknown);;(不明)
+(none);;(なし)
+(undef);;(未定義)
+(empty);;(空文字列)
 Description;;説明
 Table #;;表 #<var>{text}</var> の構造
 Graph;;グラフ
@@ -570,6 +597,7 @@ Regexp #;;正規表現 #<var>{text}</var>
 Subdocument #;;部分文書 #<var>{text}</var>
 Sub #;;部分 #<var>{text}</var>
 ...;;〜
+->;;→
 Score;;得点
 Subtotal;;小計
 Total;;合計
@@ -591,8 +619,8 @@ Conformance is conforming;;この文書に適合性に関わる誤りは見つ�
 Conformance is should-error;;この文書は<strong>おそらく<em>不</em>適合</strong>ですが、 稀に適合している場合もあります。適合性検査器はこの文書が稀な場合に該当するかどうか判定できません。
 Conformance is non-conforming;;この文書は<strong><em>不</em>適合</strong>です。
 Conformance is uncertain;;適合性検査器はこの文書が適合するかどうか判定できませんでした。 この文書は適合性検査器が対応していない機能を使っています。 この文書は適合しているかもしれませんし、していないかもしれません。
-Error level m;;<a href="../error-description#Error-level-m" rel="help"><em class="rfc2119" title="REQUIRED">必須</em>級の誤り</a>
-Error level s;;<a href="../error-description#Error-level-s" rel="help"><em class="rfc2119" title="RECOMMENDED">推奨</em>級の誤り</a>
+Error level m;;<a href="../error-description#Error-level-m" rel="help"><em class="rfc2119" title="REQUIRED">必須</em>レベルの誤り</a>
+Error level s;;<a href="../error-description#Error-level-s" rel="help"><em class="rfc2119" title="RECOMMENDED">推奨</em>レベルの誤り</a>
 Error level w;;<a href="../error-description#Error-level-w" rel="help">警告</a>
 Error level i;;<a href="../error-description#Error-level-i" rel="help">情報</a>
 Error level u;;<a href="../error-description#Error-level-u" rel="help">未対応</a>

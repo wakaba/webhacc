@@ -33,22 +33,44 @@ my $tag = decode 'utf-8', ($cgi->get_parameter ('tag') // '');
   $result->output ($out);
 
 print qq{<!DOCTYPE HTML>
-<html lang="@{[htescape $primary_language]}">
-<title>Language Tag: "@{[htescape $tag]}"</title>
-<link rel=stylesheet href="../cc-style">
-
-<h1>Language Tag</h1>
-
-<div class=section id=input>
-<h2>Input</h2>
-
-<form action="" accept-charset=utf-8 method=get>
-  <label><strong>Language tag</strong>:
-  <input name=tag value="@{[htescape $tag]}"></label>
-  <input type=submit value="Show">
-</form>
-</div>
+<html lang="@{[htescape $primary_language]}" class=webhacc-langtag>
 };
+
+$out->start_tag ('title');
+$out->nl_text ('Language tag');
+$out->text (': "' . $tag . '"');
+$out->end_tag ('title');
+
+print qq{
+<link rel=stylesheet href="../cc-style">
+<script src="../cc-script.js"></script>
+
+<body onclick=" return onbodyclick (event) " onload=" onbodyload () ">
+};
+
+$out->start_tag ('h1');
+$out->nl_text ('Language tag');
+$out->end_tag ('h1');
+
+$out->start_section (title => 'Input', id => 'input');
+$out->start_tag ('form', action => '', 'accept-charset' => 'utf-8');
+
+$out->start_tag ('p');
+
+$out->start_tag ('label');
+$out->start_tag ('strong');
+$out->nl_text ('Language tag');
+$out->end_tag ('strong');
+$out->text (': ');
+$out->start_tag ('input', name => 'tag', value => $tag, class => 'langtag');
+$out->end_tag ('label');
+
+$out->start_tag ('button', type => 'submit');
+$out->nl_text ('Check');
+$out->end_tag ('button');
+
+$out->end_tag ('form');
+$out->end_section;
 
 my @error1766;
 my @error3066;
@@ -116,11 +138,22 @@ sub value ($) {
   }
 } # value
 
-print qq{
-<div class=section id=parsed>
-<h2>Parsed language tag</h2>
+sub out_value ($$) {
+  my $out = shift;
+  if (not defined $_[0]) {
+    $out->nl_text ('(undef)');
+  } elsif (not length $_[0]) {
+    $out->nl_text ('(empty)');
+  } else {
+    $out->code ($_[0]);
+  }
+} # out_value
 
-<table>
+$out->start_section (title => 'Parse result', id => 'parsed');
+
+print qq{
+
+<table class=parsed-langtag>
   <thead>
     <tr>
       <th>
@@ -128,195 +161,128 @@ print qq{
       <th>RFC 4646
       <th>RFC 3066
       <th>RFC 1766
-  <tbody>
-    <tr>
-      <th>Language
-      <td>@{[value $parsed5646->{language}]}
-      <td>@{[value $parsed4646->{language}]}
-    <tr>
-      <th>Extended language
-      <td>
-        @{[@{$parsed5646->{extlang}}
-               ? join ', ', map { value $_ } @{$parsed5646->{extlang}}
-               : '(none)']}
-      <td>
-        @{[@{$parsed4646->{extlang}}
-               ? join ', ', map { value $_ } @{$parsed4646->{extlang}}
-               : '(none)']}
-    <tr>
-      <th>Script
-      <td>@{[value $parsed5646->{script}]}
-      <td>@{[value $parsed4646->{script}]}
-    <tr>
-      <th>Region
-      <td>@{[value $parsed5646->{region}]}
-      <td>@{[value $parsed4646->{region}]}
-    <tr>
-      <th>Variants
-      <td>
-        <ul>
-};
+  <tbody>};
 
-for (@{$parsed5646->{variant}}) {
-  print q{<li>};
-  print value $_;
+for my $subtag (
+  ['language'],
+  ['extlang'],
+  ['script'],
+  ['region'],
+  ['variant'],
+  ['extension'],
+  ['privateuse'],
+  ['illegal'],
+) {
+  $out->start_tag ('tr');
+  $out->start_tag ('th');
+  $out->nl_text ('Subtag:' . $subtag->[0]);
+  for (
+    $parsed5646,
+    $parsed4646,
+  ) {
+    $out->start_tag ('td');
+    if (ref $_->{$subtag->[0]} eq 'ARRAY') {
+      if (@{$_->{$subtag->[0]} or []}) {
+        $out->start_tag ('ul');
+        for (@{$_->{$subtag->[0]} or []}) {
+          $out->start_tag ('li');
+          if (ref $_ eq 'ARRAY') {
+            $out->start_tag ('ul');
+            for (@$_) {
+              $out->start_tag ('li');
+              out_value $out, $_;
+            }
+            $out->end_tag ('ul');
+          } else {
+            out_value $out, $_;
+          }
+        }
+      } else {
+        $out->nl_text ('(none)');
+      }
+      $out->end_tag ('ul');
+    } else {
+      out_value $out, $_->{$subtag->[0]};
+    }
+  }
 }
 
-print qq{
-        </ul>
-      <td>
-        <ul>
-};
-
-for (@{$parsed4646->{variant}}) {
-  print q{<li>};
-  print value $_;
+$out->start_tag ('tbody');
+$out->start_tag ('tr');
+$out->start_tag ('th');
+$out->nl_text ('Subtag:grandfathered');
+for ($parsed5646, $parsed4646) {
+  $out->start_tag ('td');
+  out_value $out, $_->{grandfathered};
 }
 
-print q{
-    <tr>
-      <th>Extensions
-      <td>
-        <ul>
-};
-
-for (@{$parsed5646->{extension}}) {
-  print q{<li>};
-  print join ', ', map { value $_ } @{$_};
+$out->start_tag ('tfoot', class => 'result');
+for my $flag (
+  ['well_formed', 'Well-formed'],
+  ['valid', 'Valid'],
+  ['conforming', 'Conforming'],
+) {
+  $out->start_tag ('tr');
+  $out->start_tag ('th');
+  $out->nl_text ($flag->[1]);
+  for ( 
+    $result5646,
+    $result4646,
+    $result3066,
+    $result1766,
+  ) {
+    if ($_->{$flag->[0]}) {
+      $out->start_tag ('td');
+      $out->nl_text ('Yes');
+    } elsif (defined $_->{$flag->[0]}) {
+      $out->start_tag ('td', class => 'should-errors');
+      $out->nl_text ('Maybe no');
+    } else {
+      $out->start_tag ('td', class => 'must-errors');
+      $out->nl_text ('No');
+    }
+  }
 }
 
-print qq{
-        </ul>
-      <td>
-        <ul>
-};
+$out->end_tag ('table');
+$out->end_section;
 
-for (@{$parsed4646->{extension}}) {
-  print q{<li>};
-  print join ', ', map { value $_ } @{$_};
-}
-
-print qq{
-        </ul>
-    <tr>
-      <th>Private use
-      <td>
-        @{[@{$parsed5646->{privateuse}}
-               ? join ', ', map { value $_ } @{$parsed5646->{privateuse}}
-               : '(none)']}
-      <td>
-        @{[@{$parsed4646->{privateuse}}
-               ? join ', ', map { value $_ } @{$parsed4646->{privateuse}}
-               : '(none)']}
-    <tr>
-      <th>Illegal (broken)
-      <td>
-        @{[@{$parsed5646->{illegal}}
-               ? join ', ', map { value $_ } @{$parsed5646->{illegal}}
-               : '(none)']}
-      <td>
-        @{[@{$parsed4646->{illegal}}
-               ? join ', ', map { value $_ } @{$parsed4646->{illegal}}
-               : '(none)']}
-  <tbody>
-    <tr>
-      <th>Grandfathered
-      <td>@{[value $parsed5646->{grandfathered}]}
-      <td>@{[value $parsed4646->{grandfathered}]}
-  <tfoot>
-    <tr>
-      <th>Well-formed?
-      <td>@{[$result5646->{well_formed} ? 'Yes' : 'No']}
-      <td>@{[$result4646->{well_formed} ? 'Yes' : 'No']}
-    <tr>
-      <th>Valid?
-      <td>@{[$result5646->{valid} ? 'Yes' : 'No']}
-      <td>@{[$result4646->{valid} ? 'Yes' : 'No']}
-    <tr>
-      <th>Conforming?
-      <td>@{[$result5646->{conforming} ? 'Yes' : defined $result5646->{conforming} ? 'Maybe no' : 'No']}
-      <td>@{[$result4646->{conforming} ? 'Yes' : defined $result4646->{conforming} ? 'Maybe no' : 'No']}
-      <td>@{[$result3066->{conforming} ? 'Yes' : defined $result3066->{conforming} ? 'Maybe no' : 'No']}
-      <td>@{[$result1766->{conforming} ? 'Yes' : defined $result1766->{conforming} ? 'Maybe no' : 'No']}
-</table>
-</div>
-
-<div class="section errors" id=parse-errors>
-<h2>Parse errors</h2>
-
-<div class=section id=parse-errors-5646>
-<h3>RFC 5646 errors</h3>
-
-<dl>
-};
-
-for my $error (@error5646) {
-  $result->add_error (%$error);
-}
-
-print qq{
-</dl>
-
-</div>
-
-<div class=section id=parse-errors-4646>
-<h3>RFC 4646 errors</h3>
-
-<dl>
-};
-
-for my $error (@error4646) {
-  $result->add_error (%$error);
-}
-
-print qq{
-</dl>
-
-</div>
-
-<div class=section id=parse-errors-3066>
-<h3>RFC 3066 errors</h3>
-
-<dl>
-};
-
-for my $error (@error3066) {
-  $result->add_error (%$error);
-}
-
-print qq{
-</dl>
-
-</div>
-
-<div class=section id=parse-errors-1766>
-<h3>RFC 1766 errors</h3>
-
-<dl>
-};
-
-for my $error (@error1766) {
-  $result->add_error (%$error);
-}
-
-print qq{
-</dl>
-
-</div>
-
-</div>
-};
-
-print qq{
-<div class=section id=registry-data>
-<h2>Registry data</h2>
-};
+$out->start_section (title => 'Errors', class => 'errors', id => 'errors');
 
 for my $spec (
-  ['rfc4646', $parsed4646],
-  ['rfc5646', $parsed5646],
+  ['rfc5646', \@error5646, 'RFC 5646'],
+  ['rfc4646', \@error4646, 'RFC 4646'],
+  ['rfc3066', \@error3066, 'RFC 3066'],
+  ['rfc1766', \@error1766, 'RFC 1766'],
 ) {
-  $out->start_section (title => 'Registry data:' . $spec->[0]);
+  $out->start_section
+      (title => $spec->[2], id => 'errors-' . $spec->[0]);
+
+  if (@{$spec->[1]}) {
+    $out->start_tag ('dl');
+    
+    for my $error (@{$spec->[1]}) {
+      $result->add_error (%$error);
+    }
+    
+    $out->end_tag ('dl');
+  } else {
+    $out->start_tag ('p');
+    $out->nl_text ('No error found.');
+  }
+
+  $out->end_section;
+}
+
+$out->end_section;
+
+$out->start_section (title => 'Registry data', id => 'registry-data');
+
+for my $spec (
+  ['rfc5646', $parsed5646, 'RFC 5646'],
+  ['rfc4646', $parsed4646, 'RFC 4646'],
+) {
+  $out->start_section (title => $spec->[2]);
 
   my $method = 'tag_registry_data_' . $spec->[0];
 
@@ -340,9 +306,9 @@ for my $spec (
     $out->start_tag ('div', class => 'section langtag-component');
     $out->start_tag ('dl');
     $out->start_tag ('dt');
-    $out->nl_text ('Subtag:' . 'language');
+    $out->nl_text ('Subtag:' . $component->[0]);
     $out->start_tag ('dd');
-    $out->code ($component->[1]);
+    out_value $out, $component->[1];
     
     $out->start_tag ('dt');
     $out->nl_text ('Registered date');
@@ -367,10 +333,10 @@ for my $spec (
         if ($component->[0] =~ /lang|redundant|grandfathered/) {
           ## _preferred should not contain any & or ; or #
           $out->start_tag ('a', href => '?tag=' . $def->{_preferred});
-          $out->code ($def->{_preferred});
+          out_value $out, $def->{_preferred};
           $out->end_tag ('a');
         } else {
-          $out->code ($def->{_preferred});
+          out_value $out, $def->{_preferred};
         }
       }
     }
@@ -381,7 +347,7 @@ for my $spec (
       $out->start_tag ('dd');
       ## _macro should not contain any & or ; or #
       $out->start_tag ('a', href => '?tag=' . $def->{_macro});
-      $out->code ($def->{_macro});
+      out_value $out, $def->{_macro};
       $out->end_tag ('a');
     }
     

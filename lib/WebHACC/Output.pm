@@ -172,6 +172,7 @@ sub start_section ($%) {
       delete $opt{role};
     }
   }
+  $class .= ' ' . $opt{class} if defined $opt{class} and length $opt{class};
 
   $self->{section_rank}++;
   $self->html (qq[<div class="$class"]);

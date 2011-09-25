@@ -2624,8 +2624,14 @@ Regexp::Parser::JavaScript's extension. -->
   language subtag <code><var>{text}</var></code>.  Use of extended
   language subtags is not recommended in general.</h3></div>
 
-<div class="section" id="langtag:extlang:invalid"><h3>Extended language subtag 
-  <code><var>{text}</var></code> is not registered.</h3></div>
+<div class="section" id="langtag:extlang:invalid"><h3>拡張言語部分タグ
+  <code><var>{value}</var></code> は登録されていません。</h3>
+    <p>拡張言語部分タグには IANA に登録された文字列しか使えません。
+    指定された文字列は適合性検査器の言語タグ・データベースの構築の時点で
+    IANA に登録されていませんでした。</p>
+    <p>また、拡張言語部分タグの2つ目と3つ目は現在使われていません。
+    拡張言語部分タグは1つの言語タグの中で1つだけ指定できます。</p>
+  </div>
 
 <div class="section" id="langtag:grandfathered:case"><h3>Language tag <code><var>{value}</var></code> is
   not in the preferred case combination.</h3></div>
@@ -2642,8 +2648,13 @@ Regexp::Parser::JavaScript's extension. -->
   not a combination of RFC 4646 subtags and is not a registered grandfathered
   tag.</h3></div>
 
-<div class="section" id="langtag:illegal"><h3>Subtag <code><var>{value}</var></code> is 
-  syntactically invalid.</h3></div>
+<div class="section" id="langtag:illegal"><h3>部分タグ <code><var>{value}</var></code> 
+  は構文的に正しくありません。</h3>
+    <p>一次言語部分タグ (狭義の言語を表す部分) 
+    は2文字か3文字の基本ラテン文字 (<code>a</code>〜<code>z</code>) 
+    の列である必要があります。 IANA に登録されていない言語を表したいなら 
+    <code>x-</code> をはじめにつける必要があります。</p>
+  </div>
 
 <div class="section" id="langtag:language:case"><h3>It is a good practice to represent ISO 639-1
   language code <code><var>{value}</var></code> in lowercase.</h3></div>
@@ -3057,15 +3068,70 @@ Regexp::Parser::JavaScript's extension. -->
 
 
 
-<div class="section" id="Error-level-m"><h3><a href="../error-description#Error-level-m" rel="help"><em class="rfc2119" title="REQUIRED">必須</em>級の誤り</a></h3>
-    <p>A violation to a hard requirement of the specification.
-    The document is non‐conforming.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section" id="Error-level-m"><h3><a href="../error-description#Error-level-m" rel="help"><em class="rfc2119" title="REQUIRED">必須</em>レベルの誤り</a></h3>
+    <p>仕様書の固い要件に対する違反です。文書は不適合です。</p>
   </div>
 
-<div class="section" id="Error-level-s"><h3><a href="../error-description#Error-level-s" rel="help"><em class="rfc2119" title="RECOMMENDED">推奨</em>級の誤り</a></h3>
-    <p>A violation to a requirement of the specification.
-    The violation might be legitimize in some case.  Otherwise,
-    the document is non‐conforming.</p>
+<div class="section" id="Error-level-s"><h3><a href="../error-description#Error-level-s" rel="help"><em class="rfc2119" title="RECOMMENDED">推奨</em>レベルの誤り</a></h3>
+    <p>仕様書の要件に対する違反です。
+    場合によっては違反してもよい正当な理由があるかもしれませんが、
+    そうでなければ文書は不適合です。</p>
   </div>
 
 <div class="section" id="Error-level-w"><h3><a href="../error-description#Error-level-w" rel="help">警告</a></h3>
@@ -3090,7 +3156,7 @@ Regexp::Parser::JavaScript's extension. -->
 <section id="license">
 <h2>License of This Document</h2>
 
-<p>Copyright <time>2007</time>‐<time>2008</time>
+<p>Copyright <time>2007</time>‐<time>2011</time>
 <a href="http://suika.fam.cx/~wakaba/who?" rel="author" xml:lang="ja">Wakaba</a>
 <code class="mail">&lt;<a href="mailto:w@suika.fam.cx">w@suika.fam.cx</a>&gt;</code>.</p>
 
@@ -3098,6 +3164,5 @@ Regexp::Parser::JavaScript's extension. -->
 and/or modify it under the same terms as Perl itself.</p>
 </section>
 
-<!-- $Date: 2008/12/11 05:11:11 $ -->
 </body>
 </html>
