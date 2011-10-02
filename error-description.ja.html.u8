@@ -2656,17 +2656,35 @@ Regexp::Parser::JavaScript's extension. -->
     は2文字か3文字の基本ラテン文字 (<code>a</code>〜<code>z</code>) 
     の列である必要があります。 IANA に登録されていない言語を表したいなら 
     <code>x-</code> をはじめにつける必要があります。</p>
+    <p>その他の部分タグは1文字から8文字の英数字
+    (<code>0</code>〜<code>9</code>,
+    <code>a</code>〜<code>z</code>) でなければなりません。</p>
+    <p>RFC 1766 言語タグ構文 (廃止済み) では数字は使えませんでした。</p>
   </div>
 
-<div class="section" id="langtag:language:case"><h3>It is a good practice to represent ISO 639-1
-  language code <code><var>{value}</var></code> in lowercase.</h3></div>
+<div class="section" id="langtag:deprecated"><h3>言語タグ
+  <code><var>{value}</var></code> は非推奨です。</h3></div>
+
+<div class="section" id="langtag:notregistered"><h3>言語タグ
+  <code><var>{value}</var></code> は登録されていません。</h3>
+    <p>指定された言語タグは IANA に登録されていません。
+    未登録の言語タグを使うことは禁止されていませんが、
+    相互運用性に問題があるかもしれません。</p>
+  </div>
+
+<div class="section" id="langtag:language:case"><h3>ISO 639 言語符号 <code><var>{value}</var></code>
+  は小文字で表すのが良いとされています。</h3>
+    <p>指定された一次言語部分タグには大文字が含まれていました。
+    言語タグでは ASCII の大文字と小文字を区別しませんが、
+    言語部分タグでは常に小文字を使うのがよいとされています。</p>
+  </div>
 
 <div class="section" id="langtag:language:deprecated"><h3>Use of language subtag
   <code><var>{value}</var></code> is deprecated<!-- in favor of {text} (might
   be undef) -->.</h3></div>
 
-<div class="section" id="langtag:language:invalid"><h3>Language subtag <code><var>{value}</var></code>
-  is not registered.</h3></div>
+<div class="section" id="langtag:language:invalid"><h3>言語部分タグ <code><var>{value}</var></code>
+  は登録されていません。</h3></div>
 
 <div class="section" id="langtag:language:mis"><h3>Langauge subtag <code>mis</code> should not be
   used.</h3></div>
@@ -2674,11 +2692,11 @@ Regexp::Parser::JavaScript's extension. -->
 <div class="section" id="langtag:language:mul"><h3>Langauge subtag <code>mul</code> should not be
   used unless it is really necessary.</h3></div>
 
-<div class="section" id="langtag:language:nosemantics"><h3>No semantics is defined for language subtag
-  <code><var>{value}</var></code>.</h3></div>
+<div class="section" id="langtag:language:nosemantics"><h3>言語部分タグ <code><var>{value}</var></code>
+  は定義されていません。</h3></div>
 
-<div class="section" id="langtag:language:private"><h3>Language subtag <code><var>{value}</var></code>
-  is a private use code.</h3></div>
+<div class="section" id="langtag:language:private"><h3>言語部分タグ <code><var>{value}</var></code>
+  は私用の符号です。</h3></div>
 
 <div class="section" id="langtag:language:syntax"><h3>The language subtag <code><var>{value}</var></code>
   is syntactically invalid.  Language subtag must contain one or more
@@ -2687,8 +2705,8 @@ Regexp::Parser::JavaScript's extension. -->
 <div class="section" id="langtag:language:und"><h3>Langauge tag <code>und</code> should not be
   used unless it is really necessary.</h3></div>
 
-<div class="section" id="langtag:private"><h3>It would be better if a private use language
-  tag (<code><var>{value}</var></code>) is not used.</h3></div>
+<div class="section" id="langtag:private"><h3>私用言語タグ <code><var>{value}</var></code>
+  はできれば避けるべきです。</h3></div>
 
 <div class="section" id="langtag:privateuse"><h3>Private use subtag <code><var>{value}</var></code>
   is used.</h3></div>
@@ -2709,9 +2727,8 @@ Regexp::Parser::JavaScript's extension. -->
 <div class="section" id="langtag:region:case"><h3>It is a good practice to represent ISO 3166
   country code <code><var>{value}</var></code> in uppercase.</h3></div>
 
-<div class="section" id="langtag:region:deprecated"><h3>Use of region subtag
-  <code><var>{value}</var></code> is deprecated<!-- in favor of {text} (might
-  be undef) -->.</h3></div>
+<div class="section" id="langtag:region:deprecated"><h3>地域部分タグ
+  <code><var>{value}</var></code> は非推奨です。</h3></div>
 
 <div class="section" id="langtag:region:nosemantics"><h3>No semantics is defined for region subtag
   <code><var>{value}</var></code>.</h3></div>
@@ -2719,8 +2736,9 @@ Regexp::Parser::JavaScript's extension. -->
 <div class="section" id="langtag:region:invalid"><h3>Region subtag <code><var>{value}</var></code>
   is not registered.</h3></div>
 
-<div class="section" id="langtag:region:private"><h3>Use of private use country code
-  <code><var>{value}</var></code> is not allowed.</h3></div>
+<div class="section" id="langtag:region:private"><h3>Private use country code
+  <code><var>{value}</var></code> should be avoided where
+  possible.</h3></div>
 
 <div class="section" id="langtag:script:case"><h3>Script subtag <code><var>{value}</var></code> is 
   not in the preferred form, i.e. titlecase.</h3></div>

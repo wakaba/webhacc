@@ -2665,10 +2665,30 @@ Regexp::Parser::JavaScript's extension. -->
     latin characters (<code>a</code>-<code>z</code>), or has to
     be prefixed by <code>x-</code> if it represents a language not
     registered to IANA.</p>
+    <p>The other subtags has to be a string of 1-8
+    letters and/or digits (<code>0</code>-<code>9</code>,
+    <code>a</code>-<code>z</code>).</p>
+    <p>In RFC 1766 (now obsoleted) language tag syntax,
+    digits could not be used.</p>
   </div>
 
-<div class="section" id="langtag:language:case"><h3>It is a good practice to represent ISO 639-1
-  language code <code><var>{value}</var></code> in lowercase.</h3></div>
+<div class="section" id="langtag:deprecated"><h3>Use of language tag
+  <code><var>{value}</var></code> is deprecated<!-- in favor of {text} (might
+  be undef) -->.</h3></div>
+
+<div class="section" id="langtag:notregistered"><h3>Language tag
+  <code><var>{value}</var></code> is not registered.</h3>
+    <p>The specified language tag is not registered to IANA.
+    Although it is allowed to use an unregistered language
+    tag, it might not be interoperable.</p>
+  </div>
+
+<div class="section" id="langtag:language:case"><h3>It is a good practice to represent ISO 639
+  language code <code><var>{value}</var></code> in lowercase.</h3>
+    <p>The specified primary language subtag contains a uppercase
+    letter.  Although language tags are ASCII case-insensitive,
+    it is recommended to always use lowercase for language subtags.</p>
+  </div>
 
 <div class="section" id="langtag:language:deprecated"><h3>Use of language subtag
   <code><var>{value}</var></code> is deprecated<!-- in favor of {text} (might
@@ -2696,8 +2716,9 @@ Regexp::Parser::JavaScript's extension. -->
 <div class="section" id="langtag:language:und"><h3>Langauge tag <code>und</code> should not be
   used unless it is really necessary.</h3></div>
 
-<div class="section" id="langtag:private"><h3>It would be better if a private use language
-  tag (<code><var>{value}</var></code>) is not used.</h3></div>
+<div class="section" id="langtag:private"><h3>Private use language tag 
+  <code><var>{value}</var></code> should be avoided where 
+  possible.</h3></div>
 
 <div class="section" id="langtag:privateuse"><h3>Private use subtag <code><var>{value}</var></code>
   is used.</h3></div>
@@ -2728,8 +2749,9 @@ Regexp::Parser::JavaScript's extension. -->
 <div class="section" id="langtag:region:invalid"><h3>Region subtag <code><var>{value}</var></code>
   is not registered.</h3></div>
 
-<div class="section" id="langtag:region:private"><h3>Use of private use country code
-  <code><var>{value}</var></code> is not allowed.</h3></div>
+<div class="section" id="langtag:region:private"><h3>Private use country code
+  <code><var>{value}</var></code> should be avoided where
+  possible.</h3></div>
 
 <div class="section" id="langtag:script:case"><h3>Script subtag <code><var>{value}</var></code> is 
   not in the preferred form, i.e. titlecase.</h3></div>

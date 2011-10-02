@@ -436,26 +436,28 @@ langtag:grandfathered:deprecated;;Use of language tag <code><var>{value}</var></
 langtag:grandfathered:i-default;;Language tag <code><var>i-default</var></code> should not be used unless it is really necessary for some reason.
 langtag:grandfathered:invalid;;Language tag <code><var>{value}</var></code> is not a combination of RFC 4646 subtags and is not a registered grandfathered tag.
 langtag:illegal;;部分タグ <code><var>{value}</var></code> は構文的に正しくありません。
-langtag:language:case;;It is a good practice to represent ISO 639-1 language code <code><var>{value}</var></code> in lowercase.
+langtag:deprecated;;言語タグ <code><var>{value}</var></code> は非推奨です。
+langtag:notregistered;;言語タグ <code><var>{value}</var></code> は登録されていません。
+langtag:language:case;;ISO 639 言語符号 <code><var>{value}</var></code> は小文字で表すのが良いとされています。
 langtag:language:deprecated;;Use of language subtag <code><var>{value}</var></code> is deprecated<!-- in favor of {text} (might be undef) -->.
-langtag:language:invalid;;Language subtag <code><var>{value}</var></code> is not registered.
+langtag:language:invalid;;言語部分タグ <code><var>{value}</var></code> は登録されていません。
 langtag:language:mis;;Langauge subtag <code>mis</code> should not be used.
 langtag:language:mul;;Langauge subtag <code>mul</code> should not be used unless it is really necessary.
-langtag:language:nosemantics;;No semantics is defined for language subtag <code><var>{value}</var></code>.
-langtag:language:private;;Language subtag <code><var>{value}</var></code> is a private use code.
+langtag:language:nosemantics;;言語部分タグ <code><var>{value}</var></code> は定義されていません。
+langtag:language:private;;言語部分タグ <code><var>{value}</var></code> は私用の符号です。
 langtag:language:syntax;;The language subtag <code><var>{value}</var></code> is syntactically invalid. Language subtag must contain one or more basic latin characters.
 langtag:language:und;;Langauge tag <code>und</code> should not be used unless it is really necessary.
-langtag:private;;It would be better if a private use language tag (<code><var>{value}</var></code>) is not used.
+langtag:private;;私用言語タグ <code><var>{value}</var></code> はできれば避けるべきです。
 langtag:privateuse;;Private use subtag <code><var>{value}</var></code> is used.
 langtag:privateuse:case;;Subtag <code><var>{value}</var></code> is not represented in the preferred case format.
 langtag:privateuse:syntax;;Private use subtag <code><var>{value}</var></code> is syntactically invalid.
 langtag:redundant:case;;Language tag <code><var>{value}</var></code> is not in the preferred case combination.
 langtag:redundant:deprecated;;Use of language tag <code><var>{value}</var></code> is deprecated<!-- in favor of {text} (might be undef) -->.
 langtag:region:case;;It is a good practice to represent ISO 3166 country code <code><var>{value}</var></code> in uppercase.
-langtag:region:deprecated;;Use of region subtag <code><var>{value}</var></code> is deprecated<!-- in favor of {text} (might be undef) -->.
+langtag:region:deprecated;;地域部分タグ <code><var>{value}</var></code> は非推奨です。
 langtag:region:nosemantics;;No semantics is defined for region subtag <code><var>{value}</var></code>.
 langtag:region:invalid;;Region subtag <code><var>{value}</var></code> is not registered.
-langtag:region:private;;Use of private use country code <code><var>{value}</var></code> is not allowed.
+langtag:region:private;;Private use country code <code><var>{value}</var></code> should be avoided where possible.
 langtag:script:case;;Script subtag <code><var>{value}</var></code> is not in the preferred form, i.e. titlecase.
 langtag:script:deprecated;;Use of script subtag <code><var>{value}</var></code> is deprecated<!-- in favor of {text} (might be undef) -->.
 langtag:script:invalid;;Script subtag <code><var>{value}</var></code> is not registered.

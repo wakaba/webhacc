@@ -4176,19 +4176,67 @@ Regexp::Parser::JavaScript's extension. -->
     latin characters (<code>a</code>-<code>z</code>), or has to
     be prefixed by <code>x-</code> if it represents a language not
     registered to IANA.</p>
+    <p>The other subtags has to be a string of 1-8
+    letters and/or digits (<code>0</code>-<code>9</code>,
+    <code>a</code>-<code>z</code>).</p>
+    <p>In RFC 1766 (now obsoleted) language tag syntax,
+    digits could not be used.</p>
   </d:desc>
   <d:desc xml:lang="ja">
     <p>一次言語部分タグ (狭義の言語を表す部分) 
     は2文字か3文字の基本ラテン文字 (<code>a</code>&#x301C;<code>z</code>) 
     の列である必要があります。 IANA に登録されていない言語を表したいなら 
     <code>x-</code> をはじめにつける必要があります。</p>
+    <p>その他の部分タグは1文字から8文字の英数字
+    (<code>0</code>&#x301C;<code>9</code>,
+    <code>a</code>&#x301C;<code>z</code>) でなければなりません。</p>
+    <p>RFC 1766 言語タグ構文 (廃止済み) では数字は使えませんでした。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="langtag:deprecated"
+    modules="LangTag::Checker">
+  <d:message xml:lang="en">Use of language tag
+  <code><var>{value}</var></code> is deprecated<!-- in favor of {text} (might
+  be undef) -->.</d:message>
+  <d:message xml:lang="ja">言語タグ
+  <code><var>{value}</var></code> は非推奨です。</d:message>
+</d:item>
+
+<d:item name="langtag:notregistered"
+    modules="LangTag::Checker">
+  <d:message xml:lang="en">Language tag
+  <code><var>{value}</var></code> is not registered.</d:message>
+  <d:message xml:lang="ja">言語タグ
+  <code><var>{value}</var></code> は登録されていません。</d:message>
+  <d:desc xml:lang="en">
+    <p>The specified language tag is not registered to IANA.
+    Although it is allowed to use an unregistered language
+    tag, it might not be interoperable.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>指定された言語タグは IANA に登録されていません。
+    未登録の言語タグを使うことは禁止されていませんが、
+    相互運用性に問題があるかもしれません。</p>
   </d:desc>
 </d:item>
 
 <d:item name="langtag:language:case"
     modules="LangTag::Checker">
-  <d:message xml:lang="en">It is a good practice to represent ISO 639-1
+  <d:message xml:lang="en">It is a good practice to represent ISO 639
   language code <code><var>{value}</var></code> in lowercase.</d:message>
+  <d:message xml:lang="ja">ISO 639 言語符号 <code><var>{value}</var></code>
+  は小文字で表すのが良いとされています。</d:message>
+  <d:desc xml:lang="en">
+    <p>The specified primary language subtag contains a uppercase
+    letter.  Although language tags are ASCII case-insensitive,
+    it is recommended to always use lowercase for language subtags.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>指定された一次言語部分タグには大文字が含まれていました。
+    言語タグでは ASCII の大文字と小文字を区別しませんが、
+    言語部分タグでは常に小文字を使うのがよいとされています。</p>
+  </d:desc>
 </d:item>
 
 <d:item name="langtag:language:deprecated"
@@ -4202,6 +4250,8 @@ Regexp::Parser::JavaScript's extension. -->
     modules="LangTag::Checker">
   <d:message xml:lang="en">Language subtag <code><var>{value}</var></code>
   is not registered.</d:message>
+  <d:message xml:lang="ja">言語部分タグ <code><var>{value}</var></code>
+  は登録されていません。</d:message>
 </d:item>
 
 <d:item name="langtag:language:mis"
@@ -4220,12 +4270,16 @@ Regexp::Parser::JavaScript's extension. -->
     modules="LangTag::Checker">
   <d:message xml:lang="en">No semantics is defined for language subtag
   <code><var>{value}</var></code>.</d:message>
+  <d:message xml:lang="ja">言語部分タグ <code><var>{value}</var></code>
+  は定義されていません。</d:message>
 </d:item>
 
 <d:item name="langtag:language:private"
     modules="LangTag::Checker">
   <d:message xml:lang="en">Language subtag <code><var>{value}</var></code>
   is a private use code.</d:message>
+  <d:message xml:lang="ja">言語部分タグ <code><var>{value}</var></code>
+  は私用の符号です。</d:message>
 </d:item>
 
 <d:item name="langtag:language:syntax"
@@ -4243,8 +4297,11 @@ Regexp::Parser::JavaScript's extension. -->
 
 <d:item name="langtag:private"
     modules="LangTag::Checker">
-  <d:message xml:lang="en">It would be better if a private use language
-  tag (<code><var>{value}</var></code>) is not used.</d:message>
+  <d:message xml:lang="en">Private use language tag 
+  <code><var>{value}</var></code> should be avoided where 
+  possible.</d:message>
+  <d:message xml:lang="ja">私用言語タグ <code><var>{value}</var></code>
+  はできれば避けるべきです。</d:message>
 </d:item>
 
 <d:item name="langtag:privateuse"
@@ -4289,6 +4346,8 @@ Regexp::Parser::JavaScript's extension. -->
   <d:message xml:lang="en">Use of region subtag
   <code><var>{value}</var></code> is deprecated<!-- in favor of {text} (might
   be undef) -->.</d:message>
+  <d:message xml:lang="ja">地域部分タグ
+  <code><var>{value}</var></code> は非推奨です。</d:message>
 </d:item>
 
 <d:item name="langtag:region:nosemantics"
@@ -4305,8 +4364,9 @@ Regexp::Parser::JavaScript's extension. -->
 
 <d:item name="langtag:region:private"
     modules="LangTag::Checker">
-  <d:message xml:lang="en">Use of private use country code
-  <code><var>{value}</var></code> is not allowed.</d:message>
+  <d:message xml:lang="en">Private use country code
+  <code><var>{value}</var></code> should be avoided where
+  possible.</d:message>
 </d:item>
 
 <d:item name="langtag:script:case"
