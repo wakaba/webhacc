@@ -2595,10 +2595,12 @@ Regexp::Parser::JavaScript's extension. -->
 <section id="langtag-errors">
 <h2>Language Tag Errors</h2>
 
-<div class="section" id="langtag:extension:duplication"><h3>There is another extension subtag
-  <code><var>{value}</var></code> in the same language tag.
-  A language tag extension can be used only once in
-  the tag.</h3></div>
+<div class="section" id="langtag:extension:duplication"><h3>拡張部分タグ <code><var>{value}</var></code>
+  はこの言語タグ中で既に使われています。</h3>
+    <p>There are two extension subtags with the same singleton in
+    the language tag.  A language tag extension can be used only
+    once in a language tag.</p>
+  </div>
 
 <div class="section" id="langtag:extension:order"><h3>Extension subtag <code><var>{value}</var></code>
   is placed after subtag <code><var>{text}</var></code>.</h3></div>
@@ -2737,8 +2739,12 @@ Regexp::Parser::JavaScript's extension. -->
   should be suppressed when the language subtag is
   <code><var>{text}</var></code>.</h3></div>
 
-<div class="section" id="langtag:variant:case"><h3>Variant subtag <code><var>{value}</var></code> is
-  not in the preferred form, i.e. lowercase.</h3></div>
+<div class="section" id="langtag:variant:case"><h3>異体部分タグ <code><var>{value}</var></code> 
+  は小文字表記が好ましいとされています。</h3>
+    <p>異体部分タグに大文字が含まれています。言語タグは ASCII
+    の大文字と小文字を区別しませんが、
+    異体部分タグについては小文字が好ましいとされています。</p>
+  </div>
 
 <div class="section" id="langtag:variant:combination"><h3>Variant subtag <code><var>{text}</var></code> might
   not be meaningful when it is used in combination with
@@ -2754,12 +2760,89 @@ Regexp::Parser::JavaScript's extension. -->
 <div class="section" id="langtag:variant:invalid"><h3>Variant subtag <code><var>{value}</var></code>
   is not registered.</h3></div>
 
-<div class="section" id="langtag:variant:order"><h3>Variant subtag <code><var>{value}</var></code>
-  should be placed <em>after</em> <code><var>{text}</var></code>.</h3></div>
+<div class="section" id="langtag:variant:order"><h3>異体部分タグ <code><var>{value}</var></code>
+  は <code><var>{text}</var></code> 
+  よりも<em>後</em>に来るべきです。</h3>
+    <p>異体部分タグが複数ある時は、最も重要なものが先に来るべきです。
+    重要度を決められない時は、アルファベット順に並べるべきです。</p>
+  </div>
 
 <div class="section" id="langtag:variant:prefix"><h3>Variant subtag <code><var>{value}</var></code>
   cannot be used in this context.  It must be preceded by 
   <code><var>{text}</var></code></h3></div>
+
+<div class="section" id="langtag:extension:u:case"><h3>拡張部分タグ <code><var>{value}</var></code> 
+  は小文字表記が好ましいとされています。</h3>
+    <p><code>u</code> 拡張の部分タグに大文字が含まれています。
+    言語タグは ASCII の大文字と小文字を区別しませんが、
+    <code>u</code> 拡張の正準形は小文字とされています。</p>
+  </div>
+
+<div class="section" id="langtag:extension:u:attr:duplication"><h3>属性 <code><var>{value}</var></code>
+  はこの言語タグ拡張部分タグ中で既に使われています。</h3>
+    <p>There are two attributes with same values in the
+    <code>u</code>-extension subtag of the language tag.
+    An attribute can be used only once in a language
+    tag.</p>
+  </div>
+
+<div class="section" id="langtag:extension:u:attr:order"><h3>属性 <code><var>{value}</var></code>
+  は <code><var>{text}</var></code> 
+  よりも<em>後</em>に来るべきです。</h3>
+    <p>属性が複数ある時は、アルファベット順に並べるのが正準形です。</p>
+  </div>
+
+<div class="section" id="langtag:extension:u:attr:invalid"><h3>属性 <code><var>{value}</var></code>
+  は定義されていません。</h3>
+    <p>現時点で <code>u</code> 拡張の属性は1つも定義されていません。</p>
+  </div>
+
+<div class="section" id="langtag:extension:u:key:duplication"><h3>キー <code><var>{value}</var></code>
+  はこの言語タグ拡張部分タグ中で既に使われています。</h3>
+    <p>There are two keys with same values in the <code>u</code>-extension
+    subtag of the language tag.  A key can be used only once in a language
+    tag.</p>
+  </div>
+
+<div class="section" id="langtag:extension:u:key:order"><h3>キー <code><var>{value}</var></code>
+  は <code><var>{text}</var></code> 
+  よりも<em>後</em>に来るべきです。</h3>
+    <p>キーが複数ある時は、アルファベット順に並べるのが正準形です。</p>
+  </div>
+
+<div class="section" id="langtag:extension:u:key:invalid"><h3>キー <code><var>{value}</var></code>
+  は定義されていません。</h3>
+    <p>指定されたキーは適合性検査器が使っている言語タグ・データベースの構築の時点で定義されていません。</p>
+    <p>定義されていないキーを言語タグで使うことはできません。</p>
+  </div>
+
+<div class="section" id="langtag:extension:u:type:missing"><h3>キー <code><var>{text}</var></code>
+  の型が指定されていません。</h3>
+    <p>言語タグの <code>u</code> 拡張のキーには対応する型 (値)
+    を指定する必要があります。 (ただしキーによっては既定の型
+    <code>true</code> を省略できることもあります。)</p>
+  </div>
+
+<div class="section" id="langtag:extension:u:type:invalid"><h3>型 <code><var>{value}</var></code>
+  はキー <code><var>{text}</var></code> 
+  に対して定義されていません。</h3>
+    <p>指定された型は適合性検査器が使っている言語タグ・データベースの構築の時点で定義されていません。</p>
+    <p>定義されていない型を言語タグで使うことはできません。</p>
+  </div>
+
+<div class="section" id="langtag:extension:u:type:nosemantics"><h3>型 <code><var>{value}</var></code>
+  はキー <code><var>{text}</var></code> に対して使えません。</h3>
+    <p>指定された型の意味が定義されていません。
+    この誤りは次の場合に報告されます。</p>
+    <ul>
+      <li>1つのキーに対して2つ以上 (キー <code>vt</code> については3つ以上)
+      型が指定されている場合。2つ目以降 (キー <code>vt</code>
+      については3つ目以降) の型は現時点で意味が定義されていません。</li>
+      <li>キー <code>vt</code> で型が Unicode 符号位置を表していない場合。
+      符号位置は4桁から6桁の十六進数で、 0000 から 10FFFF
+      までの範囲 (両端を含みます。) である必要があります。</li>
+    </ul>
+  </div>
 
 </section>
 
@@ -2855,6 +2938,40 @@ Regexp::Parser::JavaScript's extension. -->
   </div>
 
 </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -2602,9 +2602,10 @@ Regexp::Parser::JavaScript's extension. -->
 <h2>Language Tag Errors</h2>
 
 <div class="section" id="langtag:extension:duplication"><h3>There is another extension subtag
-  <code><var>{value}</var></code> in the same language tag.
-  A language tag extension can be used only once in
-  the tag.</h3></div>
+  <code><var>{value}</var></code> in the same language tag.</h3>
+    <p>同じ言語タグ中に同じ1文字部分タグで始まる拡張が複数含まれています。
+    同じ種類の言語タグの拡張は、1つの言語タグの中で1回だけしか使えません。</p>
+  </div>
 
 <div class="section" id="langtag:extension:order"><h3>Extension subtag <code><var>{value}</var></code>
   is placed after subtag <code><var>{text}</var></code>.</h3></div>
@@ -2748,7 +2749,11 @@ Regexp::Parser::JavaScript's extension. -->
   <code><var>{text}</var></code>.</h3></div>
 
 <div class="section" id="langtag:variant:case"><h3>Variant subtag <code><var>{value}</var></code> is
-  not in the preferred form, i.e. lowercase.</h3></div>
+  not in the preferred form, i.e. lowercase.</h3>
+    <p>A variant subtag contains one or more uppercase letters.
+    Although language tags are ASCII case-insensitive, the preferred
+    form for variant subtags is defined as the lowercase form.</p>
+  </div>
 
 <div class="section" id="langtag:variant:combination"><h3>Variant subtag <code><var>{text}</var></code> might
   not be meaningful when it is used in combination with
@@ -2765,11 +2770,96 @@ Regexp::Parser::JavaScript's extension. -->
   is not registered.</h3></div>
 
 <div class="section" id="langtag:variant:order"><h3>Variant subtag <code><var>{value}</var></code>
-  should be placed <em>after</em> <code><var>{text}</var></code>.</h3></div>
+  should be placed <em>after</em> <code><var>{text}</var></code>.</h3>
+    <p>When there are multiple variant subtags, the most significant
+    one should be placed first.  If the significance cannot be 
+    determined, the subtags should be sorted in alphabetical
+    order.</p>
+  </div>
 
 <div class="section" id="langtag:variant:prefix"><h3>Variant subtag <code><var>{value}</var></code>
   cannot be used in this context.  It must be preceded by 
   <code><var>{text}</var></code></h3></div>
+
+<div class="section" id="langtag:extension:u:case"><h3>Extension subtag <code><var>{value}</var></code> is
+  not in the preferred form, i.e. lowercase.</h3>
+    <p>A <code>u</code>-extension subtag contains one or more uppercase
+    letters.  Although language tags are ASCII case-insensitive, the
+    canonical form for <code>u</code>-extension is defined as the 
+    lowercase form.</p>
+  </div>
+
+<div class="section" id="langtag:extension:u:attr:duplication"><h3>There is another attribute
+  <code><var>{value}</var></code> in the same language tag
+  extension.</h3>
+    <p>同じ言語タグ中に同じ属性が複数含まれています。言語タグの
+    <code>u</code> 拡張の属性は、
+    1つの言語タグの中でそれぞれ1回だけしか使えません。</p>
+  </div>
+
+<div class="section" id="langtag:extension:u:attr:order"><h3>Attribute <code><var>{value}</var></code>
+  should be placed <em>after</em> <code><var>{text}</var></code>.</h3>
+    <p>When there are multiple attributes, the canonical form is sorted
+    in alphabetical order.</p>
+  </div>
+
+<div class="section" id="langtag:extension:u:attr:invalid"><h3>Attribute <code><var>{value}</var></code>
+  is not defined.</h3>
+    <p>At the time of writing no attribute for the <code>u</code>-extension
+    is defined.</p>
+  </div>
+
+<div class="section" id="langtag:extension:u:key:duplication"><h3>There is another key
+  <code><var>{value}</var></code> in the same language tag
+  extension.</h3>
+    <p>同じ言語タグ中に同じキーが複数含まれています。言語タグの
+    <code>u</code> 拡張のキーは、
+    1つの言語タグの中でそれぞれ1回だけしか使えません。</p>
+  </div>
+
+<div class="section" id="langtag:extension:u:key:order"><h3>Key <code><var>{value}</var></code>
+  should be placed <em>after</em> <code><var>{text}</var></code>.</h3>
+    <p>When there are multiple keys, the canonical form is sorted
+    in alphabetical order.</p>
+  </div>
+
+<div class="section" id="langtag:extension:u:key:invalid"><h3>Key <code><var>{value}</var></code>
+  is not defined.</h3>
+    <p>At the time of construction of the language tag database used
+    by the conformance checker, the specified key is not defined.</p>
+    <p>Undefined key cannot be used in language tags.</p>
+  </div>
+
+<div class="section" id="langtag:extension:u:type:missing"><h3>Type for key <code><var>{text}</var></code>
+  is not specified.</h3>
+    <p>For a key in the <code>u</code>-extension of the language tag,
+    a corresponding type (or value) has to be specified, unless
+    <code>true</code>, which is the default type for certain
+    keys, is implied.</p>
+  </div>
+
+<div class="section" id="langtag:extension:u:type:invalid"><h3>Type <code><var>{value}</var></code>
+  is not defined for key <code><var>{text}</var></code>.</h3>
+    <p>At the time of construction of the language tag database used
+    by the conformance checker, the specified type is not defined.</p>
+    <p>Undefined type cannot be used in language tags.</p>
+  </div>
+
+<div class="section" id="langtag:extension:u:type:nosemantics"><h3>Type <code><var>{value}</var></code>
+  cannot be used for key <code><var>{text}</var></code>.</h3>
+    <p>Semantics for the specified type is not defined.
+    This error could be reported when:</p>
+    <ul>
+      <li>More than one (or two for key <code>vt</code>) types are
+      specified for a key.  Second (or third for key <code>vt</code>)
+      or latter types have no defined semantics at the time of
+      writing.</li>
+      <li>For key <code>vt</code>, a type which does not identify
+      a Unicode code point is specified.  A code point has to be
+      represented as four, five, or six hexadecimal digits
+      in the range 0000 to 10FFFF (inclusive).</li>
+    </ul>
+  </div>
 
 </section>
 
@@ -2865,6 +2955,40 @@ Regexp::Parser::JavaScript's extension. -->
   </div>
 
 </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -4056,9 +4056,18 @@ Regexp::Parser::JavaScript's extension. -->
 <d:item name="langtag:extension:duplication"
     modules="LangTag::Parser">
   <d:message xml:lang="en">There is another extension subtag
-  <code><var>{value}</var></code> in the same language tag.
-  A language tag extension can be used only once in
-  the tag.</d:message>
+  <code><var>{value}</var></code> in the same language tag.</d:message>
+  <d:message xml:lang="ja">拡張部分タグ <code><var>{value}</var></code>
+  はこの言語タグ中で既に使われています。</d:message>
+  <d:desc xml:lang="en">
+    <p>There are two extension subtags with the same singleton in
+    the language tag.  A language tag extension can be used only
+    once in a language tag.</p>
+  </d:desc>
+  <d:desc xml:lang="en">
+    <p>同じ言語タグ中に同じ1文字部分タグで始まる拡張が複数含まれています。
+    同じ種類の言語タグの拡張は、1つの言語タグの中で1回だけしか使えません。</p>
+  </d:desc>
 </d:item>
 
 <d:item name="langtag:extension:order"
@@ -4336,6 +4345,18 @@ Regexp::Parser::JavaScript's extension. -->
     modules="LangTag::Checker">
   <d:message xml:lang="en">Variant subtag <code><var>{value}</var></code> is
   not in the preferred form, i.e. lowercase.</d:message>
+  <d:message xml:lang="ja">異体部分タグ <code><var>{value}</var></code> 
+  は小文字表記が好ましいとされています。</d:message>
+  <d:desc xml:lang="en">
+    <p>A variant subtag contains one or more uppercase letters.
+    Although language tags are ASCII case-insensitive, the preferred
+    form for variant subtags is defined as the lowercase form.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>異体部分タグに大文字が含まれています。言語タグは ASCII
+    の大文字と小文字を区別しませんが、
+    異体部分タグについては小文字が好ましいとされています。</p>
+  </d:desc>
 </d:item>
 
 <d:item name="langtag:variant:combination"
@@ -4368,6 +4389,19 @@ Regexp::Parser::JavaScript's extension. -->
     modules="LangTag::Checker">
   <d:message xml:lang="en">Variant subtag <code><var>{value}</var></code>
   should be placed <em>after</em> <code><var>{text}</var></code>.</d:message>
+  <d:message xml:lang="ja">異体部分タグ <code><var>{value}</var></code>
+  は <code><var>{text}</var></code> 
+  よりも<em>後</em>に来るべきです。</d:message>
+  <d:desc xml:lang="en">
+    <p>When there are multiple variant subtags, the most significant
+    one should be placed first.  If the significance cannot be 
+    determined, the subtags should be sorted in alphabetical
+    order.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>異体部分タグが複数ある時は、最も重要なものが先に来るべきです。
+    重要度を決められない時は、アルファベット順に並べるべきです。</p>
+  </d:desc>
 </d:item>
 
 <d:item name="langtag:variant:prefix"
@@ -4375,6 +4409,199 @@ Regexp::Parser::JavaScript's extension. -->
   <d:message xml:lang="en">Variant subtag <code><var>{value}</var></code>
   cannot be used in this context.  It must be preceded by 
   <code><var>{text}</var></code></d:message>
+</d:item>
+
+<d:item name="langtag:extension:u:case"
+    modules="LangTag::Checker">
+  <d:message xml:lang="en">Extension subtag <code><var>{value}</var></code> is
+  not in the preferred form, i.e. lowercase.</d:message>
+  <d:message xml:lang="ja">拡張部分タグ <code><var>{value}</var></code> 
+  は小文字表記が好ましいとされています。</d:message>
+  <d:desc xml:lang="en">
+    <p>A <code>u</code>-extension subtag contains one or more uppercase
+    letters.  Although language tags are ASCII case-insensitive, the
+    canonical form for <code>u</code>-extension is defined as the 
+    lowercase form.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p><code>u</code> 拡張の部分タグに大文字が含まれています。
+    言語タグは ASCII の大文字と小文字を区別しませんが、
+    <code>u</code> 拡張の正準形は小文字とされています。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="langtag:extension:u:attr:duplication"
+    modules="LangTag::Parser">
+  <d:message xml:lang="en">There is another attribute
+  <code><var>{value}</var></code> in the same language tag
+  extension.</d:message>
+  <d:message xml:lang="ja">属性 <code><var>{value}</var></code>
+  はこの言語タグ拡張部分タグ中で既に使われています。</d:message>
+  <d:desc xml:lang="en">
+    <p>There are two attributes with same values in the
+    <code>u</code>-extension subtag of the language tag.
+    An attribute can be used only once in a language
+    tag.</p>
+  </d:desc>
+  <d:desc xml:lang="en">
+    <p>同じ言語タグ中に同じ属性が複数含まれています。言語タグの
+    <code>u</code> 拡張の属性は、
+    1つの言語タグの中でそれぞれ1回だけしか使えません。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="langtag:extension:u:attr:order"
+    modules="LangTag::Checker">
+  <d:message xml:lang="en">Attribute <code><var>{value}</var></code>
+  should be placed <em>after</em> <code><var>{text}</var></code>.</d:message>
+  <d:message xml:lang="ja">属性 <code><var>{value}</var></code>
+  は <code><var>{text}</var></code> 
+  よりも<em>後</em>に来るべきです。</d:message>
+  <d:desc xml:lang="en">
+    <p>When there are multiple attributes, the canonical form is sorted
+    in alphabetical order.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>属性が複数ある時は、アルファベット順に並べるのが正準形です。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="langtag:extension:u:attr:invalid"
+    modules="LangTag::Checker">
+  <d:message xml:lang="en">Attribute <code><var>{value}</var></code>
+  is not defined.</d:message>
+  <d:message xml:lang="ja">属性 <code><var>{value}</var></code>
+  は定義されていません。</d:message>
+  <d:desc xml:lang="en">
+    <p>At the time of writing no attribute for the <code>u</code>-extension
+    is defined.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>現時点で <code>u</code> 拡張の属性は1つも定義されていません。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="langtag:extension:u:key:duplication"
+    modules="LangTag::Parser">
+  <d:message xml:lang="en">There is another key
+  <code><var>{value}</var></code> in the same language tag
+  extension.</d:message>
+  <d:message xml:lang="ja">キー <code><var>{value}</var></code>
+  はこの言語タグ拡張部分タグ中で既に使われています。</d:message>
+  <d:desc xml:lang="en">
+    <p>There are two keys with same values in the <code>u</code>-extension
+    subtag of the language tag.  A key can be used only once in a language
+    tag.</p>
+  </d:desc>
+  <d:desc xml:lang="en">
+    <p>同じ言語タグ中に同じキーが複数含まれています。言語タグの
+    <code>u</code> 拡張のキーは、
+    1つの言語タグの中でそれぞれ1回だけしか使えません。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="langtag:extension:u:key:order"
+    modules="LangTag::Checker">
+  <d:message xml:lang="en">Key <code><var>{value}</var></code>
+  should be placed <em>after</em> <code><var>{text}</var></code>.</d:message>
+  <d:message xml:lang="ja">キー <code><var>{value}</var></code>
+  は <code><var>{text}</var></code> 
+  よりも<em>後</em>に来るべきです。</d:message>
+  <d:desc xml:lang="en">
+    <p>When there are multiple keys, the canonical form is sorted
+    in alphabetical order.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>キーが複数ある時は、アルファベット順に並べるのが正準形です。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="langtag:extension:u:key:invalid"
+    modules="LangTag::Checker">
+  <d:message xml:lang="en">Key <code><var>{value}</var></code>
+  is not defined.</d:message>
+  <d:message xml:lang="ja">キー <code><var>{value}</var></code>
+  は定義されていません。</d:message>
+  <d:desc xml:lang="en">
+    <p>At the time of construction of the language tag database used
+    by the conformance checker, the specified key is not defined.</p>
+    <p>Undefined key cannot be used in language tags.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>指定されたキーは適合性検査器が使っている言語タグ・データベースの構築の時点で定義されていません。</p>
+    <p>定義されていないキーを言語タグで使うことはできません。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="langtag:extension:u:type:missing"
+    modules="LangTag::Checker">
+  <d:message xml:lang="en">Type for key <code><var>{text}</var></code>
+  is not specified.</d:message>
+  <d:message xml:lang="ja">キー <code><var>{text}</var></code>
+  の型が指定されていません。</d:message>
+  <d:desc xml:lang="en">
+    <p>For a key in the <code>u</code>-extension of the language tag,
+    a corresponding type (or value) has to be specified, unless
+    <code>true</code>, which is the default type for certain
+    keys, is implied.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>言語タグの <code>u</code> 拡張のキーには対応する型 (値)
+    を指定する必要があります。 (ただしキーによっては既定の型
+    <code>true</code> を省略できることもあります。)</p>
+  </d:desc>
+</d:item>
+
+<d:item name="langtag:extension:u:type:invalid"
+    modules="LangTag::Checker">
+  <d:message xml:lang="en">Type <code><var>{value}</var></code>
+  is not defined for key <code><var>{text}</var></code>.</d:message>
+  <d:message xml:lang="ja">型 <code><var>{value}</var></code>
+  はキー <code><var>{text}</var></code> 
+  に対して定義されていません。</d:message>
+  <d:desc xml:lang="en">
+    <p>At the time of construction of the language tag database used
+    by the conformance checker, the specified type is not defined.</p>
+    <p>Undefined type cannot be used in language tags.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>指定された型は適合性検査器が使っている言語タグ・データベースの構築の時点で定義されていません。</p>
+    <p>定義されていない型を言語タグで使うことはできません。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="langtag:extension:u:type:nosemantics"
+    modules="LangTag::Checker">
+  <d:message xml:lang="en">Type <code><var>{value}</var></code>
+  cannot be used for key <code><var>{text}</var></code>.</d:message>
+  <d:message xml:lang="ja">型 <code><var>{value}</var></code>
+  はキー <code><var>{text}</var></code> に対して使えません。</d:message>
+  <d:desc xml:lang="en">
+    <p>Semantics for the specified type is not defined.
+    This error could be reported when:</p>
+    <ul>
+      <li>More than one (or two for key <code>vt</code>) types are
+      specified for a key.  Second (or third for key <code>vt</code>)
+      or latter types have no defined semantics at the time of
+      writing.</li>
+      <li>For key <code>vt</code>, a type which does not identify
+      a Unicode code point is specified.  A code point has to be
+      represented as four, five, or six hexadecimal digits
+      in the range 0000 to 10FFFF (inclusive).</li>
+    </ul>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>指定された型の意味が定義されていません。
+    この誤りは次の場合に報告されます。</p>
+    <ul>
+      <li>1つのキーに対して2つ以上 (キー <code>vt</code> については3つ以上)
+      型が指定されている場合。2つ目以降 (キー <code>vt</code>
+      については3つ目以降) の型は現時点で意味が定義されていません。</li>
+      <li>キー <code>vt</code> で型が Unicode 符号位置を表していない場合。
+      符号位置は4桁から6桁の十六進数で、 0000 から 10FFFF
+      までの範囲 (両端を含みます。) である必要があります。</li>
+    </ul>
+  </d:desc>
 </d:item>
 
 </section>
@@ -5003,6 +5230,82 @@ Regexp::Parser::JavaScript's extension. -->
 <d:cat name="Subtag:grandfathered">
   <d:text xml:lang="en">Grandfathered</d:text>
   <d:text xml:lang="ja">祖父化</d:text>
+</d:cat>
+
+<d:cat name="Subtag:u_attr">
+  <d:text xml:lang="en"><code>u</code> attribute</d:text>
+  <d:text xml:lang="ja"><code>u</code> 属性</d:text>
+</d:cat>
+
+<d:cat name="Subtag:u_key">
+  <d:text xml:lang="en"><code>u</code> key</d:text>
+  <d:text xml:lang="ja"><code>u</code> キー</d:text>
+</d:cat>
+
+<d:cat name="Subtag:u_ca">
+  <d:text xml:lang="en"><code>u</code> calendar</d:text>
+  <d:text xml:lang="ja"><code>u</code> 暦法</d:text>
+</d:cat>
+
+<d:cat name="Subtag:u_co">
+  <d:text xml:lang="en"><code>u</code> collation</d:text>
+  <d:text xml:lang="ja"><code>u</code> 照合順序</d:text>
+</d:cat>
+
+<d:cat name="Subtag:u_ka">
+  <d:text xml:lang="en"><code>u</code> <code>colAlternate</code></d:text>
+</d:cat>
+
+<d:cat name="Subtag:u_kb">
+  <d:text xml:lang="en"><code>u</code> <code>colBackwards</code></d:text>
+</d:cat>
+
+<d:cat name="Subtag:u_kc">
+  <d:text xml:lang="en"><code>u</code> <code>colCaseLevel</code></d:text>
+</d:cat>
+
+<d:cat name="Subtag:u_kn">
+  <d:text xml:lang="en"><code>u</code> <code>colNumeric</code></d:text>
+</d:cat>
+
+<d:cat name="Subtag:u_kh">
+  <d:text xml:lang="en"><code>u</code> <code>colHiraganaQuaternary</code></d:text>
+</d:cat>
+
+<d:cat name="Subtag:u_kk">
+  <d:text xml:lang="en"><code>u</code> <code>colNormalization</code></d:text>
+</d:cat>
+
+<d:cat name="Subtag:u_kf">
+  <d:text xml:lang="en"><code>u</code> <code>colCaseFirst</code></d:text>
+</d:cat>
+
+<d:cat name="Subtag:u_ks">
+  <d:text xml:lang="en"><code>u</code> <code>colStrength</code></d:text>
+</d:cat>
+
+<d:cat name="Subtag:u_vt">
+  <d:text xml:lang="en"><code>u</code> <code>variableTop</code></d:text>
+</d:cat>
+
+<d:cat name="Subtag:u_cu">
+  <d:text xml:lang="en"><code>u</code> currency</d:text>
+  <d:text xml:lang="ja"><code>u</code> 通貨</d:text>
+</d:cat>
+
+<d:cat name="Subtag:u_nu">
+  <d:text xml:lang="en"><code>u</code> number</d:text>
+  <d:text xml:lang="ja"><code>u</code> 数字</d:text>
+</d:cat>
+
+<d:cat name="Subtag:u_tz">
+  <d:text xml:lang="en"><code>u</code> time zone</d:text>
+  <d:text xml:lang="ja"><code>u</code> 時間帯</d:text>
+</d:cat>
+
+<d:cat name="Subtag:u_va">
+  <d:text xml:lang="en"><code>u</code> locale variant</d:text>
+  <d:text xml:lang="ja"><code>u</code> ロケール異体</d:text>
 </d:cat>
 
 <d:cat name="Macrolanguage">

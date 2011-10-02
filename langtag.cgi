@@ -177,33 +177,72 @@ for my $subtag (
   $out->start_tag ('tr');
   $out->start_tag ('th');
   $out->nl_text ('Subtag:' . $subtag->[0]);
-  for (
+  for my $parsed (
     $parsed5646,
     $parsed4646,
   ) {
+    my %has_extension;
     $out->start_tag ('td');
-    if (ref $_->{$subtag->[0]} eq 'ARRAY') {
-      if (@{$_->{$subtag->[0]} or []}) {
+    if (ref $parsed->{$subtag->[0]} eq 'ARRAY') {
+      if (@{$parsed->{$subtag->[0]} or []}) {
         $out->start_tag ('ul');
-        for (@{$_->{$subtag->[0]} or []}) {
+        for (@{$parsed->{$subtag->[0]} or []}) {
           $out->start_tag ('li');
           if (ref $_ eq 'ARRAY') {
-            $out->start_tag ('ul');
-            for (@$_) {
-              $out->start_tag ('li');
-              out_value $out, $_;
+            if ($subtag->[0] eq 'extension' and
+                $_->[0] =~ /\A[Uu]\z/ and
+                $parsed->{u} and
+                not $has_extension{u}) {
+              $out->start_tag ('table');
+              $out->start_tag ('caption');
+              $out->code ($_->[0]);
+              $out->end_tag ('caption');
+              $out->start_tag ('tbody');
+              for (@{$parsed->{u}->[0]}) {
+                $out->start_tag ('tr');
+                $out->start_tag ('th');
+                $out->nl_text ('Subtag:u_attr');
+                $out->start_tag ('td');
+                $out->code ($_);
+              }
+              $out->start_tag ('tbody');
+              for (1..$#{$parsed->{u}}) {
+                my $keyword = $parsed->{u}->[$_];
+                $out->start_tag ('tr');
+                $out->start_tag ('th');
+                my $type = $keyword->[0];
+                if (Whatpm::LangTag->tag_registry_data_rfc5646 ('u_key', $type)) {
+                  $type =~ tr/A-Z/a-z/;
+                  $out->nl_text ('Subtag:u_' . $type);
+                } else {
+                  $out->code ($type);
+                }
+                $out->start_tag ('td');
+                for (1..$#$keyword) {
+                  $out->code ($keyword->[$_]);
+                  $out->text (' ');
+                }
+              }
+              $out->end_tag ('table');
+              $has_extension{u} = 1;
+            } else {
+              $out->start_tag ('ul');
+              for (@$_) {
+                $out->start_tag ('li');
+                out_value $out, $_;
+              } # $_
+              $out->end_tag ('ul');
             }
-            $out->end_tag ('ul');
           } else {
             out_value $out, $_;
           }
-        }
+        } # $parsed->{$subtag->[0]}
       } else {
         $out->nl_text ('(none)');
       }
       $out->end_tag ('ul');
     } else {
-      out_value $out, $_->{$subtag->[0]};
+      out_value $out, $parsed->{$subtag->[0]};
     }
   }
 }
@@ -304,6 +343,10 @@ for my $spec (
          ? (['region', $spec->[1]->{region}]) : ()),
     (map { ['variant', $_] } @{$spec->[1]->{variant}}),
     (map { ['extension', $_->[0]] } @{$spec->[1]->{extension}}),
+    ($spec->[1]->{u} ? (
+      map { ['u_key', $_->[0]], ($_->[1] && $_->[0] !~ /^[Vv][Tt]$/ ? (['u_' . $_->[0], $_->[1]]) : ()) }
+      @{$spec->[1]->{u}}[1..$#{$spec->[1]->{u}}]
+    ) : ()),
     (defined $spec->[1]->{grandfathered}
          ? (['grandfathered', $spec->[1]->{grandfathered}]) : ()),
     ['redundant', $tag],
@@ -318,14 +361,19 @@ for my $spec (
     $out->start_tag ('dd');
     out_value $out, $component->[1];
     
-    $out->start_tag ('dt');
-    $out->nl_text ('Registered date');
-    $out->start_tag ('dd');
-    if ($def->{_added}) {
+    if ($component->[0] =~ /^u_/ and $def) {
+      #
+    } elsif ($def->{_added}) {
+      $out->start_tag ('dt');
+      $out->nl_text ('Registered date');
+      $out->start_tag ('dd');
       $out->start_tag ('time');
       $out->text ($def->{_added});
       $out->end_tag ('time');
     } else {
+      $out->start_tag ('dt');
+      $out->nl_text ('Registered date');
+      $out->start_tag ('dd');
       $out->nl_text ('Not registered');
     }
     

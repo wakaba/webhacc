@@ -423,7 +423,7 @@ status:cr:attr;;This attribute is in the <strong>call for implementation</strong
 status:lc:attr;;This attribute is in the <strong>last call for comments</strong> stage.
 status:wd:attr;;This attribute is documented in a <strong>working draft</strong>.
 status:non-standard:attr;;This attribute is <strong>not part of any standard</strong> the conformance checker knows.
-langtag:extension:duplication;;There is another extension subtag <code><var>{value}</var></code> in the same language tag. A language tag extension can be used only once in the tag.
+langtag:extension:duplication;;There is another extension subtag <code><var>{value}</var></code> in the same language tag.
 langtag:extension:order;;Extension subtag <code><var>{value}</var></code> is placed after subtag <code><var>{text}</var></code>.
 langtag:extension:unknown;;Extension <code><var>{value}</var></code> is not defined when the conformance checker is written.
 langtag:extlang:case;;Extended language subtag <code><var>{value}</var></code> is not in the preferred form, i.e. in lowercase.
@@ -468,6 +468,16 @@ langtag:variant:duplication;;Variant subtag <code><var>{value}</var></code> is s
 langtag:variant:invalid;;Variant subtag <code><var>{value}</var></code> is not registered.
 langtag:variant:order;;Variant subtag <code><var>{value}</var></code> should be placed <em>after</em> <code><var>{text}</var></code>.
 langtag:variant:prefix;;Variant subtag <code><var>{value}</var></code> cannot be used in this context. It must be preceded by <code><var>{text}</var></code>
+langtag:extension:u:case;;Extension subtag <code><var>{value}</var></code> is not in the preferred form, i.e. lowercase.
+langtag:extension:u:attr:duplication;;There is another attribute <code><var>{value}</var></code> in the same language tag extension.
+langtag:extension:u:attr:order;;Attribute <code><var>{value}</var></code> should be placed <em>after</em> <code><var>{text}</var></code>.
+langtag:extension:u:attr:invalid;;Attribute <code><var>{value}</var></code> is not defined.
+langtag:extension:u:key:duplication;;There is another key <code><var>{value}</var></code> in the same language tag extension.
+langtag:extension:u:key:order;;Key <code><var>{value}</var></code> should be placed <em>after</em> <code><var>{text}</var></code>.
+langtag:extension:u:key:invalid;;Key <code><var>{value}</var></code> is not defined.
+langtag:extension:u:type:missing;;Type for key <code><var>{text}</var></code> is not specified.
+langtag:extension:u:type:invalid;;Type <code><var>{value}</var></code> is not defined for key <code><var>{text}</var></code>.
+langtag:extension:u:type:nosemantics;;Type <code><var>{value}</var></code> cannot be used for key <code><var>{text}</var></code>.
 bad rdf namespace;;The namespace URI of an element that represents an RDF concept must be <code>http://www.w3.org/1999/02/22-rdf-syntax-ns#</code>.
 duplicate rdf id;;The specified value is already used as an ID.
 duplicate unqualified attr;;Both unqualified attribute and namespace‐qualified RDF attribute are specified, which is not allowed.
@@ -579,6 +589,23 @@ Subtag:extension;;Extension
 Subtag:privateuse;;Private use
 Subtag:illegal;;Illegal (broken)
 Subtag:grandfathered;;Grandfathered
+Subtag:u_attr;;<code>u</code> attribute
+Subtag:u_key;;<code>u</code> key
+Subtag:u_ca;;<code>u</code> calendar
+Subtag:u_co;;<code>u</code> collation
+Subtag:u_ka;;<code>u</code> <code>colAlternate</code>
+Subtag:u_kb;;<code>u</code> <code>colBackwards</code>
+Subtag:u_kc;;<code>u</code> <code>colCaseLevel</code>
+Subtag:u_kn;;<code>u</code> <code>colNumeric</code>
+Subtag:u_kh;;<code>u</code> <code>colHiraganaQuaternary</code>
+Subtag:u_kk;;<code>u</code> <code>colNormalization</code>
+Subtag:u_kf;;<code>u</code> <code>colCaseFirst</code>
+Subtag:u_ks;;<code>u</code> <code>colStrength</code>
+Subtag:u_vt;;<code>u</code> <code>variableTop</code>
+Subtag:u_cu;;<code>u</code> currency
+Subtag:u_nu;;<code>u</code> number
+Subtag:u_tz;;<code>u</code> time zone
+Subtag:u_va;;<code>u</code> locale variant
 Macrolanguage;;Macrolanguage
 Parse result;;Parse result
 character;;character

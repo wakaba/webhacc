@@ -423,7 +423,7 @@ status:cr:attr;;This attribute is in the <strong>call for implementation</strong
 status:lc:attr;;This attribute is in the <strong>last call for comments</strong> stage.
 status:wd:attr;;This attribute is documented in a <strong>working draft</strong>.
 status:non-standard:attr;;This attribute is <strong>not part of any standard</strong> the conformance checker knows.
-langtag:extension:duplication;;There is another extension subtag <code><var>{value}</var></code> in the same language tag. A language tag extension can be used only once in the tag.
+langtag:extension:duplication;;拡張部分タグ <code><var>{value}</var></code> はこの言語タグ中で既に使われています。
 langtag:extension:order;;Extension subtag <code><var>{value}</var></code> is placed after subtag <code><var>{text}</var></code>.
 langtag:extension:unknown;;Extension <code><var>{value}</var></code> is not defined when the conformance checker is written.
 langtag:extlang:case;;Extended language subtag <code><var>{value}</var></code> is not in the preferred form, i.e. in lowercase.
@@ -461,13 +461,23 @@ langtag:script:deprecated;;Use of script subtag <code><var>{value}</var></code> 
 langtag:script:invalid;;Script subtag <code><var>{value}</var></code> is not registered.
 langtag:script:private;;Script subtag <code><var>{value}</var></code> is a private use code.
 langtag:script:suppress;;Script subtag <code><var>{value}</var></code> should be suppressed when the language subtag is <code><var>{text}</var></code>.
-langtag:variant:case;;Variant subtag <code><var>{value}</var></code> is not in the preferred form, i.e. lowercase.
+langtag:variant:case;;異体部分タグ <code><var>{value}</var></code> は小文字表記が好ましいとされています。
 langtag:variant:combination;;Variant subtag <code><var>{text}</var></code> might not be meaningful when it is used in combination with <code><var>{value}</var></code>.
 langtag:variant:deprecated;;Use of variant subtag <code><var>{value}</var></code> is deprecated<!-- in favor of {text} (might be undef) -->.
 langtag:variant:duplication;;Variant subtag <code><var>{value}</var></code> is specified twice in the same language tag.
 langtag:variant:invalid;;Variant subtag <code><var>{value}</var></code> is not registered.
-langtag:variant:order;;Variant subtag <code><var>{value}</var></code> should be placed <em>after</em> <code><var>{text}</var></code>.
+langtag:variant:order;;異体部分タグ <code><var>{value}</var></code> は <code><var>{text}</var></code> よりも<em>後</em>に来るべきです。
 langtag:variant:prefix;;Variant subtag <code><var>{value}</var></code> cannot be used in this context. It must be preceded by <code><var>{text}</var></code>
+langtag:extension:u:case;;拡張部分タグ <code><var>{value}</var></code> は小文字表記が好ましいとされています。
+langtag:extension:u:attr:duplication;;属性 <code><var>{value}</var></code> はこの言語タグ拡張部分タグ中で既に使われています。
+langtag:extension:u:attr:order;;属性 <code><var>{value}</var></code> は <code><var>{text}</var></code> よりも<em>後</em>に来るべきです。
+langtag:extension:u:attr:invalid;;属性 <code><var>{value}</var></code> は定義されていません。
+langtag:extension:u:key:duplication;;キー <code><var>{value}</var></code> はこの言語タグ拡張部分タグ中で既に使われています。
+langtag:extension:u:key:order;;キー <code><var>{value}</var></code> は <code><var>{text}</var></code> よりも<em>後</em>に来るべきです。
+langtag:extension:u:key:invalid;;キー <code><var>{value}</var></code> は定義されていません。
+langtag:extension:u:type:missing;;キー <code><var>{text}</var></code> の型が指定されていません。
+langtag:extension:u:type:invalid;;型 <code><var>{value}</var></code> はキー <code><var>{text}</var></code> に対して定義されていません。
+langtag:extension:u:type:nosemantics;;型 <code><var>{value}</var></code> はキー <code><var>{text}</var></code> に対して使えません。
 bad rdf namespace;;The namespace URI of an element that represents an RDF concept must be <code>http://www.w3.org/1999/02/22-rdf-syntax-ns#</code>.
 duplicate rdf id;;The specified value is already used as an ID.
 duplicate unqualified attr;;Both unqualified attribute and namespace‐qualified RDF attribute are specified, which is not allowed.
@@ -579,6 +589,23 @@ Subtag:extension;;拡張
 Subtag:privateuse;;私用
 Subtag:illegal;;不正 (壊れている)
 Subtag:grandfathered;;祖父化
+Subtag:u_attr;;<code>u</code> 属性
+Subtag:u_key;;<code>u</code> キー
+Subtag:u_ca;;<code>u</code> 暦法
+Subtag:u_co;;<code>u</code> 照合順序
+Subtag:u_ka;;<code>u</code> <code>colAlternate</code>
+Subtag:u_kb;;<code>u</code> <code>colBackwards</code>
+Subtag:u_kc;;<code>u</code> <code>colCaseLevel</code>
+Subtag:u_kn;;<code>u</code> <code>colNumeric</code>
+Subtag:u_kh;;<code>u</code> <code>colHiraganaQuaternary</code>
+Subtag:u_kk;;<code>u</code> <code>colNormalization</code>
+Subtag:u_kf;;<code>u</code> <code>colCaseFirst</code>
+Subtag:u_ks;;<code>u</code> <code>colStrength</code>
+Subtag:u_vt;;<code>u</code> <code>variableTop</code>
+Subtag:u_cu;;<code>u</code> 通貨
+Subtag:u_nu;;<code>u</code> 数字
+Subtag:u_tz;;<code>u</code> 時間帯
+Subtag:u_va;;<code>u</code> ロケール異体
 Macrolanguage;;マクロ言語
 Parse result;;構文解析結果
 character;;文字
