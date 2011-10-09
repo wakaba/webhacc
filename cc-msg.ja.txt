@@ -308,12 +308,13 @@ not not closed;;Argument list of the <code>:not</code> selector is not closed by
 ss after pseudo-element;;Simple selector is not allowed after a pseudo element.
 unknown pseudo-class;;Pseudo-class <code>:<var>{value}</var></code> is not supported by the conformance checker.
 unknown pseudo-element;;Pseudo-element <code>::<var>{value}</var></code> is not supported by the conformance checker.
-at-rule not allowed;;An <code>@<var>{text}</var></code> rule is not allowed here.
-at-rule syntax error;;The <code>@<var>{text}</var></code> rule is syntactically incorrect.
+at-rule not allowed;;<code>@<var>{text}</var></code> 規則はここには書けません。
+at-rule syntax error;;指定された <code>@<var>{text}</var></code> 規則は構文的に間違っています。
 block not closed;;Block is not closed before the end of file.
 CSS duplication;;Component <code>&lt;<var>{text}</var>&gt;</code> is already specified.
 CSS cursor hand;;Value <code>hand</code> is not valid as <code>&lt;'cursor'&gt;</code>.
 CSS syntax error;;Specified value is syntactically not a correct <code>&lt;<var>{text}</var>&gt;</code>.
+duplicate @namespace;;重複した <code>@namespace</code> 宣言が見つかりました。
 no declaration block;;No declaration block is found after a group of selectors.
 no property colon;;A <code>:</code> character is missing after a property name.
 no property name;;Property name is expected.

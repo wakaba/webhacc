@@ -3234,12 +3234,39 @@ p {
     modules="CSS::Parser">
   <d:message xml:lang="en">An <code>@<var>{text}</var></code> rule is not
   allowed here.</d:message>
+  <d:message xml:lang="ja"><code>@<var>{text}</var></code> 
+  規則はここには書けません。</d:message>
+  <d:desc xml:lang="en">
+    <p>The specified at-rule is not allowed in the context it is 
+    used.</p>
+    <p>CSS rules must be in the following order:</p>
+      <ul>
+        <li>At most one <code>@charset</code> at-rule</li>
+        <li><code>@import</code> at-rules</li>
+        <li><code>@namespace</code> at-rules</li>
+        <li>Other rules, including <code>@media</code> at-rules and
+        normal declaration blocks</li>
+      </ul>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>指定された@規則は、その場所では使うことができません。</p>
+    <p>CSS の規則は次の順序で指定する必要があります。</p>
+      <ul>
+        <li><code>@charset</code> 規則 (高々1つ)</li>
+        <li><code>@import</code> 規則</li>
+        <li><code>@namespace</code> 規則</li>
+        <li>その他の規則 (<code>@media</code> 規則、
+        通常の宣言ブロックなど)</li>
+      </ul>
+  </d:desc>
 </d:item>
 
 <d:item name="at-rule syntax error"
     modules="CSS::Parser">
   <d:message xml:lang="en">The <code>@<var>{text}</var></code> rule is
   syntactically incorrect.</d:message>
+  <d:message xml:lang="ja">指定された <code>@<var>{text}</var></code> 
+  規則は構文的に間違っています。</d:message>
 </d:item>
 
 <d:item name="block not closed"
@@ -3264,6 +3291,27 @@ p {
     modules="CSS::Parser">
   <d:message xml:lang="en">Specified value is syntactically not a correct
   <code>&lt;<var>{text}</var>></code>.</d:message>
+</d:item>
+
+<d:item name="duplicate @namespace" modules="CSS::Parser">
+  <d:message xml:lang="en">Duplicate <code>@namespace</code>
+  declaration is found.</d:message>
+  <d:message xml:lang="ja">重複した <code>@namespace</code>
+  宣言が見つかりました。</d:message>
+  <d:desc xml:lang="en">
+    <p>A duplicate <code>@namespace</code> declaration is found.
+    There must be at most one <code>@namespace</code> declaration
+    with same namespace prefix (or missing prefix) in a CSS
+    style sheet.  Previous declaration for the prefix (or of missing
+    prefix) is ignored.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>重複した <code>@namespace</code> 宣言が見つかりました。
+    名前空間の宣言は、1つの CSS スタイル・シート中に同じ名前空間接頭辞 
+    (または名前空間接頭辞無し) のものが複数あってはいけません。
+    同じ名前空間接頭辞 (または名前空間接頭辞無し) 
+    の前の宣言は無視されます。</p>
+  </d:desc>
 </d:item>
 
 <d:item name="no declaration block"

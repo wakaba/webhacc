@@ -2138,11 +2138,21 @@ p {
 <section id="css-errors">
 <h2>CSS Errors</h2>
 
-<div class="section" id="at-rule-not-allowed"><h3>An <code>@<var>{text}</var></code> rule is not
-  allowed here.</h3></div>
+<div class="section" id="at-rule-not-allowed"><h3><code>@<var>{text}</var></code> 
+  規則はここには書けません。</h3>
+    <p>指定された@規則は、その場所では使うことができません。</p>
+    <p>CSS の規則は次の順序で指定する必要があります。</p>
+      <ul>
+        <li><code>@charset</code> 規則 (高々1つ)</li>
+        <li><code>@import</code> 規則</li>
+        <li><code>@namespace</code> 規則</li>
+        <li>その他の規則 (<code>@media</code> 規則、
+        通常の宣言ブロックなど)</li>
+      </ul>
+  </div>
 
-<div class="section" id="at-rule-syntax-error"><h3>The <code>@<var>{text}</var></code> rule is
-  syntactically incorrect.</h3></div>
+<div class="section" id="at-rule-syntax-error"><h3>指定された <code>@<var>{text}</var></code> 
+  規則は構文的に間違っています。</h3></div>
 
 <div class="section" id="block-not-closed"><h3>Block is not closed before the end of
   file.</h3></div>
@@ -2155,6 +2165,15 @@ p {
 
 <div class="section" id="CSS-syntax-error"><h3>Specified value is syntactically not a correct
   <code>&lt;<var>{text}</var>&gt;</code>.</h3></div>
+
+<div class="section" id="duplicate-@namespace"><h3>重複した <code>@namespace</code>
+  宣言が見つかりました。</h3>
+    <p>重複した <code>@namespace</code> 宣言が見つかりました。
+    名前空間の宣言は、1つの CSS スタイル・シート中に同じ名前空間接頭辞 
+    (または名前空間接頭辞無し) のものが複数あってはいけません。
+    同じ名前空間接頭辞 (または名前空間接頭辞無し) 
+    の前の宣言は無視されます。</p>
+  </div>
 
 <div class="section" id="no-declaration-block"><h3>No declaration block is found after a group of
   selectors.</h3></div>
