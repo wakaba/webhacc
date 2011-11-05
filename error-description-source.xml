@@ -3154,6 +3154,21 @@ p {
   a <code>]</code> character.</d:message>
 </d:item>
 
+<d:item name="combinator after pseudo-element"
+    modules="CSS::SelectorsParser">
+  <d:message xml:lang="en">Pseudo-element must terminate the
+  selector.</d:message>
+  <d:message xml:lang="ja">擬似要素で選択子が終わらなければなりません。</d:message>
+  <d:desc xml:lang="en">
+    <p>In Selectors level 3, pseudo-element can only be used at
+    the end of a selector.  No combinator can follow it.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>選択子水準3では擬似要素は選択子の最後にのみ使えます。
+    その後に結合子が来ることはできません。</p>
+  </d:desc>
+</d:item>
+
 <d:item name="lang selector not closed"
     modules="CSS::SelectorsParser">
   <d:message xml:lang="en">Argument list of the <code>:lang</code>
@@ -3193,10 +3208,23 @@ p {
   <d:message xml:lang="en">Attribute value is missing.</d:message>
 </d:item>
 
-<d:item name="no class name selector"
+<d:item name="no class name"
     modules="CSS::SelectorsParser">
-  <d:message xml:lang="en">Class name is missing.</d:message>
   <!-- "." not followed by a class name -->
+  <d:message xml:lang="en">Class name is missing.</d:message>
+  <d:message xml:lang="ja">クラス名がありません。</d:message>
+  <d:desc xml:lang="en">
+    <p>No class name is specified after the <code>.</code>
+    character.</p>
+    <p>Class name must be an identifier.  It cannot start
+    with a digit.  It cannot be the empty string.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>文字 <code>.</code> の後にクラス名がありません。</p>
+    <p>クラス名は識別子でなければなりません。
+    識別子は数字から始まることができません。
+    識別子は空文字列にできません。</p>
+  </d:desc>
 </d:item>
 
 <d:item name="no combinator"
@@ -3259,6 +3287,27 @@ p {
   </d:desc>
   <d:desc xml:lang="en">
     <p>文字 <code>#</code> の後に識別子がありません。</p>
+    <p>文字 <code>#</code> は ID 選択子を表します。
+    後には識別子が続かなければなりません。
+    識別子は数字から始まることができません。
+    <code>#</code> と識別子の間に空白や注釈を入れることはできません。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="selectors:id:not ident" modules="CSS::SelectorsParser">
+  <d:message xml:lang="en">ID is syntactically not an identifier.</d:message>
+  <d:message xml:lang="ja">ID が構文的に正しい識別子でありません。</d:message>
+  <d:desc xml:lang="en">
+    <p>No valid identifier is specified after the <code>#</code>
+    character.</p>
+    <p>The <code>#</code> character introduces an ID selector.
+    The character must be followed by an identifier.  The 
+    identifier cannot start with a digit.  White spaces
+    and comments are not allowed between <code>#</code>
+    and the identifier.</p>
+  </d:desc>
+  <d:desc xml:lang="en">
+    <p>文字 <code>#</code> の後に正しい識別子がありません。</p>
     <p>文字 <code>#</code> は ID 選択子を表します。
     後には識別子が続かなければなりません。
     識別子は数字から始まることができません。
@@ -3409,29 +3458,6 @@ p {
   </d:desc>
 </d:item>
 
-<d:item name="selectors:pseudo-element:ident:one colon"
-    modules="CSS::SelectorsParser">
-  <d:message xml:lang="en">Pseudo-element should be introduced
-  by <code>::</code>.</d:message>
-  <d:message xml:lang="ja">擬似要素は <code>::</code>
-  から始まるべきです。</d:message>
-  <d:desc xml:lang="en"> 
-    <p>Since Selectors level 3, a pseudo-element is prefixed 
-    by two <code>:</code> characters.</p>
-    <p>Pseudo-elements from levels 1 and 2 are allowed to 
-    start by only a <code>:</code> character for backward
-    compatibility.  However, where possible, the new <code>::</code>
-    syntax should be used.</p>
-  </d:desc>
-  <d:desc xml:lang="ja">
-    <p>選択子水準3以降、擬似要素は <code>:</code>
-    2つから始まることになっています。</p>
-    <p>水準1や2からあった擬似要素は <code>:</code>
-    1つだけで始まることも後方互換性のために認められています。
-    しかし可能な場合は新しい <code>::</code> 構文を使うべきです。</p>
-  </d:desc>
-</d:item>
-
 <d:item name="selectors:pseudo-element:ident:unknown"
     modules="CSS::SelectorsParser">
   <d:message xml:lang="en">Pseudo-element <code>:<var>{value}</var></code>
@@ -3455,6 +3481,29 @@ p {
     あるいは単純にその擬似要素は存在しないのかもしれません。</p>
     <p>いずれにせよ、
     その擬似要素は構文解析器が実装している選択子仕様に照らして不適合です。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="selectors:pseudo-element:one colon"
+    modules="CSS::SelectorsParser">
+  <d:message xml:lang="en">Pseudo-element should be introduced
+  by <code>::</code>.</d:message>
+  <d:message xml:lang="ja">擬似要素は <code>::</code>
+  から始まるべきです。</d:message>
+  <d:desc xml:lang="en"> 
+    <p>Since Selectors level 3, a pseudo-element is prefixed 
+    by two <code>:</code> characters.</p>
+    <p>Pseudo-elements from levels 1 and 2 are allowed to 
+    start by only a <code>:</code> character for backward
+    compatibility.  However, where possible, the new <code>::</code>
+    syntax should be used.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>選択子水準3以降、擬似要素は <code>:</code>
+    2つから始まることになっています。</p>
+    <p>水準1や2からあった擬似要素は <code>:</code>
+    1つだけで始まることも後方互換性のために認められています。
+    しかし可能な場合は新しい <code>::</code> 構文を使うべきです。</p>
   </d:desc>
 </d:item>
 

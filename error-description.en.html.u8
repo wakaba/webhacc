@@ -2107,6 +2107,12 @@ p {
 <div class="section" id="attr-selector-not-closed"><h3>Attribute selector is not closed by
   a <code>]</code> character.</h3></div>
 
+<div class="section" id="combinator-after-pseudo-element"><h3>Pseudo-element must terminate the
+  selector.</h3>
+    <p>In Selectors level 3, pseudo-element can only be used at
+    the end of a selector.  No combinator can follow it.</p>
+  </div>
+
 <div class="section" id="lang-selector-not-closed"><h3>Argument list of the <code>:lang</code>
   selector is not closed by a <code>)</code> character.</h3></div>
 
@@ -2125,7 +2131,12 @@ p {
 
 <div class="section" id="no-attr-value"><h3>Attribute value is missing.</h3></div>
 
-<div class="section" id="no-class-name-selector"><h3>Class name is missing.</h3></div>
+<div class="section" id="no-class-name"><h3>Class name is missing.</h3>
+    <p>No class name is specified after the <code>.</code>
+    character.</p>
+    <p>Class name must be an identifier.  It cannot start
+    with a digit.  It cannot be the empty string.</p>
+  </div>
 
 <div class="section" id="no-combinator"><h3>Combinator is missing.</h3></div>
 
@@ -2150,6 +2161,14 @@ p {
 
 <div class="section" id="selectors:id:empty"><h3>ID is not specified.</h3>
     <p>文字 <code>#</code> の後に識別子がありません。</p>
+    <p>文字 <code>#</code> は ID 選択子を表します。
+    後には識別子が続かなければなりません。
+    識別子は数字から始まることができません。
+    <code>#</code> と識別子の間に空白や注釈を入れることはできません。</p>
+  </div>
+
+<div class="section" id="selectors:id:not-ident"><h3>ID is syntactically not an identifier.</h3>
+    <p>文字 <code>#</code> の後に正しい識別子がありません。</p>
     <p>文字 <code>#</code> は ID 選択子を表します。
     後には識別子が続かなければなりません。
     識別子は数字から始まることができません。
@@ -2221,16 +2240,6 @@ p {
     of the selector is unknown.</p>
   </div>
 
-<div class="section" id="selectors:pseudo-element:ident:one-colon"><h3>Pseudo-element should be introduced
-  by <code>::</code>.</h3> 
-    <p>Since Selectors level 3, a pseudo-element is prefixed 
-    by two <code>:</code> characters.</p>
-    <p>Pseudo-elements from levels 1 and 2 are allowed to 
-    start by only a <code>:</code> character for backward
-    compatibility.  However, where possible, the new <code>::</code>
-    syntax should be used.</p>
-  </div>
-
 <div class="section" id="selectors:pseudo-element:ident:unknown"><h3>Pseudo-element <code>:<var>{value}</var></code>
   is not known to the parser.</h3> 
     <p>The specified pseudo-element is not supported by the parser.</p>
@@ -2240,6 +2249,16 @@ p {
     or simply the pseudo-element is not found.</p>
     <p>In anyway, the pseudo-element is not conforming according to the
     Selectors specification as implemented by the parser.</p>
+  </div>
+
+<div class="section" id="selectors:pseudo-element:one-colon"><h3>Pseudo-element should be introduced
+  by <code>::</code>.</h3> 
+    <p>Since Selectors level 3, a pseudo-element is prefixed 
+    by two <code>:</code> characters.</p>
+    <p>Pseudo-elements from levels 1 and 2 are allowed to 
+    start by only a <code>:</code> character for backward
+    compatibility.  However, where possible, the new <code>::</code>
+    syntax should be used.</p>
   </div>
 
 <div class="section" id="ss-after-pseudo-element"><h3>Simple selector is not allowed after a

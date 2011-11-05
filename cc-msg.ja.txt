@@ -291,6 +291,7 @@ an+b not closed;;Argument list of the pseudo-class is not closed by a <code>)</c
 ab+b not integer;;Numbers in the argument <code><var>a</var>n+<var>b</var></code> have to be integers.
 an+b syntax error;;Argument <code><var>a</var>n+<var>b</var></code> is syntactically incorrect.
 attr selector not closed;;Attribute selector is not closed by a <code>]</code> character.
+combinator after pseudo-element;;擬似要素で選択子が終わらなければなりません。
 lang selector not closed;;Argument list of the <code>:lang</code> selector is not closed by a <code>)</code> character.
 namespace prefix:not declared;;Namespace prefix <code><var>{value}</var></code> is not declared.
 no attr local name;;Attribute local name is missing.
@@ -298,7 +299,7 @@ no attr match;;Attribute matching operator (e.g. <code>=</code>) is missing.
 no attr name;;Attribute name is missing.
 no attr namespace separator;;Attribute namespace wildcard <code>*</code> is not followed by a <code>|</code> character.
 no attr value;;Attribute value is missing.
-no class name selector;;Class name is missing.
+no class name;;クラス名がありません。
 no combinator;;Combinator is missing.
 no contains string;;No string is specified in the argument list of the <code>:-manakai-contains</code> pseudo-class selector.
 no lang tag;;Language tag argument is missing.
@@ -308,14 +309,15 @@ no pseudo-element name;;Pseudo-element name is missing.
 no sss;;Sequence of simple selectors is expected.
 not not closed;;Argument list of the <code>:not</code> selector is not closed by a <code>)</code> character.
 selectors:id:empty;;ID が指定されていません。
+selectors:id:not ident;;ID が構文的に正しい識別子でありません。
 selectors:pseudo:argument not closed;;引数リストが <code>)</code> で閉じられていません。
 selectors:pseudo-class:function:not supported;;擬似クラス <code>:<var>{value}</var>()</code> には対応していません。
 selectors:pseudo-class:function:unknown;;擬似クラス <code>:<var>{value}</var>()</code> を構文解析器は知りません。
 selectors:pseudo-class:ident:not supported;;擬似クラス <code>:<var>{value}</var></code> には対応していません。
 selectors:pseudo-class:ident:unknown;;擬似クラス <code>:<var>{value}</var></code> を構文解析器は知りません。
 selectors:pseudo-element:ident:not supported;;擬似要素 <code>:<var>{value}</var></code> には対応していません。
-selectors:pseudo-element:ident:one colon;;擬似要素は <code>::</code> から始まるべきです。
 selectors:pseudo-element:ident:unknown;;擬似要素 <code>:<var>{value}</var></code> を構文解析器は知りません。
+selectors:pseudo-element:one colon;;擬似要素は <code>::</code> から始まるべきです。
 ss after pseudo-element;;Simple selector is not allowed after a pseudo element.
 at-rule not allowed;;<code>@<var>{text}</var></code> 規則はここには書けません。
 at-rule syntax error;;指定された <code>@<var>{text}</var></code> 規則は構文的に間違っています。

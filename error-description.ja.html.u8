@@ -2102,6 +2102,11 @@ p {
 <div class="section" id="attr-selector-not-closed"><h3>Attribute selector is not closed by
   a <code>]</code> character.</h3></div>
 
+<div class="section" id="combinator-after-pseudo-element"><h3>擬似要素で選択子が終わらなければなりません。</h3>
+    <p>選択子水準3では擬似要素は選択子の最後にのみ使えます。
+    その後に結合子が来ることはできません。</p>
+  </div>
+
 <div class="section" id="lang-selector-not-closed"><h3>Argument list of the <code>:lang</code>
   selector is not closed by a <code>)</code> character.</h3></div>
 
@@ -2120,7 +2125,12 @@ p {
 
 <div class="section" id="no-attr-value"><h3>Attribute value is missing.</h3></div>
 
-<div class="section" id="no-class-name-selector"><h3>Class name is missing.</h3></div>
+<div class="section" id="no-class-name"><h3>クラス名がありません。</h3>
+    <p>文字 <code>.</code> の後にクラス名がありません。</p>
+    <p>クラス名は識別子でなければなりません。
+    識別子は数字から始まることができません。
+    識別子は空文字列にできません。</p>
+  </div>
 
 <div class="section" id="no-combinator"><h3>Combinator is missing.</h3></div>
 
@@ -2145,6 +2155,16 @@ p {
 
 <div class="section" id="selectors:id:empty"><h3>ID が指定されていません。</h3>
     <p>Identifier is not specified after the <code>#</code>
+    character.</p>
+    <p>The <code>#</code> character introduces an ID selector.
+    The character must be followed by an identifier.  The 
+    identifier cannot start with a digit.  White spaces
+    and comments are not allowed between <code>#</code>
+    and the identifier.</p>
+  </div>
+
+<div class="section" id="selectors:id:not-ident"><h3>ID が構文的に正しい識別子でありません。</h3>
+    <p>No valid identifier is specified after the <code>#</code>
     character.</p>
     <p>The <code>#</code> character introduces an ID selector.
     The character must be followed by an identifier.  The 
@@ -2207,15 +2227,6 @@ p {
     未実装のため「無視」されるため、適合するかどうかは不明です。</p>
   </div>
 
-<div class="section" id="selectors:pseudo-element:ident:one-colon"><h3>擬似要素は <code>::</code>
-  から始まるべきです。</h3>
-    <p>選択子水準3以降、擬似要素は <code>:</code>
-    2つから始まることになっています。</p>
-    <p>水準1や2からあった擬似要素は <code>:</code>
-    1つだけで始まることも後方互換性のために認められています。
-    しかし可能な場合は新しい <code>::</code> 構文を使うべきです。</p>
-  </div>
-
 <div class="section" id="selectors:pseudo-element:ident:unknown"><h3>擬似要素 <code>:<var>{value}</var></code>
   を構文解析器は知りません。</h3>
     <p>指定された擬似要素に構文解析器が対応していません。</p>
@@ -2225,6 +2236,15 @@ p {
     あるいは単純にその擬似要素は存在しないのかもしれません。</p>
     <p>いずれにせよ、
     その擬似要素は構文解析器が実装している選択子仕様に照らして不適合です。</p>
+  </div>
+
+<div class="section" id="selectors:pseudo-element:one-colon"><h3>擬似要素は <code>::</code>
+  から始まるべきです。</h3>
+    <p>選択子水準3以降、擬似要素は <code>:</code>
+    2つから始まることになっています。</p>
+    <p>水準1や2からあった擬似要素は <code>:</code>
+    1つだけで始まることも後方互換性のために認められています。
+    しかし可能な場合は新しい <code>::</code> 構文を使うべきです。</p>
   </div>
 
 <div class="section" id="ss-after-pseudo-element"><h3>Simple selector is not allowed after a
