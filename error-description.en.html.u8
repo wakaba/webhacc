@@ -2063,6 +2063,24 @@ p {
 
 </section>
 
+<section id="css-tokenization-error">
+<h2>CSS Tokenization Errors</h2>
+
+<div class="section" id="css:escape:not-unicode"><h3>Escaped non-Unicode character is not
+  allowed.</h3>
+    <p>A hexadecimal escape of non-Unicode character is not allowed
+    in the CSS syntax.  Code point greater than <code>U+10FFFF</code>
+    is not exist in Unicode.</p>
+  </div>
+
+<div class="section" id="css:escape:null"><h3>Escape <code>\0</code> is not allowed.</h3>
+    <p>Escape <code>\0</code> and its equivalents, i.e. a hexadecimal
+    escaped <code>U+0000</code> <code class="charname">NULL</code>
+    character, is not allowed in the CSS syntax.</p>
+  </div>
+
+</section>
+
 <section id="mq-errors">
 <h2>Media Query Errors</h2>
 
@@ -2130,14 +2148,102 @@ p {
 <div class="section" id="not-not-closed"><h3>Argument list of the <code>:not</code> selector
   is not closed by a <code>)</code> character.</h3></div>
 
+<div class="section" id="selectors:id:empty"><h3>ID is not specified.</h3>
+    <p>文字 <code>#</code> の後に識別子がありません。</p>
+    <p>文字 <code>#</code> は ID 選択子を表します。
+    後には識別子が続かなければなりません。
+    識別子は数字から始まることができません。
+    <code>#</code> と識別子の間に空白や注釈を入れることはできません。</p>
+  </div>
+
+<div class="section" id="selectors:pseudo:argument-not-closed"><h3>Argument list is not closed by 
+  <code>)</code>.</h3>
+    <p>The argument list of a pseudo-class or pseudo-element 
+    is not closed by a <code>)</code> character at the specified
+    point.</p>
+    <p>The <code>)</code> character might not be found
+    in the same selector, or the argument at the position
+    might be syntactically broken.</p>
+  </div>
+
+<div class="section" id="selectors:pseudo-class:function:not-supported"><h3>Pseudo-class <code>:<var>{value}</var>()</code>
+  is not supported.</h3> 
+    <p>The specified pseudo-class is not supported by the user
+    agent.</p>
+    <p>The user agent does not contain the implementation
+    for the pseudo-class.  Although the selector is in fact
+    conforming, the selector is <i>ignored</i> because of 
+    the lack of the support, and therefore the conformance
+    of the selector is unknown.</p>
+  </div>
+
+<div class="section" id="selectors:pseudo-class:function:unknown"><h3>Pseudo-class <code>:<var>{value}</var>()</code>
+  is not known to the parser.</h3> 
+    <p>The specified pseudo-class is not supported by the parser.</p>
+    <p>Either the pseudo-class is too new such that the parser does
+    not implement it yet, the pseudo-class only has the non-functional
+    notation (i.e. <code>:<var>class</var></code>),
+    or simply the pseudo-class is not found.</p>
+    <p>In anyway, the pseudo-class is not conforming according to the
+    Selectors specification as implemented by the parser.</p>
+  </div>
+
+<div class="section" id="selectors:pseudo-class:ident:not-supported"><h3>Pseudo-class <code>:<var>{value}</var></code>
+  is not supported.</h3> 
+    <p>The specified pseudo-class is not supported by the user
+    agent.</p>
+    <p>The user agent does not contain the implementation
+    for the pseudo-class.  Although the selector is in fact
+    conforming, the selector is <i>ignored</i> because of 
+    the lack of the support, and therefore the conformance
+    of the selector is unknown.</p>
+  </div>
+
+<div class="section" id="selectors:pseudo-class:ident:unknown"><h3>Pseudo-class <code>:<var>{value}</var></code>
+  is not known to the parser.</h3> 
+    <p>The specified pseudo-class is not supported by the parser.</p>
+    <p>Either the pseudo-class is too new such that the parser does
+    not implement it yet, the pseudo-class only has the functional
+    notation (i.e. <code>:<var>class</var>(<var>args</var>)</code>),
+    or simply the pseudo-class is not found.</p>
+    <p>In anyway, the pseudo-class is not conforming according to the
+    Selectors specification as implemented by the parser.</p>
+  </div>
+
+<div class="section" id="selectors:pseudo-element:ident:not-supported"><h3>Pseudo-element <code>:<var>{value}</var></code>
+  is not supported.</h3> 
+    <p>The specified pseudo-element is not supported by the user
+    agent.</p>
+    <p>The user agent does not contain the implementation
+    for the pseudo-element.  Although the selector is in fact
+    conforming, the selector is <i>ignored</i> because of 
+    the lack of the support, and therefore the conformance
+    of the selector is unknown.</p>
+  </div>
+
+<div class="section" id="selectors:pseudo-element:ident:one-colon"><h3>Pseudo-element should be introduced
+  by <code>::</code>.</h3> 
+    <p>Since Selectors level 3, a pseudo-element is prefixed 
+    by two <code>:</code> characters.</p>
+    <p>Pseudo-elements from levels 1 and 2 are allowed to 
+    start by only a <code>:</code> character for backward
+    compatibility.  However, where possible, the new <code>::</code>
+    syntax should be used.</p>
+  </div>
+
+<div class="section" id="selectors:pseudo-element:ident:unknown"><h3>Pseudo-element <code>:<var>{value}</var></code>
+  is not known to the parser.</h3> 
+    <p>The specified pseudo-element is not supported by the parser.</p>
+    <p>Either the pseudo-element is too new such that the parser does
+    not implement it yet, the pseudo-element only has the functional
+    notation (i.e. <code>:<var>class</var>(<var>args</var>)</code>),
+    or simply the pseudo-element is not found.</p>
+    <p>In anyway, the pseudo-element is not conforming according to the
+    Selectors specification as implemented by the parser.</p>
+  </div>
+
 <div class="section" id="ss-after-pseudo-element"><h3>Simple selector is not allowed after a
   pseudo element.</h3></div>
-
-<div class="section" id="unknown-pseudo-class"><h3>Pseudo-class <code>:<var>{value}</var></code>
-  is not supported by the conformance checker.</h3></div>
-
-<div class="section" id="unknown-pseudo-element"><h3>Pseudo-element <code>::<var>{value}</var></code>
-  is not supported by the conformance checker.</h3></div>
 
 </section>
 

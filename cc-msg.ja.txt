@@ -283,6 +283,8 @@ URL:password;;Password should not be included in a URL for the security.
 URL:percent-encoded unreserved;;An unreserved character is percent-encoded.
 URL:uppercase host;;The host <code><var>{value}</var></code> should be spelt in lowercase.
 URL:uppercase scheme name;;URL scheme name is in uppercase.
+css:escape:not unicode;;非 Unicode 文字のエスケープは認められていません。
+css:escape:null;;エスケープ <code>\0</code> は認められていません。
 mq syntax error;;The specified value has a syntax error as a media query.
 unknown media type;;Media type <code><var>{value}</var></code> is not supported by the conformance checker.
 an+b not closed;;Argument list of the pseudo-class is not closed by a <code>)</code> character.
@@ -305,9 +307,16 @@ no pseudo-class name;;Pseudo-class name is missing.
 no pseudo-element name;;Pseudo-element name is missing.
 no sss;;Sequence of simple selectors is expected.
 not not closed;;Argument list of the <code>:not</code> selector is not closed by a <code>)</code> character.
+selectors:id:empty;;ID が指定されていません。
+selectors:pseudo:argument not closed;;引数リストが <code>)</code> で閉じられていません。
+selectors:pseudo-class:function:not supported;;擬似クラス <code>:<var>{value}</var>()</code> には対応していません。
+selectors:pseudo-class:function:unknown;;擬似クラス <code>:<var>{value}</var>()</code> を構文解析器は知りません。
+selectors:pseudo-class:ident:not supported;;擬似クラス <code>:<var>{value}</var></code> には対応していません。
+selectors:pseudo-class:ident:unknown;;擬似クラス <code>:<var>{value}</var></code> を構文解析器は知りません。
+selectors:pseudo-element:ident:not supported;;擬似要素 <code>:<var>{value}</var></code> には対応していません。
+selectors:pseudo-element:ident:one colon;;擬似要素は <code>::</code> から始まるべきです。
+selectors:pseudo-element:ident:unknown;;擬似要素 <code>:<var>{value}</var></code> を構文解析器は知りません。
 ss after pseudo-element;;Simple selector is not allowed after a pseudo element.
-unknown pseudo-class;;Pseudo-class <code>:<var>{value}</var></code> is not supported by the conformance checker.
-unknown pseudo-element;;Pseudo-element <code>::<var>{value}</var></code> is not supported by the conformance checker.
 at-rule not allowed;;<code>@<var>{text}</var></code> 規則はここには書けません。
 at-rule syntax error;;指定された <code>@<var>{text}</var></code> 規則は構文的に間違っています。
 block not closed;;Block is not closed before the end of file.

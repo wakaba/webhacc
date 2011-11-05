@@ -2057,6 +2057,25 @@ p {
 
 </section>
 
+<section id="css-tokenization-error">
+<h2>CSS Tokenization Errors</h2>
+
+<div class="section" id="css:escape:not-unicode"><h3>非 Unicode 
+  文字のエスケープは認められていません。</h3>
+    <p>非 Unicode 文字の十六進数エスケープは CSS 構文では認められていません。
+    <code>U+10FFFF</code> より大きな符号位置は Unicode 
+    には存在しません。</p>
+  </div>
+
+<div class="section" id="css:escape:null"><h3>エスケープ <code>\0</code>
+  は認められていません。</h3>
+    <p>エスケープ <code>\0</code> やそれと等価な
+    <code>U+0000</code> <code class="charname">NULL</code> 
+    文字を表す十六進数エスケープは CSS 構文では認められていません。</p>
+  </div>
+
+</section>
+
 <section id="mq-errors">
 <h2>Media Query Errors</h2>
 
@@ -2124,14 +2143,92 @@ p {
 <div class="section" id="not-not-closed"><h3>Argument list of the <code>:not</code> selector
   is not closed by a <code>)</code> character.</h3></div>
 
+<div class="section" id="selectors:id:empty"><h3>ID が指定されていません。</h3>
+    <p>Identifier is not specified after the <code>#</code>
+    character.</p>
+    <p>The <code>#</code> character introduces an ID selector.
+    The character must be followed by an identifier.  The 
+    identifier cannot start with a digit.  White spaces
+    and comments are not allowed between <code>#</code>
+    and the identifier.</p>
+  </div>
+
+<div class="section" id="selectors:pseudo:argument-not-closed"><h3>引数リストが <code>)</code>
+  で閉じられていません。</h3>
+    <p>擬似クラスか擬似要素の引数リストを閉じる
+    <code>)</code> が指定された位置にありません。</p>
+    <p>閉じ <code>)</code> が同じ選択子の中に存在していないか、
+    指定された位置の引数に構文的に間違いがあります。</p>
+  </div>
+
+<div class="section" id="selectors:pseudo-class:function:not-supported"><h3>擬似クラス <code>:<var>{value}</var>()</code>
+  には対応していません。</h3>
+    <p>指定された擬似クラスに利用者エージェントが対応していません。</p>
+    <p>利用者エージェントが当該擬似クラスを実装していません。
+    選択子自体は実際には適合しているかもしれませんが、
+    未実装のため「無視」されるため、適合するかどうかは不明です。</p>
+  </div>
+
+<div class="section" id="selectors:pseudo-class:function:unknown"><h3>擬似クラス <code>:<var>{value}</var>()</code>
+  を構文解析器は知りません。</h3>
+    <p>指定された擬似クラスに構文解析器が対応していません。</p>
+    <p>指定された擬似クラスが新しすぎてまだ構文解析器が対応していないか、
+    その擬似クラスは非関数記法 (<code>:<var>class</var></code>)
+    しか持っていないか、
+    あるいは単純にその擬似クラスは存在しないのかもしれません。</p>
+    <p>いずれにせよ、
+    その擬似クラスは構文解析器が実装している選択子仕様に照らして不適合です。</p>
+  </div>
+
+<div class="section" id="selectors:pseudo-class:ident:not-supported"><h3>擬似クラス <code>:<var>{value}</var></code>
+  には対応していません。</h3>
+    <p>指定された擬似クラスに利用者エージェントが対応していません。</p>
+    <p>利用者エージェントが当該擬似クラスを実装していません。
+    選択子自体は実際には適合しているかもしれませんが、
+    未実装のため「無視」されるため、適合するかどうかは不明です。</p>
+  </div>
+
+<div class="section" id="selectors:pseudo-class:ident:unknown"><h3>擬似クラス <code>:<var>{value}</var></code>
+  を構文解析器は知りません。</h3>
+    <p>指定された擬似クラスに構文解析器が対応していません。</p>
+    <p>指定された擬似クラスが新しすぎてまだ構文解析器が対応していないか、
+    その擬似クラスは関数記法 (<code>:<var>class</var>(<var>args</var>)</code>)
+    しか持っていないか、
+    あるいは単純にその擬似クラスは存在しないのかもしれません。</p>
+    <p>いずれにせよ、
+    その擬似クラスは構文解析器が実装している選択子仕様に照らして不適合です。</p>
+  </div>
+
+<div class="section" id="selectors:pseudo-element:ident:not-supported"><h3>擬似要素 <code>:<var>{value}</var></code>
+  には対応していません。</h3>
+    <p>指定された擬似要素に利用者エージェントが対応していません。</p>
+    <p>利用者エージェントが当該擬似クラスを実装していません。
+    選択子自体は実際には適合しているかもしれませんが、
+    未実装のため「無視」されるため、適合するかどうかは不明です。</p>
+  </div>
+
+<div class="section" id="selectors:pseudo-element:ident:one-colon"><h3>擬似要素は <code>::</code>
+  から始まるべきです。</h3>
+    <p>選択子水準3以降、擬似要素は <code>:</code>
+    2つから始まることになっています。</p>
+    <p>水準1や2からあった擬似要素は <code>:</code>
+    1つだけで始まることも後方互換性のために認められています。
+    しかし可能な場合は新しい <code>::</code> 構文を使うべきです。</p>
+  </div>
+
+<div class="section" id="selectors:pseudo-element:ident:unknown"><h3>擬似要素 <code>:<var>{value}</var></code>
+  を構文解析器は知りません。</h3>
+    <p>指定された擬似要素に構文解析器が対応していません。</p>
+    <p>指定された擬似要素が新しすぎてまだ構文解析器が対応していないか、
+    その擬似要素は関数記法 (<code>:<var>class</var>(<var>args</var>)</code>)
+    しか持っていないか、
+    あるいは単純にその擬似要素は存在しないのかもしれません。</p>
+    <p>いずれにせよ、
+    その擬似要素は構文解析器が実装している選択子仕様に照らして不適合です。</p>
+  </div>
+
 <div class="section" id="ss-after-pseudo-element"><h3>Simple selector is not allowed after a
   pseudo element.</h3></div>
-
-<div class="section" id="unknown-pseudo-class"><h3>Pseudo-class <code>:<var>{value}</var></code>
-  is not supported by the conformance checker.</h3></div>
-
-<div class="section" id="unknown-pseudo-element"><h3>Pseudo-element <code>::<var>{value}</var></code>
-  is not supported by the conformance checker.</h3></div>
 
 </section>
 
