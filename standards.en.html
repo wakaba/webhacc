@@ -12,16 +12,18 @@ Checker"><img src="icons/title" alt="WebHACC"></abbr></a></h1>
 <div class=section id=standards>
 <h2>Supported Standards</h2>
 
-<p>The table below summarizes Web standards supported by WebHACC.  See
-following subsections for more details.
+<ul>
+  <li><a href="#css">CSS and related technologies</a>
+  <li><a href="#langtag">Language tags</a>
+</ul>
 
 <table>
 <thead>
-<tr><th scope=col>Standard<th scope=col>Version<th scope=col>Note
-</thead>
+<tr><th scope=col colspan=2>Standard<th scope=col>Note
+
 <tbody>
 <tr><th scope=row><a href="#html"><abbr title="Hypertext Markup Language">HTML</abbr></a>
-<td rowspan=2><a href="http://whatwg.org/c">Web Applications 1.0</a>
+<td rowspan=2><a href="http://whatwg.org/c">HTML Living Standard</a>
 <td rowspan=2>Most parts
 
 <tr><th><a href="#html">XHTML</a>
@@ -44,26 +46,9 @@ Namespaces
 <tr><td>1.1 First Edition
 <td>Tentative
 
-<tr>
-<th rowspan=2><a href="#css"><abbr title="Cascading Style Sheets">CSS</abbr></a>
-<td><a href="http://www.w3.org/TR/2007/CR-CSS21-20070719/">CSS 2.1
-Candidate Recommendation</a>
-<td>Most parts
-
-<tr>
-<td><a href="http://www.w3.org/TR/2008/WD-css3-color-20080721/">CSS Color
-Level 3 <abbr title="Last Call Working Draft">LCWD</abbr></a>
-<td>Most parts
-
-<tr>
-<th scope=row>Selectors
-<td>3
-<td><!-- Full -->
-</tbody>
-
 <tbody>
 <tr><th><a href="#cache-manifest">Cache Manifest</a>
-<td><a href="http://whatwg.org/c#manifests">Web Applications 1.0</a>
+<td><a href="http://whatwg.org/c#manifests">HTML Living Standard</a>
 <td><!-- Full -->
 
 <tr><th><a href="#webidl">WebIDL</a>
@@ -146,17 +131,19 @@ MIME type</a> [WA1].
 </div>
 
 <div class=section id=css>
-<h3><abbr title="Cascading Style Sheets">CSS</abbr></h3>
+<h3><abbr title="Cascading Style Sheets">CSS</abbr> and 
+related technologies</h3>
 
-<p>The following specification is implemented:
+<p>The following specifications are implemented:
 
 <ul>
+  <li><a href="http://www.w3.org/TR/selectors">Selectors</a>
+  (<a href="http://www.w3.org/TR/2011/REC-css3-selectors-20110929/">Level 3
+  September 29, 2011 W3C Recommendation</a>)
   <li><a href="http://www.w3.org/TR/css3-namespace/">CSS Namespaces</a>
   (<a href="http://www.w3.org/TR/2011/REC-css3-namespace-20110929/">September
   29, 2011 W3C Recommendation</a>)
 </ul>
-
-<p>Selectors Level 3 are fully implemented.</p>
 
 <p>Most of <a href="http://www.w3.org/TR/2007/CR-CSS21-20070719/">CSS 2.1
 (<time datetime=2007-07-19>19 July 2007</time> Candidate Recommendation)</a>
@@ -176,16 +163,39 @@ there is strong resaon to do different thing.</p>
 <p>In addition, the current implementation assumes that there are following 
 requirements:</p>
 <ul>
-<li id=css-type-charset-param>The <code>charset</code> parameter of the media 
-type <code>text/css</code> <em class=rfc2119>MUST</em> be treated as if it 
-were an unknown parameter for the purpose of determining styling langauge for 
-an <abbr>HTML</abbr> <code>style</code> element.</li>
 <li id=css-style-content>Content of an <abbr>HTML</abbr> <code>style</code> 
 element whose content is interpreted as a CSS style sheet 
 <em class=rfc2119>MUST</em> consist of zero or more 
 <a href="http://www.whatwg.org/specs/web-apps/current-work/#text-node">text nodes</a>.
 Note that it may also contain zero or more comment and/or processing 
 instruction nodes.</li>
+
+<li id=css-zero-escape>A hexadecimal escape whoes value is
+<code>0</code> <em class=rfc2119>MUST</em> be interpreted as a
+<code>U+0000</code> <code class=charname>NULL</code> character.  <span
+class=note>In CSS 2.1 its interpretation is explicitly left
+undefined.</span>
+
+<li id=css-surrogate-escape>An escape which represents a surrogate
+code point <em class=rfc2119>MUST</em> be interpreted as a 16-bit code
+unit with that code point.  That is, one or both of surrogate pair
+code units may be escaped.  <span class=note>In CSS 2.1 handling of
+escaped surrogates is not explicitly defined.</span>
+
+<li id=css-non-unicode-escape>An escape which represents a code point
+not exists in Unicode <em class=rfc2119>SHOULD NOT</em> be interpreted
+as <code>U+FFFD</code> <code class=charname>REPLACEMENT
+CHARACTER</code>.  <span class=note>In CSS 2.1 no clear requirement
+for the interpretation.</span>
+
+<li id=selectors-an+b>For the <code>an+b</code> syntax, any possible
+combination of <code>IDENT</code>, <code>DIMENSION</code>,
+<code>PLUS</code>, <code>MINUS</code>, <code>NUMBER</code>, and
+<code>S</code> tokens <em class=rfc2119>MUST</em> be accepted.  <span
+class=note>Grammer in Selectors Level 3 does not completely consistent
+with CSS tokenizer and browsers largely disagree on how to tokenize
+the <code>an+b</code> syntax.</span>
+
 </ul>
 
 </div>

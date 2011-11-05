@@ -238,6 +238,15 @@ pre.example.bad.manifest::before {
   font-family: sans-serif;
 }
 
+.charname {
+  text-transform: lowercase;
+  font-variant: small-caps;
+}
+
+.note {
+  color: green;
+  font-style: italic;
+}
 
 /* dl.switch from WHATWG specification style sheet */
 
