@@ -272,9 +272,8 @@ sub get_css_parser () {
     lang nth-child nth-last-child nth-of-type nth-last-of-type not
     -manakai-contains
   /, keys %$Whatpm::CSS::SelectorsParser::IdentOnlyPseudoClasses;
-  $p->{pseudo_element}->{$_} = 1 for qw/
-    after before first-letter first-line
-  /;
+  $p->{pseudo_element}->{$_} = 1
+      for keys %$Whatpm::CSS::SelectorsParser::IdentOnlyPseudoElements;
 
   return $CSSParser = $p;
 } # get_css_parser
