@@ -111,6 +111,8 @@ sub get_css_parser () {
   require Whatpm::CSS::Parser;
   my $p = Whatpm::CSS::Parser->new;
 
+  require Whatpm::CSS::SelectorsParser;
+
   $p->{prop}->{$_} = 1 for qw/
     alignment-baseline
     background background-attachment background-color background-image
@@ -267,12 +269,9 @@ sub get_css_parser () {
   $p->{prop_value}->{'outline-color'}->{invert} = 1;
   $p->{prop_value}->{'outline-color'}->{'-manakai-invert-or-currentcolor'} = 1;
   $p->{pseudo_class}->{$_} = 1 for qw/
-    active checked disabled empty enabled first-child first-of-type
-    focus hover indeterminate last-child last-of-type link only-child
-    only-of-type root target visited
     lang nth-child nth-last-child nth-of-type nth-last-of-type not
-    -manakai-contains -manakai-current
-  /;
+    -manakai-contains
+  /, keys %$Whatpm::CSS::SelectorsParser::IdentOnlyPseudoClasses;
   $p->{pseudo_element}->{$_} = 1 for qw/
     after before first-letter first-line
   /;
@@ -281,3 +280,12 @@ sub get_css_parser () {
 } # get_css_parser
 
 1;
+
+=head1 LICENSE
+
+Copyright 2008-2012 Wakaba <w@suika.fam.cx>.
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
+
+=cut
