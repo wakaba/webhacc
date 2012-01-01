@@ -3169,6 +3169,12 @@ p {
   </d:desc>
 </d:item>
 
+<d:item name="function not closed"
+    modules="CSS::SelectorsParser">
+  <d:message xml:lang="en">Argument list of a functional notation
+  is not closed by a <code>)</code> character.</d:message>
+</d:item>
+
 <d:item name="lang selector not closed"
     modules="CSS::SelectorsParser">
   <d:message xml:lang="en">Argument list of the <code>:lang</code>
@@ -3347,7 +3353,7 @@ p {
     <p>The specified pseudo-class is not supported by the user
     agent.</p>
     <p>The user agent does not contain the implementation
-    for the pseudo-class.  Although the selector is in fact
+    for the pseudo-class.  Although the selector could be in fact
     conforming, the selector is <i>ignored</i> because of 
     the lack of the support, and therefore the conformance
     of the selector is unknown.</p>
@@ -3386,6 +3392,55 @@ p {
   </d:desc>
 </d:item>
 
+<d:item name="selectors:pseudo-element:function:not supported"
+    modules="CSS::SelectorsParser">
+  <d:message xml:lang="en">Pseudo-element <code>::<var>{value}</var>()</code>
+  is not supported.</d:message>
+  <d:message xml:lang="ja">擬似要素 <code>::<var>{value}</var>()</code>
+  には対応していません。</d:message>
+  <d:desc xml:lang="en"> 
+    <p>The specified pseudo-element is not supported by the user
+    agent.</p>
+    <p>The user agent does not contain the implementation
+    for the pseudo-element.  Although the selector could be in fact
+    conforming, the selector is <i>ignored</i> because of 
+    the lack of the support, and therefore the conformance
+    of the selector is unknown.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>指定された擬似要素に利用者エージェントが対応していません。</p>
+    <p>利用者エージェントが当該擬似要素を実装していません。
+    選択子自体は実際には適合しているかもしれませんが、
+    未実装のため「無視」されるため、適合するかどうかは不明です。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="selectors:pseudo-element:function:unknown"
+    modules="CSS::SelectorsParser">
+  <d:message xml:lang="en">Pseudo-element <code>::<var>{value}</var>()</code>
+  is not known to the parser.</d:message>
+  <d:message xml:lang="ja">擬似要素 <code>::<var>{value}</var>()</code>
+  を構文解析器は知りません。</d:message>
+  <d:desc xml:lang="en"> 
+    <p>The specified pseudo-element is not supported by the parser.</p>
+    <p>Either the pseudo-element is too new such that the parser does
+    not implement it yet, the pseudo-class only has the non-functional
+    notation (i.e. <code>::<var>element</var></code>),
+    or simply the pseudo-element is not found.</p>
+    <p>In anyway, the pseudo-element is not conforming according to the
+    Selectors specification as implemented by the parser.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>指定された擬似要素に構文解析器が対応していません。</p>
+    <p>指定された擬似要素が新しすぎてまだ構文解析器が対応していないか、
+    その擬似クラスは非関数記法 (<code>:<var>class</var></code>)
+    しか持っていないか、
+    あるいは単純にその擬似要素は存在しないのかもしれません。</p>
+    <p>いずれにせよ、
+    その擬似クラスは構文解析器が実装している選択子仕様に照らして不適合です。</p>
+  </d:desc>
+</d:item>
+
 <d:item name="selectors:pseudo-class:ident:not supported"
     modules="CSS::SelectorsParser">
   <d:message xml:lang="en">Pseudo-class <code>:<var>{value}</var></code>
@@ -3396,7 +3451,7 @@ p {
     <p>The specified pseudo-class is not supported by the user
     agent.</p>
     <p>The user agent does not contain the implementation
-    for the pseudo-class.  Although the selector is in fact
+    for the pseudo-class.  Although the selector could be in fact
     conforming, the selector is <i>ignored</i> because of 
     the lack of the support, and therefore the conformance
     of the selector is unknown.</p>
@@ -3445,7 +3500,7 @@ p {
     <p>The specified pseudo-element is not supported by the user
     agent.</p>
     <p>The user agent does not contain the implementation
-    for the pseudo-element.  Although the selector is in fact
+    for the pseudo-element.  Although the selector could be in fact
     conforming, the selector is <i>ignored</i> because of 
     the lack of the support, and therefore the conformance
     of the selector is unknown.</p>

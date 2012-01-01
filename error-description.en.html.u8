@@ -2113,6 +2113,9 @@ p {
     the end of a selector.  No combinator can follow it.</p>
   </div>
 
+<div class="section" id="function-not-closed"><h3>Argument list of a functional notation
+  is not closed by a <code>)</code> character.</h3></div>
+
 <div class="section" id="lang-selector-not-closed"><h3>Argument list of the <code>:lang</code>
   selector is not closed by a <code>)</code> character.</h3></div>
 
@@ -2190,7 +2193,7 @@ p {
     <p>The specified pseudo-class is not supported by the user
     agent.</p>
     <p>The user agent does not contain the implementation
-    for the pseudo-class.  Although the selector is in fact
+    for the pseudo-class.  Although the selector could be in fact
     conforming, the selector is <i>ignored</i> because of 
     the lack of the support, and therefore the conformance
     of the selector is unknown.</p>
@@ -2207,12 +2210,34 @@ p {
     Selectors specification as implemented by the parser.</p>
   </div>
 
+<div class="section" id="selectors:pseudo-element:function:not-supported"><h3>Pseudo-element <code>::<var>{value}</var>()</code>
+  is not supported.</h3> 
+    <p>The specified pseudo-element is not supported by the user
+    agent.</p>
+    <p>The user agent does not contain the implementation
+    for the pseudo-element.  Although the selector could be in fact
+    conforming, the selector is <i>ignored</i> because of 
+    the lack of the support, and therefore the conformance
+    of the selector is unknown.</p>
+  </div>
+
+<div class="section" id="selectors:pseudo-element:function:unknown"><h3>Pseudo-element <code>::<var>{value}</var>()</code>
+  is not known to the parser.</h3> 
+    <p>The specified pseudo-element is not supported by the parser.</p>
+    <p>Either the pseudo-element is too new such that the parser does
+    not implement it yet, the pseudo-class only has the non-functional
+    notation (i.e. <code>::<var>element</var></code>),
+    or simply the pseudo-element is not found.</p>
+    <p>In anyway, the pseudo-element is not conforming according to the
+    Selectors specification as implemented by the parser.</p>
+  </div>
+
 <div class="section" id="selectors:pseudo-class:ident:not-supported"><h3>Pseudo-class <code>:<var>{value}</var></code>
   is not supported.</h3> 
     <p>The specified pseudo-class is not supported by the user
     agent.</p>
     <p>The user agent does not contain the implementation
-    for the pseudo-class.  Although the selector is in fact
+    for the pseudo-class.  Although the selector could be in fact
     conforming, the selector is <i>ignored</i> because of 
     the lack of the support, and therefore the conformance
     of the selector is unknown.</p>
@@ -2234,7 +2259,7 @@ p {
     <p>The specified pseudo-element is not supported by the user
     agent.</p>
     <p>The user agent does not contain the implementation
-    for the pseudo-element.  Although the selector is in fact
+    for the pseudo-element.  Although the selector could be in fact
     conforming, the selector is <i>ignored</i> because of 
     the lack of the support, and therefore the conformance
     of the selector is unknown.</p>

@@ -292,6 +292,7 @@ ab+b not integer;;Numbers in the argument <code><var>a</var>n+<var>b</var></code
 an+b syntax error;;Argument <code><var>a</var>n+<var>b</var></code> is syntactically incorrect.
 attr selector not closed;;Attribute selector is not closed by a <code>]</code> character.
 combinator after pseudo-element;;Pseudo-element must terminate the selector.
+function not closed;;Argument list of a functional notation is not closed by a <code>)</code> character.
 lang selector not closed;;Argument list of the <code>:lang</code> selector is not closed by a <code>)</code> character.
 namespace prefix:not declared;;Namespace prefix <code><var>{value}</var></code> is not declared.
 no attr local name;;Attribute local name is missing.
@@ -313,6 +314,8 @@ selectors:id:not ident;;ID is syntactically not an identifier.
 selectors:pseudo:argument not closed;;Argument list is not closed by <code>)</code>.
 selectors:pseudo-class:function:not supported;;Pseudo-class <code>:<var>{value}</var>()</code> is not supported.
 selectors:pseudo-class:function:unknown;;Pseudo-class <code>:<var>{value}</var>()</code> is not known to the parser.
+selectors:pseudo-element:function:not supported;;Pseudo-element <code>::<var>{value}</var>()</code> is not supported.
+selectors:pseudo-element:function:unknown;;Pseudo-element <code>::<var>{value}</var>()</code> is not known to the parser.
 selectors:pseudo-class:ident:not supported;;Pseudo-class <code>:<var>{value}</var></code> is not supported.
 selectors:pseudo-class:ident:unknown;;Pseudo-class <code>:<var>{value}</var></code> is not known to the parser.
 selectors:pseudo-element:ident:not supported;;Pseudo-element <code>:<var>{value}</var></code> is not supported.

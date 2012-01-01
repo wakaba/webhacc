@@ -292,6 +292,7 @@ ab+b not integer;;Numbers in the argument <code><var>a</var>n+<var>b</var></code
 an+b syntax error;;Argument <code><var>a</var>n+<var>b</var></code> is syntactically incorrect.
 attr selector not closed;;Attribute selector is not closed by a <code>]</code> character.
 combinator after pseudo-element;;擬似要素で選択子が終わらなければなりません。
+function not closed;;Argument list of a functional notation is not closed by a <code>)</code> character.
 lang selector not closed;;Argument list of the <code>:lang</code> selector is not closed by a <code>)</code> character.
 namespace prefix:not declared;;Namespace prefix <code><var>{value}</var></code> is not declared.
 no attr local name;;Attribute local name is missing.
@@ -313,6 +314,8 @@ selectors:id:not ident;;ID が構文的に正しい識別子でありません�
 selectors:pseudo:argument not closed;;引数リストが <code>)</code> で閉じられていません。
 selectors:pseudo-class:function:not supported;;擬似クラス <code>:<var>{value}</var>()</code> には対応していません。
 selectors:pseudo-class:function:unknown;;擬似クラス <code>:<var>{value}</var>()</code> を構文解析器は知りません。
+selectors:pseudo-element:function:not supported;;擬似要素 <code>::<var>{value}</var>()</code> には対応していません。
+selectors:pseudo-element:function:unknown;;擬似要素 <code>::<var>{value}</var>()</code> を構文解析器は知りません。
 selectors:pseudo-class:ident:not supported;;擬似クラス <code>:<var>{value}</var></code> には対応していません。
 selectors:pseudo-class:ident:unknown;;擬似クラス <code>:<var>{value}</var></code> を構文解析器は知りません。
 selectors:pseudo-element:ident:not supported;;擬似要素 <code>:<var>{value}</var></code> には対応していません。

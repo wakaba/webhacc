@@ -2107,6 +2107,9 @@ p {
     その後に結合子が来ることはできません。</p>
   </div>
 
+<div class="section" id="function-not-closed"><h3>Argument list of a functional notation
+  is not closed by a <code>)</code> character.</h3></div>
+
 <div class="section" id="lang-selector-not-closed"><h3>Argument list of the <code>:lang</code>
   selector is not closed by a <code>)</code> character.</h3></div>
 
@@ -2196,6 +2199,25 @@ p {
     その擬似クラスは非関数記法 (<code>:<var>class</var></code>)
     しか持っていないか、
     あるいは単純にその擬似クラスは存在しないのかもしれません。</p>
+    <p>いずれにせよ、
+    その擬似クラスは構文解析器が実装している選択子仕様に照らして不適合です。</p>
+  </div>
+
+<div class="section" id="selectors:pseudo-element:function:not-supported"><h3>擬似要素 <code>::<var>{value}</var>()</code>
+  には対応していません。</h3>
+    <p>指定された擬似要素に利用者エージェントが対応していません。</p>
+    <p>利用者エージェントが当該擬似要素を実装していません。
+    選択子自体は実際には適合しているかもしれませんが、
+    未実装のため「無視」されるため、適合するかどうかは不明です。</p>
+  </div>
+
+<div class="section" id="selectors:pseudo-element:function:unknown"><h3>擬似要素 <code>::<var>{value}</var>()</code>
+  を構文解析器は知りません。</h3>
+    <p>指定された擬似要素に構文解析器が対応していません。</p>
+    <p>指定された擬似要素が新しすぎてまだ構文解析器が対応していないか、
+    その擬似クラスは非関数記法 (<code>:<var>class</var></code>)
+    しか持っていないか、
+    あるいは単純にその擬似要素は存在しないのかもしれません。</p>
     <p>いずれにせよ、
     その擬似クラスは構文解析器が実装している選択子仕様に照らして不適合です。</p>
   </div>
