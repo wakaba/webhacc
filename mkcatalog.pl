@@ -4,6 +4,7 @@ use warnings;
 use encoding 'us-ascii', STDOUT => 'utf-8';
 use Path::Class;
 use lib glob file (__FILE__)->dir->subdir ('modules')->subdir ('*')->subdir ('lib');
+use Encode;
 
 my $HTML_NS = q<http://www.w3.org/1999/xhtml>;
 my $SRC_NS = q<http://suika.fam.cx/~wakaba/archive/2007/wdcc-desc/>;
@@ -12,14 +13,13 @@ my $XML_NS = q<http://www.w3.org/XML/1998/namespace>;
 require Message::DOM::DOMImplementation;
 my $dom = Message::DOM::DOMImplementation->new;
 
-my $doc;
+my $doc = $dom->create_document;
 {
   my $source_file_name = shift or die "$0: No source file specified\n";
   open my $source_file, '<', $source_file_name
       or die "$0: $source_file_name: $!";
-  require Message::DOM::XMLParserTemp;
-  $doc = Message::DOM::XMLParserTemp->parse_byte_stream
-      ($source_file => $dom, undef, charset => 'utf-8');
+  local $/ = undef;
+  $doc->inner_html (decode 'utf-8', <$source_file>);
   $doc->manakai_is_html (1);
 }
 
@@ -53,6 +53,7 @@ while (@node) {
         $entry->[-1] = $level . ':' . $entry->[-1] if defined $level;
         push @$entry, $node->get_attribute_ns (undef, 'class');
         push @$entry, $message->inner_html;
+        $_ = defined $_ ? $_ : '' for @$entry;
         s/\s+/ /g for @$entry;
         print join ';', @$entry;
         print "\n";
@@ -72,7 +73,7 @@ while (@node) {
           }          
         }
         if (defined $text) {
-          my $entry = [$name, undef, $text];
+          my $entry = [$name, '', $text];
           s/\s+/ /g for @$entry;
           print join ';', @$entry;
           print "\n";
