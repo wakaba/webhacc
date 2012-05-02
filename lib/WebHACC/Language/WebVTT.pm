@@ -46,14 +46,26 @@ sub generate_syntax_error_section ($) {
 sub generate_structure_dump_section ($) {
   my $self = shift;
   
+  require Whatpm::WebVTT::Parser;
   require Whatpm::WebVTT::Serializer;
+  require Message::DOM::DOMImplementation;
+  my $parser = Whatpm::WebVTT::Parser->new;
+  my $dom = Message::DOM::DOMImplementation->new;
+  my $doc = $dom->create_document;
+
   my $out = $self->output;
 
   $out->start_section (role => 'reformatted');
 
+  my $track = $self->{structure}->manakai_clone_track;
+  for my $cue (@{$track->manakai_all_cues}) {
+    my $df = $parser->text_to_dom ($cue->text => $doc);
+    my $text = Whatpm::WebVTT::Serializer->dom_to_text ($df);
+    $cue->text ($text);
+  }
+
   $out->start_code_block;
-  $out->text (Whatpm::WebVTT::Serializer->track_to_char_string
-                  ($self->{structure}));
+  $out->text (Whatpm::WebVTT::Serializer->track_to_char_string ($track));
   $out->end_code_block;
 
   $out->end_section
