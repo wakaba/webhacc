@@ -28,17 +28,17 @@ unicode not preferred;;Code point <code><var>{text}</var></code> is not the pref
 unicode should;;Character <code><var>{text}</var></code> should not be used in many cases.
 bad attribute name;;Attribute name cannot contain characters <code>"</code>, <code>'</code>, and <code>=</code>.
 bad attribute value;;Attribute value must be quoted by <code>"</code> or <code>'</code> if it contains a <code>"</code>, <code>'</code>, or <code>=</code> character.
-bare ero;;The <code>&amp;</code> character must be escaped as <code class="html example">&amp;amp;</code>.
+bare ero;;文字 <code>&amp;</code> は <code class="html example">&amp;amp;</code> とエスケープしなければなりません。
 bare etago;;A <code>&lt;/</code> string is not followed by a tag name.
-bare stago;;A <code>&lt;</code> character is not followed by tag name or by a <code>!</code> character.
+bare stago;;A <code>&lt;</code> character is not followed by a tag name or a <code>!</code>, <code>/</code>, or <code>?</code> character.
 bare nero;;The decimal representation of the code position of a character must be specified after <code>&amp;#</code>.
 bare hcro;;The hexadecimal representation of the code position of a character must be specified after <code>&amp;#x</code>.
 bogus comment;;String <code>&lt;!</code> is not followed by <code>--</code>.
 bogus end tag;;String <code>&lt;/</code> is not followed by tag name.
 dash in comment;;There is a <code>--</code> sequence in a comment.
 duplicate attribute;;There are two attributes with name <code><var>{text}</var></code>.
-empty start tag;;Empty start tag (<code>&lt;&gt;</code>) is not allowed.
-empty end tag;;Empty end tag (<code>&lt;/&gt;</code>) is not allowed.
+empty start tag;; <p>HTML、XML、WebVTT では、タグ名の無い空の開始タグは認められていません。</p> <p>開始タグを記述する時はタグ名も明示しなければなりません。</p> <p>「<code>&lt;</code>」という文字を使いたい時は文字参照 「<code>&amp;lt;</code>」を使わなければなりません。</p> 
+empty end tag;; <p>HTML、XML、WebVTT では、タグ名の無い空の終了タグは認められていません。</p> <p>終了タグを記述する時はタグ名も明示しなければなりません。</p> <p>「<code>&lt;</code>」という文字を使いたい時は文字参照 「<code>&amp;lt;</code>」を使わなければなりません。</p> 
 end tag attribute;;終了タグに属性が指定されています。
 empty unquoted attribute value;;属性値が指定されていません。
 invalid character reference;;Character reference to <code><var>{text}</var></code> is not allowed.
@@ -60,7 +60,8 @@ unclosed comment;;Comment is not closed by a string <code>--&gt;</code>.
 unclosed DOCTYPE;;The <code>DOCTYPE</code> is not closed by a <code>&gt;</code> character.
 unclosed PUBLIC literal;;The public identifier literal is not closed by a quotation mark.
 unclosed SYSTEM literal;;The system identifier literal is not closed by a quotation mark.
-unclosed tag;;Tag is not closed by a <code>&gt;</code> character.
+unclosed tag;;タグが文字 <code>&gt;</code> で閉じられていません。
+entity not declared;;実体 <code><var>{value}</var></code> は宣言されていません。
 after after frameset;;<code>html</code> 要素が閉じられた後に開始タグ <code>&lt;<var>{text}</var>&gt;</code> があります。
 after after frameset:/;;<code>html</code> 要素が閉じられた後に終了タグ <code>&lt;/<var>{text}</var>&gt;</code> があります。
 after body;;Start tag <code>&lt;<var>{text}</var>&gt;</code> is not allowed after the <code>body</code> is closed.
@@ -99,11 +100,11 @@ in table:#text;;Non‐white‐space character is not allowed within the <code>ta
 isindex;;The <code>isindex</code> element is obsolete.
 missing start tag:tr;;Start tag of <code>tr</code> element is missing.
 no DOCTYPE;parse-error;This document does not start with a <code>DOCTYPE</code>.
-not closed;parse-error;Element <code><var>{text}</var></code> is not closed.
+not closed;parse-error;要素 <code><var>{text}</var></code> は閉じられていません。
 not first start tag;parse-error;This <code>&lt;html&gt;</code> tag is not the first start tag.
 not HTML5;parse-error;This document is written in an old version of HTML.
-start tag not allowed;parse-error;Start tag <code>&lt;<var>{text}</var>&gt;</code> is not allowed here.
-unmatched end tag;parse-error;Element <code><var>{text}</var></code> is not opened.
+start tag not allowed;parse-error;開始タグ <code>&lt;<var>{text}</var>&gt;</code> はここでは認められていません。
+unmatched end tag;parse-error;要素 <code><var>{text}</var></code> は開いていません。
 XSLT-compat;;<code>DOCTYPE</code> 遺物文字列が使われています。
 basehref after URL attribute;;The <code>base</code> element with the <code>href</code> attribute specified cannot be placed after any attribute with a URL.
 basetarget after hyperlink;;The <code>base</code> element with the <code>target</code> attribute specified cannot be placed after any element that defines a hyperlink.
@@ -116,6 +117,7 @@ child element missing:td|th;content-model-error;There must be a <code>td</code> 
 child element missing:atom;;There must be an element <code><var>{text}</var></code> in the Atom namespace as a child of this element.
 child element missing:atom:link:alternate;;There must be an Atom <code>link</code> element whose <code>rel</code> attribute is set to <code>alternate</code> as a child of this element.
 child element missing:atom:link:self;;There should be an Atom <code>link</code> element whose <code>rel</code> attribute is set to <code>self</code> as a child of this element.
+element missing;;子要素 <code><var>{text}</var></code> がありません。
 element missing:hn;;There must be at least one <code>h<var>n</var></code> element descendant.
 element not allowed;;This element is not allowed in this context.
 element not allowed:area;;An <code>area</code> element cannot be used outside of a <code>map</code> element.
@@ -336,6 +338,36 @@ no property semicolon;;A <code>;</code> character is missing at the end of the p
 priority syntax error;;Priority part of the declaration is syntactically incorrect.
 unknown at-rule;;The <code>@<var>{value}</var></code> rule is not supported by the conformance checker.
 unknown property;;Property <code><var>{value}</var></code> is not supported by the conformance checker.
+empty class;;クラス名を空にすることはできません。
+form feed;;<code class="charname">FORM FEED</code> を使うことはできません。
+newline not allowed;;改行は認められていません。
+webvtt:annotation not allowed;;タグ <code><var>{text}</var></code> に注釈を指定することはできません。
+webvtt:bad timestamp;;タイムスタンプの構文が正しくありません。
+webvtt:class:syntax;;クラス名に使えない文字が含まれています。
+webvtt:empty annotation;;注釈を空にすることはできません。
+webvtt:end time < start time;;終了時刻が開始時刻より前になることはできません。
+webvtt:end time < timestamp;;時刻は終了時刻より前でなければなりません。
+webvtt:headers;;ヘッダーを使うことはできません。
+webvtt:id:duplicate;;同じ識別子のキューが他にもあります。
+webvtt:id:multiple;;識別子の行が複数あります。 この行は無視します。
+webvtt:id:syntax;;構文的に正しい WebVTT キュー識別子ではありません。
+webvtt:no cue separator;;2つのキューの間に空行がありません。
+webvtt:no header end;;最初のキューの前に空行がありません。
+webvtt:no signature;;WebVTT 文書を表す「<code>WEBVTT</code>」 の行が見つかりません。
+webvtt:no text;;キューの文章が指定されていません。
+webvtt:no timings;;タイミングを指定する行がありません。
+webvtt:start time order;;キューの開始時刻は、 同じファイルのここまでのキューの開始時刻よりも前であってはなりません。
+webvtt:setting:duplicate;;設定 <code><var>{value}</var></code> は複数回指定されています。
+webvtt:setting:empty name;;設定の名前を空にすることはできません。
+webvtt:setting:empty value;;設定の値を空にすることはできません。
+webvtt:setting:invalid;;設定 <code><var>{value}</var></code> は定義されていません。
+webvtt:setting:invalid value;;設定 <code><var>{text}</var></code> では値 <code><var>{value}</var></code> は認められていません。
+webvtt:setting:no value;;設定の値を指定する必要があります。
+webvtt:text:syntax;;構文的に正しい WebVTT キュー文章ではありません。
+webvtt:timestamp < min time;;時刻は、ここまでの時刻よりも後でなければなりません。
+webvtt:timestamp:hour;;「時」は2桁以上の数字列でなければなりまえせん。
+webvtt:timings:leading space;;時刻の指定の前に空白文字を入れてはいけません。
+webvtt:timings:no space;;<code>--&gt;</code> の前後の空白が抜けています。
 both in entries and whitelist;;This URL is found both in the explicit or fallback entries and in the online whitelist.
 different origin from manifest;;The specified URL has different origin from the manifest.
 different scheme from manifest;;The scheme component of the URL is different from that of the manifest URL. The URL is ignored.

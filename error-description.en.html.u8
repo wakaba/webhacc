@@ -275,38 +275,38 @@
 <div class="section" id="bare-ero"><h3>The <code>&amp;</code> character must
   be escaped as <code class="html example">&amp;amp;</code>.</h3>
     <p>An <code>&amp;</code> character which
-    is not part of any reference appears in the input stream.
-    The document is non‐conforming.</p>
+    is not part of any reference appears in the input stream.</p>
 
-    <p><em>Any <code>&amp;</code> character in URI (or IRI)
+    <p><em>Any <code>&amp;</code> character in URLs
     must be escaped as <code class="example">&amp;amp;</code>.</em></p>
 
     <p>The <code>&amp;</code> character must
     be the first character of a reference:
+    </p>
+
       <dl class="switch">
-      <dt>Named entity reference</dt>
+      <dt>Named character reference (HTML / WebVTT)</dt>
           <dd><pre class="html example">
 <code>&amp;<var>entity-name</var>;</code></pre>
           where <var>entity-name</var> is the name of the
-          character entity to be referenced.</dd>
-      <dt>Numeric character reference</dt>
+          character to be referenced.</dd>
+      <dt>Numeric character reference (HTML only)</dt>
           <dd><pre class="html example">
 <code>&amp;#<var>d</var>;</code></pre>
           where <var>d</var> is the decimal representation of
           the code position of the character to be referenced.</dd>
-      <dt>Hexadecimal character reference</dt>
+      <dt>Hexadecimal character reference (HTML only)</dt>
           <dd><pre class="html example">
 <code>&amp;#x<var>h</var>;</code></pre>
           where <var>h</var> is the hexadecimal representation
           of the code position of the character to be referenced.</dd>
       </dl>
-    </p>
 
     <p>To represent <code>&amp;</code> as a data character, use
-    named entity reference:
+    named character reference:
+    </p>
       <pre class="html example">
 <code>&amp;amp;</code></pre>
-    </p>
   </div>
 
 <div class="section" id="bare-etago"><h3>A <code>&lt;/</code> string is not followed
@@ -324,22 +324,22 @@
 
     <p>The <code>&lt;/</code> sequence as string data must
     be escaped as:
+    </p>
     <pre class="html example">
 <code>&amp;lt;/</code></pre>
-    </p>
   </div>
 
-<div class="section" id="bare-stago"><h3>A <code>&lt;</code> character is not followed
-  by tag name or by a <code>!</code> character.</h3>
-    <p>A <code>&lt;</code> (<code>U+003C</code> 
-    <code class="charname">LESS-THAN SIGN</code>) character which is not part
-    of any markup appears in the input stream.</p>
+<div class="section" id="bare-stago"><h3>文字 <code>&lt;</code> の次がタグ名でも
+  <code>!</code>, <code>/</code>,
+  <code>?</code> のいずれでもありません。</h3>
+    <p>A <code>&lt;</code> (<code class="char">U+003C</code> <code class="charname">LESS-THAN SIGN</code>) character which is not
+    part of any markup appears in the input stream.</p>
 
     <p>The <code>&lt;</code> character as a data character must
     be escaped as:
+    </p>
     <pre class="html example">
 <code>&amp;lt;</code></pre>
-    </p>
   </div>
 
 <div class="section" id="bare-nero"><h3>The decimal representation of the code position
@@ -465,11 +465,23 @@
     Use <code>img</code> element with animation GIF instead.</p>
   </div>
 
-<div class="section" id="empty-start-tag"><h3>Empty start tag (<code>&lt;&gt;</code>) is not
-  allowed.</h3></div>
+<div class="section" id="empty-start-tag"><h3>
+    <p>In HTML, XML, and WebVTT, empty start tag, i.e. start
+    tag with no tag name, is not allowed.</p>
+    <p>To represent a start tag, you have to specify the
+    tag name explicitly.</p>
+    <p>To represent a string with the <code>&lt;</code> character,
+    you have to use the character reference: <code>&amp;lt;</code>.</p>
+  </h3></div>
 
-<div class="section" id="empty-end-tag"><h3>Empty end tag (<code>&lt;/&gt;</code>) is not
-  allowed.</h3></div>
+<div class="section" id="empty-end-tag"><h3>
+    <p>In HTML, XML, and WebVTT, empty end tag, i.e. end
+    tag with no tag name, is not allowed.</p>
+    <p>To represent an end tag, you have to specify the
+    tag name explicitly.</p>
+    <p>To represent a string with the <code>&lt;</code> character,
+    you have to use the character reference: <code>&amp;lt;</code>.</p>
+  </h3></div>
 
 <div class="section" id="end-tag-attribute"><h3>End tag cannot have attributes.</h3></div>
 
@@ -640,7 +652,44 @@ p {
   quotation mark.</h3></div>
 
 <div class="section" id="unclosed-tag"><h3>Tag is not closed by a <code>&gt;</code>
-  character.</h3></div>
+  character.</h3>
+    <p>In HTML, XML, and WebVTT, any tag must be closed 
+    by a <code>&gt;</code> character.</p>
+  </div>
+
+</section>
+
+<section id="xml-errors">
+<h2>XML Errors</h2>
+
+<div class="section" id="entity-not-declared"><h3>Entity <code><var>{value}</var></code>
+  is not declared.</h3>
+    <p>The referenced entity is not declared.</p>
+
+    <dl class="swtich">
+      <dt>XML documents</dt>
+
+      <dd>In XML documents, most of entities must be declared in the
+      document type definition of the document.  Lack of entity
+      declaration is validity error, or sometimes well-formedness
+      error, depending on the standaloness of the document.</dd>
+
+      <dd>In XML documents, although entities <code>amp</code>,
+      <code>lt</code>, <code>gt</code>, <code>quot</code>, and
+      <code>apos</code> are predefined, therefore they can be used
+      even when they are not explicitly declared, they have to be
+      declared for interoperability, according to the XML
+      specification.</dd>
+
+      <dt>WebVTT documents</dt>
+
+      <dd>In WebVTT documents. only the following character 
+      references are allowed: <code>&amp;amp;</code>,
+      <code>&amp;lt;</code>, <code>&amp;gt;</code>,
+      <code>&amp;lrm;</code>, <code>&amp;rlm;</code>,
+      and <code>&amp;nbsp;</code>.</dd>
+    </dl>
+  </div>
 
 </section>
 
@@ -855,24 +904,34 @@ p {
   closed.</h3>
     <p>End tag of an element is not found before, for example,
     an end tag of another element appears or
-    the end of the document.  The document is non-conforming.</p>
+    the end of the document.</p>
 
-    <p>Only <code>body</code>, <code>colgroup</code>, <code>dd</code>,
-    <code>dt</code>, <code>head</code>, <code>html</code>, <code>li</code>,
-    <code>ol</code>, <code>option</code>, <code>optgroup</code>, 
-    <code>p</code>, <code>rb</code>, <code>rp</code>, <code>rt</code>,
-    <code>tbody</code>, <code>td</code>, <code>tfoot</code>,
-    <code>th</code>, <code>thead</code>, <code>tr</code>,
-    <code>ul</code> end tag can be omitted in HTML documents.
-    For any element except for void element, there must be an explicit
-    end tag.</p>
+    <p>Only end tags for <code>body</code>, <code>colgroup</code>,
+    <code>dd</code>, <code>dt</code>, <code>head</code>,
+    <code>html</code>, <code>li</code>, <code>ol</code>,
+    <code>option</code>, <code>optgroup</code>, <code>p</code>,
+    <code>rp</code>, <code>rt</code>, <code>tbody</code>,
+    <code>td</code>, <code>tfoot</code>, <code>th</code>,
+    <code>thead</code>, <code>tr</code>, and <code>ul</code> elements
+    can be omitted in HTML documents.  Only <code>v</code> and
+    <code>rt</code> end tags can be omitted in WebVTT documents.  For
+    any element except for void element, there must be an explicit end
+    tag.</p>
 
     <dl class="switch">
-    <dt>HTML <code>canvas</code> element</dt>
+
+      <dt>HTML <code>canvas</code> element</dt>
+
       <dd>Though the element is void in earlier versions of Safari,
       the <code>canvas</code> element is <em>no</em> longer
       defined as empty.  There must be an end tag
       <code class="html example">&lt;/canvas&gt;</code>.</dd>
+
+      <dt>In XML document</dt>
+
+      <dd>No end tag can be omitted in XML documents.  Use the empty
+      element tag syntax <code class="xml       example">&lt;<var>element</var> /&gt;</code> to minimize the
+      markup.</dd>
     </dl>
 
     <p>Note that misnesting tags, such as 
@@ -908,28 +967,43 @@ p {
     HTML document (roughly) as defined in HTML5.</p>
   </div>
 
-<div class="section" id="start-tag-not-allowed"><h3>Start tag <code>&lt;<var>{text}</var>&gt;</code> is
-  not allowed here.</h3></div>
+<div class="section" id="start-tag-not-allowed"><h3>Start tag
+  <code>&lt;<var>{text}</var>&gt;</code> is not allowed here.</h3>
+    <p>The specified tag is not allowed in the context.</p>
+
+    <dl class="switch">
+      <dt>WebVTT cue text</dt>
+      <dd>In WebVTT, only following start tags are allowed:
+      <code>&lt;c&gt;</code>, <code>&lt;b&gt;</code>,
+      <code>&lt;i&gt;</code>, <code>&lt;u&gt;</code>,
+      <code>&lt;ruby&gt;</code>, <code>&lt;rt&gt;</code>, and
+      <code>&lt;v&gt;</code>.</dd>
+      <dd>The <code>&lt;rt&gt;</code> tag is only allowed within
+      the <code>ruby</code> element.</dd>
+    </dl>
+  </div>
 
 <div class="section" id="unmatched-end-tag"><h3>Element <code><var>{text}</var></code> is not
   opened.</h3>
     <p>An end tag appears though no element with the same name
-    has been opened.  The document is non-conforming.</p>
+    has been opened.</p>
 
-    <p>For any end tag in HTML document, there must be a
-    corresponding start tag.</p>
+    <p>For any end tag in HTML, XML, or WebVTT document, there must be
+    a corresponding start tag.</p>
 
     <dl class="switch">
-    <dt>HTML <code>base</code>, <code>basefont</code>,
-    <code>bgsound</code>, <code>br</code>, <code>col</code>,
-    <code>embed</code>, <code>frame</code>, <code>hr</code>,
-    <code>image</code>, <code>img</code>, <code>input</code>,
-    <code>isindex</code>, <code>link</code>, <code>meta</code>,
-    <code>param</code>, <code>spacer</code>, or <code>wbr</code> element</dt>
+
+      <dt>HTML <code>base</code>, <code>basefont</code>,
+      <code>bgsound</code>, <code>br</code>, <code>col</code>,
+      <code>command</code>, <code>embed</code>, <code>frame</code>,
+      <code>hr</code>, <code>image</code>, <code>img</code>,
+      <code>input</code>, <code>isindex</code>, <code>keygen</code>,
+      <code>link</code>, <code>meta</code>, <code>param</code>,
+      <code>source</code>, <code>spacer</code>, <code>track</code>, or
+      <code>wbr</code> element</dt>
+
       <dd>End tag is not allowed for these elements, since
-      those content must always be empty.  Remove end tag.</dd>
-    <!-- keygen -->
-    <!-- command, event-source, nest, source -->
+      those content must always be empty.  Remove the end tag.</dd>
     </dl>
   </div>
 
@@ -1031,6 +1105,21 @@ p {
 <div class="section" id="child-element-missing:atom:link:self"><h3>There should be an Atom <code>link</code> element
   whose <code>rel</code> attribute is set to <code>self</code> as a
   child of this element.</h3></div>
+
+<div class="section" id="element-missing"><h3>Required child element 
+  <code><var>{text}</var></code> is not found.</h3>
+    <p>指定された要素名の子要素がなければなりませんが、
+    この要素の子供に見つかりませんでした。</p>
+
+    <dl class="switch">
+      <dt>WebVTT の <code>ruby</code></dt>
+
+      <dd>WebVTT キューの文章で <code>ruby</code> 内の
+      <code>rt</code> 以外のオブジェクトが続いた後には
+      <code>rt</code> が必要です。</dd>
+
+    </dl>
+  </div>
 
 <div class="section" id="element-missing:hn"><h3>There must be at least one 
   <code>h<var>n</var></code> element descendant.</h3></div>
@@ -2354,6 +2443,232 @@ p {
 
 </section>
 
+<section id="webvtt-errors">
+<h2>WebVTT Errors</h2>
+
+<div class="section" id="empty-class"><h3>Class name cannot be empty.</h3>
+    <p>A class name cannot be the empty string.</p>
+    <p>Class names cannot contain white space
+    characters, newlines, the <code>.</code> character,
+    or the <code>&gt;</code> character in WebVTT.</p>
+  </div>
+
+<div class="section" id="form-feed"><h3>Form feed character is not allowed.</h3>
+    <p>In WebVTT, <code class="char">U+000C</code>
+    <code class="charname">FORM FEED</code> character cannot be
+    used as white space.</p>
+    <p>Use normal space or newline character instead.</p>
+  </div>
+
+<div class="section" id="newline-not-allowed"><h3>Newline is not allowed.</h3>
+    <p>In WebVTT, newlines are not allowed within tags,
+    annotations, or identifiers.</p>
+  </div>
+
+<div class="section" id="webvtt:annotation-not-allowed"><h3>Annotation cannot be specified for
+  tag <code><var>{text}</var></code>.</h3>
+    <p>Annotation cannot be specified within the given tag.</p>
+    <p>The only tag annotations are allowed is <code>&lt;v&gt;</code>.</p>
+  </div>
+
+<div class="section" id="webvtt:bad-timestamp"><h3>Timestamp is syntactically in error.</h3>
+    <p>A WebVTT timestamp is expected but it is not a syntactically 
+    valid timestamp.</p>
+    <p>In WebVTT, a timestamp must be in the format 
+    <code><var>hh</var>:<var>mm</var>:<var>ss</var>.<var>fff</var></code>
+    or <code><var>mm</var>:<var>ss</var>.<var>fff</var></code>.</p>
+    <p>The minute and second components must have value less
+    than or equal to 59.</p>
+  </div>
+
+<div class="section" id="webvtt:class:syntax"><h3>Class name contains an invalid character.</h3>
+    <p>The specified string is syntactically not a valid WebVTT
+    class name.</p>
+    <p>In WebVTT, class names cannot contain characters
+    <code>&lt;</code>, <code>&gt;</code>, <code>&amp;</code>,
+    and <code>.</code><!-- and white space characters
+    and newlines, but they are interpreted as separators
+    in HTML class="" attributes. -->.</p>
+  </div>
+
+<div class="section" id="webvtt:empty-annotation"><h3>Annotation cannot be empty.</h3>
+    <p>A WebVTT annotation cannot be empty.  It must contain 
+    at least a character that is not a white space character.</p>
+  </div>
+
+<div class="section" id="webvtt:end-time-<-start-time"><h3>End time cannot be less than
+  start time.</h3>
+    <p>The end time of the cue must be greater than or equal to
+    the start time of the cue.</p>
+  </div>
+
+<div class="section" id="webvtt:end-time-<-timestamp"><h3>Timestamp must be less than end time.</h3>
+    <p>The timestamp tag in the WebVTT cue text must be
+    less than the end time of the cue.</p>
+  </div>
+
+<div class="section" id="webvtt:headers"><h3>Header is not allowed.</h3>
+    <p>In WebVTT, header's syntax and semantics is not defined
+    at the time of writing.</p>
+    <p>To specify the identifier for the first cue, you have
+    to insert a blank line between the <code>WEBVTT</code> signature line
+    and the identifier.</p>
+  </div>
+
+<div class="section" id="webvtt:id:duplicate"><h3>There are multiple cues with same
+  identifier.</h3>
+    <p>There are another cue with the same identifier as the
+    cue, in the WebVTT file.</p>
+    <p>Although duplication of identifier is not an error
+    according to the WebVTT specification, APIs retriving
+    cues by their identifiers will ignore the second or later
+    cues.</p>
+  </div>
+
+<div class="section" id="webvtt:id:multiple"><h3>There are multiple identifer lines;
+  This line is ignored.</h3>
+    <p>There must be at most one identifier line before
+    the timings line.</p>
+    <p>If there are more than one identifiers, only the
+    last identifier is used by implementations.</p>
+  </div>
+
+<div class="section" id="webvtt:id:syntax"><h3>This is not a syntactically valid WebVTT
+  cue identifier.</h3>
+    <p>The specified string is not a valid WebVTT cue identifier.</p> 
+    <p>A WebVTT cue identifier cannot contain string <code>--&gt;</code>.
+    It cannot contain any newline.</p>
+  </div>
+
+<div class="section" id="webvtt:no-cue-separator"><h3>No blank line is found between
+  two cues.</h3>
+    <p>No blank line is found between two consecutive cues.</p>
+    <p>There must be at least two newlines between the end of the
+    first cue and the beginning of the second cue.</p>
+  </div>
+
+<div class="section" id="webvtt:no-header-end"><h3>No blank line is found before the
+  first cue.</h3>
+    <p>No blank line is found between the header and the first cue.</p>
+    <p>There must be at least two newlines between the end of the
+    header portion and the beginning of the first cue's identifier
+    or timings.</p>
+  </div>
+
+<div class="section" id="webvtt:no-signature"><h3>The <code>WEBVTT</code> signature
+  line is not found.</h3>
+    <p>The first line in the WebVTT file must be the signature
+    line, i.e. <code>WEBVTT</code>.</p>
+    <ul>
+      <li>The word <code>WEBVTT</code> must be in uppercase.</li>
+      <li>The next character to <code>WEBVTT</code> must be
+      a newline, space, or tab.  Space variants such as
+      fullwidth space and no-break space are not allowed here.</li>
+      <li>No character, even the space character, is allowed
+      before the word <code>WEBVTT</code>.</li>
+    </ul>
+  </div>
+
+<div class="section" id="webvtt:no-text"><h3>No text is specified for the cue.</h3>
+    <p>No text is specified for the cue.</p>
+    <p>Even when you really want to specify a cue with empty
+    text, you have to insert an empty cue text line after the
+    timings line.  If there is another cue following the 
+    empty text cue, there must be two blank lines between
+    them.</p>
+  </div>
+
+<div class="section" id="webvtt:no-timings"><h3>No timings line is found.</h3>
+    <p>No timings line is found in the cue.  Start and
+    end times must be specified in the format 
+    <code><var>hh</var>:<var>mm</var>:<var>ss</var>.<var>fff</var>&amp;nbsp;--&gt;&amp;nbsp;<var>hh</var>:<var>mm</var>:<var>ss</var>.<var>fff</var></code>.</p>
+    <p>Cue text cannot contain two concecutive newlines (or
+    a blank line).</p>
+  </div>
+
+<div class="section" id="webvtt:start-time-order"><h3>Start time of a cue cannot be less than
+  the start time of the previous cues in the same file.</h3>
+    <p>The start time of a cue must be greater than or equal to the
+    start times of the cues appearing before the cue in the 
+    same WebVTT file.  In other word, the cues in a WebVTT
+    file must be sorted by their start times.</p>
+  </div>
+
+<div class="section" id="webvtt:setting:duplicate"><h3>Setting <code><var>{value}</var></code>
+  is specified twice.</h3>
+    <p>The setting with the same name is specified multiple
+    times in the line.  Only the last valid specification is 
+    used by user agents.  All other specifications
+    are ignored.</p>
+  </div>
+
+<div class="section" id="webvtt:setting:empty-name"><h3>Setting name cannot be empty.</h3>
+    <p>The name of the setting cannot be empty.  A valid 
+    setting name must be specified before the <code>:</code>
+    character.</p>
+  </div>
+
+<div class="section" id="webvtt:setting:empty-value"><h3>Setting value cannot be empty.</h3>
+    <p>The value of the setting cannot be empty.  A valid 
+    setting value must be specified after the <code>:</code>
+    character.</p>
+    <p>No white space character can be inserted before
+    or after the <code>:</code> character.</p>
+  </div>
+
+<div class="section" id="webvtt:setting:invalid"><h3>Setting <code><var>{value}</var></code>
+  is not defined.</h3>
+    <p>At the time of writing, the specified setting name
+    is not defined by the WebVTT specification.  The setting 
+    cannot be used and is ignored.</p>
+  </div>
+
+<div class="section" id="webvtt:setting:invalid-value"><h3>Setting <code><var>{text}</var></code>
+  does not allow the value <code><var>{value}</var></code>.</h3>
+    <p>The specified value is not allowed for the setting.
+    The entire setting is ignored by user agents.</p>
+  </div>
+
+<div class="section" id="webvtt:setting:no-value"><h3>Setting value must be specified.</h3>
+    <p>The value of the setting must be specified after the
+    setting name, separating by the <code>:</code> character.</p>
+    <p>No white space character can be inserted before
+    or after the <code>:</code> character.</p>
+  </div>
+<div class="section" id="webvtt:text:syntax"><h3>This is not a syntactically valid WebVTT
+  cue text.</h3>
+    <p>The specified string is not a valid WebVTT cue text.</p> 
+    <p>A WebVTT cue text cannot contain two consecutive newlines.
+    It cannot begin with a newline, or end by a newline.</p>
+  </div>
+
+<div class="section" id="webvtt:timestamp-<-min-time"><h3>Timestamp must be greater than
+  previous timestamps.</h3>
+    <p>The timestamp tag in the WebVTT cue text must be
+    greater than the start time of the cue
+    and any preceding timestamp tag in the cue text.</p>
+  </div>
+
+<div class="section" id="webvtt:timestamp:hour"><h3>Hour component must contain two or more
+  digits.</h3>
+    <p>The hour component in the WebVTT timestamp must have 
+    two or more digits.  If the value is less than 10,
+    it must be zero-padded.</p>
+  </div>
+
+<div class="section" id="webvtt:timings:leading-space"><h3>White spaces are not allowed before timings.</h3>
+    <p>No white space character is allowed before the start time
+    in the timings line.</p>
+  </div>
+
+<div class="section" id="webvtt:timings:no-space"><h3>White space is missing before or after
+  <code>--&gt;</code>.</h3>
+    <p>There must be a white space character before and after
+    <code>--&gt;</code> in the timing specification.</p>
+  </div>
+
+</section><!-- #webvtt-errors -->
+
 <section id="cache-manifest-errors">
 <h2>Cache Manifest Errors</h2>
 
@@ -3488,7 +3803,7 @@ Regexp::Parser::JavaScript's extension. -->
 <section id="license">
 <h2>License of This Document</h2>
 
-<p>Copyright <time>2007</time>‐<time>2011</time>
+<p>Copyright <time>2007</time>‐<time>2012</time>
 <a href="http://suika.fam.cx/~wakaba/who?" rel="author" xml:lang="ja">Wakaba</a>
 <code class="mail">&lt;<a href="mailto:w@suika.fam.cx">w@suika.fam.cx</a>&gt;</code>.</p>
 

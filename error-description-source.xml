@@ -1,30 +1,36 @@
-<!DOCTYPE html>
+<!DOCTYPE html [
+  <!ENTITY amp "&#x26;#x26;">
+  <!ENTITY gt "&#x26;#x3E;">
+  <!ENTITY lt "&#x26;#x3C;">
+  <!ENTITY nbsp "&#x26;#xA0;">
+  <!ENTITY beta "&#x03B2;">
+]>
 <html xmlns="http://www.w3.org/1999/xhtml"
     xmlns:d="http://suika.fam.cx/~wakaba/archive/2007/wdcc-desc/"
     id="error-description">
 <head>
 <base href="cc/"/>
-<title xml:lang="en">Description of Errors &#x2014; WebHACC (β)</title>
-<title xml:lang="ja">誤りの説明 &#x2014; WebHACC (β)</title>
+<title xml:lang="en">Description of Errors &#x2014; WebHACC (&beta;)</title>
+<title xml:lang="ja">誤りの説明 &#x2014; WebHACC (&beta;)</title>
 <link rel="stylesheet" href="../cc-style"/>
 <link rel="license" href="#license"/>
 </head>
 <body>
 <header>
-<h1><a href="../cc-about"><abbr title="Web Hypertext Application Conformance Checker (β)"><img src="../icons/title" alt="WebHACC"/></abbr></a></h1>
+<h1><a href="../cc-about"><abbr title="Web Hypertext Application Conformance Checker (&beta;)"><img src="../icons/title" alt="WebHACC"/></abbr></a></h1>
 <h2>Description of Errors</h2>
 </header>
 
 <d:cat name="WebHACC:Title">
-  <d:text xml:lang="en">WebHACC (β)</d:text>
+  <d:text xml:lang="en">WebHACC (&beta;)</d:text>
 </d:cat>
 
 <d:cat name="WebHACC:Heading">
   <d:text xml:lang="en">
-    <a href="../error-description#WebHACC:Heading" rel="help"><abbr title="Web Hypertext Application Conformance Checker (β)"><img src="../icons/title" alt="WebHACC"/></abbr></a>
+    <a href="../error-description#WebHACC:Heading" rel="help"><abbr title="Web Hypertext Application Conformance Checker (&beta;)"><img src="../icons/title" alt="WebHACC"/></abbr></a>
   </d:text>
   <d:text xml:lang="ja">
-    <a href="../error-description#WebHACC:Heading" rel="help"><abbr title="Web ハイパーテキスト応用適合性検査器 (β)"><img src="../icons/title" alt="WebHACC"/></abbr></a>
+    <a href="../error-description#WebHACC:Heading" rel="help"><abbr title="Web ハイパーテキスト応用適合性検査器 (&beta;)"><img src="../icons/title" alt="WebHACC"/></abbr></a>
   </d:text>
   <d:desc xml:lang="en">
     <p><a href="./#input"><abbr title="Web Hypertext Application Conformance Checker">WebHACC</abbr></a>
@@ -394,39 +400,70 @@
 </d:item>
 
 <d:item name="bare ero"
-    modules="HTML::Parser">
+    modules="HTML::Parser WebVTT::Parser">
   <d:message xml:lang="en">The <code>&amp;</code> character must
   be escaped as <code class="html example">&amp;amp;</code>.</d:message>
+  <d:message xml:lang="ja">文字 <code>&amp;</code> は
+  <code class="html example">&amp;amp;</code>
+  とエスケープしなければなりません。</d:message>
   <d:desc xml:lang="en">
     <p>An <code>&amp;</code> character which
-    is not part of any reference appears in the input stream.
-    The document is non‐conforming.</p>
+    is not part of any reference appears in the input stream.</p>
 
-    <p><em>Any <code>&amp;</code> character in URI (or IRI)
+    <p><em>Any <code>&amp;</code> character in URLs
     must be escaped as <code class="example">&amp;amp;</code>.</em></p>
 
     <p>The <code>&amp;</code> character must
     be the first character of a reference:
+    </p>
+
       <dl class="switch">
-      <dt>Named entity reference</dt>
+      <dt>Named character reference (HTML / WebVTT)</dt>
           <dd><pre class="html example"><code>&amp;<var>entity-name</var>;</code></pre>
           where <var>entity-name</var> is the name of the
-          character entity to be referenced.</dd>
-      <dt>Numeric character reference</dt>
+          character to be referenced.</dd>
+      <dt>Numeric character reference (HTML only)</dt>
           <dd><pre class="html example"><code>&amp;#<var>d</var>;</code></pre>
           where <var>d</var> is the decimal representation of
           the code position of the character to be referenced.</dd>
-      <dt>Hexadecimal character reference</dt>
+      <dt>Hexadecimal character reference (HTML only)</dt>
           <dd><pre class="html example"><code>&amp;#x<var>h</var>;</code></pre>
           where <var>h</var> is the hexadecimal representation
           of the code position of the character to be referenced.</dd>
       </dl>
-    </p>
 
     <p>To represent <code>&amp;</code> as a data character, use
-    named entity reference:
-      <pre class="html example"><code>&amp;amp;</code></pre>
+    named character reference:
     </p>
+      <pre class="html example"><code>&amp;amp;</code></pre>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>文字 <code>&amp;</code> が、文字参照の一部ではなく、
+    単独で現れました。</p>
+
+    <p><em>URL 中の <code>&amp;</code> 文字も
+    <code class="example">&amp;amp;</code> 
+    とエスケープしなければなりません。</em></p>
+
+    <p>文字 <code>&amp;</code> は参照の最初の1文字でなければなりません。
+    </p>
+
+      <dl class="switch">
+      <dt>名前付き文字参照 (HTML / WebVTT)</dt>
+          <dd><pre class="html example"><code>&amp;<var>実体名</var>;</code></pre>
+          の<var>実体名</var>が参照する文字の名前となります。</dd>
+      <dt>数値文字参照 (HTML のみ)</dt>
+          <dd><pre class="html example"><code>&amp;#<var>d</var>;</code></pre>
+          の <var>d</var> が参照する文字の符号位置の十進表現となります。</dd>
+      <dt>十六進数文字参照 (HTML のみ)</dt>
+          <dd><pre class="html example"><code>&amp;#x<var>h</var>;</code></pre>
+          の <var>h</var> が参照する文字の符号位置の十六進表現となります。</dd>
+      </dl>
+
+    <p>データ文字としての <code>&amp;</code> を表したい時は、
+    文字参照を使ってください。
+    </p>
+      <pre class="html example"><code>&amp;amp;</code></pre>
   </d:desc>
 </d:item>
 
@@ -448,24 +485,37 @@
 
     <p>The <code>&lt;/</code> sequence as string data must
     be escaped as:
-    <pre class="html example"><code>&amp;lt;/</code></pre>
     </p>
+    <pre class="html example"><code>&amp;lt;/</code></pre>
   </d:desc>
 </d:item>
 
 <d:item name="bare stago"
-    modules="HTML::Parser">
+    modules="HTML::Parser WebVTT::Parser">
   <d:message xml:lang="en">A <code>&lt;</code> character is not followed
-  by tag name or by a <code>!</code> character.</d:message>
+  by a tag name or a <code>!</code>, <code>/</code>, or
+  <code>?</code> character.</d:message>
+  <d:message xml:lang="en">文字 <code>&lt;</code> の次がタグ名でも
+  <code>!</code>, <code>/</code>,
+  <code>?</code> のいずれでもありません。</d:message>
   <d:desc xml:lang="en">
-    <p>A <code>&lt;</code> (<code>U+003C</code> 
-    <code class="charname">LESS-THAN SIGN</code>) character which is not part
-    of any markup appears in the input stream.</p>
+    <p>A <code>&lt;</code> (<code class="char">U+003C</code> <code
+    class="charname">LESS-THAN SIGN</code>) character which is not
+    part of any markup appears in the input stream.</p>
 
     <p>The <code>&lt;</code> character as a data character must
     be escaped as:
-    <pre class="html example"><code>&amp;lt;</code></pre>
     </p>
+    <pre class="html example"><code>&amp;lt;</code></pre>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>文字 <code>&lt;</code> (<code class="char">U+003C</code> <code
+    class="charname">LESS-THAN SIGN</code>) が出現しましたが、
+    正しいマーク付けの一部ではありません。</p>
+
+    <p>文字 <code>&lt;</code> をデータ文字として表したい時は、
+    エスケープしなければなりません。</p>
+    <pre class="html example"><code>&amp;lt;</code></pre>
   </d:desc>
 </d:item>
 
@@ -611,15 +661,47 @@
 </d:item>
 
 <d:item name="empty start tag"
-    modules="HTML::Parser">
+    modules="HTML::Parser WebVTT::Parser">
   <d:message xml:lang="en">Empty start tag (<code>&lt;></code>) is not
   allowed.</d:message>
+  <d:message xml:lang="ja">空の開始タグ (<code>&lt;></code>) 
+  は認められていません。</d:message>
+  <d:message xml:lang="en">
+    <p>In HTML, XML, and WebVTT, empty start tag, i.e. start
+    tag with no tag name, is not allowed.</p>
+    <p>To represent a start tag, you have to specify the
+    tag name explicitly.</p>
+    <p>To represent a string with the <code>&lt;</code> character,
+    you have to use the character reference: <code>&amp;lt;</code>.</p>
+  </d:message>
+  <d:message xml:lang="ja">
+    <p>HTML、XML、WebVTT では、タグ名の無い空の開始タグは認められていません。</p>
+    <p>開始タグを記述する時はタグ名も明示しなければなりません。</p>
+    <p>「<code>&lt;</code>」という文字を使いたい時は文字参照
+    「<code>&amp;lt;</code>」を使わなければなりません。</p>
+  </d:message>
 </d:item>
 
 <d:item name="empty end tag"
-    modules="HTML::Parser">
+    modules="HTML::Parser WebVTT::Parser">
   <d:message xml:lang="en">Empty end tag (<code>&lt;/></code>) is not
   allowed.</d:message>
+  <d:message xml:lang="ja">空の終了タグ (<code>&lt;/></code>)
+  は認められていません。</d:message>
+  <d:message xml:lang="en">
+    <p>In HTML, XML, and WebVTT, empty end tag, i.e. end
+    tag with no tag name, is not allowed.</p>
+    <p>To represent an end tag, you have to specify the
+    tag name explicitly.</p>
+    <p>To represent a string with the <code>&lt;</code> character,
+    you have to use the character reference: <code>&amp;lt;</code>.</p>
+  </d:message>
+  <d:message xml:lang="ja">
+    <p>HTML、XML、WebVTT では、タグ名の無い空の終了タグは認められていません。</p>
+    <p>終了タグを記述する時はタグ名も明示しなければなりません。</p>
+    <p>「<code>&lt;</code>」という文字を使いたい時は文字参照
+    「<code>&amp;lt;</code>」を使わなければなりません。</p>
+  </d:message>
 </d:item>
 
 <d:item name="end tag attribute"
@@ -859,9 +941,83 @@ p {
 </d:item>
 
 <d:item name="unclosed tag"
-    modules="HTML::Parser">
+    modules="HTML::Parser WebVTT::Parser">
   <d:message xml:lang="en">Tag is not closed by a <code>></code>
   character.</d:message>
+  <d:message xml:lang="ja">タグが文字 <code>></code>
+  で閉じられていません。</d:message>
+  <d:desc xml:lang="en">
+    <p>In HTML, XML, and WebVTT, any tag must be closed 
+    by a <code>></code> character.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>HTML、XML、WebVTT ではタグは <code>></code>
+    で閉じられている必要があります。</p>
+  </d:desc>
+</d:item>
+
+</section>
+
+<section id="xml-errors">
+<h2>XML Errors</h2>
+
+<d:item name="entity not declared"
+    modules="WebVTT::Parser">
+  <d:message xml:lang="en">Entity <code><var>{value}</var></code>
+  is not declared.</d:message>
+  <d:message xml:lang="ja">実体 <code><var>{value}</var></code>
+  は宣言されていません。</d:message>
+  <d:desc xml:lang="en">
+    <p>The referenced entity is not declared.</p>
+
+    <dl class="swtich">
+      <dt>XML documents</dt>
+
+      <dd>In XML documents, most of entities must be declared in the
+      document type definition of the document.  Lack of entity
+      declaration is validity error, or sometimes well-formedness
+      error, depending on the standaloness of the document.</dd>
+
+      <dd>In XML documents, although entities <code>amp</code>,
+      <code>lt</code>, <code>gt</code>, <code>quot</code>, and
+      <code>apos</code> are predefined, therefore they can be used
+      even when they are not explicitly declared, they have to be
+      declared for interoperability, according to the XML
+      specification.</dd>
+
+      <dt>WebVTT documents</dt>
+
+      <dd>In WebVTT documents. only the following character 
+      references are allowed: <code>&amp;amp;</code>,
+      <code>&amp;lt;</code>, <code>&amp;gt;</code>,
+      <code>&amp;lrm;</code>, <code>&amp;rlm;</code>,
+      and <code>&amp;nbsp;</code>.</dd>
+    </dl>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>参照されている実体は宣言されていません。</p>
+
+    <dl class="swtich">
+      <dt>XML 文書</dt>
+
+      <dd>XML 文書では、ほとんどの実体は文書の文書型定義で制限されていなければなりません。
+      実体宣言が無いのは妥当性制約違反ですし、
+      文書の単独性如何によっては整形式制約違反でもあります。</dd>
+
+      <dd>XML 文書では、実体 <code>amp</code>,
+      <code>lt</code>, <code>gt</code>, <code>quot</code>, 
+      <code>apos</code> は定義済みであり、明示的に宣言する必要はないのですが、
+      XML 仕様によれば相互運用性のために敢えて宣言する必要があります。</dd>
+
+      <dt>WebVTT 文書</dt>
+
+      <dd>WebVTT 文書では、文字参照として使えるのは
+      <code>&amp;amp;</code>,
+      <code>&amp;lt;</code>, <code>&amp;gt;</code>,
+      <code>&amp;lrm;</code>, <code>&amp;rlm;</code>,
+      <code>&amp;nbsp;</code> だけです。</dd>
+    </dl>
+  </d:desc>
 </d:item>
 
 </section>
@@ -1206,35 +1362,83 @@ p {
 
 <d:item name="not closed"
     class="parse-error"
-    modules="HTML::Parser">
+    modules="HTML::Parser WebVTT::Parser">
   <d:message xml:lang="en">Element <code><var>{text}</var></code> is not
   closed.</d:message>
-  <d:desc>
+  <d:message xml:lang="ja">要素 <code><var>{text}</var></code>
+  は閉じられていません。</d:message>
+  <d:desc xml:lang="en">
     <p>End tag of an element is not found before, for example,
     an end tag of another element appears or
-    the end of the document.  The document is non-conforming.</p>
+    the end of the document.</p>
 
-    <p>Only <code>body</code>, <code>colgroup</code>, <code>dd</code>,
-    <code>dt</code>, <code>head</code>, <code>html</code>, <code>li</code>,
-    <code>ol</code>, <code>option</code>, <code>optgroup</code>, 
-    <code>p</code>, <code>rb</code>, <code>rp</code>, <code>rt</code>,
-    <code>tbody</code>, <code>td</code>, <code>tfoot</code>,
-    <code>th</code>, <code>thead</code>, <code>tr</code>,
-    <code>ul</code> end tag can be omitted in HTML documents.
-    For any element except for void element, there must be an explicit
-    end tag.</p>
+    <p>Only end tags for <code>body</code>, <code>colgroup</code>,
+    <code>dd</code>, <code>dt</code>, <code>head</code>,
+    <code>html</code>, <code>li</code>, <code>ol</code>,
+    <code>option</code>, <code>optgroup</code>, <code>p</code>,
+    <code>rp</code>, <code>rt</code>, <code>tbody</code>,
+    <code>td</code>, <code>tfoot</code>, <code>th</code>,
+    <code>thead</code>, <code>tr</code>, and <code>ul</code> elements
+    can be omitted in HTML documents.  Only <code>v</code> and
+    <code>rt</code> end tags can be omitted in WebVTT documents.  For
+    any element except for void element, there must be an explicit end
+    tag.</p>
 
     <dl class="switch">
-    <dt>HTML <code>canvas</code> element</dt>
+
+      <dt>HTML <code>canvas</code> element</dt>
+
       <dd>Though the element is void in earlier versions of Safari,
       the <code>canvas</code> element is <em>no</em> longer
       defined as empty.  There must be an end tag
       <code class="html example">&lt;/canvas></code>.</dd>
+
+      <dt>In XML document</dt>
+
+      <dd>No end tag can be omitted in XML documents.  Use the empty
+      element tag syntax <code class="xml
+      example">&lt;<var>element</var> /></code> to minimize the
+      markup.</dd>
     </dl>
 
     <p>Note that misnesting tags, such as 
     <code class="bad example">&lt;a>&lt;b>&lt;/a>&lt;/b></code>, are not
     allowed and they also cause this error.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>他の要素の終了タグが現れたり、文書の終わりに到達したりする前に、
+    要素の終了タグが現れませんでした。</p>
+
+    <p>HTML 文書では <code>body</code>, <code>colgroup</code>,
+    <code>dd</code>, <code>dt</code>, <code>head</code>,
+    <code>html</code>, <code>li</code>, <code>ol</code>,
+    <code>option</code>, <code>optgroup</code>, <code>p</code>,
+    <code>rp</code>, <code>rt</code>, <code>tbody</code>,
+    <code>td</code>, <code>tfoot</code>, <code>th</code>,
+    <code>thead</code>, <code>tr</code>, <code>ul</code> 
+    の終了タグだけを省略できます。 WebVTT 文書では <code>v</code> と 
+    <code>rt</code> の終了タグだけを省略できます。それ以外の要素は、
+    空隙要素を除き、明示的に終了タグを書く必要があります。</p>
+
+    <dl class="switch">
+
+      <dt>HTML <code>canvas</code> 要素</dt>
+
+      <dd><code>camvas</code> は Safari の初期の版では空隙要素でしたが、
+      現在ではそうでは<em>ありません</em>。明示的に終了タグ
+      <code class="html example">&lt;/canvas></code>
+      を書く必要があります。</dd>
+
+      <dt>XML 文書</dt>
+
+      <dd>XML 文書では終了タグを省略することはできません。
+      マーク付けを最小化したいなら空要素構文 <code class="xml
+      example">&lt;<var>element</var> /></code> を使ってください。</dd>
+    </dl>
+
+    <p>タグが正しく入れ子になっていない、
+    <code class="bad example">&lt;a>&lt;b>&lt;/a>&lt;/b></code>
+    のようなケースでもこのエラーになります。</p>
   </d:desc>
 </d:item>
 
@@ -1278,34 +1482,89 @@ p {
 
 <d:item name="start tag not allowed"
     class="parse-error"
-    modules="HTML::Parser">
-  <d:message xml:lang="en">Start tag <code>&lt;<var>{text}</var>></code> is
-  not allowed here.</d:message>
+    modules="HTML::Parser WebVTT::Parser">
+  <d:message xml:lang="en">Start tag
+  <code>&lt;<var>{text}</var>></code> is not allowed here.</d:message>
+  <d:message xml:lang="ja">開始タグ <code>&lt;<var>{text}</var>></code>
+  はここでは認められていません。</d:message>
+  <d:desc xml:lang="en">
+    <p>The specified tag is not allowed in the context.</p>
+
+    <dl class="switch">
+      <dt>WebVTT cue text</dt>
+      <dd>In WebVTT, only following start tags are allowed:
+      <code>&lt;c></code>, <code>&lt;b></code>,
+      <code>&lt;i></code>, <code>&lt;u></code>,
+      <code>&lt;ruby></code>, <code>&lt;rt></code>, and
+      <code>&lt;v></code>.</dd>
+      <dd>The <code>&lt;rt></code> tag is only allowed within
+      the <code>ruby</code> element.</dd>
+    </dl>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>指定されたタグは、その文脈では使うことができません。</p>
+
+    <dl class="switch">
+      <dt>WebVTT キューの文章</dt>
+      <dd>WebVTT で認められている開始タグは
+      <code>&lt;c></code>, <code>&lt;b></code>,
+      <code>&lt;i></code>, <code>&lt;u></code>,
+      <code>&lt;ruby></code>, <code>&lt;rt></code>, 
+      <code>&lt;v></code> だけです。</dd>
+      <dd>開始タグ <code>&lt;rt></code> は
+      <code>ruby</code> 要素の中でだけ使えます。</dd>
+    </dl>
+  </d:desc>
 </d:item>
 
 <d:item name="unmatched end tag"
     class="parse-error"
-    modules="HTML::Parser">
+    modules="HTML::Parser WebVTT::Parser">
   <d:message xml:lang="en">Element <code><var>{text}</var></code> is not
   opened.</d:message>
-  <d:desc>
+  <d:message xml:lang="ja">要素 <code><var>{text}</var></code> 
+  は開いていません。</d:message>
+  <d:desc xml:lang="en">
     <p>An end tag appears though no element with the same name
-    has been opened.  The document is non-conforming.</p>
+    has been opened.</p>
 
-    <p>For any end tag in HTML document, there must be a
-    corresponding start tag.</p>
+    <p>For any end tag in HTML, XML, or WebVTT document, there must be
+    a corresponding start tag.</p>
 
     <dl class="switch">
-    <dt>HTML <code>base</code>, <code>basefont</code>,
-    <code>bgsound</code>, <code>br</code>, <code>col</code>,
-    <code>embed</code>, <code>frame</code>, <code>hr</code>,
-    <code>image</code>, <code>img</code>, <code>input</code>,
-    <code>isindex</code>, <code>link</code>, <code>meta</code>,
-    <code>param</code>, <code>spacer</code>, or <code>wbr</code> element</dt>
+
+      <dt>HTML <code>base</code>, <code>basefont</code>,
+      <code>bgsound</code>, <code>br</code>, <code>col</code>,
+      <code>command</code>, <code>embed</code>, <code>frame</code>,
+      <code>hr</code>, <code>image</code>, <code>img</code>,
+      <code>input</code>, <code>isindex</code>, <code>keygen</code>,
+      <code>link</code>, <code>meta</code>, <code>param</code>,
+      <code>source</code>, <code>spacer</code>, <code>track</code>, or
+      <code>wbr</code> element</dt>
+
       <dd>End tag is not allowed for these elements, since
-      those content must always be empty.  Remove end tag.</dd>
-    <!-- keygen -->
-    <!-- command, event-source, nest, source -->
+      those content must always be empty.  Remove the end tag.</dd>
+    </dl>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>終了タグがありましたが、同じ名前の要素は開いていません。</p>
+
+    <p>HTML、XML、WebVTT では、
+    終了タグは対応する開始タグがなければなりません。</p>
+
+    <dl class="switch">
+
+      <dt>HTML の要素 <code>base</code>, <code>basefont</code>,
+      <code>bgsound</code>, <code>br</code>, <code>col</code>,
+      <code>command</code>, <code>embed</code>, <code>frame</code>,
+      <code>hr</code>, <code>image</code>, <code>img</code>,
+      <code>input</code>, <code>isindex</code>, <code>keygen</code>,
+      <code>link</code>, <code>meta</code>, <code>param</code>,
+      <code>source</code>, <code>spacer</code>, <code>track</code>,
+      <code>wbr</code></dt>
+
+      <dd>これらの要素は常に内容が空であるため、
+      終了タグが認められていません。終了タグを削除してください。</dd>
     </dl>
   </d:desc>
 </d:item>
@@ -1449,6 +1708,40 @@ p {
   <d:message xml:lang="en">There should be an Atom <code>link</code> element
   whose <code>rel</code> attribute is set to <code>self</code> as a
   child of this element.</d:message>
+</d:item>
+
+<d:item name="element missing"
+    modules="ContentChecker::HTML WebVTT::Checker">
+  <d:message xml:lang="en">Required child element 
+  <code><var>{text}</var></code> is not found.</d:message>
+  <d:message xml:lang="ja">子要素 <code><var>{text}</var></code>
+  がありません。</d:message>
+  <d:desc xml:lang="en">
+    <p>There must be a child element with the specified element
+    name, but the element has no such element.</p>
+
+    <dl class="switch">
+      <dt><code>ruby</code> in WebVTT</dt>
+
+      <dd>Any run of non-<code>rt</code> objects in <code>ruby</code>
+      in WebVTT cue text must be followed by a <code>rt</code>
+      object.</dd>
+
+    </dl>
+  </d:desc>
+  <d:desc xml:lang="en">
+    <p>指定された要素名の子要素がなければなりませんが、
+    この要素の子供に見つかりませんでした。</p>
+
+    <dl class="switch">
+      <dt>WebVTT の <code>ruby</code></dt>
+
+      <dd>WebVTT キューの文章で <code>ruby</code> 内の
+      <code>rt</code> 以外のオブジェクトが続いた後には
+      <code>rt</code> が必要です。</dd>
+
+    </dl>
+  </d:desc>
 </d:item>
 
 <d:item name="element missing:hn"
@@ -3699,6 +3992,543 @@ p {
 </d:item>
 
 </section>
+
+<section id="webvtt-errors">
+<h2>WebVTT Errors</h2>
+
+<d:item name="empty class"
+    modules="WebVTT::Parser">
+  <d:message xml:lang="en">Class name cannot be empty.</d:message>
+  <d:message xml:lang="ja">クラス名を空にすることはできません。</d:message>
+  <d:desc xml:lang="en">
+    <p>A class name cannot be the empty string.</p>
+    <p>Class names cannot contain white space
+    characters, newlines, the <code>.</code> character,
+    or the <code>></code> character in WebVTT.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>クラス名を空文字列にすることはできません。</p>
+    <p>WebVTT ではクラス名に空白、改行、 <code>.</code>、
+    <code>></code> を含めることはできません。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="form feed"
+    modules="WebVTT::Parser">
+  <d:message xml:lang="en">Form feed character is not allowed.</d:message>
+  <d:message xml:lang="ja"><code class="charname">FORM FEED</code>
+  を使うことはできません。</d:message>
+  <d:desc xml:lang="en">
+    <p>In WebVTT, <code class="char">U+000C</code>
+    <code class="charname">FORM FEED</code> character cannot be
+    used as white space.</p>
+    <p>Use normal space or newline character instead.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>WebVTT では <code class="char">U+000C</code>
+    <code class="charname">FORM FEED</code> を空白として使うことはできません。</p>
+    <p>通常の空白や改行を使ってください。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="newline not allowed"
+    modules="WebVTT::Parser">
+  <d:message xml:lang="en">Newline is not allowed.</d:message>
+  <d:message xml:lang="ja">改行は認められていません。</d:message>
+  <d:desc xml:lang="en">
+    <p>In WebVTT, newlines are not allowed within tags,
+    annotations, or identifiers.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>WebVTT ではタグ、注釈、識別子の中に改行を含めることはできません。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="webvtt:annotation not allowed"
+    modules="WebVTT::Parser">
+  <d:message xml:lang="en">Annotation cannot be specified for
+  tag <code><var>{text}</var></code>.</d:message>
+  <d:message xml:lang="ja">タグ <code><var>{text}</var></code>
+  に注釈を指定することはできません。</d:message>
+  <d:desc xml:lang="en">
+    <p>Annotation cannot be specified within the given tag.</p>
+    <p>The only tag annotations are allowed is <code>&lt;v></code>.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>注釈をそのタグの中に記述することはできません。</p>
+    <p>注釈を書けるタグは <code>&lt;v></code> だけです。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="webvtt:bad timestamp"
+    modules="WebVTT::Parser">
+  <d:message xml:lang="en">Timestamp is syntactically in error.</d:message>
+  <d:message xml:lang="ja">タイムスタンプの構文が正しくありません。</d:message>
+  <d:desc xml:lang="en">
+    <p>A WebVTT timestamp is expected but it is not a syntactically 
+    valid timestamp.</p>
+    <p>In WebVTT, a timestamp must be in the format 
+    <code><var>hh</var>:<var>mm</var>:<var>ss</var>.<var>fff</var></code>
+    or <code><var>mm</var>:<var>ss</var>.<var>fff</var></code>.</p>
+    <p>The minute and second components must have value less
+    than or equal to 59.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>WebVTT 形式のタイムスタンプがあるべき場所ですが、
+    構文的に正しいタイムスタンプではありません。</p>
+    <p>WebVTT のタイムスタンプは
+    <code><var>hh</var>:<var>mm</var>:<var>ss</var>.<var>fff</var></code>
+    か <code><var>mm</var>:<var>ss</var>.<var>fff</var></code>
+    のいずれかの形式でなければなりません。</p>
+    <p>「分」や「秒」の値は59以下でなければなりません。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="webvtt:class:syntax"
+    modules="WebVTT::Checker">
+  <d:message xml:lang="en">Class name contains an invalid character.</d:message>
+  <d:message xml:lang="ja">クラス名に使えない文字が含まれています。</d:message>
+  <d:desc xml:lang="en">
+    <p>The specified string is syntactically not a valid WebVTT
+    class name.</p>
+    <p>In WebVTT, class names cannot contain characters
+    <code>&lt;</code>, <code>></code>, <code>&amp;</code>,
+    and <code>.</code><!-- and white space characters
+    and newlines, but they are interpreted as separators
+    in HTML class="" attributes. -->.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>指定された文字列は構文的に正しい WebVTT クラス名ではありません。</p>
+    <p>WebVTT ではクラス名に <code>&lt;</code>, <code>></code>,
+    <code>&amp;</code>, <code>.</code> を使うことができません。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="webvtt:empty annotation"
+    modules="WebVTT::Checker">
+  <d:message xml:lang="en">Annotation cannot be empty.</d:message>
+  <d:message xml:lang="ja">注釈を空にすることはできません。</d:message>
+  <d:desc xml:lang="en">
+    <p>A WebVTT annotation cannot be empty.  It must contain 
+    at least a character that is not a white space character.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>WebVTT の注釈は空にできません。
+    少なくても1つは空白でない文字を含んでいる必要があります。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="webvtt:end time &lt; start time"
+    modules="WebVTT::Checker">
+  <d:message xml:lang="en">End time cannot be less than
+  start time.</d:message>
+  <d:message xml:lang="ja">終了時刻が開始時刻より前になることはできません。</d:message>
+  <d:desc xml:lang="en">
+    <p>The end time of the cue must be greater than or equal to
+    the start time of the cue.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>キューの終了時刻は開始時刻以上でなければなりません。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="webvtt:end time &lt; timestamp"
+    modules="WebVTT::Checker">
+  <d:message xml:lang="en">Timestamp must be less than end time.</d:message>
+  <d:message xml:lang="ja">時刻は終了時刻より前でなければなりません。</d:message>
+  <d:desc xml:lang="en">
+    <p>The timestamp tag in the WebVTT cue text must be
+    less than the end time of the cue.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>WebVTT キューの文章中の時刻は、キューの終了時刻よりも前でなければなりません。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="webvtt:headers"
+    modules="WebVTT::Parser">
+  <d:message xml:lang="en">Header is not allowed.</d:message>
+  <d:message xml:lang="ja">ヘッダーを使うことはできません。</d:message>
+  <d:desc xml:lang="en">
+    <p>In WebVTT, header's syntax and semantics is not defined
+    at the time of writing.</p>
+    <p>To specify the identifier for the first cue, you have
+    to insert a blank line between the <code>WEBVTT</code> signature line
+    and the identifier.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>WebVTT のヘッダーの構文と意味は、
+    執筆時点では定義されていません。</p>
+    <p>最初のキューの識別子を指定するなら、最初の <code>WEBVTT</code>
+    の行と識別子の間に空行を入れる必要があります。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="webvtt:id:duplicate"
+    modules="WebVTT::Checker">
+  <d:message xml:lang="en">There are multiple cues with same
+  identifier.</d:message>
+  <d:message xml:lang="ja">同じ識別子のキューが他にもあります。</d:message>
+  <d:desc xml:lang="en">
+    <p>There are another cue with the same identifier as the
+    cue, in the WebVTT file.</p>
+    <p>Although duplication of identifier is not an error
+    according to the WebVTT specification, APIs retriving
+    cues by their identifiers will ignore the second or later
+    cues.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>WebVTT ファイル中に同じ識別子のキューが他にもあります。</p>
+    <p>識別子が重複していても WebVTT 仕様上問題はありませんが、
+    キューを識別子により取得する API は2つ目以降のキューを無視することになります。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="webvtt:id:multiple"
+    modules="WebVTT::Parser">
+  <d:message xml:lang="en">There are multiple identifer lines;
+  This line is ignored.</d:message>
+  <d:message xml:lang="ja">識別子の行が複数あります。
+  この行は無視します。</d:message>
+  <d:desc xml:lang="en">
+    <p>There must be at most one identifier line before
+    the timings line.</p>
+    <p>If there are more than one identifiers, only the
+    last identifier is used by implementations.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>タイミングの行の前に置ける識別子の行は1つまでです。</p>
+    <p>識別子の行が複数あっても、実装が使うのは最後の行だけです。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="webvtt:id:syntax"
+    modules="WebVTT::Checker">
+  <d:message xml:lang="en">This is not a syntactically valid WebVTT
+  cue identifier.</d:message>
+  <d:message xml:lang="ja">構文的に正しい WebVTT 
+  キュー識別子ではありません。</d:message>
+  <d:desc xml:lang="en">
+    <p>The specified string is not a valid WebVTT cue identifier.</p> 
+    <p>A WebVTT cue identifier cannot contain string <code>--></code>.
+    It cannot contain any newline.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>指定された文字列は正しい WebVTT キュー識別子ではありません。</p>
+    <p>WebVTT キュー識別子は文字列 <code>--></code> を含むことができません。
+    改行も含むことができません。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="webvtt:no cue separator"
+    modules="WebVTT::Parser">
+  <d:message xml:lang="en">No blank line is found between
+  two cues.</d:message>
+  <d:message xml:lang="ja">2つのキューの間に空行がありません。</d:message>
+  <d:desc xml:lang="en">
+    <p>No blank line is found between two consecutive cues.</p>
+    <p>There must be at least two newlines between the end of the
+    first cue and the beginning of the second cue.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>2つのキューの間に空行がありません。</p>
+    <p>1つ目のキューの最後と2つ目のキューの最初の間には、
+    最低でも2つの改行が必要です。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="webvtt:no header end"
+    modules="WebVTT::Parser">
+  <d:message xml:lang="en">No blank line is found before the
+  first cue.</d:message>
+  <d:message xml:lang="ja">最初のキューの前に空行がありません。</d:message>
+  <d:desc xml:lang="en">
+    <p>No blank line is found between the header and the first cue.</p>
+    <p>There must be at least two newlines between the end of the
+    header portion and the beginning of the first cue's identifier
+    or timings.</p>
+  </d:desc> 
+  <d:desc xml:lang="ja">
+    <p>ヘッダーと最初のキューの間に空行がありません。</p>
+    <p>ヘッダー部分の最後と最初のキューの識別子やタイミングの指定の間には、
+    最低でも2つの改行が必要です。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="webvtt:no signature"
+    modules="WebVTT::Parser">
+  <d:message xml:lang="en">The <code>WEBVTT</code> signature
+  line is not found.</d:message>
+  <d:message xml:lang="ja">WebVTT 文書を表す「<code>WEBVTT</code>」
+  の行が見つかりません。</d:message>
+  <d:desc xml:lang="en">
+    <p>The first line in the WebVTT file must be the signature
+    line, i.e. <code>WEBVTT</code>.</p>
+    <ul>
+      <li>The word <code>WEBVTT</code> must be in uppercase.</li>
+      <li>The next character to <code>WEBVTT</code> must be
+      a newline, space, or tab.  Space variants such as
+      fullwidth space and no-break space are not allowed here.</li>
+      <li>No character, even the space character, is allowed
+      before the word <code>WEBVTT</code>.</li>
+    </ul>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>WebVTT ファイルの最初の行は「<code>WEBVTT</code>」
+    でなければなりません。</p>
+    <ul>
+      <li>「<code>WEBVTT</code>」はすべて大文字でなければなりません。</li>
+      <li><code>WEBVTT</code> の次の文字は改行、スペース (半角)、
+      タブのいずれかでなければなりません。
+      全角スペースなどは認められていません。</li>
+      <li><code>WEBVTT</code> より前には、
+      スペースも含め何も書いてはいけません。</li>
+    </ul>
+  </d:desc>
+</d:item>
+
+<d:item name="webvtt:no text"
+    modules="WebVTT::parser">
+  <d:message xml:lang="en">No text is specified for the cue.</d:message>
+  <d:message xml:lang="ja">キューの文章が指定されていません。</d:message>
+  <d:desc xml:lang="en">
+    <p>No text is specified for the cue.</p>
+    <p>Even when you really want to specify a cue with empty
+    text, you have to insert an empty cue text line after the
+    timings line.  If there is another cue following the 
+    empty text cue, there must be two blank lines between
+    them.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>キューの文章が指定されていません。</p>
+    <p>本当にキューの文章を空にしたい場合でも、
+    時刻の行の次に空行を入れる必要があります。
+    次のキューが続く場合には、間に2つ空行が必要となります。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="webvtt:no timings"
+    modules="WebVTT::Parser">
+  <d:message xml:lang="en">No timings line is found.</d:message>
+  <d:message xml:lang="ja">タイミングを指定する行がありません。</d:message>
+  <d:desc xml:lang="en">
+    <p>No timings line is found in the cue.  Start and
+    end times must be specified in the format 
+    <code><var>hh</var>:<var>mm</var>:<var>ss</var>.<var>fff</var>&nbsp;--&gt;&nbsp;<var>hh</var>:<var>mm</var>:<var>ss</var>.<var>fff</var></code>.</p>
+    <p>Cue text cannot contain two concecutive newlines (or
+    a blank line).</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>キューのタイミングを指定する行がありません。
+    開始と終了の時刻を、
+    <code><var>hh</var>:<var>mm</var>:<var>ss</var>.<var>fff</var>&nbsp;--&gt;&nbsp;<var>hh</var>:<var>mm</var>:<var>ss</var>.<var>fff</var></code>
+    という形式で指定する必要があります。</p>
+    <p>キューの文章の部分に2つの連続する改行 (あるいは空行)
+    を含めることはできません。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="webvtt:start time order"
+    modules="WebVTT::Checker">
+  <d:message xml:lang="en">Start time of a cue cannot be less than
+  the start time of the previous cues in the same file.</d:message>
+  <d:message xml:lang="ja">キューの開始時刻は、
+  同じファイルのここまでのキューの開始時刻よりも前であってはなりません。</d:message>
+  <d:desc xml:lang="en">
+    <p>The start time of a cue must be greater than or equal to the
+    start times of the cues appearing before the cue in the 
+    same WebVTT file.  In other word, the cues in a WebVTT
+    file must be sorted by their start times.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>キューの開始時刻は、同じ WebVTT 
+    ファイルのそれ以前のキューの開始時刻以上でなければなりません。
+    つまり、 WebVTT ファイル内のキューは開始時刻で整列していなければなりません。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="webvtt:setting:duplicate"
+    modules="WebVTT::Parser">
+  <d:message xml:lang="en">Setting <code><var>{value}</var></code>
+  is specified twice.</d:message>
+  <d:message xml:lang="ja">設定 <code><var>{value}</var></code>
+  は複数回指定されています。</d:message>
+  <d:desc xml:lang="en">
+    <p>The setting with the same name is specified multiple
+    times in the line.  Only the last valid specification is 
+    used by user agents.  All other specifications
+    are ignored.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>同じ名前の設定が複数回、同じ行に指定されています。
+    利用者エージェントは最後の正しい指定を採用します。
+    それ以外はすべて無視されます。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="webvtt:setting:empty name"
+    modules="WebVTT::Parser">
+  <d:message xml:lang="en">Setting name cannot be empty.</d:message>
+  <d:message xml:lang="ja">設定の名前を空にすることはできません。</d:message>
+  <d:desc xml:lang="en">
+    <p>The name of the setting cannot be empty.  A valid 
+    setting name must be specified before the <code>:</code>
+    character.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>設定の名前を空にすることはできません。
+    正しい設定の名前を <code>:</code> の前に指定する必要があります。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="webvtt:setting:empty value"
+    modules="WebVTT::Parser">
+  <d:message xml:lang="en">Setting value cannot be empty.</d:message>
+  <d:message xml:lang="ja">設定の値を空にすることはできません。</d:message>
+  <d:desc xml:lang="en">
+    <p>The value of the setting cannot be empty.  A valid 
+    setting value must be specified after the <code>:</code>
+    character.</p>
+    <p>No white space character can be inserted before
+    or after the <code>:</code> character.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>設定の値を空にすることはできません。
+    正しい値の名前を <code>:</code> の前に指定する必要があります。</p>
+    <p><code>:</code> の前後に空白文字を入れることはできません。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="webvtt:setting:invalid"
+    modules="WebVTT::Parser">
+  <d:message xml:lang="en">Setting <code><var>{value}</var></code>
+  is not defined.</d:message>
+  <d:message xml:lang="ja">設定 <code><var>{value}</var></code>
+  は定義されていません。</d:message>
+  <d:desc xml:lang="en">
+    <p>At the time of writing, the specified setting name
+    is not defined by the WebVTT specification.  The setting 
+    cannot be used and is ignored.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>指定された名前の設定は、執筆の時点で WebVTT 
+    仕様で定義されていません。この名前の設定を使うことはできず、
+    無視されます。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="webvtt:setting:invalid value"
+    modules="WebVTT::Parser">
+  <d:message xml:lang="en">Setting <code><var>{text}</var></code>
+  does not allow the value <code><var>{value}</var></code>.</d:message>
+  <d:message xml:lang="ja">設定 <code><var>{text}</var></code>
+  では値 <code><var>{value}</var></code>
+  は認められていません。</d:message>
+  <d:desc xml:lang="en">
+    <p>The specified value is not allowed for the setting.
+    The entire setting is ignored by user agents.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>指定された値は、この名前の設定で使うことはできません。
+    利用者エージェントはこの設定を無視します。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="webvtt:setting:no value"
+    modules="WebVTT::Parser">
+  <d:message xml:lang="en">Setting value must be specified.</d:message>
+  <d:message xml:lang="ja">設定の値を指定する必要があります。</d:message>
+  <d:desc xml:lang="en">
+    <p>The value of the setting must be specified after the
+    setting name, separating by the <code>:</code> character.</p>
+    <p>No white space character can be inserted before
+    or after the <code>:</code> character.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>設定の名前の後には <code>:</code>
+    と設定の値を指定する必要があります。</p>
+    <p><code>:</code> の前後に空白文字を入れることはできません。</p>
+  </d:desc>
+</d:item>
+<d:item name="webvtt:text:syntax"
+    modules="WebVTT::Checker">
+  <d:message xml:lang="en">This is not a syntactically valid WebVTT
+  cue text.</d:message>
+  <d:message xml:lang="ja">構文的に正しい WebVTT 
+  キュー文章ではありません。</d:message>
+  <d:desc xml:lang="en">
+    <p>The specified string is not a valid WebVTT cue text.</p> 
+    <p>A WebVTT cue text cannot contain two consecutive newlines.
+    It cannot begin with a newline, or end by a newline.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>指定された文字列は正しい WebVTT キュー文章ではありません。</p>
+    <p>WebVTT キュー文章は連続した改行を含むことができませんし、
+    改行で始まったり終わったりすることもできません。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="webvtt:timestamp &lt; min time"
+    modules="WebVTT::Checker">
+  <d:message xml:lang="en">Timestamp must be greater than
+  previous timestamps.</d:message>
+  <d:message xml:lang="ja">時刻は、ここまでの時刻よりも後でなければなりません。</d:message>
+  <d:desc xml:lang="en">
+    <p>The timestamp tag in the WebVTT cue text must be
+    greater than the start time of the cue
+    and any preceding timestamp tag in the cue text.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>WebVTT キューの文章の中にある時刻のタグは、
+    キューの開始時刻や、同じ文章中のそれ以前の時刻のタグよりも後の時刻になっていなければなりません。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="webvtt:timestamp:hour"
+    modules="WebVTT::Parser">
+  <d:message xml:lang="en">Hour component must contain two or more
+  digits.</d:message>
+  <d:message xml:lang="ja">「時」は2桁以上の数字列でなければなりまえせん。</d:message>
+  <d:desc xml:lang="en">
+    <p>The hour component in the WebVTT timestamp must have 
+    two or more digits.  If the value is less than 10,
+    it must be zero-padded.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>WebVTT の時刻の「時」
+    部分は2桁以上の数字の列として表さなければなりません。
+    値が10よりも小さい時は、十の位に「0」を明示しなければなりません。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="webvtt:timings:leading space"
+    modules="WebVTT::Parser">
+  <d:message xml:lang="en">White spaces are not allowed before timings.</d:message>
+  <d:message xml:lang="ja">時刻の指定の前に空白文字を入れてはいけません。</d:message>
+  <d:desc xml:lang="en">
+    <p>No white space character is allowed before the start time
+    in the timings line.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>時刻を指定する行では、開始時刻の前に空白文字を入れることはできません。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="webvtt:timings:no space"
+    modules="WebVTT::Parser">
+  <d:message xml:lang="en">White space is missing before or after
+  <code>--></code>.</d:message>
+  <d:message xml:lang="ja"><code>--></code> の前後の空白が抜けています。</d:message>
+  <d:desc xml:lang="en">
+    <p>There must be a white space character before and after
+    <code>--></code> in the timing specification.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>時刻の指定の <code>--></code> の前後には空白文字が必要です。</p>
+  </d:desc>
+</d:item>
+
+</section><!-- #webvtt-errors -->
 
 <section id="cache-manifest-errors">
 <h2>Cache Manifest Errors</h2>
@@ -6045,7 +6875,7 @@ Regexp::Parser::JavaScript's extension. -->
 <section id="license">
 <h2>License of This Document</h2>
 
-<p>Copyright <time>2007</time>‐<time>2011</time>
+<p>Copyright <time>2007</time>‐<time>2012</time>
 <a href="http://suika.fam.cx/~wakaba/who?" rel="author" xml:lang="ja">Wakaba</a>
 <code class="mail">&lt;<a href="mailto:w@suika.fam.cx">w@suika.fam.cx</a>></code>.</p>
 

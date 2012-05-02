@@ -273,41 +273,39 @@
     <code class="html bad example">bar</code>, not as another attribute.</p>
   </div>
 
-<div class="section" id="bare-ero"><h3>The <code>&amp;</code> character must
-  be escaped as <code class="html example">&amp;amp;</code>.</h3>
-    <p>An <code>&amp;</code> character which
-    is not part of any reference appears in the input stream.
-    The document is non‐conforming.</p>
+<div class="section" id="bare-ero"><h3>文字 <code>&amp;</code> は
+  <code class="html example">&amp;amp;</code>
+  とエスケープしなければなりません。</h3>
+    <p>文字 <code>&amp;</code> が、文字参照の一部ではなく、
+    単独で現れました。</p>
 
-    <p><em>Any <code>&amp;</code> character in URI (or IRI)
-    must be escaped as <code class="example">&amp;amp;</code>.</em></p>
+    <p><em>URL 中の <code>&amp;</code> 文字も
+    <code class="example">&amp;amp;</code> 
+    とエスケープしなければなりません。</em></p>
 
-    <p>The <code>&amp;</code> character must
-    be the first character of a reference:
+    <p>文字 <code>&amp;</code> は参照の最初の1文字でなければなりません。
+    </p>
+
       <dl class="switch">
-      <dt>Named entity reference</dt>
+      <dt>名前付き文字参照 (HTML / WebVTT)</dt>
           <dd><pre class="html example">
-<code>&amp;<var>entity-name</var>;</code></pre>
-          where <var>entity-name</var> is the name of the
-          character entity to be referenced.</dd>
-      <dt>Numeric character reference</dt>
+<code>&amp;<var>実体名</var>;</code></pre>
+          の<var>実体名</var>が参照する文字の名前となります。</dd>
+      <dt>数値文字参照 (HTML のみ)</dt>
           <dd><pre class="html example">
 <code>&amp;#<var>d</var>;</code></pre>
-          where <var>d</var> is the decimal representation of
-          the code position of the character to be referenced.</dd>
-      <dt>Hexadecimal character reference</dt>
+          の <var>d</var> が参照する文字の符号位置の十進表現となります。</dd>
+      <dt>十六進数文字参照 (HTML のみ)</dt>
           <dd><pre class="html example">
 <code>&amp;#x<var>h</var>;</code></pre>
-          where <var>h</var> is the hexadecimal representation
-          of the code position of the character to be referenced.</dd>
+          の <var>h</var> が参照する文字の符号位置の十六進表現となります。</dd>
       </dl>
-    </p>
 
-    <p>To represent <code>&amp;</code> as a data character, use
-    named entity reference:
+    <p>データ文字としての <code>&amp;</code> を表したい時は、
+    文字参照を使ってください。
+    </p>
       <pre class="html example">
 <code>&amp;amp;</code></pre>
-    </p>
   </div>
 
 <div class="section" id="bare-etago"><h3>A <code>&lt;/</code> string is not followed
@@ -325,22 +323,21 @@
 
     <p>The <code>&lt;/</code> sequence as string data must
     be escaped as:
+    </p>
     <pre class="html example">
 <code>&amp;lt;/</code></pre>
-    </p>
   </div>
 
 <div class="section" id="bare-stago"><h3>A <code>&lt;</code> character is not followed
-  by tag name or by a <code>!</code> character.</h3>
-    <p>A <code>&lt;</code> (<code>U+003C</code> 
-    <code class="charname">LESS-THAN SIGN</code>) character which is not part
-    of any markup appears in the input stream.</p>
+  by a tag name or a <code>!</code>, <code>/</code>, or
+  <code>?</code> character.</h3>
+    <p>文字 <code>&lt;</code> (<code class="char">U+003C</code> <code class="charname">LESS-THAN SIGN</code>) が出現しましたが、
+    正しいマーク付けの一部ではありません。</p>
 
-    <p>The <code>&lt;</code> character as a data character must
-    be escaped as:
+    <p>文字 <code>&lt;</code> をデータ文字として表したい時は、
+    エスケープしなければなりません。</p>
     <pre class="html example">
 <code>&amp;lt;</code></pre>
-    </p>
   </div>
 
 <div class="section" id="bare-nero"><h3>The decimal representation of the code position
@@ -466,11 +463,19 @@
     Use <code>img</code> element with animation GIF instead.</p>
   </div>
 
-<div class="section" id="empty-start-tag"><h3>Empty start tag (<code>&lt;&gt;</code>) is not
-  allowed.</h3></div>
+<div class="section" id="empty-start-tag"><h3>
+    <p>HTML、XML、WebVTT では、タグ名の無い空の開始タグは認められていません。</p>
+    <p>開始タグを記述する時はタグ名も明示しなければなりません。</p>
+    <p>「<code>&lt;</code>」という文字を使いたい時は文字参照
+    「<code>&amp;lt;</code>」を使わなければなりません。</p>
+  </h3></div>
 
-<div class="section" id="empty-end-tag"><h3>Empty end tag (<code>&lt;/&gt;</code>) is not
-  allowed.</h3></div>
+<div class="section" id="empty-end-tag"><h3>
+    <p>HTML、XML、WebVTT では、タグ名の無い空の終了タグは認められていません。</p>
+    <p>終了タグを記述する時はタグ名も明示しなければなりません。</p>
+    <p>「<code>&lt;</code>」という文字を使いたい時は文字参照
+    「<code>&amp;lt;</code>」を使わなければなりません。</p>
+  </h3></div>
 
 <div class="section" id="end-tag-attribute"><h3>終了タグに属性が指定されています。</h3></div>
 
@@ -640,8 +645,42 @@ p {
 <div class="section" id="unclosed-SYSTEM-literal"><h3>The system identifier literal is not closed by a
   quotation mark.</h3></div>
 
-<div class="section" id="unclosed-tag"><h3>Tag is not closed by a <code>&gt;</code>
-  character.</h3></div>
+<div class="section" id="unclosed-tag"><h3>タグが文字 <code>&gt;</code>
+  で閉じられていません。</h3>
+    <p>HTML、XML、WebVTT ではタグは <code>&gt;</code>
+    で閉じられている必要があります。</p>
+  </div>
+
+</section>
+
+<section id="xml-errors">
+<h2>XML Errors</h2>
+
+<div class="section" id="entity-not-declared"><h3>実体 <code><var>{value}</var></code>
+  は宣言されていません。</h3>
+    <p>参照されている実体は宣言されていません。</p>
+
+    <dl class="swtich">
+      <dt>XML 文書</dt>
+
+      <dd>XML 文書では、ほとんどの実体は文書の文書型定義で制限されていなければなりません。
+      実体宣言が無いのは妥当性制約違反ですし、
+      文書の単独性如何によっては整形式制約違反でもあります。</dd>
+
+      <dd>XML 文書では、実体 <code>amp</code>,
+      <code>lt</code>, <code>gt</code>, <code>quot</code>, 
+      <code>apos</code> は定義済みであり、明示的に宣言する必要はないのですが、
+      XML 仕様によれば相互運用性のために敢えて宣言する必要があります。</dd>
+
+      <dt>WebVTT 文書</dt>
+
+      <dd>WebVTT 文書では、文字参照として使えるのは
+      <code>&amp;amp;</code>,
+      <code>&amp;lt;</code>, <code>&amp;gt;</code>,
+      <code>&amp;lrm;</code>, <code>&amp;rlm;</code>,
+      <code>&amp;nbsp;</code> だけです。</dd>
+    </dl>
+  </div>
 
 </section>
 
@@ -850,33 +889,40 @@ p {
     allowed in HTML document.</p>
   </div>
 
-<div class="section" id="not-closed"><h3>Element <code><var>{text}</var></code> is not
-  closed.</h3>
-    <p>End tag of an element is not found before, for example,
-    an end tag of another element appears or
-    the end of the document.  The document is non-conforming.</p>
+<div class="section" id="not-closed"><h3>要素 <code><var>{text}</var></code>
+  は閉じられていません。</h3>
+    <p>他の要素の終了タグが現れたり、文書の終わりに到達したりする前に、
+    要素の終了タグが現れませんでした。</p>
 
-    <p>Only <code>body</code>, <code>colgroup</code>, <code>dd</code>,
-    <code>dt</code>, <code>head</code>, <code>html</code>, <code>li</code>,
-    <code>ol</code>, <code>option</code>, <code>optgroup</code>, 
-    <code>p</code>, <code>rb</code>, <code>rp</code>, <code>rt</code>,
-    <code>tbody</code>, <code>td</code>, <code>tfoot</code>,
-    <code>th</code>, <code>thead</code>, <code>tr</code>,
-    <code>ul</code> end tag can be omitted in HTML documents.
-    For any element except for void element, there must be an explicit
-    end tag.</p>
+    <p>HTML 文書では <code>body</code>, <code>colgroup</code>,
+    <code>dd</code>, <code>dt</code>, <code>head</code>,
+    <code>html</code>, <code>li</code>, <code>ol</code>,
+    <code>option</code>, <code>optgroup</code>, <code>p</code>,
+    <code>rp</code>, <code>rt</code>, <code>tbody</code>,
+    <code>td</code>, <code>tfoot</code>, <code>th</code>,
+    <code>thead</code>, <code>tr</code>, <code>ul</code> 
+    の終了タグだけを省略できます。 WebVTT 文書では <code>v</code> と 
+    <code>rt</code> の終了タグだけを省略できます。それ以外の要素は、
+    空隙要素を除き、明示的に終了タグを書く必要があります。</p>
 
     <dl class="switch">
-    <dt>HTML <code>canvas</code> element</dt>
-      <dd>Though the element is void in earlier versions of Safari,
-      the <code>canvas</code> element is <em>no</em> longer
-      defined as empty.  There must be an end tag
-      <code class="html example">&lt;/canvas&gt;</code>.</dd>
+
+      <dt>HTML <code>canvas</code> 要素</dt>
+
+      <dd><code>camvas</code> は Safari の初期の版では空隙要素でしたが、
+      現在ではそうでは<em>ありません</em>。明示的に終了タグ
+      <code class="html example">&lt;/canvas&gt;</code>
+      を書く必要があります。</dd>
+
+      <dt>XML 文書</dt>
+
+      <dd>XML 文書では終了タグを省略することはできません。
+      マーク付けを最小化したいなら空要素構文 <code class="xml       example">&lt;<var>element</var> /&gt;</code> を使ってください。</dd>
     </dl>
 
-    <p>Note that misnesting tags, such as 
-    <code class="bad example">&lt;a&gt;&lt;b&gt;&lt;/a&gt;&lt;/b&gt;</code>, are not
-    allowed and they also cause this error.</p>
+    <p>タグが正しく入れ子になっていない、
+    <code class="bad example">&lt;a&gt;&lt;b&gt;&lt;/a&gt;&lt;/b&gt;</code>
+    のようなケースでもこのエラーになります。</p>
   </div>
 
 <div class="section" id="not-first-start-tag"><h3>This <code>&lt;html&gt;</code> tag is not
@@ -907,28 +953,42 @@ p {
     HTML document (roughly) as defined in HTML5.</p>
   </div>
 
-<div class="section" id="start-tag-not-allowed"><h3>Start tag <code>&lt;<var>{text}</var>&gt;</code> is
-  not allowed here.</h3></div>
-
-<div class="section" id="unmatched-end-tag"><h3>Element <code><var>{text}</var></code> is not
-  opened.</h3>
-    <p>An end tag appears though no element with the same name
-    has been opened.  The document is non-conforming.</p>
-
-    <p>For any end tag in HTML document, there must be a
-    corresponding start tag.</p>
+<div class="section" id="start-tag-not-allowed"><h3>開始タグ <code>&lt;<var>{text}</var>&gt;</code>
+  はここでは認められていません。</h3>
+    <p>指定されたタグは、その文脈では使うことができません。</p>
 
     <dl class="switch">
-    <dt>HTML <code>base</code>, <code>basefont</code>,
-    <code>bgsound</code>, <code>br</code>, <code>col</code>,
-    <code>embed</code>, <code>frame</code>, <code>hr</code>,
-    <code>image</code>, <code>img</code>, <code>input</code>,
-    <code>isindex</code>, <code>link</code>, <code>meta</code>,
-    <code>param</code>, <code>spacer</code>, or <code>wbr</code> element</dt>
-      <dd>End tag is not allowed for these elements, since
-      those content must always be empty.  Remove end tag.</dd>
-    <!-- keygen -->
-    <!-- command, event-source, nest, source -->
+      <dt>WebVTT キューの文章</dt>
+      <dd>WebVTT で認められている開始タグは
+      <code>&lt;c&gt;</code>, <code>&lt;b&gt;</code>,
+      <code>&lt;i&gt;</code>, <code>&lt;u&gt;</code>,
+      <code>&lt;ruby&gt;</code>, <code>&lt;rt&gt;</code>, 
+      <code>&lt;v&gt;</code> だけです。</dd>
+      <dd>開始タグ <code>&lt;rt&gt;</code> は
+      <code>ruby</code> 要素の中でだけ使えます。</dd>
+    </dl>
+  </div>
+
+<div class="section" id="unmatched-end-tag"><h3>要素 <code><var>{text}</var></code> 
+  は開いていません。</h3>
+    <p>終了タグがありましたが、同じ名前の要素は開いていません。</p>
+
+    <p>HTML、XML、WebVTT では、
+    終了タグは対応する開始タグがなければなりません。</p>
+
+    <dl class="switch">
+
+      <dt>HTML の要素 <code>base</code>, <code>basefont</code>,
+      <code>bgsound</code>, <code>br</code>, <code>col</code>,
+      <code>command</code>, <code>embed</code>, <code>frame</code>,
+      <code>hr</code>, <code>image</code>, <code>img</code>,
+      <code>input</code>, <code>isindex</code>, <code>keygen</code>,
+      <code>link</code>, <code>meta</code>, <code>param</code>,
+      <code>source</code>, <code>spacer</code>, <code>track</code>,
+      <code>wbr</code></dt>
+
+      <dd>これらの要素は常に内容が空であるため、
+      終了タグが認められていません。終了タグを削除してください。</dd>
     </dl>
   </div>
 
@@ -1030,6 +1090,21 @@ p {
 <div class="section" id="child-element-missing:atom:link:self"><h3>There should be an Atom <code>link</code> element
   whose <code>rel</code> attribute is set to <code>self</code> as a
   child of this element.</h3></div>
+
+<div class="section" id="element-missing"><h3>子要素 <code><var>{text}</var></code>
+  がありません。</h3>
+    <p>There must be a child element with the specified element
+    name, but the element has no such element.</p>
+
+    <dl class="switch">
+      <dt><code>ruby</code> in WebVTT</dt>
+
+      <dd>Any run of non-<code>rt</code> objects in <code>ruby</code>
+      in WebVTT cue text must be followed by a <code>rt</code>
+      object.</dd>
+
+    </dl>
+  </div>
 
 <div class="section" id="element-missing:hn"><h3>There must be at least one 
   <code>h<var>n</var></code> element descendant.</h3></div>
@@ -2336,6 +2411,201 @@ p {
 
 </section>
 
+<section id="webvtt-errors">
+<h2>WebVTT Errors</h2>
+
+<div class="section" id="empty-class"><h3>クラス名を空にすることはできません。</h3>
+    <p>クラス名を空文字列にすることはできません。</p>
+    <p>WebVTT ではクラス名に空白、改行、 <code>.</code>、
+    <code>&gt;</code> を含めることはできません。</p>
+  </div>
+
+<div class="section" id="form-feed"><h3><code class="charname">FORM FEED</code>
+  を使うことはできません。</h3>
+    <p>WebVTT では <code class="char">U+000C</code>
+    <code class="charname">FORM FEED</code> を空白として使うことはできません。</p>
+    <p>通常の空白や改行を使ってください。</p>
+  </div>
+
+<div class="section" id="newline-not-allowed"><h3>改行は認められていません。</h3>
+    <p>WebVTT ではタグ、注釈、識別子の中に改行を含めることはできません。</p>
+  </div>
+
+<div class="section" id="webvtt:annotation-not-allowed"><h3>タグ <code><var>{text}</var></code>
+  に注釈を指定することはできません。</h3>
+    <p>注釈をそのタグの中に記述することはできません。</p>
+    <p>注釈を書けるタグは <code>&lt;v&gt;</code> だけです。</p>
+  </div>
+
+<div class="section" id="webvtt:bad-timestamp"><h3>タイムスタンプの構文が正しくありません。</h3>
+    <p>WebVTT 形式のタイムスタンプがあるべき場所ですが、
+    構文的に正しいタイムスタンプではありません。</p>
+    <p>WebVTT のタイムスタンプは
+    <code><var>hh</var>:<var>mm</var>:<var>ss</var>.<var>fff</var></code>
+    か <code><var>mm</var>:<var>ss</var>.<var>fff</var></code>
+    のいずれかの形式でなければなりません。</p>
+    <p>「分」や「秒」の値は59以下でなければなりません。</p>
+  </div>
+
+<div class="section" id="webvtt:class:syntax"><h3>クラス名に使えない文字が含まれています。</h3>
+    <p>指定された文字列は構文的に正しい WebVTT クラス名ではありません。</p>
+    <p>WebVTT ではクラス名に <code>&lt;</code>, <code>&gt;</code>,
+    <code>&amp;</code>, <code>.</code> を使うことができません。</p>
+  </div>
+
+<div class="section" id="webvtt:empty-annotation"><h3>注釈を空にすることはできません。</h3>
+    <p>WebVTT の注釈は空にできません。
+    少なくても1つは空白でない文字を含んでいる必要があります。</p>
+  </div>
+
+<div class="section" id="webvtt:end-time-<-start-time"><h3>終了時刻が開始時刻より前になることはできません。</h3>
+    <p>キューの終了時刻は開始時刻以上でなければなりません。</p>
+  </div>
+
+<div class="section" id="webvtt:end-time-<-timestamp"><h3>時刻は終了時刻より前でなければなりません。</h3>
+    <p>WebVTT キューの文章中の時刻は、キューの終了時刻よりも前でなければなりません。</p>
+  </div>
+
+<div class="section" id="webvtt:headers"><h3>ヘッダーを使うことはできません。</h3>
+    <p>WebVTT のヘッダーの構文と意味は、
+    執筆時点では定義されていません。</p>
+    <p>最初のキューの識別子を指定するなら、最初の <code>WEBVTT</code>
+    の行と識別子の間に空行を入れる必要があります。</p>
+  </div>
+
+<div class="section" id="webvtt:id:duplicate"><h3>同じ識別子のキューが他にもあります。</h3>
+    <p>WebVTT ファイル中に同じ識別子のキューが他にもあります。</p>
+    <p>識別子が重複していても WebVTT 仕様上問題はありませんが、
+    キューを識別子により取得する API は2つ目以降のキューを無視することになります。</p>
+  </div>
+
+<div class="section" id="webvtt:id:multiple"><h3>識別子の行が複数あります。
+  この行は無視します。</h3>
+    <p>タイミングの行の前に置ける識別子の行は1つまでです。</p>
+    <p>識別子の行が複数あっても、実装が使うのは最後の行だけです。</p>
+  </div>
+
+<div class="section" id="webvtt:id:syntax"><h3>構文的に正しい WebVTT 
+  キュー識別子ではありません。</h3>
+    <p>指定された文字列は正しい WebVTT キュー識別子ではありません。</p>
+    <p>WebVTT キュー識別子は文字列 <code>--&gt;</code> を含むことができません。
+    改行も含むことができません。</p>
+  </div>
+
+<div class="section" id="webvtt:no-cue-separator"><h3>2つのキューの間に空行がありません。</h3>
+    <p>2つのキューの間に空行がありません。</p>
+    <p>1つ目のキューの最後と2つ目のキューの最初の間には、
+    最低でも2つの改行が必要です。</p>
+  </div>
+
+<div class="section" id="webvtt:no-header-end"><h3>最初のキューの前に空行がありません。</h3>
+    <p>ヘッダーと最初のキューの間に空行がありません。</p>
+    <p>ヘッダー部分の最後と最初のキューの識別子やタイミングの指定の間には、
+    最低でも2つの改行が必要です。</p>
+  </div>
+
+<div class="section" id="webvtt:no-signature"><h3>WebVTT 文書を表す「<code>WEBVTT</code>」
+  の行が見つかりません。</h3>
+    <p>WebVTT ファイルの最初の行は「<code>WEBVTT</code>」
+    でなければなりません。</p>
+    <ul>
+      <li>「<code>WEBVTT</code>」はすべて大文字でなければなりません。</li>
+      <li><code>WEBVTT</code> の次の文字は改行、スペース (半角)、
+      タブのいずれかでなければなりません。
+      全角スペースなどは認められていません。</li>
+      <li><code>WEBVTT</code> より前には、
+      スペースも含め何も書いてはいけません。</li>
+    </ul>
+  </div>
+
+<div class="section" id="webvtt:no-text"><h3>キューの文章が指定されていません。</h3>
+    <p>キューの文章が指定されていません。</p>
+    <p>本当にキューの文章を空にしたい場合でも、
+    時刻の行の次に空行を入れる必要があります。
+    次のキューが続く場合には、間に2つ空行が必要となります。</p>
+  </div>
+
+<div class="section" id="webvtt:no-timings"><h3>タイミングを指定する行がありません。</h3>
+    <p>キューのタイミングを指定する行がありません。
+    開始と終了の時刻を、
+    <code><var>hh</var>:<var>mm</var>:<var>ss</var>.<var>fff</var>&amp;nbsp;--&gt;&amp;nbsp;<var>hh</var>:<var>mm</var>:<var>ss</var>.<var>fff</var></code>
+    という形式で指定する必要があります。</p>
+    <p>キューの文章の部分に2つの連続する改行 (あるいは空行)
+    を含めることはできません。</p>
+  </div>
+
+<div class="section" id="webvtt:start-time-order"><h3>キューの開始時刻は、
+  同じファイルのここまでのキューの開始時刻よりも前であってはなりません。</h3>
+    <p>キューの開始時刻は、同じ WebVTT 
+    ファイルのそれ以前のキューの開始時刻以上でなければなりません。
+    つまり、 WebVTT ファイル内のキューは開始時刻で整列していなければなりません。</p>
+  </div>
+
+<div class="section" id="webvtt:setting:duplicate"><h3>設定 <code><var>{value}</var></code>
+  は複数回指定されています。</h3>
+    <p>同じ名前の設定が複数回、同じ行に指定されています。
+    利用者エージェントは最後の正しい指定を採用します。
+    それ以外はすべて無視されます。</p>
+  </div>
+
+<div class="section" id="webvtt:setting:empty-name"><h3>設定の名前を空にすることはできません。</h3>
+    <p>設定の名前を空にすることはできません。
+    正しい設定の名前を <code>:</code> の前に指定する必要があります。</p>
+  </div>
+
+<div class="section" id="webvtt:setting:empty-value"><h3>設定の値を空にすることはできません。</h3>
+    <p>設定の値を空にすることはできません。
+    正しい値の名前を <code>:</code> の前に指定する必要があります。</p>
+    <p><code>:</code> の前後に空白文字を入れることはできません。</p>
+  </div>
+
+<div class="section" id="webvtt:setting:invalid"><h3>設定 <code><var>{value}</var></code>
+  は定義されていません。</h3>
+    <p>指定された名前の設定は、執筆の時点で WebVTT 
+    仕様で定義されていません。この名前の設定を使うことはできず、
+    無視されます。</p>
+  </div>
+
+<div class="section" id="webvtt:setting:invalid-value"><h3>設定 <code><var>{text}</var></code>
+  では値 <code><var>{value}</var></code>
+  は認められていません。</h3>
+    <p>指定された値は、この名前の設定で使うことはできません。
+    利用者エージェントはこの設定を無視します。</p>
+  </div>
+
+<div class="section" id="webvtt:setting:no-value"><h3>設定の値を指定する必要があります。</h3>
+    <p>設定の名前の後には <code>:</code>
+    と設定の値を指定する必要があります。</p>
+    <p><code>:</code> の前後に空白文字を入れることはできません。</p>
+  </div>
+<div class="section" id="webvtt:text:syntax"><h3>構文的に正しい WebVTT 
+  キュー文章ではありません。</h3>
+    <p>指定された文字列は正しい WebVTT キュー文章ではありません。</p>
+    <p>WebVTT キュー文章は連続した改行を含むことができませんし、
+    改行で始まったり終わったりすることもできません。</p>
+  </div>
+
+<div class="section" id="webvtt:timestamp-<-min-time"><h3>時刻は、ここまでの時刻よりも後でなければなりません。</h3>
+    <p>WebVTT キューの文章の中にある時刻のタグは、
+    キューの開始時刻や、同じ文章中のそれ以前の時刻のタグよりも後の時刻になっていなければなりません。</p>
+  </div>
+
+<div class="section" id="webvtt:timestamp:hour"><h3>「時」は2桁以上の数字列でなければなりまえせん。</h3>
+    <p>WebVTT の時刻の「時」
+    部分は2桁以上の数字の列として表さなければなりません。
+    値が10よりも小さい時は、十の位に「0」を明示しなければなりません。</p>
+  </div>
+
+<div class="section" id="webvtt:timings:leading-space"><h3>時刻の指定の前に空白文字を入れてはいけません。</h3>
+    <p>時刻を指定する行では、開始時刻の前に空白文字を入れることはできません。</p>
+  </div>
+
+<div class="section" id="webvtt:timings:no-space"><h3><code>--&gt;</code> の前後の空白が抜けています。</h3>
+    <p>時刻の指定の <code>--&gt;</code> の前後には空白文字が必要です。</p>
+  </div>
+
+</section><!-- #webvtt-errors -->
+
 <section id="cache-manifest-errors">
 <h2>Cache Manifest Errors</h2>
 
@@ -3451,7 +3721,7 @@ Regexp::Parser::JavaScript's extension. -->
 <section id="license">
 <h2>License of This Document</h2>
 
-<p>Copyright <time>2007</time>‐<time>2011</time>
+<p>Copyright <time>2007</time>‐<time>2012</time>
 <a href="http://suika.fam.cx/~wakaba/who?" rel="author" xml:lang="ja">Wakaba</a>
 <code class="mail">&lt;<a href="mailto:w@suika.fam.cx">w@suika.fam.cx</a>&gt;</code>.</p>
 

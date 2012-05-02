@@ -30,15 +30,15 @@ bad attribute name;;Attribute name cannot contain characters <code>"</code>, <co
 bad attribute value;;Attribute value must be quoted by <code>"</code> or <code>'</code> if it contains a <code>"</code>, <code>'</code>, or <code>=</code> character.
 bare ero;;The <code>&amp;</code> character must be escaped as <code class="html example">&amp;amp;</code>.
 bare etago;;A <code>&lt;/</code> string is not followed by a tag name.
-bare stago;;A <code>&lt;</code> character is not followed by tag name or by a <code>!</code> character.
+bare stago;;文字 <code>&lt;</code> の次がタグ名でも <code>!</code>, <code>/</code>, <code>?</code> のいずれでもありません。
 bare nero;;The decimal representation of the code position of a character must be specified after <code>&amp;#</code>.
 bare hcro;;The hexadecimal representation of the code position of a character must be specified after <code>&amp;#x</code>.
 bogus comment;;String <code>&lt;!</code> is not followed by <code>--</code>.
 bogus end tag;;String <code>&lt;/</code> is not followed by tag name.
 dash in comment;;There is a <code>--</code> sequence in a comment.
 duplicate attribute;;There are two attributes with name <code><var>{text}</var></code>.
-empty start tag;;Empty start tag (<code>&lt;&gt;</code>) is not allowed.
-empty end tag;;Empty end tag (<code>&lt;/&gt;</code>) is not allowed.
+empty start tag;; <p>In HTML, XML, and WebVTT, empty start tag, i.e. start tag with no tag name, is not allowed.</p> <p>To represent a start tag, you have to specify the tag name explicitly.</p> <p>To represent a string with the <code>&lt;</code> character, you have to use the character reference: <code>&amp;lt;</code>.</p> 
+empty end tag;; <p>In HTML, XML, and WebVTT, empty end tag, i.e. end tag with no tag name, is not allowed.</p> <p>To represent an end tag, you have to specify the tag name explicitly.</p> <p>To represent a string with the <code>&lt;</code> character, you have to use the character reference: <code>&amp;lt;</code>.</p> 
 end tag attribute;;End tag cannot have attributes.
 empty unquoted attribute value;;Attribute value is not specified.
 invalid character reference;;Character reference to <code><var>{text}</var></code> is not allowed.
@@ -61,6 +61,7 @@ unclosed DOCTYPE;;The <code>DOCTYPE</code> is not closed by a <code>&gt;</code> 
 unclosed PUBLIC literal;;The public identifier literal is not closed by a quotation mark.
 unclosed SYSTEM literal;;The system identifier literal is not closed by a quotation mark.
 unclosed tag;;Tag is not closed by a <code>&gt;</code> character.
+entity not declared;;Entity <code><var>{value}</var></code> is not declared.
 after after frameset;;There is a start tag <code>&lt;<var>{text}</var>&gt;</code> is after the <code>html</code> element is closed.
 after after frameset:/;;There is an end tag <code>&lt;/<var>{text}</var>&gt;</code> is after the <code>html</code> element is closed.
 after body;;Start tag <code>&lt;<var>{text}</var>&gt;</code> is not allowed after the <code>body</code> is closed.
@@ -116,6 +117,7 @@ child element missing:td|th;content-model-error;There must be a <code>td</code> 
 child element missing:atom;;There must be an element <code><var>{text}</var></code> in the Atom namespace as a child of this element.
 child element missing:atom:link:alternate;;There must be an Atom <code>link</code> element whose <code>rel</code> attribute is set to <code>alternate</code> as a child of this element.
 child element missing:atom:link:self;;There should be an Atom <code>link</code> element whose <code>rel</code> attribute is set to <code>self</code> as a child of this element.
+element missing;;Required child element <code><var>{text}</var></code> is not found.
 element missing:hn;;There must be at least one <code>h<var>n</var></code> element descendant.
 element not allowed;;This element is not allowed in this context.
 element not allowed:area;;An <code>area</code> element cannot be used outside of a <code>map</code> element.
@@ -336,6 +338,36 @@ no property semicolon;;A <code>;</code> character is missing at the end of the p
 priority syntax error;;Priority part of the declaration is syntactically incorrect.
 unknown at-rule;;The <code>@<var>{value}</var></code> rule is not supported by the conformance checker.
 unknown property;;Property <code><var>{value}</var></code> is not supported by the conformance checker.
+empty class;;Class name cannot be empty.
+form feed;;Form feed character is not allowed.
+newline not allowed;;Newline is not allowed.
+webvtt:annotation not allowed;;Annotation cannot be specified for tag <code><var>{text}</var></code>.
+webvtt:bad timestamp;;Timestamp is syntactically in error.
+webvtt:class:syntax;;Class name contains an invalid character.
+webvtt:empty annotation;;Annotation cannot be empty.
+webvtt:end time < start time;;End time cannot be less than start time.
+webvtt:end time < timestamp;;Timestamp must be less than end time.
+webvtt:headers;;Header is not allowed.
+webvtt:id:duplicate;;There are multiple cues with same identifier.
+webvtt:id:multiple;;There are multiple identifer lines; This line is ignored.
+webvtt:id:syntax;;This is not a syntactically valid WebVTT cue identifier.
+webvtt:no cue separator;;No blank line is found between two cues.
+webvtt:no header end;;No blank line is found before the first cue.
+webvtt:no signature;;The <code>WEBVTT</code> signature line is not found.
+webvtt:no text;;No text is specified for the cue.
+webvtt:no timings;;No timings line is found.
+webvtt:start time order;;Start time of a cue cannot be less than the start time of the previous cues in the same file.
+webvtt:setting:duplicate;;Setting <code><var>{value}</var></code> is specified twice.
+webvtt:setting:empty name;;Setting name cannot be empty.
+webvtt:setting:empty value;;Setting value cannot be empty.
+webvtt:setting:invalid;;Setting <code><var>{value}</var></code> is not defined.
+webvtt:setting:invalid value;;Setting <code><var>{text}</var></code> does not allow the value <code><var>{value}</var></code>.
+webvtt:setting:no value;;Setting value must be specified.
+webvtt:text:syntax;;This is not a syntactically valid WebVTT cue text.
+webvtt:timestamp < min time;;Timestamp must be greater than previous timestamps.
+webvtt:timestamp:hour;;Hour component must contain two or more digits.
+webvtt:timings:leading space;;White spaces are not allowed before timings.
+webvtt:timings:no space;;White space is missing before or after <code>--&gt;</code>.
 both in entries and whitelist;;This URL is found both in the explicit or fallback entries and in the online whitelist.
 different origin from manifest;;The specified URL has different origin from the manifest.
 different scheme from manifest;;The scheme component of the URL is different from that of the manifest URL. The URL is ignored.
