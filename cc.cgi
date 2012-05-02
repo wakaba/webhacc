@@ -83,10 +83,10 @@ sub check_and_print ($$$) {
     'text/x-h2h' => 'WebHACC::Language::H2H',
     'text/x-regexp-js' => 'WebHACC::Language::RegExpJS',
     'text/x-webidl' => 'WebHACC::Language::WebIDL',
+    'text/vtt' => 'WebHACC::Language::WebVTT',
     
     ## HTML MIME types
     'text/html' => 'WebHACC::Language::HTML',
-    'text/html-sandboxed' => 'WebHACC::Language::HTML',
 
     ## XML MIME types
     'text/xml' => 'WebHACC::Language::XML',
@@ -152,9 +152,9 @@ Wakaba <w@suika.fam.cx>.
 
 =head1 LICENSE
 
-Copyright 2007-2010 Wakaba <w@suika.fam.cx>
+Copyright 2007-2012 Wakaba <w@suika.fam.cx>.
 
-This library is free software; you can redistribute it
-and/or modify it under the same terms as Perl itself.
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
 
 =cut

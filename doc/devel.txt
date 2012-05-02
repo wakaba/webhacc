@@ -1,0 +1,11 @@
+* Add a new MIME type support
+
+- WebHACC::Output::generate_input_section - Add the MIME type to the
+  select box.
+
+- cc.cgi - Add the mapping from MIME type to the Language module.
+
+- WebHACC::Language::??? (the Language module) - Implement the rule
+  for pasing and checking for the MIME type.
+
+- standards.en.html - Add the format identified by the MIME type.

@@ -542,9 +542,10 @@ sub generate_input_section ($$) {
   my $options = sub ($) {
     my $context = shift;
 
-    $out->{handle}->print (q[<div class="details default"><p class=legend onclick="nextSibling.style.display = nextSibling.style.display == 'block' ? 'none' : 'block'; parentNode.className = nextSibling.style.display == 'none' ? 'details' : 'details open'" tabindex=0>]);
+    $out->start_tag ('section');
+    $out->start_tag ('h4');
     $out->nl_text (q[Options]);
-    $out->start_tag ('div');
+    $out->end_tag ('h4');
 
     if ($context eq 'url') {
       $out->start_tag ('p');
@@ -556,7 +557,7 @@ sub generate_input_section ($$) {
       $out->nl_text ('Check error page');
       $out->end_tag ('label');
     }
- 
+    
     $out->start_tag ('p');
     $out->start_tag ('label');
     $out->nl_text (q[Content type]);
@@ -569,7 +570,7 @@ sub generate_input_section ($$) {
       {value => 'text/x-css-inline'},
       {value => 'text/x-h2h'},
       {value => 'text/html'},
-      {value => 'text/html-sandboxed'},
+      {value => 'text/vtt'},
       {value => 'text/x-regexp-js'},
       {value => 'text/x-webidl'},
       {value => 'application/xhtml+xml'},
@@ -672,7 +673,7 @@ sub generate_input_section ($$) {
       $out->end_tag ('label');
     }
 
-    $out->{handle}->print (q[</div></div>]);
+    $out->end_tag ('section');
   }; # $options
 
   $out->start_section (id => 'input', title => 'Input');
@@ -764,9 +765,9 @@ Wakaba <w@suika.fam.cx>.
 
 =head1 LICENSE
 
-Copyright 2007-2010 Wakaba <w@suika.fam.cx>
+Copyright 2007-2012 Wakaba <w@suika.fam.cx>.
 
-This library is free software; you can redistribute it
-and/or modify it under the same terms as Perl itself.
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
 
 =cut
