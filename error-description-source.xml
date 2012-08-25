@@ -63,7 +63,7 @@
 <h2>Character Encoding Layer Errors</h2>
 
 <d:item name="fallback-char-error"
-    modules="Charset::DecodeHandle">
+    modules="Whatpm::Charset::DecodeHandle">
   <d:message xml:lang="en">Octet sequence <code><var>{octets}</var></code>
   is not an allowed representation of the character
   <code><var>{char}</var></code> &#x2014; character reference
@@ -72,20 +72,20 @@
 </d:item>
 
 <d:item name="fallback-unassigned-error"
-    modules="Charset::DecodeHandle">
+    modules="Whatpm::Charset::DecodeHandle">
   <d:message xml:lang="en">No character is assigned to octet sequence
   <code><var>{octets}</var></code>.</d:message>
   <!-- HTML5 parse error -->
 </d:item>
 
 <d:item name="illegal-octets-error"
-    modules="Charset::DecodeHandle">
+    modules="Whatpm::Charset::DecodeHandle">
   <d:message xml:lang="en">Octet sequence <code><var>{octets}</var></code>
   is illegal.</d:message>
 </d:item>
 
 <d:item name="invalid-state-error"
-    modules="Charset::DecodeHandle::ISO2022JP">
+    modules="Whatpm::Charset::DecodeHandle::ISO2022JP">
   <!-- TODO: more user-friendly error message is desired... -->
   <d:message xml:lang="en">The input stream is broken.</d:message>
   <d:desc xml:lang="en">
@@ -98,7 +98,7 @@
 </d:item>
 
 <d:item name="unassigned-code-point-error"
-    modules="Charset::DecodeHandle">
+    modules="Whatpm::Charset::DecodeHandle">
   <d:message xml:lang="en">No character is assigned to octet sequence
   <code><var>{octets}</var></code>.</d:message>
 </d:item>
@@ -108,7 +108,7 @@
 <h2>HTML5 Character Encoding Errors</h2>
 
 <d:item name="charset:not supported"
-    modules="HTML::Parser::Sniffer">
+    modules="Whatpm::HTML::Parser::Sniffer">
   <d:message xml:lang="en">Character encoding <code><var>{value}</var></code>
   is not supported and the explicit character encoding specification is
   ignored.  The result of the conformance checking might be
@@ -116,7 +116,7 @@
 </d:item>
 
 <d:item name="disallowed character encoding"
-    modules="ContentChecker">
+    modules="Whatpm::ContentChecker">
   <d:message xml:lang="en">Character encoding <code><var>{text}</var></code>
   is not allowed for <abbr>HTML</abbr> document.</d:message>
   <d:desc xml:lang="en">
@@ -126,7 +126,7 @@
 </d:item>
 
 <d:item name="bad character encoding"
-    modules="ContentChecker">
+    modules="Whatpm::ContentChecker">
   <d:message xml:lang="en">Character encoding <code><var>{text}</var></code>
   should not be used for <abbr>HTML</abbr> document.</d:message>
   <d:desc xml:lang="en">
@@ -137,7 +137,7 @@
 </d:item>
 
 <d:item name="non-utf-8 character encoding"
-    modules="ContentChecker">
+    modules="Whatpm::ContentChecker">
   <d:message xml:lang="en">Use of UTF-8 is encouraged (this document
   is encoded in <code><var>{text}</var></code>).</d:message>
   <d:desc xml:lang="en">
@@ -147,7 +147,7 @@
 </d:item>
 
 <d:item name="character encoding unchecked"
-    modules="ContentChecker">
+    modules="Whatpm::ContentChecker">
   <d:message xml:lang="en">Conformance for character encoding requirements
   cannot be checked, since the input is not a byte stream.</d:message>
   <d:desc xml:lang="en">
@@ -160,7 +160,7 @@
 </d:item>
 
 <d:item name="no character encoding declaration"
-    modules="ContentChecker">
+    modules="Whatpm::ContentChecker">
   <d:message xml:lang="en">There is no character encoding
   declaration.</d:message>
   <d:desc xml:lang="en">
@@ -181,7 +181,7 @@
 </d:item>
 
 <d:item name="non ascii superset"
-    modules="ContentChecker">
+    modules="Whatpm::ContentChecker">
   <d:message xml:lang="en">No character encoding metadata is found
   in lower‐level protocol nor is there <abbr>BOM</abbr>, while
   character encoding <code><var>{text}</var></code>
@@ -211,7 +211,7 @@
 </d:item>
 
 <d:item name="sniffing:chardet"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">Character encoding of this document is sniffed
   as <code><var>{text}</var></code> (Sniffed because no explicit specification
   for the character encoding of this document is found in the transfer
@@ -219,7 +219,7 @@
 </d:item>
 
 <d:item name="sniffing:default"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">Character encoding of this document is defaulted
   to <code><var>{text}</var></code> because no explicit specification
   for the character encoding of this document is found in the transfer
@@ -227,7 +227,7 @@
 </d:item>
 
 <d:item name="chardecode:fallback"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">Results might be <em>wrong</em>, since the
   conformance checker cannot find an appropriate decoder for the character
   encoding used for the document.</d:message>
@@ -258,13 +258,13 @@
 </d:item>
 
 <d:item name="chardecode:no error"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">Conformance error checking for the character
   encoding <code><var>{text}</var></code> is not supported.</d:message>
 </d:item>
 
 <d:item name="charset label:matching"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">Sniffed character encoding 
   <code><var>{text}</var></code> is same as the character encoding specified
   in the character encoding declaration.  This is <em>not</em> an
@@ -272,7 +272,7 @@
 </d:item>
 
 <d:item name="charset label detected"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">While parsing the document as
   <code><var>{text}</var></code>, a character encoding declaration specifying
   a different character encoding is found.  The document
@@ -307,21 +307,21 @@
 <h2>Coded Character Set Layer Errors</h2>
 
 <d:item name="NULL"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <!-- HTML5 Parse Error -->
   <d:message xml:lang="en">The <code class="charname">NULL</code> character
   is not allowed.</d:message>
 </d:item>
 
 <d:item name="control char"
-    modules="Charset::UnicodeChecker">
+    modules="Whatpm::Charset::UnicodeChecker">
   <!-- HTML5 Parse Error -->
   <d:message xml:lang="en">Code point <code><var>{text}</var></code> is
   not allowed.</d:message>
 </d:item>
 
 <d:item name="nonchar"
-    modules="Charset::UnicodeChecker">
+    modules="Whatpm::Charset::UnicodeChecker">
   <d:message xml:lang="en">Noncharacter <code><var>{text}</var></code>
   is found in the input stream.</d:message>
   <d:desc xml:lang="en">
@@ -336,31 +336,31 @@
 </d:item>
 
 <d:item name="non unicode"
-    modules="Charset::UnicodeChecker">
+    modules="Whatpm::Charset::UnicodeChecker">
   <d:message xml:lang="en">Character <code><var>{text}</var></code> is not
   a Unicode character.</d:message>
 </d:item>
 
 <d:item name="unicode deprecated"
-    modules="Charset::UnicodeChecker">
+    modules="Whatpm::Charset::UnicodeChecker">
   <d:message xml:lang="en">Use of character <code><var>{text}</var></code>
   is deprecated.</d:message>
 </d:item>
 
 <d:item name="unicode discouraged"
-    modules="Charset::UnicodeChecker">
+    modules="Whatpm::Charset::UnicodeChecker">
   <d:message xml:lang="en">Use of character <code><var>{text}</var></code>
   is discouraged.</d:message>
 </d:item>
 
 <d:item name="unicode not preferred"
-    modules="Charset::UnicodeChecker">
+    modules="Whatpm::Charset::UnicodeChecker">
   <d:message xml:lang="en">Code point <code><var>{text}</var></code>
   is not the preferred representation of that character.</d:message>
 </d:item>
 
 <d:item name="unicode should"
-    modules="Charset::UnicodeChecker">
+    modules="Whatpm::Charset::UnicodeChecker">
   <d:message xml:lang="en">Character <code><var>{text}</var></code>
   should not be used in many cases.</d:message>
 </d:item>
@@ -371,13 +371,13 @@
 <h2>HTML5 Parse Errors in Tokenization Stage</h2>
 
 <d:item name="bad attribute name"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">Attribute name cannot contain characters
   <code>"</code>, <code>'</code>, and <code>=</code>.</d:message>
 </d:item>
 
 <d:item name="bad attribute value"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">Attribute value must be quoted by <code>"</code>
   or <code>'</code> if it contains a <code>"</code>, <code>'</code>, or
   <code>=</code> character.</d:message>
@@ -400,7 +400,7 @@
 </d:item>
 
 <d:item name="bare ero"
-    modules="HTML::Parser WebVTT::Parser">
+    modules="Whatpm::HTML::Parser Whatpm::WebVTT::Parser">
   <d:message xml:lang="en">The <code>&amp;</code> character must
   be escaped as <code class="html example">&amp;amp;</code>.</d:message>
   <d:message xml:lang="ja">文字 <code>&amp;</code> は
@@ -468,7 +468,7 @@
 </d:item>
 
 <d:item name="bare etago"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">A <code>&lt;/</code> string is not followed
   by a tag name.</d:message><!-- </ EOF -->
   <d:desc xml:lang="en">
@@ -491,7 +491,7 @@
 </d:item>
 
 <d:item name="bare stago"
-    modules="HTML::Parser WebVTT::Parser">
+    modules="Whatpm::HTML::Parser Whatpm::WebVTT::Parser">
   <d:message xml:lang="en">A <code>&lt;</code> character is not followed
   by a tag name or a <code>!</code>, <code>/</code>, or
   <code>?</code> character.</d:message>
@@ -520,7 +520,7 @@
 </d:item>
 
 <d:item name="bare nero"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">The decimal representation of the code position
   of a character must be specified after <code>&amp;#</code>.</d:message>
   <d:desc xml:lang="en">
@@ -553,7 +553,7 @@
 </d:item>
 
 <d:item name="bare hcro"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">The hexadecimal representation of the code position
   of a character must be specified after <code>&amp;#x</code>.</d:message>
   <d:desc xml:lang="en">
@@ -575,7 +575,7 @@
 </d:item>
 
 <d:item name="bogus comment"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">String <code>&lt;!</code> is not followed
   by <code>--</code>.</d:message>
   <d:desc xml:lang="en">
@@ -609,7 +609,7 @@
 </d:item>
 
 <d:item name="bogus end tag"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">String <code>&lt;/</code> is not followed
   by tag name.</d:message><!-- </ non-name-start-char-non-EOF -->
   <d:desc xml:lang="en">
@@ -631,7 +631,7 @@
 </d:item>
 
 <d:item name="dash in comment"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">There is a <code>--</code> sequence
   in a comment.</d:message>
   <d:desc xml:lang="en">
@@ -648,7 +648,7 @@
 </d:item>
 
 <d:item name="duplicate attribute"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">There are two attributes with name
       <code><var>{text}</var></code>.</d:message>
   <d:desc xml:lang="en">
@@ -661,7 +661,7 @@
 </d:item>
 
 <d:item name="empty start tag"
-    modules="HTML::Parser WebVTT::Parser">
+    modules="Whatpm::HTML::Parser Whatpm::WebVTT::Parser">
   <d:message xml:lang="en">Empty start tag (<code>&lt;></code>) is not
   allowed.</d:message>
   <d:message xml:lang="ja">空の開始タグ (<code>&lt;></code>) 
@@ -683,7 +683,7 @@
 </d:item>
 
 <d:item name="empty end tag"
-    modules="HTML::Parser WebVTT::Parser">
+    modules="Whatpm::HTML::Parser Whatpm::WebVTT::Parser">
   <d:message xml:lang="en">Empty end tag (<code>&lt;/></code>) is not
   allowed.</d:message>
   <d:message xml:lang="ja">空の終了タグ (<code>&lt;/></code>)
@@ -705,13 +705,13 @@
 </d:item>
 
 <d:item name="end tag attribute"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">End tag cannot have attributes.</d:message>
   <d:message xml:lang="ja">終了タグに属性が指定されています。</d:message>
 </d:item>
 
 <d:item name="empty unquoted attribute value"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">Attribute value is not specified.</d:message>
   <d:message xml:lang="ja">属性値が指定されていません。</d:message>
   <d:desc xml:lang="en">
@@ -736,7 +736,7 @@
 </d:item>
 
 <d:item name="invalid character reference"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">Character reference to
   <code><var>{text}</var></code> is not allowed.</d:message>
   <!-- Control characters, CR character, DEL character, C1 characters,
@@ -745,7 +745,7 @@
 </d:item>
 
 <d:item name="nestc"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">Polytheistic slash (<code>/></code>) cannot be
   used for this element.</d:message>
   <d:desc xml:lang="en">
@@ -792,44 +792,44 @@
 </d:item>
 
 <d:item name="no DOCTYPE name"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">After the string <code>&lt;!DOCTYPE </code>, the
   document type name must be specified.</d:message>
 </d:item>
 
 <d:item name="no PUBLIC literal"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">After the keyword <code>PUBLIC</code>, no
   oublic identifier is specified.</d:message>
 </d:item>
 
 <d:item name="no refc"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">Character reference must be closed by a
   <code>;</code> character.</d:message>
 </d:item>
 
 <d:item name="no space before DOCTYPE name"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">After the string <code>&lt;!DOCTYPE</code>, there
   must be at least a white space character before the document type
   name.</d:message>
 </d:item>
 
 <d:item name="no space between attributes"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">Attributes must be separeted by at least a
   white space character.</d:message>
 </d:item>
 
 <d:item name="no SYSTEM literal"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">After the keyword <code>SYSTEM</code>, no
   system identifier is specified.</d:message>
 </d:item>
 
 <d:item name="pio"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">Processing instruction 
   (<code>&lt;?<var>...</var>></code>) is not allowed in HTML
   document.</d:message>
@@ -881,67 +881,67 @@ p {
 </d:item>
 
 <d:item name="string after DOCTYPE name"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">There is a bogus string after the document type
   name.</d:message>
 </d:item>
 
 <d:item name="string after PUBLIC"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">There is a bogus string after the keyword
   <code>PUBLIC</code>.</d:message>
 </d:item>
 
 <d:item name="string after PUBLIC literal"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">There is a bogus string after the public
   identifier.</d:message>
 </d:item>
 
 <d:item name="string after SYSTEM"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">There is a bogus string after the keyword
   <code>SYSTEM</code>.</d:message>
 </d:item>
 
 <d:item name="string after SYSTEM literal"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">There is a bogus string after the system
   identifier.</d:message>
 </d:item>
 
 <d:item name="unclosed attribute value"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">Attribute value is not closed by a quotation
   mark.</d:message>
 </d:item>
 
 <d:item name="unclosed comment"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">Comment is not closed by a string
   <code>--></code>.</d:message>
 </d:item>
 
 <d:item name="unclosed DOCTYPE"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">The <code>DOCTYPE</code> is not closed by a
   <code>></code> character.</d:message>
 </d:item>
 
 <d:item name="unclosed PUBLIC literal"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">The public identifier literal is not closed by a
   quotation mark.</d:message>
 </d:item>
 
 <d:item name="unclosed SYSTEM literal"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">The system identifier literal is not closed by a
   quotation mark.</d:message>
 </d:item>
 
 <d:item name="unclosed tag"
-    modules="HTML::Parser WebVTT::Parser">
+    modules="Whatpm::HTML::Parser Whatpm::WebVTT::Parser">
   <d:message xml:lang="en">Tag is not closed by a <code>></code>
   character.</d:message>
   <d:message xml:lang="ja">タグが文字 <code>></code>
@@ -962,7 +962,7 @@ p {
 <h2>XML Errors</h2>
 
 <d:item name="entity not declared"
-    modules="WebVTT::Parser">
+    modules="Whatpm::WebVTT::Parser">
   <d:message xml:lang="en">Entity <code><var>{value}</var></code>
   is not declared.</d:message>
   <d:message xml:lang="ja">実体 <code><var>{value}</var></code>
@@ -1026,7 +1026,7 @@ p {
 <h2>HTML5 Parse Errors in Tree Construction Stage</h2>
 
 <d:item name="after after frameset"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">There is a start tag
   <code>&lt;<var>{text}</var>></code> is after the <code>html</code> element
   is closed.</d:message>
@@ -1035,7 +1035,7 @@ p {
 </d:item>
 
 <d:item name="after after frameset:/"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">There is an end tag
   <code>&lt;/<var>{text}</var>></code> is after the <code>html</code> element
   is closed.</d:message>
@@ -1044,43 +1044,43 @@ p {
 </d:item>
 
 <d:item name="after body"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">Start tag <code>&lt;<var>{text}</var>></code> is
   not allowed after the <code>body</code> is closed.</d:message>
 </d:item>
 
 <d:item name="after body:/"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">End tag <code>&lt;/<var>{text}</var>></code> is
   not allowed after the <code>body</code> is closed.</d:message>
 </d:item>
 
 <d:item name="after body:#text"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">Non‐white‐space characters are not allowed
   after the <code>body</code> is closed.</d:message>
 </d:item>
 
 <d:item name="after frameset"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">Start tag <code>&lt;<var>{text}</var>></code> is
   not allowed after the <code>frameset</code> is closed.</d:message>
 </d:item>
 
 <d:item name="after frameset:/"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">End tag <code>&lt;/<var>{text}</var>></code> is
   not allowed after the <code>frameset</code> is closed.</d:message>
 </d:item>
 
 <d:item name="after frameset:#text"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">Non‐white‐space characters are not allowed
   after the <code>frame</code> is closed.</d:message>
 </d:item>
 
 <d:item name="after head"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">The <code><var>{text}</var></code> element cannot be
   inserted between <code>head</code> and <code>body</code>
   elements.</d:message>
@@ -1092,7 +1092,7 @@ p {
 </d:item>
 
 <d:item name="after html"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">Start tag <code>&lt;<var>{text}</var>></code> is
   not allowed after the <code>html</code> is closed.</d:message>
   <d:desc xml:lang="en">
@@ -1107,7 +1107,7 @@ p {
 </d:item>
 
 <d:item name="after html:/"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">End tag <code>&lt;/<var>{text}</var>></code> is
   not allowed after the <code>html</code> is closed.</d:message>
   <d:desc xml:lang="en">
@@ -1122,19 +1122,19 @@ p {
 </d:item>
 
 <d:item name="after html:#text"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">Non‐white‐space characters are not allowed
   after the <code>html</code> is closed.</d:message>
 </d:item>
 
 <d:item name="image"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">The <code>image</code> element is
   obsolete.</d:message>
 </d:item>
 
 <d:item name="in a:a"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">Anchor cannot be nested.</d:message>
   <d:desc xml:lang="en">
     <p>HTML <code>a</code> elements cannot be nested.
@@ -1146,7 +1146,7 @@ p {
 </d:item>
 
 <d:item name="in body"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">Start tag <code>&lt;<var>{text}</var>&gt;</code>
   is not allowed in the <code>body</code> element.</d:message>
   <d:desc xml:lang="en">
@@ -1158,49 +1158,49 @@ p {
 </d:item>
 
 <d:item name="in body:#eof"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">Some element is not closed before the end of
   file.</d:message>
 </d:item>
 
 <d:item name="in button:button"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">The <code>button</code> element cannot be
   nested.</d:message>
 </d:item>
 
 <d:item name="in CDATA:#eof"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">Element is not closed before the end of
   file.</d:message>
 </d:item>
 
 <d:item name="in form:form"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">Start tag <code>&lt;form></code> is
   not allowed in a <code>form</code> element.</d:message>
 </d:item>
 
 <d:item name="in frameset"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">Start tag <code>&lt;<var>{text}</var>></code> is
   not allowed in a <code>framset</code> element.</d:message>
 </d:item>
 
 <d:item name="in frameset:/"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">End tag <code>&lt;/<var>{text}</var>></code> is
   not allowed in a <code>frameset</code> element.</d:message>
 </d:item>
 
 <d:item name="in frameset:#text"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">Non‐white‐space characters are not allowed
   in a <code>frameset</code> element.</d:message>
 </d:item>
 
 <d:item name="in head:head"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">Start tag <code>&lt;head&gt;</code>
   is not allowed in the <code>head</code> element.</d:message>
   <d:desc xml:lang="en">
@@ -1214,7 +1214,7 @@ p {
 </d:item>
 
 <d:item name="in html:#DOCTYPE"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">A <code>DOCTYPE</code> appears after any
   element or data character has been seen.</d:message>
   <!-- <!DOCTYPE HTML><!DOCTYPE HTML> -->
@@ -1230,57 +1230,57 @@ p {
 </d:item>
 
 <d:item name="in nobr:nobr"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">The <code>nobr</code> element cannot be
   nested.</d:message>
 </d:item>
 
 <d:item name="in noscript"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">The <code><var>{text}</var></code> element is not
   allowed in a <code>noscript</code> element in the
   <code>head</code> element.</d:message>
 </d:item>
 
 <d:item name="in noscript:/"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">An end tag <code>&lt;/<var>{text}</var>></code>
   appers before the <code>noscript</code> element is closed.</d:message>
 </d:item>
 
 <d:item name="in noscript:#eof"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">A <code>noscript</code> element is not closed
   before the end of file.</d:message>
 </d:item>
 
 <d:item name="in noscript:#text"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">Non‐white‐space characters are not allowed
   in a <code>noscript</code> element in the <code>head</code>
   element.</d:message>
 </d:item>
 
 <d:item name="in PCDATA:#eof"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">Element is not closed before the end of
   file.</d:message>
 </d:item>
 
 <d:item name="in select"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">Start tag <code>&lt;<var>{text}</var>&gt;</code>
   is not allowed in a <code>select</code> element.</d:message>
 </d:item>
 
 <d:item name="in select:/"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">End tag <code>&lt;/<var>{text}</var>&gt;</code>
   is not allowed in a <code>select</code> element.</d:message>
 </d:item>
 
 <d:item name="in table"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">Start tag <code>&lt;<var>{text}</var>&gt;</code>
   is not allowed in a <code>table</code> element.</d:message>
   <d:desc xml:lang="en">
@@ -1298,13 +1298,13 @@ p {
 </d:item>
 
 <d:item name="in table:/"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">End tag <code>&lt;/<var>{text}</var>&gt;</code>
   is not allowed in a <code>table</code> element.</d:message>
 </d:item>
 
 <d:item name="in table:#text"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">Non‐white‐space character is not allowed within 
   the <code>table</code> element, outside of the caption and cells.</d:message>
   <d:desc xml:lang="en">
@@ -1320,13 +1320,13 @@ p {
 </d:item>
 
 <d:item name="isindex"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">The <code>isindex</code> element is
   obsolete.</d:message>
 </d:item>
 
 <d:item name="missing start tag:tr"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">Start tag of <code>tr</code>
   element is missing.</d:message>
   <d:desc>
@@ -1343,7 +1343,7 @@ p {
 
 <d:item name="no DOCTYPE"
     class="parse-error"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">This document does not start with a
   <code>DOCTYPE</code>.</d:message>
   <d:desc>
@@ -1362,7 +1362,7 @@ p {
 
 <d:item name="not closed"
     class="parse-error"
-    modules="HTML::Parser WebVTT::Parser">
+    modules="Whatpm::HTML::Parser Whatpm::WebVTT::Parser">
   <d:message xml:lang="en">Element <code><var>{text}</var></code> is not
   closed.</d:message>
   <d:message xml:lang="ja">要素 <code><var>{text}</var></code>
@@ -1444,7 +1444,7 @@ p {
 
 <d:item name="not first start tag"
     class="parse-error"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">This <code>&lt;html></code> tag is not
   the first start tag.</d:message>
   <d:desc>
@@ -1463,7 +1463,7 @@ p {
 
 <d:item name="not HTML5"
     class="parse-error"
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">This document is written in an old version of 
   HTML.</d:message>
   <d:desc xml:lang="en">
@@ -1482,7 +1482,7 @@ p {
 
 <d:item name="start tag not allowed"
     class="parse-error"
-    modules="HTML::Parser WebVTT::Parser">
+    modules="Whatpm::HTML::Parser Whatpm::WebVTT::Parser">
   <d:message xml:lang="en">Start tag
   <code>&lt;<var>{text}</var>></code> is not allowed here.</d:message>
   <d:message xml:lang="ja">開始タグ <code>&lt;<var>{text}</var>></code>
@@ -1519,7 +1519,7 @@ p {
 
 <d:item name="unmatched end tag"
     class="parse-error"
-    modules="HTML::Parser WebVTT::Parser">
+    modules="Whatpm::HTML::Parser Whatpm::WebVTT::Parser">
   <d:message xml:lang="en">Element <code><var>{text}</var></code> is not
   opened.</d:message>
   <d:message xml:lang="ja">要素 <code><var>{text}</var></code> 
@@ -1570,7 +1570,7 @@ p {
 </d:item>
 
 <d:item name="XSLT-compat" 
-    modules="HTML::Parser">
+    modules="Whatpm::HTML::Parser">
   <d:message xml:lang="en">The <code>DOCTYPE</code> legacy string is
   used.</d:message>
   <d:message xml:lang="ja"><code>DOCTYPE</code>
@@ -1598,21 +1598,21 @@ p {
 <h2>Element Content Model Errors</h2>
 
 <d:item name="basehref after URL attribute"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">The <code>base</code> element with the 
   <code>href</code> attribute specified cannot be placed after
   any attribute with a URL.</d:message>
 </d:item>
 
 <d:item name="basetarget after hyperlink"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">The <code>base</code> element with the
   <code>target</code> attribute specified cannot be placed after
   any element that defines a hyperlink.</d:message>
 </d:item>
 
 <d:item name="character not allowed"
-    modules="ContentChecker::HTML RDFXML">
+    modules="Whatpm::ContentChecker::HTML Whatpm::RDFXML">
   <d:message xml:lang="en">Data character is not allowed in this
   context.</d:message>
   <d:desc xml:lang="en">
@@ -1639,25 +1639,25 @@ p {
 </d:item>
 
 <d:item name="character not allowed:empty"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">Non‐white‐space characters are not allowed in
   an empty element.</d:message>
 </d:item>
 
 <d:item name="character not allowed:atom|PersonConstruct"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">Non‐white‐space characters are not allowed in
   Person construct.</d:message>
 </d:item>
 
 <d:item name="character not allowed:atom|TextConstruct"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">Non‐white‐space characters are not allowed in
   Text construct.</d:message>
 </d:item>
 
 <d:item name="child element missing"
-    modules="ContentChecker::HTML ContentChecker::Atom">
+    modules="Whatpm::ContentChecker::HTML Whatpm::ContentChecker::Atom">
   <d:message xml:lang="en">There must be an element
   <code><var>{text}</var></code> as a child of this element.</d:message>
   <d:desc xml:lang="en">
@@ -1690,28 +1690,28 @@ p {
 </d:item>
 
 <d:item name="child element missing:atom"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">There must be an element
   <code><var>{text}</var></code> in the Atom namespace as a child of this
   element.</d:message>
 </d:item>
 
 <d:item name="child element missing:atom:link:alternate"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">There must be an Atom <code>link</code> element
   whose <code>rel</code> attribute is set to <code>alternate</code> as a
   child of this element.</d:message>
 </d:item>
 
 <d:item name="child element missing:atom:link:self"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">There should be an Atom <code>link</code> element
   whose <code>rel</code> attribute is set to <code>self</code> as a
   child of this element.</d:message>
 </d:item>
 
 <d:item name="element missing"
-    modules="ContentChecker::HTML WebVTT::Checker">
+    modules="Whatpm::ContentChecker::HTML Whatpm::WebVTT::Checker">
   <d:message xml:lang="en">Required child element 
   <code><var>{text}</var></code> is not found.</d:message>
   <d:message xml:lang="ja">子要素 <code><var>{text}</var></code>
@@ -1745,13 +1745,13 @@ p {
 </d:item>
 
 <d:item name="element missing:hn"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">There must be at least one 
   <code>h<var>n</var></code> element descendant.</d:message>
 </d:item>
 
 <d:item name="element not allowed"
-    modules="ContentChecker::HTML ContentChecker::Atom RDFXML">
+    modules="Whatpm::ContentChecker::HTML Whatpm::ContentChecker::Atom Whatpm::RDFXML">
   <d:message xml:lang="en">This element is not allowed in this 
   context.</d:message>
   <d:desc xml:lang="en">
@@ -1819,82 +1819,82 @@ p {
 </d:item>
 
 <d:item name="element not allowed:area"
-    modules="ContentChecker ContentChecker::HTML">
+    modules="Whatpm::ContentChecker Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">An <code>area</code> element cannot be used
   outside of a <code>map</code> element.</d:message>
 </d:item>
 
 <d:item name="element not allowed:base"
-    modules="ContentChecker ContentChecker::HTML">
+    modules="Whatpm::ContentChecker Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">There is another <code>base</code>
   element.</d:message>
 </d:item>
 
 <d:item name="element not allowed:datatemplate"
-    modules="ContentChecker ContentChecker::HTML">
+    modules="Whatpm::ContentChecker Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">In a <code>datatemplate</code> element, only
   <code>rule</code> elements are allowed.</d:message>
 </d:item>
 
 <d:item name="element not allowed:details legend"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">In a <code>details</code> or <code>fieldset</code>
   element, only at the beginning of the element a <code>legend</code> element
   may be used.</d:message>
 </d:item>
 
 <d:item name="element not allowed:empty"
-    modules="ContentChecker::HTML ContentChecker::Atom">
+    modules="Whatpm::ContentChecker::HTML Whatpm::ContentChecker::Atom">
   <d:message xml:lang="en">Elements are not allowed in an empty
   element.</d:message>
 </d:item>
 
 <d:item name="element not allowed:figure legend"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">In a <code>figure</code> element, only at the
   beginning or only at the end of the element a <code>lengend</code> element
   may be used.</d:message>
 </d:item>
 
 <d:item name="element not allowed:flow"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">This element is not allowed where flow
   content is expected.</d:message>
 </d:item>
 
 <d:item name="element not allowed:flow style"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">A <code>style</code> element without
   <code>scoped</code> attribute is not allowed in this context.</d:message>
 </d:item>
 
 <d:item name="element not allowed:head noscript"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">This element is not allowed in a
   <code>noscript</code> element in the <code>head</code> element.</d:message>
 </d:item>
 
 <d:item name="element not allowed:head style"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">A <code>style</code> element with
   <code>scoped</code> attribute is not allowed in the <code>head</code>
   element.</d:message>
 </d:item>
 
 <d:item name="element not allowed:head title"
-    modules="ContentChecker ContentChecker::HTML">
+    modules="Whatpm::ContentChecker Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">There is another <code>title</code>
   element.</d:message>
 </d:item>
 
 <d:item name="element not allowed:minus"
-    modules="ContentChecker ContentChecker::HTML">
+    modules="Whatpm::ContentChecker Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">This element is not allowed in this
   context.</d:message>
 </d:item>
 
 <d:item name="element not allowed:meta charset"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">The character encoding declaration is not the
   first child element in the <code>head</code> element.</d:message>
   <d:message xml:lang="ja">文字符号化宣言が <code>head</code> 
@@ -1915,19 +1915,19 @@ p {
 </d:item>
 
 <d:item name="element not allowed:metadata"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">This element is not allowed where metadata
   content is expected.</d:message>
 </d:item>
 
 <d:item name="element not allowed:phrasing"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">This element is not allowed where phrasing
   content is expected.</d:message>
 </d:item>
 
 <d:item name="element not allowed:root"
-    modules="ContentChecker">
+    modules="Whatpm::ContentChecker">
   <d:message xml:lang="en">This element is not allowed as the root
   element of a document.</d:message>
   <d:desc xml:lang="en">
@@ -1957,43 +1957,43 @@ p {
 </d:item>
 
 <d:item name="element not allowed:root:xml"
-    modules="ContentChecker">
+    modules="Whatpm::ContentChecker">
   <d:message xml:lang="en">This element is not allowed as the root element
   of an XML document.</d:message>
 </d:item>
 
 <d:item name="element not allowed:ruby base"
-    modules="ContentChecker">
+    modules="Whatpm::ContentChecker">
   <d:message xml:lang="en">This element is not allowed in the <code>ruby</code>
   element.</d:message>
 </d:item>
 
 <d:item name="element not allowed:text"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">This element is not allowed in this
   context.</d:message>
 </d:item>
 
 <d:item name="element not allowed:atom|content"
-    modules="ContentChecker::Atom">
+    modules="Whatpm::ContentChecker::Atom">
   <d:message xml:lang="en">This element is not allowed in an Atom
   <code>content</code> element.</d:message>
 </d:item>
 
 <d:item name="element not allowed:atom|PersonConstruct"
-    modules="ContentChecker::Atom">
+    modules="Whatpm::ContentChecker::Atom">
   <d:message xml:lang="en">This element is not allowed in Person
   construct.</d:message>
 </d:item>
 
 <d:item name="element not allowed:atom|TextConstruct"
-    modules="ContentChecker::Atom">
+    modules="Whatpm::ContentChecker::Atom">
   <d:message xml:lang="en">This element is not allowed in Text
   construct.</d:message>
 </d:item>
 
 <d:item name="element not defined"
-    modules="ContentChecker">
+    modules="Whatpm::ContentChecker">
   <d:message xml:lang="en">This element is not defined.</d:message>
   <d:message xml:lang="ja">この要素は定義されていません。</d:message>
   <d:desc xml:lang="en">
@@ -2014,7 +2014,7 @@ p {
 </d:item>
 
 <d:item name="multiple labelable fae"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">More than one labelable form-associated element
   is associated to a <code>label</code> element.</d:message>
   <!-- for="" with descendant form control, or more than one descendant
@@ -2022,25 +2022,25 @@ p {
 </d:item>
 
 <d:item name="no significant content"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">No significant content is contained
   in this element.</d:message>
 </d:item>
 
 <d:item name="no significant content before"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">There is no significant content
   before this element.</d:message>
 </d:item>
 
 <d:item name="no significant content at the end"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">No significant content is contained
   at the end of this element.</d:message>
 </d:item>
 
 <d:item name="ps element missing"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">There is no <code><var>{text}</var></code>
   element before this element.</d:message>
   <d:desc xml:lang="en">
@@ -2053,7 +2053,7 @@ p {
 </d:item>
 
 <d:item name="rp:syntax error"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">The content of a <code>rp</code> element must
   be a parenthesis.</d:message>
 </d:item>
@@ -2064,7 +2064,7 @@ p {
 <h2>Attribute Errors</h2>
 
 <d:item name="attribute missing"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">Required attribute <code><var>{text}</var></code>
   is not specified.</d:message>
   <d:desc>
@@ -2088,21 +2088,21 @@ p {
 </d:item>
 
 <d:item name="attribute missing:data|type"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">For an <code>object</code> at least one of
   <code>data</code> and <code>type</code> attributes must be 
   specified.</d:message>
 </d:item>
 
 <d:item name="attribute missing:href|target"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">For a <code>base</code> element, at least one of
   <code>href</code> and <code>target</code> attributes must be
   specified.</d:message>
 </d:item>
 
 <d:item name="attribute missing:name|http-equiv"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">For a <code>meta</code> element with the
   <code>content</code> attribute specified, exactly one of
   <code>name</code> and <code>http-equiv</code> attributes must be
@@ -2110,14 +2110,14 @@ p {
 </d:item>
 
 <d:item name="attribute missing:name|http-equiv|charset"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">For a <code>meta</code> element, exactly one of
   <code>name</code>, <code>http-equiv</code>, and <code>charset</code>
   attributes must be specified.</d:message>
 </d:item>
 
 <d:item name="attribute not allowed"
-    modules="ContentChecker::HTML RDFXML">
+    modules="Whatpm::ContentChecker::HTML Whatpm::RDFXML">
   <d:message xml:lang="en">Attribute
   <code><var>{local-name}</var></code> is not allowed for
   <code><var>{element-local-name}</var></code> element.</d:message>
@@ -2135,13 +2135,13 @@ p {
 </d:item>
 
 <d:item name="attribute not allowed:ismap"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">The <code>ismap</code> attribute may only be
   used for the image contained in an <code>a</code> element.</d:message>
 </d:item>
 
 <d:item name="attribute not defined"
-    modules="ContentChecker">
+    modules="Whatpm::ContentChecker">
   <d:message xml:lang="en">This attribute is not defined.</d:message>
   <d:message xml:lang="ja">この属性は定義されていません。</d:message>
   <d:desc xml:lang="en">
@@ -2183,7 +2183,7 @@ p {
 </d:item>
 
 <d:item name="_charset_ value"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">The <code>value</code> attribute cannot be 
   specified to an <code>input</code> element whose <code>type</code>
   is <code>hidden</code> and <code>name</code> is
@@ -2191,7 +2191,7 @@ p {
 </d:item>
 
 <d:item name="in HTML:xml:lang"
-    modules="ContentChecker::XML">
+    modules="Whatpm::ContentChecker::XML">
   <d:message xml:lang="en">The <code>xml:lang</code> attribute in HTML
   document is ignored.</d:message>
   <d:desc xml:lang="en">
@@ -2217,7 +2217,7 @@ p {
 </d:item>
 
 <d:item name="in XML:charset"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">The <code>charset</code> attribute is not 
   allowed in XML document.</d:message>
   <d:desc>
@@ -2233,13 +2233,13 @@ p {
 </d:item>
 
 <d:item name="in XML:noscript"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">A <code>noscript</code> element cannot be 
   used in XML document.</d:message>
 </d:item>
 
 <d:item name="in XML:xml:lang"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">The <code>xml:lang</code> attribute in no namespace
   is only allowed in HTML document.</d:message>
   <d:message xml:lang="ja">名前空間に属さない <code>xml:lang</code> 
@@ -2247,7 +2247,7 @@ p {
 </d:item>
 
 <d:item name="in XML:xmlns"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">The <code>xmlns</code> attribute 
   in the <code>null</code> namespace is not allowed in
   XHTML document.  The document is non-conforming.</d:message>
@@ -2261,21 +2261,21 @@ p {
 </d:item>
 
 <d:item name="input attr not applicable"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">This attribute is not applied to an 
   <code>input</code> element whose <code>type</code> is 
   <code><var>{text}</var></code>.</d:message>
 </d:item>
 
 <d:item name="non-ol li value"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">The <code>value</code> attribute cannot be 
   specified to a <code>li</code> element whose parent element is
   not an <code>ol</code> element.</d:message>
 </d:item>
 
 <d:item name="xml:lang not allowed"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">The <code>xml:lang</code> attribute is only allowed
   when the <code>lang</code> attribute is specified.</d:message>
   <d:message xml:lang="ja"><code>xml:lang</code> 属性を指定できるのは
@@ -2288,26 +2288,26 @@ p {
 <h2>Attribute Value Errors</h2>
 
 <d:item name="boolean:invalid"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">Attribute value <code><var>{@}</var></code>
   is not allowed.  It must be an empty string or a string
   <code><var>{local-name}</var></code>.</d:message>
 </d:item>
 
 <d:item name="char:syntax error"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">The attribute value must be exactly one
   character.</d:message>
 </d:item>
 
 <d:item name="charref in charset"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">A character reference cannot be used to
   represent a character encoding name.</d:message>
 </d:item>
 
 <d:item name="charset:not ascii compat"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">Characeter encoding <code><var>{value}</var></code>
   is not ASCII compatible.</d:message>
   <d:message xml:lang="ja">文字符号化 <code><var>{value}</var></code>
@@ -2315,14 +2315,14 @@ p {
 </d:item>
 
 <d:item name="charset:not preferred"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">Character encoding name
   <code><var>{value}</var></code> is not the preferred name of that
   character encoding.</d:message>
 </d:item>
 
 <d:item name="charset:not registered"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">Character encoding name
   <code><var>{value}</var></code> is not a registered name.</d:message>
   <d:desc xml:lang="en">
@@ -2368,7 +2368,7 @@ p {
 </d:item>
 
 <d:item name="charset:private"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">Character encoding name
   <code><var>{value}</var></code> is a private name.</d:message>
   <d:desc xml:lang="en">
@@ -2390,7 +2390,7 @@ p {
 </d:item>
 
 <d:item name="charset:syntax error"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">The specified value <code><var>{value}</var></code>
   is syntactically not a character encoding name.</d:message>
   <d:desc xml:lang="en">
@@ -2403,120 +2403,120 @@ p {
 </d:item>
 
 <d:item name="color:syntax error"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">The specified value is not a color
   name or hexadecimal color number.</d:message>
 </d:item>
 
 <d:item name="coords:number not 3"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">The <code>coords</code> attribute have to
   contain three (3) numbers (specified:
   <code><var>{text}</var></code>).</d:message>
 </d:item>
 
 <d:item name="coords:number not 4"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">The <code>coords</code> attribute have to
   contain four (4) numbers (specified:
   <code><var>{text}</var></code>).</d:message>
 </d:item>
 
 <d:item name="coords:number lt 6"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">The <code>coords</code> attribute have to
   contain more than or equal to six (6) numbers (specified:
   <code><var>{text}</var></code>).</d:message>
 </d:item>
 
 <d:item name="coords:number not even"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">The <code>coords</code> attribute have to
   contain even number of numbers (specified:
   <code><var>{text}</var></code>).</d:message>
 </d:item>
 
 <d:item name="coords:out of range"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">The specified value <code><var>{value}</var></code>
   is out of range.</d:message>
 </d:item>
 
 <d:item name="coords:syntax error"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">The specified value is not valid.</d:message>
 </d:item>
 
 <d:item name="datetime:bad year"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">Year number is out of range.</d:message>
   <d:message xml:lang="ja">年の値が値域外です。</d:message>
 </d:item>
 
 <d:item name="datetime:bad month"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">Month number is out of range.</d:message>
   <d:message xml:lang="ja">月の値が値域外です。</d:message>
 </d:item>
 
 <d:item name="datetime:bad day"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">Day number is out of range.</d:message>
   <d:message xml:lang="ja">日の値が値域外です。</d:message>
 </d:item>
 
 <d:item name="datetime:bad hour"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">Hour number is out of range.</d:message>
   <d:message xml:lang="ja">時の値が値域外です。</d:message>
 </d:item>
 
 <d:item name="datetime:bad minute"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">Minute number is out of range.</d:message>
   <d:message xml:lang="ja">分の値が値域外です。</d:message>
 </d:item>
 
 <d:item name="datetime:bad second"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">Second number is out of range.</d:message>
   <d:message xml:lang="ja">秒の値が値域外です。</d:message>
 </d:item>
 
 <d:item name="datetime:bad timezone hour"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">Hour number of the timezone component is out of
   range.</d:message>
   <d:message xml:lang="ja">時間帯の部分の時の値が値域外です。</d:message>
 </d:item>
 
 <d:item name="datetime:bad timezone minute"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">Minute number of the timezone component is out of
   range.</d:message>
   <d:message xml:lang="ja">時間帯の部分の分の値が値域外です。</d:message>
 </d:item>
 
 <d:item name="datetime:syntax error"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">The value is not a datetime.</d:message>
   <d:message xml:lang="ja">値が日時ではありません。</d:message>
 </d:item>
 
 <d:item name="dateortime:syntax error"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">The value is not a date or time.</d:message>
   <d:message xml:lang="ja">値が日付か時刻ではありません。</d:message>
 </d:item>
 
 <d:item name="empty form name"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">Form name is empty.</d:message>
   <d:message xml:lang="ja">フォーム名が空です。</d:message>
 </d:item>
 
 <d:item name="enumerated:invalid"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">This attribute only allow a limited set of 
   values and the specified value <code><var>{@}</var></code> is not one 
   of them.</d:message>
@@ -2563,46 +2563,46 @@ p {
 </d:item>
 
 <d:item name="enumerated:non-conforming"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">Attribute value <code><var>{@}</var></code>
   is not allowed.</d:message>
 </d:item>
 
 <d:item name="duplicate form name"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">Form name <code><var>{value}</var></code> is already
   used for another element.</d:message>
 </d:item>
 
 <d:item name="duplicate http-equiv"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">There is another pragma
   <code><var>{value}</var></code>.</d:message>
 </d:item>
 
 <d:item name="duplicate ID"
     class="attribute-value-error"
-    modules="ContentChecker::XML ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::XML Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">This identifier has already been
   assigned to another element.</d:message>
   <!-- @@ <id=a xml:id=a>? -->
 </d:item>
 
 <d:item name="duplicate token"
-    modules="ContentChecker::HTML HTML::Table">
+    modules="Whatpm::ContentChecker::HTML Whatpm::HTML::Table">
   <d:message xml:lang="en">The token <code><var>{value}</var></code>
   appears in the attribute value twice.</d:message>
 </d:item>
 
 <d:item name="empty anchor image alt"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">The <code>alt</code> attribute value is 
   empty.</d:message>
   <!-- input type=image -->
 </d:item>
 
 <d:item name="empty area alt"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">The <code>alt</code> attribute value is
   empty.</d:message>
   <d:message xml:lang="ja"><code>alt</code> 属性値が空です。</d:message>
@@ -2627,13 +2627,13 @@ p {
 </d:item>
 
 <d:item name="empty attribute value"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">The attribute value is empty.</d:message>
   <d:message xml:lang="ja">属性値が空です。</d:message>
 </d:item>
 
 <d:item name="empty style sheet title"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">The value of the <code>title</code> attribute
   is empty.</d:message>
   <d:message xml:lang="ja"><code>title</code> 属性の値が空です。</d:message>
@@ -2649,12 +2649,12 @@ p {
 </d:item>
 
 <d:item name="float:out of range"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">The specified value is out of range.</d:message>
 </d:item>
 
 <d:item name="float:syntax error"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">The attribute value is not a real
   number.</d:message>
   <!-- a valid floating point number, or a valid floating point number
@@ -2662,36 +2662,36 @@ p {
 </d:item>
 
 <d:item name="fragment points itself"
-    modules="ContentChecker">
+    modules="Whatpm::ContentChecker">
   <d:message xml:lang="en">A fragment identifier references the element
   itself.</d:message>
 </d:item>
 
 <d:item name="fragment points nothing"
-    modules="ContentChecker">
+    modules="Whatpm::ContentChecker">
   <d:message xml:lang="en">A fragment identifier references no
   node.</d:message>
 </d:item>
 
 <d:item name="hashref:syntax error"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">A hash−name reference must start with a
   <code>#</code> character.</d:message>
 </d:item>
 
 <d:item name="id ne name"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">The <code>id</code> attribute value is 
   different from the <code>name</code> attribute value.</d:message>
 </d:item>
 
 <d:item name="integer:syntax error"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">The attribute value is not an integer.</d:message>
 </d:item>
 
 <d:item name="link type:bad context"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">The link type <code><var>{value}</var></code>
   cannot be specified for this element.</d:message>
   <d:desc xml:lang="en">
@@ -2709,19 +2709,19 @@ p {
 
 <d:item name="invalid attribute value"
     class="attribute-value-error"
-    modules="ContentChecker::XML ContentChecker::HTML ContentChecker::Atom">
+    modules="Whatpm::ContentChecker::XML Whatpm::ContentChecker::HTML Whatpm::ContentChecker::Atom">
   <d:message xml:lang="en">Attribute value <code><var>{@}</var></code>
   is not an allowed value.</d:message>
 </d:item>
 
 <d:item name="length:syntax error"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">The attribute value is not a length
   value.</d:message>
 </d:item>
 
 <d:item name="link type:non-conforming"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">The link type <code><var>{value}</var></code>
   is non-conforming.</d:message>
   <d:desc xml:lang="en">
@@ -2746,13 +2746,13 @@ p {
 </d:item>
 
 <d:item name="meta content-type syntax error"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">The specified value is not a valid as a long
   character encoding declaration.</d:message>
 </d:item>
 
 <d:item name="mismatched charset name"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">The specified character encoding name
   <code><var>{value}</var></code> is different from the actual document
   character encoding <code><var>{text}</var></code>.</d:message>
@@ -2764,64 +2764,64 @@ p {
 </d:item> 
 
 <d:item name="mismatched charset name not checked"
-    mopdules="ContentChecker::HTML">
+    mopdules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">Whether the specified character encoding name
   <code><var>{value}</var></code> matches to the actual character encoding
   name cannot be checked since the input is not a byte stream.</d:message>
 </d:item>
 
 <d:item name="mode:syntax error"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">The attribute value is not a valid mode
   name.</d:message>
 </d:item>
 
 <d:item name="nninteger:out of range"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">The specified value is out of range.</d:message>
 </d:item>
 
 <d:item name="nninteger:syntax error"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">The attribute value is not a non‐negative
   integer.</d:message>
 </d:item>
 
 <d:item name="no referenced form"
-    modules="ContentChecker">
+    modules="Whatpm::ContentChecker">
   <d:message xml:lang="en">The element referneced by the <code>form</code>
   attribute is not a <code>form</code> element, or no element is
   found.</d:message>
 </d:item>
 
 <d:item name="no referenced map"
-    modules="ContentChecker">
+    modules="Whatpm::ContentChecker">
   <d:message xml:lang="en">The element referneced by the <code>usemap</code>
   attribute is not a <code>map</code> element, or no element is
   found.</d:message>
 </d:item>
 
 <d:item name="no referenced menu"
-    modules="ContentChecker">
+    modules="Whatpm::ContentChecker">
   <d:message xml:lang="en">The element referneced by the
   <code>contextmenu</code> attribute is not a <code>menu</code> element, or
   no element is found.</d:message>
 </d:item>
 
 <d:item name="no referenced header cell"
-    modules="ContentChecker">
+    modules="Whatpm::ContentChecker">
   <d:message xml:lang="en">There is no table header cell whose <code>id</code>
   is <code><var>{value}</var></code> in the same table.</d:message>
 </d:item>
 
 <d:item name="refresh:syntax error"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">the specified value is not a valid as part
   of a <code>Refresh</code> pragma.</d:message>
 </d:item>
 
 <d:item name="repeat:syntax error"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">The attribute value is not an integer or 
   a string <code>template</code>.</d:message>
 </d:item>
@@ -2847,19 +2847,19 @@ p {
 </d:item>
 
 <d:item name="Reserved Prefixes and Namespace Names:Name"
-    modules="ContentChecker::XML">
+    modules="Whatpm::ContentChecker::XML">
   <d:message xml:lang="en">Namespace name <code><var>{text}</var></code>
   is reserved and cannot be used for an arbitrary prefix.</d:message>
 </d:item>
 
 <d:item name="Reserved Prefixes and Namespace Names:Prefix"
-    modules="ContentChecker::XML">
+    modules="Whatpm::ContentChecker::XML">
   <d:message xml:lang="en">Namespace prefix <code><var>{text}</var></code>
   is reserved and cannot be used for an arbitrary namespace name.</d:message>
 </d:item>
 
 <d:item name="link type:proposed"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">Link type <code><var>{value}</var></code>
   is proposed but not accepted yet; it <em>should not</em> be
   used until it has been accepted.</d:message>
@@ -2877,54 +2877,54 @@ p {
 </d:item>
 
 <d:item name="sizes:syntax error"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">The specified value <code><var>{value}</var></code>
   is not a valid value.</d:message>
 </d:item>
 
 <d:item name="space in ID"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">White space characters are not allowed
   in the <code>id</code> attribute.</d:message>
 </d:item>
 
 <d:item name="template:not template"
-    modules="ContentChecker ContentChecker::HTML">
+    modules="Whatpm::ContentChecker Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">The node referenced by the <code>template</code>
   attribute is not a template.</d:message>
 </d:item>
 
 <d:item name="value too long"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">The <code>value</code> attribute value is longer
   than the value of the <code>maxlength</code> attribute.</d:message>
 </d:item>
 
 <d:item name="window name:empty"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">Browsing context name must not be empty.</d:message>
 </d:item>
 
 <d:item name="window name:reserved"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">Browsing context name
   <code><var>{value}</var></code> is reserved.</d:message>
 </d:item>
 
 <d:item name="word not allowed"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">The word <code><var>{value}</var></code> is not
   allowed in this attribute.</d:message>
 </d:item>
 
 <d:item name="XML 1.0 NCName:syntax error"
-    modules="RDFXML">
+    modules="Whatpm::RDFXML">
   <d:message xml:lang="en">The specified value is not a legal XML Namespaces
   1.0 <code>NCName</code>.</d:message>
 </d:item>
 
 <d:item name="xml:lang ne lang"
-    modules="ContentChecker::XML ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::XML Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">The value of the <code>xml:lang</code> attribute
   is different from the value of the <code>lang</code> attribute.</d:message>
   <d:message xml:lang="ja"><code>xml:lang</code> 属性の値が <code>lang</code>
@@ -2980,20 +2980,20 @@ p {
 <h2>Table Model Errors</h2>
 
 <d:item name="cell overlapping"
-    modules="HTML::Table">
+    modules="Whatpm::HTML::Table">
   <d:message xml:lang="en">Cell slot (<var>{text}</var>) is filled by
   multiple cells.</d:message>
 </d:item>
 
 <d:item name="colspan creates column with no anchored cell"
-    modules="HTML::Table">
+    modules="Whatpm::HTML::Table">
   <d:message xml:lang="en">This <code>colspan</code> attribute
   results in creating a table column that does not contain
   any cell anchored to it.</d:message>
 </d:item>
 
 <d:item name="column with no anchored cell"
-    modules="HTML::Table">
+    modules="Whatpm::HTML::Table">
   <d:message xml:lang="en">This column has no anchored cell.</d:message>
 </d:item>
 
@@ -3026,12 +3026,12 @@ p {
 </d:item>
 
 <d:item name="row with no anchored cell"
-    modules="HTML::Table">
+    modules="Whatpm::HTML::Table">
   <d:message xml:lang="en">This row has no anchored cell.</d:message>
 </d:item>
 
 <d:item name="rowspan creates row with no anchored cell"
-    modules="HTML::Table">
+    modules="Whatpm::HTML::Table">
   <d:message xml:lang="en">This <code>rowspan</code> attribute
   results in creating a table row that does not contain
   any cell anchored to it.</d:message>
@@ -3044,50 +3044,50 @@ p {
 <h2>Internet Media Type Errors</h2>
 
 <d:item name="boundary:syntax error"
-    modules="IMTChecker">
+    modules="Whatpm::IMTChecker">
   <d:message xml:lang="en">The specified value is not a valid value
   as a multipart boundary.</d:message>
 </d:item>
 
 <d:item name="e4x:syntax error"
-    modules="IMTChecker">
+    modules="Whatpm::IMTChecker">
   <d:message xml:lang="en">The specified value is not a valid value
   for the attribute <code>e4x</code>.</d:message>
 </d:item>
 
 <d:item name="IMT:attribute syntax error"
-    modules="IMTChecker">
+    modules="Whatpm::IMTChecker">
   <d:message xml:lang="en">The specified value,
   <code><var>{value}</var></code>, is syntactically not a valid
   attribute name.</d:message>
 </d:item>
 
 <d:item name="IMT:composite"
-    modules="ContentChecker::Atom">
+    modules="Whatpm::ContentChecker::Atom">
   <d:message xml:lang="en">The specified media type is a composite
   type, which is not allowed in this context.</d:message>
 </d:item>
 
 <d:item name="IMT:limited use subtype"
-    modules="IMTChecker">
+    modules="Whatpm::IMTChecker">
   <d:message xml:lang="en">An Internet Media Type whose intended usage
   is limited use, <code><var>{value}</var></code> is used.</d:message>
 </d:item>
 
 <d:item name="IMT:syntax error"
-    modules="ContentChecker::HTML ContentChecker::Atom">
+    modules="Whatpm::ContentChecker::HTML Whatpm::ContentChecker::Atom">
   <d:message xml:lang="en">The specified value is not an Internet Media
   Type.</d:message>
 </d:item>
 
 <d:item name="IMT:obsolete parameter"
-    modules="IMTChecker">
+    modules="Whatpm::IMTChecker">
   <d:message xml:lang="en">An obsolete parameter
   <code><var>{value}</var></code> is used.</d:message>
 </d:item>
 
 <d:item name="IMT:obsolete subtype"
-    modules="IMTChecker">
+    modules="Whatpm::IMTChecker">
   <d:message xml:lang="en">An obsolete Internet Media Type
   <code><var>{value}</var></code> is used.</d:message>
   <d:message xml:lang="ja">廃止されたインターネット媒体型
@@ -3113,51 +3113,51 @@ p {
 </d:item>
 
 <d:item name="IMT:parameter missing"
-    modules="IMTChecker">
+    modules="Whatpm::IMTChecker">
   <d:message xml:lang="en">Parameter <code><var>{text}</var></code> have to
   be specified for the Internet Media Type
   <code><var>{value}</var></code>.</d:message>
 </d:item>
 
 <d:item name="IMT:parameter not allowed"
-    modules="IMTChecker">
+    modules="Whatpm::IMTChecker">
   <d:message xml:lang="en">Parameter <code><var>{value}</var></code> is not
   allowed for this Internet Media Type.</d:message>
 </d:item>
 
 <d:item name="IMT:private subtype"
-    modules="IMTChecker">
+    modules="Whatpm::IMTChecker">
   <d:message xml:lang="en">Use of a private Internet Media Type
   <code><var>{value}</var></code> is not encouraged.</d:message>
 </d:item>
 
 <d:item name="IMT:private type"
-    modules="IMTChecker">
+    modules="Whatpm::IMTChecker">
   <d:message xml:lang="en">Use of a private type
   <code><var>{value}</var></code> is not encouraged.</d:message>
 </d:item>
 
 <d:item name="IMT:subtype syntax error"
-    modules="IMTChecker">
+    modules="Whatpm::IMTChecker">
   <d:message xml:lang="en">Value <code><var>{value}</var></code> is
   syntactically not a valid subtype value of an Internet Media Type.</d:message>
 </d:item>
 
 <d:item name="IMT:type syntax error"
-    modules="IMTChecker">
+    modules="Whatpm::IMTChecker">
   <d:message xml:lang="en">Value <code><var>{value}</var></code> is
   syntactically not a valid type.</d:message>
 </d:item>
 
 <d:item name="IMT:unknown parameter"
-    modules="IMTChecker">
+    modules="Whatpm::IMTChecker">
   <d:message xml:lang="en">An unknown parameter <code><var>{value}</var></code>
   is used.  The conformance checker cannot determine whether use of this
   parameter is valid or not.</d:message>
 </d:item>
 
 <d:item name="IMT:unknown subtype"
-    modules="IMTChecker">
+    modules="Whatpm::IMTChecker">
   <d:message xml:lang="en">An unknown Internet Media Type
   <code><var>{value}</var></code> is used.  At the time of the update of 
   the conformance checker's Internet Media Type database, the subtype is
@@ -3167,21 +3167,21 @@ p {
 </d:item>
 
 <d:item name="IMT:unregistered subtype"
-    modules="IMTChecker">
+    modules="Whatpm::IMTChecker">
   <d:message xml:lang="en">Use of an Internet Media Type
   <code><var>{value}</var></code> is not encouraged since it is not
   part of the IANA registry.</d:message>
 </d:item>
 
 <d:item name="IMT:unregistered type"
-    modules="IMTChecker">
+    modules="Whatpm::IMTChecker">
   <d:message xml:lang="en">Use of a type
   <code><var>{value}</var></code> is not encouraged since it is not
   a standardized type.</d:message>
 </d:item>
 
 <d:item name="not IMT"
-    modules="ContentChecker::Atom">
+    modules="Whatpm::ContentChecker::Atom">
   <d:message xml:lang="en">A value that is not an Internet Media Type
   is not allowed here.</d:message>
 </d:item>
@@ -3192,13 +3192,13 @@ p {
 <h2>URL Errors</h2>
 
 <d:item name="syntax error:iri3987"
-    modules="URIChecker CacheManifest">
+    modules="Whatpm::URIChecker Whatpm::CacheManifest">
   <d:message xml:lang="en">The specified value is syntactically not an
   IRI.</d:message>
 </d:item>
 
 <d:item name="syntax error:iriref3987"
-    modules="URIChecker">
+    modules="Whatpm::URIChecker">
   <d:message xml:lang="en">The specified value is syntactically not an IRI
   reference.</d:message>
   <d:desc xml:lang="en">
@@ -3217,36 +3217,36 @@ p {
 </d:item>
 
 <d:item name="syntax error:rdfuriref"
-    modules="URIChecker">
+    modules="Whatpm::URIChecker">
   <d:message xml:lang="en">The specified value is syntactically not an RDF
   URI reference.</d:message>
 </d:item>
 
 <d:item name="syntax error:uri2396"
-    modules="URIChecker">
+    modules="Whatpm::URIChecker">
   <d:message xml:lang="en">The specified value is syntactically not a
   URI according to RFC 2396.</d:message>
 </d:item>
 
 <d:item name="syntax error:uri3986"
-    modules="URIChecker">
+    modules="Whatpm::URIChecker">
   <d:message xml:lang="en">The specified value is syntactically not a
   URI.</d:message>
 </d:item>
 
 <d:item name="URL:address format"
-    modules="URIChecker">
+    modules="Whatpm::URIChecker">
   <d:message xml:lang="en">URL host address format
   <code><var>{text}</var></code> is not defined.</d:message>
 </d:item>
 
 <d:item name="URL:default port"
-    modules="URIChecker">
+    modules="Whatpm::URIChecker">
   <d:message xml:lang="en">Default port number should be omitted.</d:message>
 </d:item>
 
 <d:item name="URL:dot-segment"
-    modules="URIChecker">
+    modules="Whatpm::URIChecker">
   <d:message xml:lang="en">A dot-segment (<code>.</code> or
   <code>..</code>) occurs in an absolute reference.</d:message>
   <d:desc>
@@ -3262,12 +3262,12 @@ p {
 </d:item>
 
 <d:item name="URL:empty host"
-    modules="URIChecker">
+    modules="Whatpm::URIChecker">
   <d:message xml:lang="en">The host component of the URL is empty.</d:message>
 </d:item>
 
 <d:item name="URL:empty path"
-    modules="URIChecker">
+    modules="Whatpm::URIChecker">
   <d:message xml:lang="en">The URL does not end with
   a <code>/</code> character.</d:message>
   <d:item xml:lang="en">
@@ -3281,24 +3281,24 @@ p {
 </d:item>
 
 <d:item name="URL:empty port"
-    modules="URIChecker">
+    modules="Whatpm::URIChecker">
   <d:message xml:lang="en">The port component of the URL is empty.</d:message>
 </d:item>
 
 <d:item name="URL fragment not allowed"
-    modules="CacheManifest">
+    modules="Whatpm::CacheManifest">
   <d:message xml:lang="en">The fragment component of the URL is not 
   allowed.</d:message>
 </d:item>
 
 <d:item name="URL:long host"
-    modules="URIChecker">
+    modules="Whatpm::URIChecker">
   <d:message xml:lang="en">The host component of the URL
   is too long.</d:message>
 </d:item>
 
 <d:item name="URL:lowercase hexadecimal digit"
-    modules="URIChecker">
+    modules="Whatpm::URIChecker">
   <d:message xml:lang="en">A lowercase hexadecimal digit is used
   in percent-encoding.</d:message>
   <d:desc xml:lang="en">
@@ -3309,25 +3309,25 @@ p {
 </d:item>
 
 <d:item name="URL:non-DNS host"
-    modules="URIChecker">
+    modules="Whatpm::URIChecker">
   <d:message xml:lang="en">The host component of the URL
   is not a DNS host name.</d:message>
 </d:item>
 
 <d:item name="URL:non UTF-8 host"
-    modules="URIChecker">
+    modules="Whatpm::URIChecker">
   <d:message xml:lang="en">The host component of the URL
   is not encoded in UTF-8.</d:message>
 </d:item>
 
 <d:item name="URL:password"
-    modules="URIChecker">
+    modules="Whatpm::URIChecker">
   <d:message xml:lang="en">Password should not be included in a URL
   for the security.</d:message>
 </d:item>
 
 <d:item name="URL:percent-encoded unreserved"
-    modules="URIChecker">
+    modules="Whatpm::URIChecker">
   <d:message xml:lang="en">An unreserved character is 
   percent-encoded.</d:message>
   <d:desc xml:lang="en">
@@ -3338,13 +3338,13 @@ p {
 </d:item>
 
 <d:item name="URL:uppercase host"
-    modules="URIChecker">
+    modules="Whatpm::URIChecker">
   <d:message xml:lang="en">The host <code><var>{value}</var></code>
   should be spelt in lowercase.</d:message>
 </d:item>
 
 <d:item name="URL:uppercase scheme name"
-    modules="URIChecker">
+    modules="Whatpm::URIChecker">
   <d:message xml:lang="en">URL scheme name is in uppercase.</d:message>
   <d:desc xml:lang="en">
     <p>The scheme part of the IRI is written in uppercase letter.</p>
@@ -3997,7 +3997,7 @@ p {
 <h2>WebVTT Errors</h2>
 
 <d:item name="empty class"
-    modules="WebVTT::Parser">
+    modules="Whatpm::WebVTT::Parser">
   <d:message xml:lang="en">Class name cannot be empty.</d:message>
   <d:message xml:lang="ja">クラス名を空にすることはできません。</d:message>
   <d:desc xml:lang="en">
@@ -4014,7 +4014,7 @@ p {
 </d:item>
 
 <d:item name="form feed"
-    modules="WebVTT::Parser">
+    modules="Whatpm::WebVTT::Parser">
   <d:message xml:lang="en">Form feed character is not allowed.</d:message>
   <d:message xml:lang="ja"><code class="charname">FORM FEED</code>
   を使うことはできません。</d:message>
@@ -4032,7 +4032,7 @@ p {
 </d:item>
 
 <d:item name="newline not allowed"
-    modules="WebVTT::Parser">
+    modules="Whatpm::WebVTT::Parser">
   <d:message xml:lang="en">Newline is not allowed.</d:message>
   <d:message xml:lang="ja">改行は認められていません。</d:message>
   <d:desc xml:lang="en">
@@ -4045,7 +4045,7 @@ p {
 </d:item>
 
 <d:item name="webvtt:annotation not allowed"
-    modules="WebVTT::Parser">
+    modules="Whatpm::WebVTT::Parser">
   <d:message xml:lang="en">Annotation cannot be specified for
   tag <code><var>{text}</var></code>.</d:message>
   <d:message xml:lang="ja">タグ <code><var>{text}</var></code>
@@ -4061,7 +4061,7 @@ p {
 </d:item>
 
 <d:item name="webvtt:bad timestamp"
-    modules="WebVTT::Parser">
+    modules="Whatpm::WebVTT::Parser">
   <d:message xml:lang="en">Timestamp is syntactically in error.</d:message>
   <d:message xml:lang="ja">タイムスタンプの構文が正しくありません。</d:message>
   <d:desc xml:lang="en">
@@ -4085,7 +4085,7 @@ p {
 </d:item>
 
 <d:item name="webvtt:class:syntax"
-    modules="WebVTT::Checker">
+    modules="Whatpm::WebVTT::Checker">
   <d:message xml:lang="en">Class name contains an invalid character.</d:message>
   <d:message xml:lang="ja">クラス名に使えない文字が含まれています。</d:message>
   <d:desc xml:lang="en">
@@ -4105,7 +4105,7 @@ p {
 </d:item>
 
 <d:item name="webvtt:empty annotation"
-    modules="WebVTT::Checker">
+    modules="Whatpm::WebVTT::Checker">
   <d:message xml:lang="en">Annotation cannot be empty.</d:message>
   <d:message xml:lang="ja">注釈を空にすることはできません。</d:message>
   <d:desc xml:lang="en">
@@ -4119,7 +4119,7 @@ p {
 </d:item>
 
 <d:item name="webvtt:end time &lt; start time"
-    modules="WebVTT::Checker">
+    modules="Whatpm::WebVTT::Checker">
   <d:message xml:lang="en">End time cannot be less than
   start time.</d:message>
   <d:message xml:lang="ja">終了時刻が開始時刻より前になることはできません。</d:message>
@@ -4133,7 +4133,7 @@ p {
 </d:item>
 
 <d:item name="webvtt:end time &lt; timestamp"
-    modules="WebVTT::Checker">
+    modules="Whatpm::WebVTT::Checker">
   <d:message xml:lang="en">Timestamp must be less than end time.</d:message>
   <d:message xml:lang="ja">時刻は終了時刻より前でなければなりません。</d:message>
   <d:desc xml:lang="en">
@@ -4146,7 +4146,7 @@ p {
 </d:item>
 
 <d:item name="webvtt:headers"
-    modules="WebVTT::Parser">
+    modules="Whatpm::WebVTT::Parser">
   <d:message xml:lang="en">Header is not allowed.</d:message>
   <d:message xml:lang="ja">ヘッダーを使うことはできません。</d:message>
   <d:desc xml:lang="en">
@@ -4165,7 +4165,7 @@ p {
 </d:item>
 
 <d:item name="webvtt:id:duplicate"
-    modules="WebVTT::Checker">
+    modules="Whatpm::WebVTT::Checker">
   <d:message xml:lang="en">There are multiple cues with same
   identifier.</d:message>
   <d:message xml:lang="ja">同じ識別子のキューが他にもあります。</d:message>
@@ -4185,7 +4185,7 @@ p {
 </d:item>
 
 <d:item name="webvtt:id:multiple"
-    modules="WebVTT::Parser">
+    modules="Whatpm::WebVTT::Parser">
   <d:message xml:lang="en">There are multiple identifer lines;
   This line is ignored.</d:message>
   <d:message xml:lang="ja">識別子の行が複数あります。
@@ -4203,7 +4203,7 @@ p {
 </d:item>
 
 <d:item name="webvtt:id:syntax"
-    modules="WebVTT::Checker">
+    modules="Whatpm::WebVTT::Checker">
   <d:message xml:lang="en">This is not a syntactically valid WebVTT
   cue identifier.</d:message>
   <d:message xml:lang="ja">構文的に正しい WebVTT 
@@ -4221,7 +4221,7 @@ p {
 </d:item>
 
 <d:item name="webvtt:no cue separator"
-    modules="WebVTT::Parser">
+    modules="Whatpm::WebVTT::Parser">
   <d:message xml:lang="en">No blank line is found between
   two cues.</d:message>
   <d:message xml:lang="ja">2つのキューの間に空行がありません。</d:message>
@@ -4238,7 +4238,7 @@ p {
 </d:item>
 
 <d:item name="webvtt:no header end"
-    modules="WebVTT::Parser">
+    modules="Whatpm::WebVTT::Parser">
   <d:message xml:lang="en">No blank line is found before the
   first cue.</d:message>
   <d:message xml:lang="ja">最初のキューの前に空行がありません。</d:message>
@@ -4256,7 +4256,7 @@ p {
 </d:item>
 
 <d:item name="webvtt:no signature"
-    modules="WebVTT::Parser">
+    modules="Whatpm::WebVTT::Parser">
   <d:message xml:lang="en">The <code>WEBVTT</code> signature
   line is not found.</d:message>
   <d:message xml:lang="ja">WebVTT 文書を表す「<code>WEBVTT</code>」
@@ -4288,7 +4288,7 @@ p {
 </d:item>
 
 <d:item name="webvtt:no text"
-    modules="WebVTT::parser">
+    modules="Whatpm::WebVTT::parser">
   <d:message xml:lang="en">No text is specified for the cue.</d:message>
   <d:message xml:lang="ja">キューの文章が指定されていません。</d:message>
   <d:desc xml:lang="en">
@@ -4308,7 +4308,7 @@ p {
 </d:item>
 
 <d:item name="webvtt:no timings"
-    modules="WebVTT::Parser">
+    modules="Whatpm::WebVTT::Parser">
   <d:message xml:lang="en">No timings line is found.</d:message>
   <d:message xml:lang="ja">タイミングを指定する行がありません。</d:message>
   <d:desc xml:lang="en">
@@ -4329,7 +4329,7 @@ p {
 </d:item>
 
 <d:item name="webvtt:start time order"
-    modules="WebVTT::Checker">
+    modules="Whatpm::WebVTT::Checker">
   <d:message xml:lang="en">Start time of a cue cannot be less than
   the start time of the previous cues in the same file.</d:message>
   <d:message xml:lang="ja">キューの開始時刻は、
@@ -4348,7 +4348,7 @@ p {
 </d:item>
 
 <d:item name="webvtt:setting:duplicate"
-    modules="WebVTT::Parser">
+    modules="Whatpm::WebVTT::Parser">
   <d:message xml:lang="en">Setting <code><var>{value}</var></code>
   is specified twice.</d:message>
   <d:message xml:lang="ja">設定 <code><var>{value}</var></code>
@@ -4367,7 +4367,7 @@ p {
 </d:item>
 
 <d:item name="webvtt:setting:empty name"
-    modules="WebVTT::Parser">
+    modules="Whatpm::WebVTT::Parser">
   <d:message xml:lang="en">Setting name cannot be empty.</d:message>
   <d:message xml:lang="ja">設定の名前を空にすることはできません。</d:message>
   <d:desc xml:lang="en">
@@ -4382,7 +4382,7 @@ p {
 </d:item>
 
 <d:item name="webvtt:setting:empty value"
-    modules="WebVTT::Parser">
+    modules="Whatpm::WebVTT::Parser">
   <d:message xml:lang="en">Setting value cannot be empty.</d:message>
   <d:message xml:lang="ja">設定の値を空にすることはできません。</d:message>
   <d:desc xml:lang="en">
@@ -4400,7 +4400,7 @@ p {
 </d:item>
 
 <d:item name="webvtt:setting:invalid"
-    modules="WebVTT::Parser">
+    modules="Whatpm::WebVTT::Parser">
   <d:message xml:lang="en">Setting <code><var>{value}</var></code>
   is not defined.</d:message>
   <d:message xml:lang="ja">設定 <code><var>{value}</var></code>
@@ -4418,7 +4418,7 @@ p {
 </d:item>
 
 <d:item name="webvtt:setting:invalid value"
-    modules="WebVTT::Parser">
+    modules="Whatpm::WebVTT::Parser">
   <d:message xml:lang="en">Setting <code><var>{text}</var></code>
   does not allow the value <code><var>{value}</var></code>.</d:message>
   <d:message xml:lang="ja">設定 <code><var>{text}</var></code>
@@ -4435,7 +4435,7 @@ p {
 </d:item>
 
 <d:item name="webvtt:setting:no value"
-    modules="WebVTT::Parser">
+    modules="Whatpm::WebVTT::Parser">
   <d:message xml:lang="en">Setting value must be specified.</d:message>
   <d:message xml:lang="ja">設定の値を指定する必要があります。</d:message>
   <d:desc xml:lang="en">
@@ -4451,7 +4451,7 @@ p {
   </d:desc>
 </d:item>
 <d:item name="webvtt:text:syntax"
-    modules="WebVTT::Checker">
+    modules="Whatpm::WebVTT::Checker">
   <d:message xml:lang="en">This is not a syntactically valid WebVTT
   cue text.</d:message>
   <d:message xml:lang="ja">構文的に正しい WebVTT 
@@ -4469,7 +4469,7 @@ p {
 </d:item>
 
 <d:item name="webvtt:timestamp &lt; min time"
-    modules="WebVTT::Checker">
+    modules="Whatpm::WebVTT::Checker">
   <d:message xml:lang="en">Timestamp must be greater than
   previous timestamps.</d:message>
   <d:message xml:lang="ja">時刻は、ここまでの時刻よりも後でなければなりません。</d:message>
@@ -4485,7 +4485,7 @@ p {
 </d:item>
 
 <d:item name="webvtt:timestamp:hour"
-    modules="WebVTT::Parser">
+    modules="Whatpm::WebVTT::Parser">
   <d:message xml:lang="en">Hour component must contain two or more
   digits.</d:message>
   <d:message xml:lang="ja">「時」は2桁以上の数字列でなければなりまえせん。</d:message>
@@ -4502,7 +4502,7 @@ p {
 </d:item>
 
 <d:item name="webvtt:timings:leading space"
-    modules="WebVTT::Parser">
+    modules="Whatpm::WebVTT::Parser">
   <d:message xml:lang="en">White spaces are not allowed before timings.</d:message>
   <d:message xml:lang="ja">時刻の指定の前に空白文字を入れてはいけません。</d:message>
   <d:desc xml:lang="en">
@@ -4515,7 +4515,7 @@ p {
 </d:item>
 
 <d:item name="webvtt:timings:no space"
-    modules="WebVTT::Parser">
+    modules="Whatpm::WebVTT::Parser">
   <d:message xml:lang="en">White space is missing before or after
   <code>--></code>.</d:message>
   <d:message xml:lang="ja"><code>--></code> の前後の空白が抜けています。</d:message>
@@ -4534,36 +4534,36 @@ p {
 <h2>Cache Manifest Errors</h2>
 
 <d:item name="both in entries and whitelist"
-    modules="CacheManifest">
+    modules="Whatpm::CacheManifest">
   <d:message xml:lang="en">This URL is found both in the explicit or
   fallback entries and in the online whitelist.</d:message>
 </d:item>
 
 <d:item name="different origin from manifest"
-    modules="CacheManifest">
+    modules="Whatpm::CacheManifest">
   <d:message xml:lang="en">The specified URL has different origin from
   the manifest.</d:message>
 </d:item>
 
 <d:item name="different scheme from manifest"
-    modules="CacheManifest">
+    modules="Whatpm::CacheManifest">
   <d:message xml:lang="en">The scheme component of the URL is
   different from that of the manifest URL.  The URL is ignored.</d:message>
 </d:item>
 
 <d:item name="duplicate oc namespace"
-    modules="CacheManifest">
+    modules="Whatpm::CacheManifest">
   <d:message xml:lang="en">This oppotunistic caching namespace is already
   specified.</d:message>
 </d:item>
 
 <d:item name="no fallback entry URL"
-    modules="CacheManifest">
+    modules="Whatpm::CacheManifest">
   <d:message xml:lang="en">Fallback entry URL is missing.</d:message>
 </d:item>
 
 <d:item name="not manifest"
-    modules="CacheManifest">
+    modules="Whatpm::CacheManifest">
   <d:message xml:lang="en">This document is not a cache manifest.</d:message>
   <d:desc xml:lang="en">
     <p>The specified document is <em>not</em> a cache manifest.
@@ -4580,7 +4580,7 @@ p {
 </d:item>
 
 <d:item name="same as manifest URL"
-    modules="CacheManifest">
+    modules="Whatpm::CacheManifest">
   <d:message xml:lang="en">This URL is same as the manifest URL.</d:message>
 </d:item>
 
@@ -4790,19 +4790,19 @@ Regexp::Parser::JavaScript's extension. -->
 <h2>WebIDL Errors</h2>
 
 <d:item name="after argument"
-    modules="WebIDL::Parser">
+    modules="Whatpm::WebIDL::Parser">
   <d:message xml:lang="en">An argument name is not followed by a
   <code>,</code> character or a <code>)</code> character.</d:message>
 </d:item>
 
 <d:item name="after exception name"
-    modules="WebIDL::Parser">
+    modules="Whatpm::WebIDL::Parser">
   <d:message xml:lang="en">An exception name is not followed by a
   <code>,</code> character or a <code>)</code> character.</d:message>
 </d:item>
 
 <d:item name="after unsigned"
-    modules="WebIDL::Parser">
+    modules="Whatpm::WebIDL::Parser">
   <d:message xml:lang="en">The token after the <code>unsigned</code>
   keyword is not <code>short</code> or <code>long</code>.</d:message>
   <d:message xml:lang="en">キーワード <code>unsigned</code> の後の字句が
@@ -4810,138 +4810,138 @@ Regexp::Parser::JavaScript's extension. -->
 </d:item>
 
 <d:item name="after xattr"
-    modules="WebIDL::Parser">
+    modules="Whatpm::WebIDL::Parser">
   <d:message xml:lang="en">An extended attribute is not followed by 
   a <code>,</code> character or a <code>]</code> character.</d:message>
 </d:item>
 
 <d:item name="argument after variadic"
-    modules="WebIDL::Checker">
+    modules="Whatpm::WebIDL::Checker">
   <d:message xml:lang="en">An argument is specified after an argument
   with <code>Variadic</code> extended attribute is seen.</d:message>
 </d:item>
 
 <d:item name="attr not readonly"
-    modules="WebIDL::Checker">
+    modules="Whatpm::WebIDL::Checker">
   <d:message xml:lang="en">Extended attribute <code><var>{text}</var></code> is
   specified for an attribute that is not read-only.</d:message>
 </d:item>
 
 <d:item name="attr type not interface"
-    modules="WebIDL::Checker">
+    modules="Whatpm::WebIDL::Checker">
   <d:message xml:lang="en">Extended attribute <code><var>{text}</var></code>
   is specified for an attribute whose type is not an interface.</d:message>
 </d:item>
 
 <d:item name="before exception member"
-    modules="WebIDL::Parser">
+    modules="Whatpm::WebIDL::Parser">
   <d:message xml:lang="en">An unknown construct is found where an exception
   member or a <code>}</code> character is expected.</d:message>
 </d:item>
 
 <d:item name="before interface member"
-    modules="WebIDL::Parser">
+    modules="Whatpm::WebIDL::Parser">
   <d:message xml:lang="en">An unknown construct is found where an interface
   member or a <code>}</code> character is expected.</d:message>
 </d:item>
 
 <d:item name="before webidl block"
-    modules="WebIDL::Parser">
+    modules="Whatpm::WebIDL::Parser">
   <d:message xml:lang="en">An identifier for the <code><var>{text}</var></code>
   is not followed by a <code>{</code> character.</d:message>
 </d:item>
 
 <d:item name="before webidl def"
-    modules="WebIDL::Parser">
+    modules="Whatpm::WebIDL::Parser">
   <d:message xml:lang="en">An unknown construct is found after an
   extended attribute list (where a <code>Definition</code> is
   expected).</d:message>
 </d:item>
 
 <d:item name="before webidl defs"
-    modules="WebIDL::Parser">
+    modules="Whatpm::WebIDL::Parser">
   <d:message xml:lang="en">An unknown construct is found where a
   <code>Definition</code> (optionally preceded by an extended attribute list)
   is expected.</d:message>
 </d:item>
 
 <d:item name="before webidl type"
-    modules="WebIDL::Parser">
+    modules="Whatpm::WebIDL::Parser">
   <d:message xml:lang="en">The type for <code><var>{text}</var></code> is
   not specified.</d:message>
 </d:item>
 
 <d:item name="before webidl type:argument"
-    modules="WebIDL::Parser">
+    modules="Whatpm::WebIDL::Parser">
   <d:message xml:lang="en">The type for an argument is not
   specified.</d:message>
 </d:item>
 
 <d:item name="before webidl type:exception member"
-    modules="WebIDL::Parser">
+    modules="Whatpm::WebIDL::Parser">
   <d:message xml:lang="en">The type for an exception member is not
   specified.</d:message>
 </d:item>
 
 <d:item name="before xattr"
-    modules="WebIDL::Parser">
+    modules="Whatpm::WebIDL::Parser">
   <d:message xml:lang="en">No extended attribute is specified after
   a <code>[</code> character.</d:message>
 </d:item>
 
 <d:item name="before xattrarg"
-    modules="WebIDL::Parser">
+    modules="Whatpm::WebIDL::Parser">
   <d:message xml:lang="en">No identifier is specified in an extended 
   attribute assignment.</d:message>
 </d:item>
 
 <d:item name="const value out of range"
-    modules="WebIDL::Checker">
+    modules="Whatpm::WebIDL::Checker">
   <d:message xml:lang="en">The specified value <code><var>{value}</var></code>
   is outside of the range of the type for the constant,
   <code><var>{text}</var></code>.</d:message>
 </d:item>
 
 <d:item name="const type mismatch"
-    modules="WebIDL::Checker">
+    modules="Whatpm::WebIDL::Checker">
   <d:message xml:lang="en">The type of the value,
   <code><var>{value}</var></code>, is different from the type of the constant,
   <code><var>{text}</var></code>.</d:message>
 </d:item>
 
 <d:item name="duplicate accessor"
-    modules="WebIDL::Checker">
+    modules="Whatpm::WebIDL::Checker">
   <d:message xml:lang="en">Extended attribute <code><var>{text}</var></code>
   is already specified for another operation in the same interface.</d:message>
 </d:item>
 
 <d:item name="duplicate constructor name"
-    modules="WebIDL::Checker">
+    modules="Whatpm::WebIDL::Checker">
   <d:message xml:lang="en">Constructor name <code><var>{value}</var></code>
   specified by extended attribute <code><var>{text}</var></code> is already
   used for an interface.</d:message>
 </d:item>
 
 <d:item name="duplicate member"
-    modules="WebIDL::Checker">
+    modules="Whatpm::WebIDL::Checker">
   <d:message xml:lang="en">Name <code><var>{text}</var></code> is
   already used.</d:message>
 </d:item>
 
 <d:item name="duplicate qname"
-    modules="WebIDL::Checker">
+    modules="Whatpm::WebIDL::Checker">
   <d:message xml:lang="en">Qualified name <code><var>{text}</var></code> is
   already used.</d:message>
 </d:item>
 
 <d:item name="duplicate xattr"
-    modules="WebIDL::Checker">
+    modules="Whatpm::WebIDL::Checker">
   <d:message xml:lang="en">Extended attribute <code><var>{text}</var></code>
   is already specified.</d:message>
 </d:item>
 
 <d:item name="exception not defined"
-    modules="WebIDL::Checker">
+    modules="Whatpm::WebIDL::Checker">
   <d:message xml:lang="en">Exception <code><var>{text}</var></code> is
   not defined in the fragment.</d:message>
   <!-- {text} is unqualified name when it appears in an extended attribute,
@@ -4949,161 +4949,161 @@ Regexp::Parser::JavaScript's extension. -->
 </d:item>
 
 <d:item name="interface not defined"
-    modules="WebIDL::Checker">
+    modules="Whatpm::WebIDL::Checker">
   <d:message xml:lang="en">Interface <code><var>{text}</var></code> is
   not defined in the fragment.</d:message>
   <!-- {text} is absolute scoped name. -->
 </d:item>
 
 <d:item name="no arguments in"
-    modules="WebIDL::Parser">
+    modules="Whatpm::WebIDL::Parser">
   <d:message xml:lang="en">No <code>in</code> keyword for an argument is
   found.</d:message>
 </d:item>
 
 <d:item name="no arguments lparen"
-    modules="WebIDL::Parser">
+    modules="Whatpm::WebIDL::Parser">
   <d:message xml:lang="en">No <code>(</code> character for an argument
   list is found.</d:message>
 </d:item>
 
 <d:item name="no raises lparen"
-    modules="WebIDL::Parser">
+    modules="Whatpm::WebIDL::Parser">
   <d:message xml:lang="en">A <code>raises</code> (or <code>getraises</code>
   or <code>setraises</code>) keyword is not followed by a <code>(</code>
   character.</d:message>
 </d:item>
 
 <d:item name="no sequence gt"
-    modules="WebIDL::Parser">
+    modules="Whatpm::WebIDL::Parser">
   <d:message xml:lang="en">A <code>sequence&lt;></code> type is not
   terminated by a <code>&gt;</code> character.</d:message>
 </d:item>
 
 <d:item name="no sequence lt"
-    modules="WebIDL::Parser">
+    modules="Whatpm::WebIDL::Parser">
   <d:message xml:lang="en">Keyword <code>sequence</code> is not followed
   by a <code>&lt;</code> character.</d:message>
 </d:item>
 
 <d:item name="no sequence type"
-    modules="WebIDL::Parser">
+    modules="Whatpm::WebIDL::Parser">
   <d:message xml:lang="en">No type is specified in
   <code>sequence&lt;></code>.</d:message>
 </d:item>
 
 <d:item name="no webidl identifier"
-    modules="WebIDL::Parser">
+    modules="Whatpm::WebIDL::Parser">
   <d:message xml:lang="en">No identifier is specified for the
   <code><var>{text}</var></code>.</d:message>
 </d:item>
 
 <d:item name="no webidl identifier:argument"
-    modules="WebIDL::Parser">
+    modules="Whatpm::WebIDL::Parser">
   <d:message xml:lang="en">No identifier is specified for the
   argument.</d:message>
 </d:item>
 
 <d:item name="no webidl identifier:exception member"
-    modules="WebIDL::Parser">
+    modules="Whatpm::WebIDL::Parser">
   <d:message xml:lang="en">No identifier is specified for the
   exception member.</d:message>
 </d:item>
 
 <d:item name="no webidl identifier:operation"
-    modules="WebIDL::Parser">
+    modules="Whatpm::WebIDL::Parser">
   <d:message xml:lang="en">No identifier is specified for the
   operation.</d:message>
 </d:item>
 
 <d:item name="no webidl semicolon"
-    modules="WebIDL::Parser">
+    modules="Whatpm::WebIDL::Parser">
   <d:message xml:lang="en">No semicolon is found at the end of the
   definition or member.</d:message>
 </d:item>
 
 <d:item name="non-module definition"
-    modules="WebIDL::Checker">
+    modules="Whatpm::WebIDL::Checker">
   <d:message xml:lang="en">This definition is not part of any
   module.</d:message>
 </d:item>
 
 <d:item name="not boxable type"
-    modules="WebIDL::Checker">
+    modules="Whatpm::WebIDL::Checker">
   <d:message xml:lang="en">Type <code><var>{text}</var></code> cannot be
   used in <code>valuetype</code>.</d:message>
 </d:item>
 
 <d:item name="premature end of webidl"
-    modules="WebIDL::Parser">
+    modules="Whatpm::WebIDL::Parser">
   <d:message xml:lang="en">The WebIDL fragment ends before all the blocks
   are closed by <code>};</code> sequences.</d:message>
 </d:item>
 
 <d:item name="referenced attr not defined"
-    modules="WebIDL::Checker">
+    modules="Whatpm::WebIDL::Checker">
   <d:message xml:lang="en">Attribute <code><var>{value}</var></code> is
   not defined in the interface specified for the attribute to which
   extended attribute <code><var>{text}</var></code> is set.</d:message>
 </d:item>
 
 <d:item name="scoped name"
-    modules="WebIDL::Parser">
+    modules="Whatpm::WebIDL::Parser">
   <d:message xml:lang="en">A scoped name is expected here.</d:message>
 </d:item>
 
 <d:item name="scoped name:dcolon"
-    modules="WebIDL::Parser">
+    modules="Whatpm::WebIDL::Parser">
   <d:message xml:lang="en">A <code>::</code> token is not followed by
   an identifier or a <code>DOMString</code> keyword.</d:message>
 </d:item>
 
 <d:item name="type not defined"
-    modules="WebIDL::Checker">
+    modules="Whatpm::WebIDL::Checker">
   <d:message xml:lang="en">Type <code><var>{text}</var></code> is not 
   defined.</d:message>
 </d:item>
 
 <d:item name="typedef ignored"
-    modules="WebIDL::Checker">
+    modules="Whatpm::WebIDL::Checker">
   <d:message xml:lang="en"><code>typedef</code> of name <code>DOMString</code>
   is ignored.</d:message>
 </d:item>
 
 <d:item name="unknown xattr"
-    modules="WebIDL::Checker">
+    modules="Whatpm::WebIDL::Checker">
   <d:message xml:lang="en">An unknown extended attribute 
   <code><var>{text}</var></code> is used.</d:message>
 </d:item>
 
 <d:item name="valuetype DOMString"
-    modules="WebIDL::Parser">
+    modules="Whatpm::WebIDL::Parser">
   <d:message xml:lang="en">The <code>valuetype</code> definition does
   not define <code>DOMString</code> as
   <code>sequence&lt;unsigned short></code>.</d:message>
 </d:item>
 
 <d:item name="valuetype ignored"
-    modules="WebIDL::Checker">
+    modules="Whatpm::WebIDL::Checker">
   <d:message xml:lang="en"><code>valuetype</code> of name
   <code>DOMString</code> is ignored.</d:message>
 </d:item>
 
 <d:item name="wrong signature accessor"
-    modules="WebIDL::Checker">
+    modules="Whatpm::WebIDL::Checker">
   <d:message xml:lang="en">The operation cannot be used as accessor operation
   of <code><var>{text}</var></code>, since its signature different from
   the expected one.</d:message>
 </d:item>
 
 <d:item name="xattr arglist not allowed"
-    modules="WebIDL::Checker">
+    modules="Whatpm::WebIDL::Checker">
   <d:message xml:lang="en">Use of an argument list for extended attribute
   <code><var>{text}</var></code> is not allowed.</d:message>
 </d:item>
 
 <d:item name="xattr for wrong type"
-    modules="WebIDL::Checker">
+    modules="Whatpm::WebIDL::Checker">
   <d:message xml:lang="en">Extended attribute <code><var>{text}</var></code>
   is not applicable for an attribute whose type is not
   <code>DOMString</code>.</d:message>
@@ -5111,26 +5111,26 @@ Regexp::Parser::JavaScript's extension. -->
 </d:item>
 
 <d:item name="xattr id missing"
-    modules="WebIDL::Checker">
+    modules="Whatpm::WebIDL::Checker">
   <d:message xml:lang="en">The identifier for extended attribute
   <code><var>{text}</var></code> is not specified.</d:message>
 </d:item>
 
 <d:item name="xattr id not allowed"
-    modules="WebIDL::Checker">
+    modules="Whatpm::WebIDL::Checker">
   <d:message xml:lang="en">Use of an identifier for extended attribute
   <code><var>{text}</var></code> is not allowed.</d:message>
 </d:item>
 
 <d:item name="xattr id value not allowed"
-    modules="WebIDL::Checker">
+    modules="Whatpm::WebIDL::Checker">
   <d:message xml:lang="en">The identifier <code><var>{value}</var></code> is
   not an allowed value for extended attribute
   <code><var>{text}</var></code>.</d:message>
 </d:item>
 
 <d:item name="xattr not applicable"
-    modules="WebIDL::Checker">
+    modules="Whatpm::WebIDL::Checker">
   <d:message xml:lang="en">Extended attribute <code><var>{text}</var></code>
   is not applicable to this kind of object.</d:message>
 </d:item>
@@ -5141,17 +5141,17 @@ Regexp::Parser::JavaScript's extension. -->
 <h2>Stability Information</h2>
 
 <d:item name="deprecated:attr"
-    modules="ContentChecker">
+    modules="Whatpm::ContentChecker">
   <d:message xml:lang="en">This attribute is deprecated.</d:message>
 </d:item>
 
 <d:item name="deprecated:element"
-    modules="ContentChecker">
+    modules="Whatpm::ContentChecker">
   <d:message xml:lang="en">This element is deprecated.</d:message>
 </d:item>
 
 <d:item name="status:cr:element"
-    modules="ContentChecker">
+    modules="Whatpm::ContentChecker">
   <d:message xml:lang="en">This element is in the
   <strong>call for implementation</strong> stage.</d:message>
   <d:desc xml:lang="en">
@@ -5168,7 +5168,7 @@ Regexp::Parser::JavaScript's extension. -->
 </d:item>
 
 <d:item name="status:lc:element"
-    modules="ContentChecker">
+    modules="Whatpm::ContentChecker">
   <d:message xml:lang="en">This element is in the <strong>last
   call for comments</strong> stage.</d:message>
   <d:desc xml:lang="en">
@@ -5186,7 +5186,7 @@ Regexp::Parser::JavaScript's extension. -->
 </d:item>
 
 <d:item name="status:wd:element"
-    modules="ContentChecker">
+    modules="Whatpm::ContentChecker">
   <d:message xml:lang="en">This element is documented in a <strong>working
   draft</strong>.</d:message>
   <d:desc xml:lang="en">
@@ -5202,7 +5202,7 @@ Regexp::Parser::JavaScript's extension. -->
 </d:item>
 
 <d:item name="status:non-standard:element"
-    modules="ContentChecker">
+    modules="Whatpm::ContentChecker">
   <d:message xml:lang="en">This element is <strong>not part of any
   standard</strong> the conformance checker knows.</d:message>
   <d:desc xml:lang="en">
@@ -5215,7 +5215,7 @@ Regexp::Parser::JavaScript's extension. -->
 </d:item>
 
 <d:item name="status:cr:attr"
-    modules="ContentChecker">
+    modules="Whatpm::ContentChecker">
   <d:message xml:lang="en">This attribute is in the
   <strong>call for implementation</strong> stage.</d:message>
   <d:desc xml:lang="en">
@@ -5229,7 +5229,7 @@ Regexp::Parser::JavaScript's extension. -->
 </d:item>
 
 <d:item name="status:lc:attr"
-    modules="ContentChecker">
+    modules="Whatpm::ContentChecker">
   <d:message xml:lang="en">This attribute is in the <strong>last
   call for comments</strong> stage.</d:message>
   <d:desc xml:lang="en">
@@ -5244,7 +5244,7 @@ Regexp::Parser::JavaScript's extension. -->
 </d:item>
 
 <d:item name="status:wd:attr"
-    modules="ContentChecker">
+    modules="Whatpm::ContentChecker">
   <d:message xml:lang="en">This attribute is documented in a <strong>working
   draft</strong>.</d:message>
   <d:desc xml:lang="en">
@@ -5258,7 +5258,7 @@ Regexp::Parser::JavaScript's extension. -->
 </d:item>
 
 <d:item name="status:non-standard:attr"
-    modules="ContentChecker">
+    modules="Whatpm::ContentChecker">
   <d:message xml:lang="en">This attribute is <strong>not part of any
   standard</strong> the conformance checker knows.</d:message>
   <d:desc xml:lang="en">
@@ -5275,7 +5275,7 @@ Regexp::Parser::JavaScript's extension. -->
 <h2>Language Tag Errors</h2>
 
 <d:item name="langtag:extension:duplication"
-    modules="LangTag::Parser">
+    modules="Whatpm::LangTag::Parser">
   <d:message xml:lang="en">There is another extension subtag
   <code><var>{value}</var></code> in the same language tag.</d:message>
   <d:message xml:lang="ja">拡張部分タグ <code><var>{value}</var></code>
@@ -5292,33 +5292,33 @@ Regexp::Parser::JavaScript's extension. -->
 </d:item>
 
 <d:item name="langtag:extension:order"
-    modules="LangTag::Checker">
+    modules="Whatpm::LangTag::Checker">
   <d:message xml:lang="en">Extension subtag <code><var>{value}</var></code>
   is placed after subtag <code><var>{text}</var></code>.</d:message>
 </d:item>
 
 <d:item name="langtag:extension:unknown"
-    modules="LangTag::Checker">
+    modules="Whatpm::LangTag::Checker">
   <d:message xml:lang="en">Extension <code><var>{value}</var></code> is not
   defined when the conformance checker is written.</d:message>
 </d:item>
 
 <d:item name="langtag:extlang:case"
-    modules="LangTag::Checker">
+    modules="Whatpm::LangTag::Checker">
   <d:message xml:lang="en">Extended language subtag
   <code><var>{value}</var></code> is not in the preferred form, i.e. in 
   lowercase.</d:message>
 </d:item>
 
 <d:item name="langtag:extlang:deprecated"
-    modules="LangTag::Checker">
+    modules="Whatpm::LangTag::Checker">
   <d:message xml:lang="en">Use of extended language subtag
   <code><var>{value}</var></code> is deprecated<!-- in favor of {text}
   language subtag (might be undef) -->.</d:message>
 </d:item>
 
 <d:item name="langtag:extlang:prefix"
-    modules="LangTag::Checker">
+    modules="Whatpm::LangTag::Checker">
   <d:message xml:lang="en">Extended language subtag
   <code><var>{text}</var></code> is not allowed in the combination with this
   language (and extended language) subtag(s).  It must be used
@@ -5326,7 +5326,7 @@ Regexp::Parser::JavaScript's extension. -->
 </d:item>
 
 <d:item name="langtag:extlang:preferred"
-    modules="LangTag::Checker">
+    modules="Whatpm::LangTag::Checker">
   <d:message xml:lang="en">The language subtag and the extended language
   subtag <code><var>{value}</var></code> should be replaced by the
   language subtag <code><var>{text}</var></code>.  Use of extended
@@ -5334,7 +5334,7 @@ Regexp::Parser::JavaScript's extension. -->
 </d:item>
 
 <d:item name="langtag:extlang:invalid"
-    modules="LangTag::Checker">
+    modules="Whatpm::LangTag::Checker">
   <d:message xml:lang="en">Extended language subtag 
   <code><var>{value}</var></code> is not registered.</d:message>
   <d:message xml:lang="ja">拡張言語部分タグ
@@ -5359,34 +5359,34 @@ Regexp::Parser::JavaScript's extension. -->
 </d:item>
 
 <d:item name="langtag:grandfathered:case"
-    modules="LangTag::Checker">
+    modules="Whatpm::LangTag::Checker">
   <d:message xml:lang="en">Language tag <code><var>{value}</var></code> is
   not in the preferred case combination.</d:message>
 </d:item>
 
 <d:item name="langtag:grandfathered:deprecated"
-    modules="LangTag::Checker">
+    modules="Whatpm::LangTag::Checker">
   <d:message xml:lang="en">Use of language tag
   <code><var>{value}</var></code> is deprecated<!-- in favor of {text} (might
   be undef) -->.</d:message>
 </d:item>
 
 <d:item name="langtag:grandfathered:i-default"
-    modules="LangTag::Checker">
+    modules="Whatpm::LangTag::Checker">
   <d:message xml:lang="en">Language tag <code><var>i-default</var></code> 
   should not be used unless it is really necessary for some 
   reason.</d:message>
 </d:item>
 
 <d:item name="langtag:grandfathered:invalid"
-    modules="LangTag::Checker">
+    modules="Whatpm::LangTag::Checker">
   <d:message xml:lang="en">Language tag <code><var>{value}</var></code> is
   not a combination of RFC 4646 subtags and is not a registered grandfathered
   tag.</d:message>
 </d:item>
 
 <d:item name="langtag:illegal"
-    modules="LangTag::Parser LangTag::Checker">
+    modules="Whatpm::LangTag::Parser Whatpm::LangTag::Checker">
   <d:message xml:lang="en">Subtag <code><var>{value}</var></code> is 
   syntactically invalid.</d:message>
   <d:message xml:lang="ja">部分タグ <code><var>{value}</var></code> 
@@ -5416,7 +5416,7 @@ Regexp::Parser::JavaScript's extension. -->
 </d:item>
 
 <d:item name="langtag:deprecated"
-    modules="LangTag::Checker">
+    modules="Whatpm::LangTag::Checker">
   <d:message xml:lang="en">Use of language tag
   <code><var>{value}</var></code> is deprecated<!-- in favor of {text} (might
   be undef) -->.</d:message>
@@ -5425,7 +5425,7 @@ Regexp::Parser::JavaScript's extension. -->
 </d:item>
 
 <d:item name="langtag:notregistered"
-    modules="LangTag::Checker">
+    modules="Whatpm::LangTag::Checker">
   <d:message xml:lang="en">Language tag
   <code><var>{value}</var></code> is not registered.</d:message>
   <d:message xml:lang="ja">言語タグ
@@ -5443,7 +5443,7 @@ Regexp::Parser::JavaScript's extension. -->
 </d:item>
 
 <d:item name="langtag:language:case"
-    modules="LangTag::Checker">
+    modules="Whatpm::LangTag::Checker">
   <d:message xml:lang="en">It is a good practice to represent ISO 639
   language code <code><var>{value}</var></code> in lowercase.</d:message>
   <d:message xml:lang="ja">ISO 639 言語符号 <code><var>{value}</var></code>
@@ -5461,14 +5461,14 @@ Regexp::Parser::JavaScript's extension. -->
 </d:item>
 
 <d:item name="langtag:language:deprecated"
-    modules="LangTag::Checker">
+    modules="Whatpm::LangTag::Checker">
   <d:message xml:lang="en">Use of language subtag
   <code><var>{value}</var></code> is deprecated<!-- in favor of {text} (might
   be undef) -->.</d:message>
 </d:item>
 
 <d:item name="langtag:language:invalid"
-    modules="LangTag::Checker">
+    modules="Whatpm::LangTag::Checker">
   <d:message xml:lang="en">Language subtag <code><var>{value}</var></code>
   is not registered.</d:message>
   <d:message xml:lang="ja">言語部分タグ <code><var>{value}</var></code>
@@ -5476,19 +5476,19 @@ Regexp::Parser::JavaScript's extension. -->
 </d:item>
 
 <d:item name="langtag:language:mis"
-    modules="LangTag::Checker">
+    modules="Whatpm::LangTag::Checker">
   <d:message xml:lang="en">Langauge subtag <code>mis</code> should not be
   used.</d:message>
 </d:item>
 
 <d:item name="langtag:language:mul"
-    modules="LangTag::Checker">
+    modules="Whatpm::LangTag::Checker">
   <d:message xml:lang="en">Langauge subtag <code>mul</code> should not be
   used unless it is really necessary.</d:message>
 </d:item>
 
 <d:item name="langtag:language:nosemantics"
-    modules="LangTag::Checker">
+    modules="Whatpm::LangTag::Checker">
   <d:message xml:lang="en">No semantics is defined for language subtag
   <code><var>{value}</var></code>.</d:message>
   <d:message xml:lang="ja">言語部分タグ <code><var>{value}</var></code>
@@ -5496,7 +5496,7 @@ Regexp::Parser::JavaScript's extension. -->
 </d:item>
 
 <d:item name="langtag:language:private"
-    modules="LangTag::Checker">
+    modules="Whatpm::LangTag::Checker">
   <d:message xml:lang="en">Language subtag <code><var>{value}</var></code>
   is a private use code.</d:message>
   <d:message xml:lang="ja">言語部分タグ <code><var>{value}</var></code>
@@ -5504,20 +5504,20 @@ Regexp::Parser::JavaScript's extension. -->
 </d:item>
 
 <d:item name="langtag:language:syntax"
-    modules="LangTag::Parser">
+    modules="Whatpm::LangTag::Parser">
   <d:message xml:lang="en">The language subtag <code><var>{value}</var></code>
   is syntactically invalid.  Language subtag must contain one or more
   basic latin characters.</d:message>
 </d:item>
 
 <d:item name="langtag:language:und"
-    modules="LangTag::Checker">
+    modules="Whatpm::LangTag::Checker">
   <d:message xml:lang="en">Langauge tag <code>und</code> should not be
   used unless it is really necessary.</d:message>
 </d:item>
 
 <d:item name="langtag:private"
-    modules="LangTag::Checker">
+    modules="Whatpm::LangTag::Checker">
   <d:message xml:lang="en">Private use language tag 
   <code><var>{value}</var></code> should be avoided where 
   possible.</d:message>
@@ -5526,44 +5526,44 @@ Regexp::Parser::JavaScript's extension. -->
 </d:item>
 
 <d:item name="langtag:privateuse"
-    modules="LangTag::Checker">
+    modules="Whatpm::LangTag::Checker">
   <d:message xml:lang="en">Private use subtag <code><var>{value}</var></code>
   is used.</d:message>
 </d:item>
 
 <d:item name="langtag:privateuse:case"
-    modules="LangTag::Checker">
+    modules="Whatpm::LangTag::Checker">
   <d:message xml:lang="en">Subtag <code><var>{value}</var></code> is not 
   represented in the preferred case format.</d:message>
 </d:item>
 
 <d:item name="langtag:privateuse:syntax"
-    modules="LangTag::Parser">
+    modules="Whatpm::LangTag::Parser">
   <d:message xml:lang="en">Private use subtag <code><var>{value}</var></code>
   is syntactically invalid.</d:message>
 </d:item>
 
 <d:item name="langtag:redundant:case"
-    modules="LangTag::Checker">
+    modules="Whatpm::LangTag::Checker">
   <d:message xml:lang="en">Language tag <code><var>{value}</var></code> is
   not in the preferred case combination.</d:message>
 </d:item>
 
 <d:item name="langtag:redundant:deprecated"
-    modules="LangTag::Checker">
+    modules="Whatpm::LangTag::Checker">
   <d:message xml:lang="en">Use of language tag
   <code><var>{value}</var></code> is deprecated<!-- in favor of {text} (might
   be undef) -->.</d:message>
 </d:item>
 
 <d:item name="langtag:region:case"
-    modules="LangTag::Checker">
+    modules="Whatpm::LangTag::Checker">
   <d:message xml:lang="en">It is a good practice to represent ISO 3166
   country code <code><var>{value}</var></code> in uppercase.</d:message>
 </d:item>
 
 <d:item name="langtag:region:deprecated"
-    modules="LangTag::Checker">
+    modules="Whatpm::LangTag::Checker">
   <d:message xml:lang="en">Use of region subtag
   <code><var>{value}</var></code> is deprecated<!-- in favor of {text} (might
   be undef) -->.</d:message>
@@ -5572,58 +5572,58 @@ Regexp::Parser::JavaScript's extension. -->
 </d:item>
 
 <d:item name="langtag:region:nosemantics"
-    modules="LangTag::Checker">
+    modules="Whatpm::LangTag::Checker">
   <d:message xml:lang="en">No semantics is defined for region subtag
   <code><var>{value}</var></code>.</d:message>
 </d:item>
 
 <d:item name="langtag:region:invalid"
-    modules="LangTag::Checker">
+    modules="Whatpm::LangTag::Checker">
   <d:message xml:lang="en">Region subtag <code><var>{value}</var></code>
   is not registered.</d:message>
 </d:item>
 
 <d:item name="langtag:region:private"
-    modules="LangTag::Checker">
+    modules="Whatpm::LangTag::Checker">
   <d:message xml:lang="en">Private use country code
   <code><var>{value}</var></code> should be avoided where
   possible.</d:message>
 </d:item>
 
 <d:item name="langtag:script:case"
-    modules="LangTag::Checker">
+    modules="Whatpm::LangTag::Checker">
   <d:message xml:lang="en">Script subtag <code><var>{value}</var></code> is 
   not in the preferred form, i.e. titlecase.</d:message>
 </d:item>
 
 <d:item name="langtag:script:deprecated"
-    modules="LangTag::Checker">
+    modules="Whatpm::LangTag::Checker">
   <d:message xml:lang="en">Use of script subtag
   <code><var>{value}</var></code> is deprecated<!-- in favor of {text} (might
   be undef) -->.</d:message>
 </d:item>
 
 <d:item name="langtag:script:invalid"
-    modules="LangTag::Checker">
+    modules="Whatpm::LangTag::Checker">
   <d:message xml:lang="en">Script subtag <code><var>{value}</var></code>
   is not registered.</d:message>
 </d:item>
 
 <d:item name="langtag:script:private"
-    modules="LangTag::Checker">
+    modules="Whatpm::LangTag::Checker">
   <d:message xml:lang="en">Script subtag <code><var>{value}</var></code>
   is a private use code.</d:message>
 </d:item>
 
 <d:item name="langtag:script:suppress"
-    modules="LangTag::Checker">
+    modules="Whatpm::LangTag::Checker">
   <d:message xml:lang="en">Script subtag <code><var>{value}</var></code>
   should be suppressed when the language subtag is
   <code><var>{text}</var></code>.</d:message>
 </d:item>
 
 <d:item name="langtag:variant:case"
-    modules="LangTag::Checker">
+    modules="Whatpm::LangTag::Checker">
   <d:message xml:lang="en">Variant subtag <code><var>{value}</var></code> is
   not in the preferred form, i.e. lowercase.</d:message>
   <d:message xml:lang="ja">異体部分タグ <code><var>{value}</var></code> 
@@ -5641,33 +5641,33 @@ Regexp::Parser::JavaScript's extension. -->
 </d:item>
 
 <d:item name="langtag:variant:combination"
-    modules="LangTag::Checker">
+    modules="Whatpm::LangTag::Checker">
   <d:message xml:lang="en">Variant subtag <code><var>{text}</var></code> might
   not be meaningful when it is used in combination with
   <code><var>{value}</var></code>.</d:message>
 </d:item>
 
 <d:item name="langtag:variant:deprecated"
-    modules="LangTag::Checker">
+    modules="Whatpm::LangTag::Checker">
   <d:message xml:lang="en">Use of variant subtag
   <code><var>{value}</var></code> is deprecated<!-- in favor of {text} (might
   be undef) -->.</d:message>
 </d:item>
 
 <d:item name="langtag:variant:duplication"
-    modules="LangTag::Checker">
+    modules="Whatpm::LangTag::Checker">
   <d:message xml:lang="en">Variant subtag <code><var>{value}</var></code>
   is specified twice in the same language tag.</d:message>
 </d:item>
 
 <d:item name="langtag:variant:invalid"
-    modules="LangTag::Checker">
+    modules="Whatpm::LangTag::Checker">
   <d:message xml:lang="en">Variant subtag <code><var>{value}</var></code>
   is not registered.</d:message>
 </d:item>
 
 <d:item name="langtag:variant:order"
-    modules="LangTag::Checker">
+    modules="Whatpm::LangTag::Checker">
   <d:message xml:lang="en">Variant subtag <code><var>{value}</var></code>
   should be placed <em>after</em> <code><var>{text}</var></code>.</d:message>
   <d:message xml:lang="ja">異体部分タグ <code><var>{value}</var></code>
@@ -5686,14 +5686,14 @@ Regexp::Parser::JavaScript's extension. -->
 </d:item>
 
 <d:item name="langtag:variant:prefix"
-    modules="LangTag::Checker">
+    modules="Whatpm::LangTag::Checker">
   <d:message xml:lang="en">Variant subtag <code><var>{value}</var></code>
   cannot be used in this context.  It must be preceded by 
   <code><var>{text}</var></code></d:message>
 </d:item>
 
 <d:item name="langtag:extension:u:case"
-    modules="LangTag::Checker">
+    modules="Whatpm::LangTag::Checker">
   <d:message xml:lang="en">Extension subtag <code><var>{value}</var></code> is
   not in the preferred form, i.e. lowercase.</d:message>
   <d:message xml:lang="ja">拡張部分タグ <code><var>{value}</var></code> 
@@ -5712,7 +5712,7 @@ Regexp::Parser::JavaScript's extension. -->
 </d:item>
 
 <d:item name="langtag:extension:u:attr:duplication"
-    modules="LangTag::Parser">
+    modules="Whatpm::LangTag::Parser">
   <d:message xml:lang="en">There is another attribute
   <code><var>{value}</var></code> in the same language tag
   extension.</d:message>
@@ -5732,7 +5732,7 @@ Regexp::Parser::JavaScript's extension. -->
 </d:item>
 
 <d:item name="langtag:extension:u:attr:order"
-    modules="LangTag::Checker">
+    modules="Whatpm::LangTag::Checker">
   <d:message xml:lang="en">Attribute <code><var>{value}</var></code>
   should be placed <em>after</em> <code><var>{text}</var></code>.</d:message>
   <d:message xml:lang="ja">属性 <code><var>{value}</var></code>
@@ -5748,7 +5748,7 @@ Regexp::Parser::JavaScript's extension. -->
 </d:item>
 
 <d:item name="langtag:extension:u:attr:invalid"
-    modules="LangTag::Checker">
+    modules="Whatpm::LangTag::Checker">
   <d:message xml:lang="en">Attribute <code><var>{value}</var></code>
   is not defined.</d:message>
   <d:message xml:lang="ja">属性 <code><var>{value}</var></code>
@@ -5763,7 +5763,7 @@ Regexp::Parser::JavaScript's extension. -->
 </d:item>
 
 <d:item name="langtag:extension:u:key:duplication"
-    modules="LangTag::Parser">
+    modules="Whatpm::LangTag::Parser">
   <d:message xml:lang="en">There is another key
   <code><var>{value}</var></code> in the same language tag
   extension.</d:message>
@@ -5782,7 +5782,7 @@ Regexp::Parser::JavaScript's extension. -->
 </d:item>
 
 <d:item name="langtag:extension:u:key:order"
-    modules="LangTag::Checker">
+    modules="Whatpm::LangTag::Checker">
   <d:message xml:lang="en">Key <code><var>{value}</var></code>
   should be placed <em>after</em> <code><var>{text}</var></code>.</d:message>
   <d:message xml:lang="ja">キー <code><var>{value}</var></code>
@@ -5798,7 +5798,7 @@ Regexp::Parser::JavaScript's extension. -->
 </d:item>
 
 <d:item name="langtag:extension:u:key:invalid"
-    modules="LangTag::Checker">
+    modules="Whatpm::LangTag::Checker">
   <d:message xml:lang="en">Key <code><var>{value}</var></code>
   is not defined.</d:message>
   <d:message xml:lang="ja">キー <code><var>{value}</var></code>
@@ -5815,7 +5815,7 @@ Regexp::Parser::JavaScript's extension. -->
 </d:item>
 
 <d:item name="langtag:extension:u:type:missing"
-    modules="LangTag::Checker">
+    modules="Whatpm::LangTag::Checker">
   <d:message xml:lang="en">Type for key <code><var>{text}</var></code>
   is not specified.</d:message>
   <d:message xml:lang="ja">キー <code><var>{text}</var></code>
@@ -5834,7 +5834,7 @@ Regexp::Parser::JavaScript's extension. -->
 </d:item>
 
 <d:item name="langtag:extension:u:type:invalid"
-    modules="LangTag::Checker">
+    modules="Whatpm::LangTag::Checker">
   <d:message xml:lang="en">Type <code><var>{value}</var></code>
   is not defined for key <code><var>{text}</var></code>.</d:message>
   <d:message xml:lang="ja">型 <code><var>{value}</var></code>
@@ -5852,7 +5852,7 @@ Regexp::Parser::JavaScript's extension. -->
 </d:item>
 
 <d:item name="langtag:extension:u:type:nosemantics"
-    modules="LangTag::Checker">
+    modules="Whatpm::LangTag::Checker">
   <d:message xml:lang="en">Type <code><var>{value}</var></code>
   cannot be used for key <code><var>{text}</var></code>.</d:message>
   <d:message xml:lang="ja">型 <code><var>{value}</var></code>
@@ -5891,43 +5891,43 @@ Regexp::Parser::JavaScript's extension. -->
 <h2>RDF/XML Errors</h2>
 
 <d:item name="bad rdf namespace"
-    modules="RDFXML">
+    modules="Whatpm::RDFXML">
   <d:message xml:lang="en">The namespace URI of an element that
   represents an RDF concept must be 
   <code>http://www.w3.org/1999/02/22-rdf-syntax-ns#</code>.</d:message>
 </d:item>
 
 <d:item name="duplicate rdf id"
-    modules="RDFXML">
+    modules="Whatpm::RDFXML">
   <d:message xml:lang="en">The specified value is already used as an
   ID.</d:message>
 </d:item>
 
 <d:item name="duplicate unqualified attr"
-    modules="RDFXML">
+    modules="Whatpm::RDFXML">
   <d:message xml:lang="en">Both unqualified attribute and namespace‐qualified
   RDF attribute are specified, which is not allowed.</d:message>
 </d:item>
 
 <d:item name="parse type other"
-    modules="RDFXML">
+    modules="Whatpm::RDFXML">
   <d:message xml:lang="en">An invalid value is specified to 
   the <code>parseType</code> attribute.</d:message>
 </d:item>
 
 <d:item name="second node element" 
-    modules="RDFXML">
+    modules="Whatpm::RDFXML">
   <d:message xml:lang="en">There is another element, such that
   this element is not allowed.</d:message>
 </d:item>
 
 <d:item name="unqualified attr"
-    modules="RDFXML">
+    modules="Whatpm::RDFXML">
   <d:message xml:lang="en">Unqualified attribute is not allowed.</d:message>
 </d:item>
 
 <d:item name="unqualified rdf attr"
-    modules="RDFXML">
+    modules="Whatpm::RDFXML">
   <d:message xml:lang="en">RDF attribute should be
   namespace‐qualified.</d:message>
 </d:item>
@@ -5938,7 +5938,7 @@ Regexp::Parser::JavaScript's extension. -->
 <h2><i>Unsupported</i> Messages</h2>
 
 <d:item name="unknown element"
-    modules="ContentChecker">
+    modules="Whatpm::ContentChecker">
   <d:message xml:lang="en">Conformance checking for element
   <code><var>{local-name}</var></code> is not supported; <em>it might or
   might not be conforming</em>.</d:message>
@@ -5949,7 +5949,7 @@ Regexp::Parser::JavaScript's extension. -->
 </d:item>
 
 <d:item name="unknown attribute"
-    modules="ContentChecker ContentChecker::HTML ContentChecker::Atom">
+    modules="Whatpm::ContentChecker Whatpm::ContentChecker::HTML Whatpm::ContentChecker::Atom">
   <d:message xml:lang="en">Conformance checking for attribute
   <code><var>{local-name}</var></code> of element 
   <code><var>{element-local-name}</var></code> is not supported;
@@ -5961,7 +5961,7 @@ Regexp::Parser::JavaScript's extension. -->
 </d:item>
 
 <d:item name="unknown link type"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">Link type <code><var>{value}</var></code> is not
   standardized or registered at the time of the release of the conformance
   checker; <em>it is non-conforming unless it now has been
@@ -5987,39 +5987,39 @@ Regexp::Parser::JavaScript's extension. -->
 </d:item>
 
 <d:item name="event handler"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">Conformance checking for event handler attribute
   is not supported; <em>it might or might not be conforming.</em></d:message>
 </d:item>
 
 <d:item name="media query"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">Conformance checking for media query
   is not supported; <em>it might or might not be conforming.</em></d:message>
 </d:item>
 
 <d:item name="addr-spec not supported"
-    modules="ContentChecker::Atom">
+    modules="Whatpm::ContentChecker::Atom">
   <d:message xml:lang="en">Conformance checking for an <code>addr-spec</code>
   is not supported; <em>it might or might not be conforming.</em></d:message>
 </d:item>
 
 <d:item name="XML script lang"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">Conformance checking for script
   language <code><var>{text}</var></code> is not supported;
   <em>it might or might not be conforming.</em></d:message>
 </d:item>
 
 <d:item name="XML style lang"
-    modules="ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML">
   <d:message xml:lang="en">Conformance checking for style
   language <code><var>{text}</var></code> is not supported;
   <em>it might or might not be conforming.</em></d:message>
 </d:item>
 
 <d:item name="atom|content not supported"
-    modules="ContentChecker::Atom">
+    modules="Whatpm::ContentChecker::Atom">
   <d:message xml:lang="en">Conformance checking for an Atom
   <code>content</code> element with <code>type</code>
   <code><var>{text}</var></code> is not supported.</d:message>
