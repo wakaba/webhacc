@@ -6072,7 +6072,7 @@ Regexp::Parser::JavaScript's extension. -->
     <p>No attribute except for the <code>class</code> attribute
     can be generated multiple times for the same element.</p>
   </d:desc>
-  <d:desc xml:lang="en">
+  <d:desc xml:lang="ja">
     <p>同じ名前の属性が1つの要素に対して複数回生成されています。</p>
     <p>同じ要素に対しては <code>class</code> 
     以外の属性を複数回生成することはできません。</p>
@@ -6134,7 +6134,7 @@ Regexp::Parser::JavaScript's extension. -->
   <d:message xml:lang="en">Non-Temma attribute 
   <code><var>{text}</var></code> is not allowed on the 
   <code>html</code> element.</d:message>
-  <d:message xml:lang="en">Temma 属性ではない
+  <d:message xml:lang="ja">Temma 属性ではない
   <code><var>{text}</var></code> は
   <code>html</code> 要素には指定できません。</d:message>
   <d:desc xml:lang="en">

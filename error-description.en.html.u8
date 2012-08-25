@@ -3406,9 +3406,11 @@ Regexp::Parser::JavaScript's extension. -->
 
 <div class="section" id="temma:duplicate-attr"><h3>No two attributes can share the same name
   <code><var>{text}</var></code>.</h3>
-    <p>同じ名前の属性が1つの要素に対して複数回生成されています。</p>
-    <p>同じ要素に対しては <code>class</code> 
-    以外の属性を複数回生成することはできません。</p>
+    <p>There are more than one attributes with the same name 
+    generated for an element.</p>
+
+    <p>No attribute except for the <code>class</code> attribute
+    can be generated multiple times for the same element.</p>
   </div>
 
 <div class="section" id="temma:duplicate-field"><h3>Duplicate field name
@@ -3433,9 +3435,9 @@ Regexp::Parser::JavaScript's extension. -->
     within the <code>t:for</code> element.</p>
   </div>
 
-<div class="section" id="temma:html-non-temma-attr"><h3>Temma 属性ではない
-  <code><var>{text}</var></code> は
-  <code>html</code> 要素には指定できません。</h3>
+<div class="section" id="temma:html-non-temma-attr"><h3>Non-Temma attribute 
+  <code><var>{text}</var></code> is not allowed on the 
+  <code>html</code> element.</h3>
     <p>The <code>html</code> start tag in the Temma source document
     interpreted in the <code>body</code> parsing mode does not allow
     any attribute not in the Temma namespace.  In other word,

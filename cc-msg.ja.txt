@@ -546,7 +546,7 @@ temma:duplicate attr;;2つの属性が同じ名前 <code><var>{text}</var></code
 temma:duplicate field;;欄名 <code><var>{value}</var></code> が重複しています。
 temma:duplicate param;;引数 <code><var>{value}</var></code> の指定が重複しています。
 temma:duplicate sep;;<code>t:sep</code> 要素は一度だけしか使えません。
-temma:html non temma attr;;Non-Temma attribute <code><var>{text}</var></code> is not allowed on the <code>html</code> element.
+temma:html non temma attr;;Temma 属性ではない <code><var>{text}</var></code> は <code>html</code> 要素には指定できません。
 temma:include error;;外部ファイルを取り込めません: <code><var>{value}</var></code>。
 temma:macro already defined;;マクロ <code><var>{value}</var></code> は既に定義されています。
 temma:macro not defined;;マクロ <code><var>{value}</var></code> は定義されていません。
