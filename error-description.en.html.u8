@@ -456,13 +456,13 @@
     declaration.</p>
   </div>
 
-<div class="section" id="duplicate-attribute"><h3>There are two attributes with name
-      <code><var>{text}</var></code>.</h3>
-    <p>There are more than one attributes with the same
-    name in a tag.  The document is non-conforming.</p>
+<div class="section" id="duplicate-attribute"><h3>No two attributes can share the same name
+  <code><var>{text}</var></code>.</h3>
+    <p>There are more than one attributes with the same name in a tag.</p>
 
-    <p>The <code>motion</code> attribute is not part of the HTML standard.
-    Use <code>img</code> element with animation GIF instead.</p>
+    <p>The <code>motion</code> attribute of the <code>img</code>
+    element is obsolete.  Use <code>img</code> element with animation
+    GIF instead.</p>
   </div>
 
 <div class="section" id="empty-start-tag"><h3>
@@ -988,8 +988,8 @@ p {
     <p>An end tag appears though no element with the same name
     has been opened.</p>
 
-    <p>For any end tag in HTML, XML, or WebVTT document, there must be
-    a corresponding start tag.</p>
+    <p>For any end tag in HTML, XML, WebVTT, or Temma document, there
+    must be a corresponding start tag.</p>
 
     <dl class="switch">
 
@@ -1126,67 +1126,7 @@ p {
 
 <div class="section" id="element-not-allowed"><h3>This element is not allowed in this 
   context.</h3>
-    <p>An element appears where it is not allowed.  The document
-    is non-conforming.</p>
-
-    <p>Possible causes:
-      <dl class="switch">
-      <dt>If the element with the error is an inline-level element,
-      such as <code>a</code>, <code>progress</code>, or <code>img</code></dt>
-          <dd><p>An inline-level element cannot be a child
-          of certain sectioning elements such as <code>body</code>,
-          <code>section</code>, and <code>blockquote</code>.</p>
-
-          <p>Any inline-level content must be put
-          in e.g. paragraph element such as <code>p</code>.</p></dd>
-      <dt>If it is a block-level elements, such as <code>aside</code>,
-      <code>div</code>, <code>h<var>n</var></code>,
-      <code>p</code>, or <code>section</code></dt>
-          <dd><dl class="switch">
-              <dt>If the parent element is <code>div</code>,
-              <code>li</code>, <code>td</code>, or <code>th</code></dt>
-              <!-- @@ TODO: more... -->
-                  <!-- @@ TODO: <p><ul><li><p> -->
-                  <dd><p>The parent element allows <em>either</em>
-                  block-level or inline-level content.  If there is a
-                  block-level content, any inline-level content must be
-                  put in e.g. paragraph element such as <code>p</code>.</p>
-                  <p>For example, an HTML document fragment
-                  <code class="html bad example">&lt;div&gt;&lt;p&gt;Hello!&lt;/p&gt; World!&lt;/div&gt;</code>
-                  is non-conforming, since a word <q>World!</q> does not belong
-                  to any paragraph.  (If not part of any paragraph, what is
-                  it!?)  A conforming example would be:
-                    <pre class="html example">
-<code>&lt;div&gt;&lt;p&gt;Hello!&lt;/p&gt; &lt;p&gt;World!&lt;/p&gt;&lt;/div&gt;</code></pre>
-                  </p></dd>
-              <dt>If the parent element does <em>not</em> allow 
-              block-level elements as content</dt>
-                  <dd>The element is not allowed to be inserted here.
-                  For example, a <code>div</code> element cannot be 
-                  a child of an <code>h1</code> element.</dd>
-          </dl></dd>
-      <dt>If the element with the error is a <code>noscript</code> element</dt>
-          <dd>The <code>noscript</code> element is allowed only in the context
-          where a block-level or inline-level content is expected
-          and in the <code>head</code> element.
-          It cannot be used in e.g. <code>ul</code>, <code>table</code>,
-          or <code>select</code>.</dd>
-      <dt>If the element with the error is <code>blink</code>,
-      <code>center</code>, or <code>marquee</code> element</dt>
-          <dd>These elements are not part of the HTML standard.
-          Use CSS for styling control.</dd>
-
-      <dt><code>button</code>, <code>datalist</code>,
-      <code>fieldset</code>, <code>form</code>,
-      <code>input</code>, <code>label</code>,
-      <code>optgroup</code>, <code>option</code>, <code>output</code>,
-      <code>rb</code>, <code>rp</code>, <code>rt</code>, <code>ruby</code>,
-      <code>textarea</code>, or <code>textarea</code> element</dt>
-      <!-- rbc, rtc ? -->
-          <dd>These elements are intentionally not supported by the conformance
-          checker <em>yet</em>.</dd>
-      </dl>
-    </p>
+    <p>An element appears where it is not allowed.</p>
   </div>
 
 <div class="section" id="element-not-allowed:area"><h3>An <code>area</code> element cannot be used
@@ -1249,6 +1189,12 @@ p {
 <div class="section" id="element-not-allowed:phrasing"><h3>This element is not allowed where phrasing
   content is expected.</h3></div>
 
+<div class="section" id="element-not-allowed:rawtext"><h3>The element is not allowed where 
+  rawtext content is expected.</h3>
+    <p>The parent element accepts rawtext content here.
+    Elements other than rawtext content cannot be used.</p>
+  </div>
+
 <div class="section" id="element-not-allowed:root"><h3>This element is not allowed as the root
   element of a document.</h3>
     <p>An element that is not allowed as the root element
@@ -1294,6 +1240,14 @@ p {
 
 <div class="section" id="element-not-allowed:atom|TextConstruct"><h3>This element is not allowed in Text
   construct.</h3></div>
+
+<div class="section" id="element-not-allowed:t:if"><h3>This element is not allowed in this context of
+  the <code>t:if</code> element.</h3>
+    <p>The element is not allowed in the context.  In the 
+    <code>t:if</code> element, <code>t:elsif</code>
+    elements cannot be used after the <code>t:else</code> element.
+    The <code>t:else</code> element can only be used once.</p>
+  </div>
 
 <div class="section" id="element-not-defined"><h3>This element is not defined.</h3>
     <p>The element is not one of elements allowed
@@ -1342,8 +1296,7 @@ p {
 
 <div class="section" id="attribute-missing"><h3>Required attribute <code><var>{text}</var></code>
   is not specified.</h3>
-    <p>A required attribute is not specified.  The document
-    is non-conforming.</p>
+    <p>A required attribute is not specified.</p>
 
     <p>Some attribute is defined as <i>required</i>.
     Without required attributes specified, user agents 
@@ -3393,6 +3346,217 @@ Regexp::Parser::JavaScript's extension. -->
 
 <div class="section" id="unqualified-rdf-attr"><h3>RDF attribute should be
   namespace‐qualified.</h3></div>
+
+</section>
+
+<section id="temma">
+<h2>Temma errors</h2>
+
+<div class="section" id="temma:bad-macro-name"><h3>Macro name is syntactically
+  inappropriate.</h3>
+    <p>The specified macro name is syntactically non-conforming.</p>
+    <p>The macro name must match the regular expression
+    <code>[a-z_.][a-z_.0-9-]*</code>.  Macro names are ASCII
+    case-insensitive.</p>
+  </div>
+
+<div class="section" id="temma:bad-params"><h3>Parameter list attribute has a token
+  that is not a variable name: <code><var>{value}</var></code>.</h3>
+    <p>The parameter specificaiton list attribute has a token that is
+    not a variable name.  The list cannot contain anything other than
+    variable name.  Variable name must match the regular expression
+    <code>\$?[A-Za-z_][0-9A-Za-z_]*</code> but not <code>\$?_</code>.</p>
+  </div>
+
+<div class="section" id="temma:block-not-found"><h3>The <code>t:for</code> block is not 
+  found.</h3>
+    <p>The block specified by <code>t:next</code> or <code>t:last</code>
+    element is not found.</p>
+    <p>If the element has the <code>for</code> attribute, there must be
+    the <code>t:for</code> element in scope whose <code>name</code> attribute
+    has the same block name.  Otherwise, there must be the
+    <code>t:for</code> element in scope.</p>
+    <p>The <code>t:next</code> or <code>t:last</code> element cannot be
+    used to break the current macro or inclusion.</p>
+  </div>
+
+<div class="section" id="temma:child-not-allowed"><h3>The child node cannot be generated in
+  this context.</h3>
+    <p>The result node generated by this source node is not 
+    allowed in the current context of the result document.</p>
+
+    <p>For example, no element or comment node can be generated 
+    within <code>title</code> element.</p>
+  </div>
+
+<div class="section" id="temma:comment-not-allowed"><h3>Comment cannot be generated in this
+  context.</h3>
+    <p>The comment node cannot be generated in the context where only
+    text is allowed.  In particular, comments are not allowed in
+    <code>title</code>, <code>textarea</code>, <code>script</code>, or
+    <code>style</code> element, or in plain text mode.</p>
+  </div>
+
+<div class="section" id="temma:components:unknown-type"><h3>Unknown component type 
+  <code><var>{value}</var></code> is returned by the locale object.</h3>
+    <p>The locale object returned a component with the unknown component
+    type specified.  The locale object is expected to only return
+    the data structure defined by the Temma processor module.</p>
+  </div>
+
+<div class="section" id="temma:duplicate-attr"><h3>No two attributes can share the same name
+  <code><var>{text}</var></code>.</h3>
+    <p>同じ名前の属性が1つの要素に対して複数回生成されています。</p>
+    <p>同じ要素に対しては <code>class</code> 
+    以外の属性を複数回生成することはできません。</p>
+  </div>
+
+<div class="section" id="temma:duplicate-field"><h3>Duplicate field name
+  <code><var>{value}</var></code>.</h3>
+    <p>There are multiple fields with the same name for the 
+    macro, inclusion, or message ID reference.</p>
+    <p>Field names given by the <code>name</code> attribute
+    of the <code>t:field</code> element must be unique
+    in the parent element.</p>
+  </div>
+
+<div class="section" id="temma:duplicate-param"><h3>Duplicate parameter specification
+  for <code><var>{value}</var></code>.</h3>
+    <p>There are multiple specification of the same parameter
+    name in the parameter list attribute.  There must not be
+    duplicate parameter specification in the attribute.</p>
+  </div>
+
+<div class="section" id="temma:duplicate-sep"><h3>Duplicate <code>t:sep</code> element
+  is not allowed.</h3>
+    <p>The <code>t:sep</code> element can be used only once
+    within the <code>t:for</code> element.</p>
+  </div>
+
+<div class="section" id="temma:html-non-temma-attr"><h3>Temma 属性ではない
+  <code><var>{text}</var></code> は
+  <code>html</code> 要素には指定できません。</h3>
+    <p>The <code>html</code> start tag in the Temma source document
+    interpreted in the <code>body</code> parsing mode does not allow
+    any attribute not in the Temma namespace.  In other word,
+    no attribute other than the <code>t:params</code> is allowed.</p>
+  </div>
+
+<div class="section" id="temma:include-error"><h3>Can't include an external file:
+  <code><var>{value}</var></code>.</h3>
+    <p>The processor cannot include the specified external file,
+    because of some error (e.g. the specified file is not found or the
+    current user does not have permission to read the file).</p>
+  </div>
+
+<div class="section" id="temma:macro-already-defined"><h3>Macro <code><var>{value}</var></code>
+  is already defined.</h3>
+    <p>The specified macro name is already used for another macro.
+    No two macros can share the same name.  Note that macro names are
+    ASCII case-insensitive.</p>
+  </div>
+
+<div class="section" id="temma:macro-not-defined"><h3>Macro <code><var>{value}</var></code>
+  is not defined.</h3>
+    <p>The referenced macro is not defined.  Macro must be
+    defined before used.</p>
+  </div>
+
+<div class="section" id="temma:macro-too-deep"><h3>Macro/inclusion call stack overflow.</h3>
+    <p>Nesting level of macro invocations and/or inclusions is too
+    deep.  There might be recursive references of macro or external
+    file.</p>
+  </div>
+
+<div class="section" id="temma:name-not-serializable"><h3>Name <code><var>{value}</var></code> 
+  is not allowed.</h3>
+    <p>The specified element or attribute name is not serialized
+    in the format of the result document.</p>
+
+    <p>Element or attribute name generated by Temma document must
+    match the regular expression
+    <code>[A-Za-z_-][A-Za-z0-9_:-]*</code>.</p>
+  </div>
+
+<div class="section" id="temma:no-cb-method"><h3>The condvar object does not have the
+  <code>cb</code> method.</h3>
+    <p>The condvar object specified by the <code>t:wait</code>
+    element does not have the <code>cb</code> method defined.</p>
+  </div>
+
+<div class="section" id="temma:no-locale"><h3>Processing of this document requires
+  the locale object.</h3>
+    <p>The source template document requires the locale object for
+    its processing.  For the processing of <code>msg:<var>*</var></code> 
+    elements and attributes, the locale object is required.</p>
+  </div>
+
+<div class="section" id="temma:no-param"><h3>Parameter <code><var>{value}</var></code>
+  is not defined.</h3>
+    <p>The specified parameter is not defined by the <code>t:params</code>
+    attribute of the <code>html</code> element.</p>
+  </div>
+
+<div class="section" id="temma:not-arrayref"><h3>The <code>x</code> attribute must 
+  return an array reference (or equivalent).</h3>
+    <p>The <code>x</code> attribute of the <code>t:for</code> element
+    must return an array reference (or something that can be interpreted
+    as if it were an array reference).</p>
+  </div>
+
+<div class="section" id="temma:not-representable-in-raw-text"><h3>Element content cannot contain text
+  that can be interpreted as the end tag.</h3>
+    <p>The element contains text that can be interpreted as 
+    the end tag of the element.  Since rawtext elements such 
+    as <code>script</code> or <code>style</code> element cannot
+    contain such a text, allowing it makes the result document
+    non-serializable, and therefore it is disallowed.</p>
+  </div>
+
+<div class="section" id="temma:perl-exception"><h3>A Perl exception is thrown:
+  <code><var>{value}</var></code>.</h3>
+    <p>An exception is thrown in the Perl code but it is not 
+    catched in the source document.</p>
+
+    <p>The exception is either thrown in the Perl code explicitly by
+    the <code>die</code> statement or thrown by Perl by syntax error.
+    Anyway, it must be catched within the Perl code or by the
+    <code>t:try</code> element in scope.</p>
+  </div>
+
+<div class="section" id="temma:perl-exception:cb"><h3>A Perl exception is thrown:
+  <code><var>{value}</var></code>.</h3>
+    <p>An exception is thrown in the <code>cb</code> method of
+    the condvar object.  The method is not expected to throw
+    any exception.</p>
+  </div>
+
+<div class="section" id="temma:start-tag-already-closed"><h3>The start tag is already closed such that
+  no attribute can be generated for the element anymore.</h3>
+    <p>An attribute cannot be generated once content of the element
+    is generated.  In other word, attributes must be generated
+    before any non white space character or element.</p>
+  </div>
+
+<div class="section" id="temma:undef"><h3>The attribute cannot return the 
+  <code>undef</code> value.</h3>
+    <p>This Perl expression attribute is expected to return some
+    useful value, but the attribute is evaluated to the <code>undef</code>
+    value.</p>
+  </div>
+
+<div class="section" id="temma:unknown-element"><h3>The <code><var>{value}</var></code>
+  element is not defined or allowed here.</h3>
+    <p>The element is not defined or allowed only in specific context.
+    Undefined elements in the Temma namespace must not be used.</p>
+  </div>
+
+<div class="section" id="temma:variable-name"><h3>Variable name is syntaxtically 
+  inappropriate.</h3>
+    <p>The specified variable name is syntactically non-conforming.</p>
+    <p>The variable name must match the regular expression
+    <code>\$?[A-Za-z_][0-9A-Za-z_]*</code> but not <code>\$?_</code>.</p>
+  </div>
 
 </section>
 

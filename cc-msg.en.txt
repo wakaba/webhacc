@@ -36,7 +36,7 @@ bare hcro;;The hexadecimal representation of the code position of a character mu
 bogus comment;;String <code>&lt;!</code> is not followed by <code>--</code>.
 bogus end tag;;String <code>&lt;/</code> is not followed by tag name.
 dash in comment;;There is a <code>--</code> sequence in a comment.
-duplicate attribute;;There are two attributes with name <code><var>{text}</var></code>.
+duplicate attribute;;No two attributes can share the same name <code><var>{text}</var></code>.
 empty start tag;; <p>In HTML, XML, and WebVTT, empty start tag, i.e. start tag with no tag name, is not allowed.</p> <p>To represent a start tag, you have to specify the tag name explicitly.</p> <p>To represent a string with the <code>&lt;</code> character, you have to use the character reference: <code>&amp;lt;</code>.</p> 
 empty end tag;; <p>In HTML, XML, and WebVTT, empty end tag, i.e. end tag with no tag name, is not allowed.</p> <p>To represent an end tag, you have to specify the tag name explicitly.</p> <p>To represent a string with the <code>&lt;</code> character, you have to use the character reference: <code>&amp;lt;</code>.</p> 
 end tag attribute;;End tag cannot have attributes.
@@ -135,6 +135,7 @@ element not allowed:minus;;This element is not allowed in this context.
 element not allowed:meta charset;;The character encoding declaration is not the first child element in the <code>head</code> element.
 element not allowed:metadata;;This element is not allowed where metadata content is expected.
 element not allowed:phrasing;;This element is not allowed where phrasing content is expected.
+element not allowed:rawtext;;The element is not allowed where rawtext content is expected.
 element not allowed:root;;This element is not allowed as the root element of a document.
 element not allowed:root:xml;;This element is not allowed as the root element of an XML document.
 element not allowed:ruby base;;This element is not allowed in the <code>ruby</code> element.
@@ -142,6 +143,7 @@ element not allowed:text;;This element is not allowed in this context.
 element not allowed:atom|content;;This element is not allowed in an Atom <code>content</code> element.
 element not allowed:atom|PersonConstruct;;This element is not allowed in Person construct.
 element not allowed:atom|TextConstruct;;This element is not allowed in Text construct.
+element not allowed:t:if;;This element is not allowed in this context of the <code>t:if</code> element.
 element not defined;;This element is not defined.
 multiple labelable fae;;More than one labelable form-associated element is associated to a <code>label</code> element.
 no significant content;;No significant content is contained in this element.
@@ -534,6 +536,33 @@ parse type other;;An invalid value is specified to the <code>parseType</code> at
 second node element;;There is another element, such that this element is not allowed.
 unqualified attr;;Unqualified attribute is not allowed.
 unqualified rdf attr;;RDF attribute should be namespace‐qualified.
+temma:bad macro name;;Macro name is syntactically inappropriate.
+temma:bad params;;Parameter list attribute has a token that is not a variable name: <code><var>{value}</var></code>.
+temma:block not found;;The <code>t:for</code> block is not found.
+temma:child not allowed;;The child node cannot be generated in this context.
+temma:comment not allowed;;Comment cannot be generated in this context.
+temma:components:unknown type;;Unknown component type <code><var>{value}</var></code> is returned by the locale object.
+temma:duplicate attr;;No two attributes can share the same name <code><var>{text}</var></code>.
+temma:duplicate field;;Duplicate field name <code><var>{value}</var></code>.
+temma:duplicate param;;Duplicate parameter specification for <code><var>{value}</var></code>.
+temma:duplicate sep;;Duplicate <code>t:sep</code> element is not allowed.
+temma:html non temma attr;;Temma 属性ではない <code><var>{text}</var></code> は <code>html</code> 要素には指定できません。
+temma:include error;;Can't include an external file: <code><var>{value}</var></code>.
+temma:macro already defined;;Macro <code><var>{value}</var></code> is already defined.
+temma:macro not defined;;Macro <code><var>{value}</var></code> is not defined.
+temma:macro too deep;;Macro/inclusion call stack overflow.
+temma:name not serializable;;Name <code><var>{value}</var></code> is not allowed.
+temma:no cb method;;The condvar object does not have the <code>cb</code> method.
+temma:no locale;;Processing of this document requires the locale object.
+temma:no param;;Parameter <code><var>{value}</var></code> is not defined.
+temma:not arrayref;;The <code>x</code> attribute must return an array reference (or equivalent).
+temma:not representable in raw text;;Element content cannot contain text that can be interpreted as the end tag.
+temma:perl exception;;A Perl exception is thrown: <code><var>{value}</var></code>.
+temma:perl exception:cb;;A Perl exception is thrown: <code><var>{value}</var></code>.
+temma:start tag already closed;;The start tag is already closed such that no attribute can be generated for the element anymore.
+temma:undef;;The attribute cannot return the <code>undef</code> value.
+temma:unknown element;;The <code><var>{value}</var></code> element is not defined or allowed here.
+temma:variable name;;Variable name is syntaxtically inappropriate.
 unknown element;;Conformance checking for element <code><var>{local-name}</var></code> is not supported; <em>it might or might not be conforming</em>.
 unknown attribute;;Conformance checking for attribute <code><var>{local-name}</var></code> of element <code><var>{element-local-name}</var></code> is not supported; <em>it might or might not be conforming</em>.
 unknown link type;;Link type <code><var>{value}</var></code> is not standardized or registered at the time of the release of the conformance checker; <em>it is non-conforming unless it now has been registered</em>.

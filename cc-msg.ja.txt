@@ -36,7 +36,7 @@ bare hcro;;The hexadecimal representation of the code position of a character mu
 bogus comment;;String <code>&lt;!</code> is not followed by <code>--</code>.
 bogus end tag;;String <code>&lt;/</code> is not followed by tag name.
 dash in comment;;There is a <code>--</code> sequence in a comment.
-duplicate attribute;;There are two attributes with name <code><var>{text}</var></code>.
+duplicate attribute;;2つの属性が同じ名前 <code><var>{text}</var></code> を使うことはできません。
 empty start tag;; <p>HTML、XML、WebVTT では、タグ名の無い空の開始タグは認められていません。</p> <p>開始タグを記述する時はタグ名も明示しなければなりません。</p> <p>「<code>&lt;</code>」という文字を使いたい時は文字参照 「<code>&amp;lt;</code>」を使わなければなりません。</p> 
 empty end tag;; <p>HTML、XML、WebVTT では、タグ名の無い空の終了タグは認められていません。</p> <p>終了タグを記述する時はタグ名も明示しなければなりません。</p> <p>「<code>&lt;</code>」という文字を使いたい時は文字参照 「<code>&amp;lt;</code>」を使わなければなりません。</p> 
 end tag attribute;;終了タグに属性が指定されています。
@@ -119,7 +119,7 @@ child element missing:atom:link:alternate;;There must be an Atom <code>link</cod
 child element missing:atom:link:self;;There should be an Atom <code>link</code> element whose <code>rel</code> attribute is set to <code>self</code> as a child of this element.
 element missing;;子要素 <code><var>{text}</var></code> がありません。
 element missing:hn;;There must be at least one <code>h<var>n</var></code> element descendant.
-element not allowed;;This element is not allowed in this context.
+element not allowed;;この要素はこの場所では認められていません。
 element not allowed:area;;An <code>area</code> element cannot be used outside of a <code>map</code> element.
 element not allowed:base;;There is another <code>base</code> element.
 element not allowed:datatemplate;;In a <code>datatemplate</code> element, only <code>rule</code> elements are allowed.
@@ -135,6 +135,7 @@ element not allowed:minus;;This element is not allowed in this context.
 element not allowed:meta charset;;文字符号化宣言が <code>head</code> 要素の最初の子要素ではありません。
 element not allowed:metadata;;This element is not allowed where metadata content is expected.
 element not allowed:phrasing;;This element is not allowed where phrasing content is expected.
+element not allowed:rawtext;;この要素は生テキスト内容が期待される場所では認められていません。
 element not allowed:root;;This element is not allowed as the root element of a document.
 element not allowed:root:xml;;This element is not allowed as the root element of an XML document.
 element not allowed:ruby base;;This element is not allowed in the <code>ruby</code> element.
@@ -142,6 +143,7 @@ element not allowed:text;;This element is not allowed in this context.
 element not allowed:atom|content;;This element is not allowed in an Atom <code>content</code> element.
 element not allowed:atom|PersonConstruct;;This element is not allowed in Person construct.
 element not allowed:atom|TextConstruct;;This element is not allowed in Text construct.
+element not allowed:t:if;;この要素は <code>t:if</code> 要素内のこの場所では認められていません。
 element not defined;;この要素は定義されていません。
 multiple labelable fae;;More than one labelable form-associated element is associated to a <code>label</code> element.
 no significant content;;No significant content is contained in this element.
@@ -149,7 +151,7 @@ no significant content before;;There is no significant content before this eleme
 no significant content at the end;;No significant content is contained at the end of this element.
 ps element missing;;There is no <code><var>{text}</var></code> element before this element.
 rp:syntax error;;The content of a <code>rp</code> element must be a parenthesis.
-attribute missing;;Required attribute <code><var>{text}</var></code> is not specified.
+attribute missing;;必須の属性 <code><var>{text}</var></code> が指定されていません。
 attribute missing:data|type;;For an <code>object</code> at least one of <code>data</code> and <code>type</code> attributes must be specified.
 attribute missing:href|target;;For a <code>base</code> element, at least one of <code>href</code> and <code>target</code> attributes must be specified.
 attribute missing:name|http-equiv;;For a <code>meta</code> element with the <code>content</code> attribute specified, exactly one of <code>name</code> and <code>http-equiv</code> attributes must be specified.
@@ -534,6 +536,33 @@ parse type other;;An invalid value is specified to the <code>parseType</code> at
 second node element;;There is another element, such that this element is not allowed.
 unqualified attr;;Unqualified attribute is not allowed.
 unqualified rdf attr;;RDF attribute should be namespace‐qualified.
+temma:bad macro name;;マクロ名が構文的に不適切です。
+temma:bad params;;引数リスト属性が変数名でない字句 <code><var>{value}</var></code> を含んでいます。
+temma:block not found;;<code>t:for</code> ブロックが見つかりません。
+temma:child not allowed;;ここではこの子供節点を生成できません。
+temma:comment not allowed;;ここでは注釈を生成することはできません。
+temma:components:unknown type;;ロケール・オブジェクトが未知の部品型 <code><var>{value}</var></code> を返しました。
+temma:duplicate attr;;2つの属性が同じ名前 <code><var>{text}</var></code> を使うことはできません。
+temma:duplicate field;;欄名 <code><var>{value}</var></code> が重複しています。
+temma:duplicate param;;引数 <code><var>{value}</var></code> の指定が重複しています。
+temma:duplicate sep;;<code>t:sep</code> 要素は一度だけしか使えません。
+temma:html non temma attr;;Non-Temma attribute <code><var>{text}</var></code> is not allowed on the <code>html</code> element.
+temma:include error;;外部ファイルを取り込めません: <code><var>{value}</var></code>。
+temma:macro already defined;;マクロ <code><var>{value}</var></code> は既に定義されています。
+temma:macro not defined;;マクロ <code><var>{value}</var></code> は定義されていません。
+temma:macro too deep;;マクロ・取り込みの呼び出しスタック溢れです。
+temma:name not serializable;;名前 <code><var>{value}</var></code> は認められていません。
+temma:no cb method;;指定された condvar オブジェクトは <code>cb</code> メソッドを持っていません。
+temma:no locale;;この文書の処理にはロケール・オブジェクトが必要です。
+temma:no param;;引数 <code><var>{value}</var></code> は定義されていません。
+temma:not arrayref;;<code>x</code> 属性は配列参照 (かそれと等価なもの) を返さなければなりません。
+temma:not representable in raw text;;要素内に終了タグと解釈できるテキストが含まれています。
+temma:perl exception;;Perl の例外が投げられました: <code><var>{value}</var></code>。
+temma:perl exception:cb;;Perl の例外が投げられました: <code><var>{value}</var></code>。
+temma:start tag already closed;;開始タグは既に閉じられているため、 これ以上この要素の属性を生成することはできません。
+temma:undef;;この属性が <code>undef</code> 値を返してはいけません。
+temma:unknown element;;<code><var>{value}</var></code> 要素は定義されていないかここでは使えません。
+temma:variable name;;変数名が構文的に不適切です。
 unknown element;;Conformance checking for element <code><var>{local-name}</var></code> is not supported; <em>it might or might not be conforming</em>.
 unknown attribute;;Conformance checking for attribute <code><var>{local-name}</var></code> of element <code><var>{element-local-name}</var></code> is not supported; <em>it might or might not be conforming</em>.
 unknown link type;;Link type <code><var>{value}</var></code> is not standardized or registered at the time of the release of the conformance checker; <em>it is non-conforming unless it now has been registered</em>.

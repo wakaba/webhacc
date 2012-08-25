@@ -648,15 +648,24 @@
 </d:item>
 
 <d:item name="duplicate attribute"
-    modules="Whatpm::HTML::Parser">
-  <d:message xml:lang="en">There are two attributes with name
-      <code><var>{text}</var></code>.</d:message>
+    modules="Whatpm::HTML::Parser Temma::Parser">
+  <d:message xml:lang="en">No two attributes can share the same name
+  <code><var>{text}</var></code>.</d:message>
+  <d:message xml:lang="ja">2つの属性が同じ名前 
+  <code><var>{text}</var></code> を使うことはできません。</d:message>
   <d:desc xml:lang="en">
-    <p>There are more than one attributes with the same
-    name in a tag.  The document is non-conforming.</p>
+    <p>There are more than one attributes with the same name in a tag.</p>
 
-    <p>The <code>motion</code> attribute is not part of the HTML standard.
-    Use <code>img</code> element with animation GIF instead.</p>
+    <p>The <code>motion</code> attribute of the <code>img</code>
+    element is obsolete.  Use <code>img</code> element with animation
+    GIF instead.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>同じ名前の属性を複数同じタグに指定することはできません。</p>
+
+    <p><code>img</code> 要素の <code>motion</code> 属性は廃止されています。
+    代わりに <code>img</code> 要素とアニメーション GIF 
+    をお使いください。</p>
   </d:desc>
 </d:item>
 
@@ -1362,7 +1371,8 @@ p {
 
 <d:item name="not closed"
     class="parse-error"
-    modules="Whatpm::HTML::Parser Whatpm::WebVTT::Parser">
+    modules="Whatpm::HTML::Parser Whatpm::WebVTT::Parser
+             Temma::Parser">
   <d:message xml:lang="en">Element <code><var>{text}</var></code> is not
   closed.</d:message>
   <d:message xml:lang="ja">要素 <code><var>{text}</var></code>
@@ -1482,7 +1492,8 @@ p {
 
 <d:item name="start tag not allowed"
     class="parse-error"
-    modules="Whatpm::HTML::Parser Whatpm::WebVTT::Parser">
+    modules="Whatpm::HTML::Parser Whatpm::WebVTT::Parser
+             Temma::Parser">
   <d:message xml:lang="en">Start tag
   <code>&lt;<var>{text}</var>></code> is not allowed here.</d:message>
   <d:message xml:lang="ja">開始タグ <code>&lt;<var>{text}</var>></code>
@@ -1519,7 +1530,7 @@ p {
 
 <d:item name="unmatched end tag"
     class="parse-error"
-    modules="Whatpm::HTML::Parser Whatpm::WebVTT::Parser">
+    modules="Whatpm::HTML::Parser Whatpm::WebVTT::Parser Temma::Parser">
   <d:message xml:lang="en">Element <code><var>{text}</var></code> is not
   opened.</d:message>
   <d:message xml:lang="ja">要素 <code><var>{text}</var></code> 
@@ -1528,8 +1539,8 @@ p {
     <p>An end tag appears though no element with the same name
     has been opened.</p>
 
-    <p>For any end tag in HTML, XML, or WebVTT document, there must be
-    a corresponding start tag.</p>
+    <p>For any end tag in HTML, XML, WebVTT, or Temma document, there
+    must be a corresponding start tag.</p>
 
     <dl class="switch">
 
@@ -1549,7 +1560,7 @@ p {
   <d:desc xml:lang="ja">
     <p>終了タグがありましたが、同じ名前の要素は開いていません。</p>
 
-    <p>HTML、XML、WebVTT では、
+    <p>HTML、XML、WebVTT、 Temma では、
     終了タグは対応する開始タグがなければなりません。</p>
 
     <dl class="switch">
@@ -1751,70 +1762,16 @@ p {
 </d:item>
 
 <d:item name="element not allowed"
-    modules="Whatpm::ContentChecker::HTML Whatpm::ContentChecker::Atom Whatpm::RDFXML">
+    modules="Whatpm::ContentChecker::HTML Whatpm::ContentChecker::Atom
+             Whatpm::RDFXML Temma::Processor">
   <d:message xml:lang="en">This element is not allowed in this 
   context.</d:message>
+  <d:message xml:lang="ja">この要素はこの場所では認められていません。</d:message>
   <d:desc xml:lang="en">
-    <p>An element appears where it is not allowed.  The document
-    is non-conforming.</p>
-
-    <p>Possible causes:
-      <dl class="switch">
-      <dt>If the element with the error is an inline-level element,
-      such as <code>a</code>, <code>progress</code>, or <code>img</code></dt>
-          <dd><p>An inline-level element cannot be a child
-          of certain sectioning elements such as <code>body</code>,
-          <code>section</code>, and <code>blockquote</code>.</p>
-
-          <p>Any inline-level content must be put
-          in e.g. paragraph element such as <code>p</code>.</p></dd>
-      <dt>If it is a block-level elements, such as <code>aside</code>,
-      <code>div</code>, <code>h<var>n</var></code>,
-      <code>p</code>, or <code>section</code></dt>
-          <dd><dl class="switch">
-              <dt>If the parent element is <code>div</code>,
-              <code>li</code>, <code>td</code>, or <code>th</code></dt>
-              <!-- @@ TODO: more... -->
-                  <!-- @@ TODO: <p><ul><li><p> -->
-                  <dd><p>The parent element allows <em>either</em>
-                  block-level or inline-level content.  If there is a
-                  block-level content, any inline-level content must be
-                  put in e.g. paragraph element such as <code>p</code>.</p>
-                  <p>For example, an HTML document fragment
-                  <code class="html bad example">&lt;div>&lt;p>Hello!&lt;/p> World!&lt;/div></code>
-                  is non-conforming, since a word <q>World!</q> does not belong
-                  to any paragraph.  (If not part of any paragraph, what is
-                  it!?)  A conforming example would be:
-                    <pre class="html example"><code>&lt;div>&lt;p>Hello!&lt;/p> &lt;p>World!&lt;/p>&lt;/div></code></pre>
-                  </p></dd>
-              <dt>If the parent element does <em>not</em> allow 
-              block-level elements as content</dt>
-                  <dd>The element is not allowed to be inserted here.
-                  For example, a <code>div</code> element cannot be 
-                  a child of an <code>h1</code> element.</dd>
-          </dl></dd>
-      <dt>If the element with the error is a <code>noscript</code> element</dt>
-          <dd>The <code>noscript</code> element is allowed only in the context
-          where a block-level or inline-level content is expected
-          and in the <code>head</code> element.
-          It cannot be used in e.g. <code>ul</code>, <code>table</code>,
-          or <code>select</code>.</dd>
-      <dt>If the element with the error is <code>blink</code>,
-      <code>center</code>, or <code>marquee</code> element</dt>
-          <dd>These elements are not part of the HTML standard.
-          Use CSS for styling control.</dd>
-
-      <dt><code>button</code>, <code>datalist</code>,
-      <code>fieldset</code>, <code>form</code>,
-      <code>input</code>, <code>label</code>,
-      <code>optgroup</code>, <code>option</code>, <code>output</code>,
-      <code>rb</code>, <code>rp</code>, <code>rt</code>, <code>ruby</code>,
-      <code>textarea</code>, or <code>textarea</code> element</dt>
-      <!-- rbc, rtc ? -->
-          <dd>These elements are intentionally not supported by the conformance
-          checker <em>yet</em>.</dd>
-      </dl>
-    </p>
+    <p>An element appears where it is not allowed.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>親要素の内容モデルで認められていない子要素が現れました。</p>
   </d:desc>
 </d:item>
 
@@ -1926,6 +1883,20 @@ p {
   content is expected.</d:message>
 </d:item>
 
+<d:item name="element not allowed:rawtext" modules="Temma::Processor">
+  <d:message xml:lang="en">The element is not allowed where 
+  rawtext content is expected.</d:message>
+  <d:message xml:lang="ja">この要素は生テキスト内容が期待される場所では認められていません。</d:message>
+  <d:desc xml:lang="en">
+    <p>The parent element accepts rawtext content here.
+    Elements other than rawtext content cannot be used.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>親要素が生テキスト内容を受け付けているので、
+    ここでは生テキスト内容でない要素を使うことはできません。</p>
+  </d:desc>
+</d:item>
+
 <d:item name="element not allowed:root"
     modules="Whatpm::ContentChecker">
   <d:message xml:lang="en">This element is not allowed as the root
@@ -1990,6 +1961,25 @@ p {
     modules="Whatpm::ContentChecker::Atom">
   <d:message xml:lang="en">This element is not allowed in Text
   construct.</d:message>
+</d:item>
+
+<d:item name="element not allowed:t:if" modules="Temma::Processor">
+  <d:message xml:lang="en">This element is not allowed in this context of
+  the <code>t:if</code> element.</d:message>
+  <d:message xml:lang="ja">この要素は <code>t:if</code>
+  要素内のこの場所では認められていません。</d:message>
+  <d:desc xml:lang="en">
+    <p>The element is not allowed in the context.  In the 
+    <code>t:if</code> element, <code>t:elsif</code>
+    elements cannot be used after the <code>t:else</code> element.
+    The <code>t:else</code> element can only be used once.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>この要素はこの場所では認められていません。 <code>t:if</code>
+    要素内では <code>t:elsif</code> 要素は <code>t:else</code>
+    要素の後に置くことはできませんし、 <code>t:else</code>
+    要素は一度しか使えません。</p>
+  </d:desc>
 </d:item>
 
 <d:item name="element not defined"
@@ -2064,12 +2054,13 @@ p {
 <h2>Attribute Errors</h2>
 
 <d:item name="attribute missing"
-    modules="Whatpm::ContentChecker::HTML">
+    modules="Whatpm::ContentChecker::HTML Temma::Processor">
   <d:message xml:lang="en">Required attribute <code><var>{text}</var></code>
   is not specified.</d:message>
+  <d:message xml:lang="ja">必須の属性 <code><var>{text}</var></code>
+  が指定されていません。</d:message>
   <d:desc>
-    <p>A required attribute is not specified.  The document
-    is non-conforming.</p>
+    <p>A required attribute is not specified.</p>
 
     <p>Some attribute is defined as <i>required</i>.
     Without required attributes specified, user agents 
@@ -2083,6 +2074,21 @@ p {
     <dt>HTML <code>link</code> element</dt>
         <dd>The <code>rel</code> attribute must be specified.
         Note that the <code>rev</code> attribute is obsolete.</dd>
+    </dl>
+  </d:desc>
+  <d:desc>
+    <p>必須の属性が指定されていません。</p>
+
+    <p>属性によっては「必須」とされており、
+    必須の属性がないと利用者エージェントは当該要素の機能を完全には利用者に提供できないことがあります。</p>
+
+    <dl class="switch">
+    <dt>HTML <code>img</code> 要素</dt>
+        <dd><code>src</code> 属性を指定しなければなりません。更に、多くの場合
+        <code>alt</code> 属性も指定しなければなりません。</dd>
+    <dt>HTML <code>link</code> 要素</dt>
+        <dd><code>rel</code> 属性を指定しなければなりません。
+        なお <code>rev</code> 属性は廃止されました。</dd>
     </dl>
   </d:desc>
 </d:item>
@@ -5930,6 +5936,490 @@ Regexp::Parser::JavaScript's extension. -->
     modules="Whatpm::RDFXML">
   <d:message xml:lang="en">RDF attribute should be
   namespace‐qualified.</d:message>
+</d:item>
+
+</section>
+
+<section id="temma">
+<h2>Temma errors</h2>
+
+<d:item name="temma:bad macro name" modules="Temma::Processor">
+  <d:message xml:lang="en">Macro name is syntactically
+  inappropriate.</d:message>
+  <d:message xml:lang="ja">マクロ名が構文的に不適切です。</d:message>
+  <d:desc xml:lang="en">
+    <p>The specified macro name is syntactically non-conforming.</p>
+    <p>The macro name must match the regular expression
+    <code>[a-z_.][a-z_.0-9-]*</code>.  Macro names are ASCII
+    case-insensitive.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>指定されたマクロ名は構文的に不適合です。</p>
+    <p>マクロ名は正規表現 <code>[a-z_.][a-z_.0-9-]*</code>
+    に一致しなければなりません。マクロ名は ASCII 大文字・小文字不区別です。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="temma:bad params" modules="Temma::Processor">
+  <d:message xml:lang="en">Parameter list attribute has a token
+  that is not a variable name: <code><var>{value}</var></code>.</d:message>
+  <d:message xml:lang="ja">引数リスト属性が変数名でない字句
+  <code><var>{value}</var></code> を含んでいます。</d:message>
+  <d:desc xml:lang="en">
+    <p>The parameter specificaiton list attribute has a token that is
+    not a variable name.  The list cannot contain anything other than
+    variable name.  Variable name must match the regular expression
+    <code>\$?[A-Za-z_][0-9A-Za-z_]*</code> but not <code>\$?_</code>.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>引数指定リスト属性が変数名でない字句を含んでいます。
+    リストに変数名以外のものを含めてはなりません。変数名は正規表現
+    <code>\$?[A-Za-z_][0-9A-Za-z_]*</code> に一致し、
+    <code>\$?_</code> に一致しないものでなければなりません。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="temma:block not found" modules="Temma::Processor">
+  <d:message xml:lang="en">The <code>t:for</code> block is not 
+  found.</d:message>
+  <d:message xml:lang="ja"><code>t:for</code>
+  ブロックが見つかりません。</d:message>
+  <d:desc xml:lang="en">
+    <p>The block specified by <code>t:next</code> or <code>t:last</code>
+    element is not found.</p>
+    <p>If the element has the <code>for</code> attribute, there must be
+    the <code>t:for</code> element in scope whose <code>name</code> attribute
+    has the same block name.  Otherwise, there must be the
+    <code>t:for</code> element in scope.</p>
+    <p>The <code>t:next</code> or <code>t:last</code> element cannot be
+    used to break the current macro or inclusion.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p><code>t:next</code> 要素や <code>t:last</code>
+    要素が指定するブロックが見つかりません。</p>
+    <p>要素が <code>for</code> 属性を保つ場合は、同じ値の
+    <code>name</code> 属性を持つ <code>t:for</code> 
+    要素の範囲内になければなりません。そうでない場合、
+    <code>t:for</code> 要素の範囲内になければなりません。</p>
+    <p><code>t:next</code> 要素や <code>t:last</code>
+    要素によってマクロやファイルの取り込みを中断することはできません。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="temma:child not allowed" modules="Temma::Processor">
+  <d:message xml:lang="en">The child node cannot be generated in
+  this context.</d:message>
+  <d:message xml:lang="ja">ここではこの子供節点を生成できません。</d:message>
+  <d:desc xml:lang="en">
+    <p>The result node generated by this source node is not 
+    allowed in the current context of the result document.</p>
+
+    <p>For example, no element or comment node can be generated 
+    within <code>title</code> element.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>この原始節点から生成される結果節点は、
+    結果文書の現在の文脈では認められていません。</p>
+
+    <p>例えば、 <code>title</code>
+    要素内に要素節点や注釈節点を入れることはできません。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="temma:comment not allowed" modules="Temma::Processor">
+  <d:message xml:lang="en">Comment cannot be generated in this
+  context.</d:message>
+  <d:message xml:lang="ja">ここでは注釈を生成することはできません。</d:message>
+  <d:desc xml:lang="en">
+    <p>The comment node cannot be generated in the context where only
+    text is allowed.  In particular, comments are not allowed in
+    <code>title</code>, <code>textarea</code>, <code>script</code>, or
+    <code>style</code> element, or in plain text mode.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>注釈節点はテキストのみが認められている場所では生成できません。
+    特に、 <code>title</code>, <code>textarea</code>, <code>script</code>, 
+    <code>style</code> 各要素の中や、平文モードでは注釈は使えません。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="temma:components:unknown type" modules="Temma::Processor">
+  <d:message xml:lang="en">Unknown component type 
+  <code><var>{value}</var></code> is returned by the locale object.</d:message>
+  <d:message xml:lang="ja">ロケール・オブジェクトが未知の部品型
+  <code><var>{value}</var></code> を返しました。</d:message>
+  <d:desc xml:lang="en">
+    <p>The locale object returned a component with the unknown component
+    type specified.  The locale object is expected to only return
+    the data structure defined by the Temma processor module.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>ロケール・オブジェクトが未知の部品型が指定された部品を返しました。
+    ロケール・オブジェクトは Temma 
+    処理器モジュールが定義するデータ構造のみを返すことが期待されています。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="temma:duplicate attr" modules="Temma::Processor">
+  <d:message xml:lang="en">No two attributes can share the same name
+  <code><var>{text}</var></code>.</d:message>
+  <d:message xml:lang="ja">2つの属性が同じ名前
+  <code><var>{text}</var></code> を使うことはできません。</d:message>
+  <d:desc xml:lang="en">
+    <p>There are more than one attributes with the same name 
+    generated for an element.</p>
+
+    <p>No attribute except for the <code>class</code> attribute
+    can be generated multiple times for the same element.</p>
+  </d:desc>
+  <d:desc xml:lang="en">
+    <p>同じ名前の属性が1つの要素に対して複数回生成されています。</p>
+    <p>同じ要素に対しては <code>class</code> 
+    以外の属性を複数回生成することはできません。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="temma:duplicate field" modules="Temma::Processor">
+  <d:message xml:lang="en">Duplicate field name
+  <code><var>{value}</var></code>.</d:message>
+  <d:message xml:lang="ja">欄名 <code><var>{value}</var></code>
+  が重複しています。</d:message>
+  <d:desc xml:lang="en">
+    <p>There are multiple fields with the same name for the 
+    macro, inclusion, or message ID reference.</p>
+    <p>Field names given by the <code>name</code> attribute
+    of the <code>t:field</code> element must be unique
+    in the parent element.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>同じマクロ、取り込み、メッセージID
+    の参照の中で同じ名前の欄が複数あってはなりません。</p>
+    <p><code>t:field</code> 要素の <code>name</code> 
+    属性により指定される名前は親要素中で固有のものでなければなりません。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="temma:duplicate param" modules="Temma::Processor">
+  <d:message xml:lang="en">Duplicate parameter specification
+  for <code><var>{value}</var></code>.</d:message>
+  <d:message xml:lang="ja">引数 <code><var>{value}</var></code>
+  の指定が重複しています。</d:message>
+  <d:desc xml:lang="en">
+    <p>There are multiple specification of the same parameter
+    name in the parameter list attribute.  There must not be
+    duplicate parameter specification in the attribute.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>同じ引数名が1つの引数リスト属性中に複数あります。
+    1つの属性中に同じ引数の指定があってはなりません。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="temma:duplicate sep" modules="Temma::Processor">
+  <d:message xml:lang="en">Duplicate <code>t:sep</code> element
+  is not allowed.</d:message>
+  <d:message xml:lang="ja"><code>t:sep</code> 
+  要素は一度だけしか使えません。</d:message>
+  <d:desc xml:lang="en">
+    <p>The <code>t:sep</code> element can be used only once
+    within the <code>t:for</code> element.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p><code>t:for</code> 要素の中では <code>t:sep</code>
+    要素は一度しか使えません。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="temma:html non temma attr" modules="Temma::Parser">
+  <d:message xml:lang="en">Non-Temma attribute 
+  <code><var>{text}</var></code> is not allowed on the 
+  <code>html</code> element.</d:message>
+  <d:message xml:lang="en">Temma 属性ではない
+  <code><var>{text}</var></code> は
+  <code>html</code> 要素には指定できません。</d:message>
+  <d:desc xml:lang="en">
+    <p>The <code>html</code> start tag in the Temma source document
+    interpreted in the <code>body</code> parsing mode does not allow
+    any attribute not in the Temma namespace.  In other word,
+    no attribute other than the <code>t:params</code> is allowed.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>Temma 原始文書が <code>body</code> 構文解析モードで解釈される場合、
+    <code>html</code> 開始タグに Temma 
+    名前空間の属性以外を指定することはできません。つまり、
+    <code>t:params</code> 属性以外の属性を使うことはできません。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="temma:include error" modules="Temma::Processor">
+  <d:message xml:lang="en">Can't include an external file:
+  <code><var>{value}</var></code>.</d:message>
+  <d:message xml:lang="ja">外部ファイルを取り込めません:
+  <code><var>{value}</var></code>。</d:message>
+  <d:desc xml:lang="en">
+    <p>The processor cannot include the specified external file,
+    because of some error (e.g. the specified file is not found or the
+    current user does not have permission to read the file).</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>処理器は指定された外部ファイルを取り込めませんでした。
+    何らかのエラー (指定されたファイルが見つからない、
+    現在の利用者がそのファイルを読む権限を有していない、など) 
+    が発生しました。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="temma:macro already defined" modules="Temma::Processor">
+  <d:message xml:lang="en">Macro <code><var>{value}</var></code>
+  is already defined.</d:message>
+  <d:message xml:lang="ja">マクロ <code><var>{value}</var></code>
+  は既に定義されています。</d:message>
+  <d:desc xml:lang="en">
+    <p>The specified macro name is already used for another macro.
+    No two macros can share the same name.  Note that macro names are
+    ASCII case-insensitive.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>指定されたマクロ名は既に他のマクロに使われています。
+    同じ名前のマクロを定義することはできません。なおマクロ名は
+    ASCII 大文字・小文字不区別です。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="temma:macro not defined" modules="Temma::Processor">
+  <d:message xml:lang="en">Macro <code><var>{value}</var></code>
+  is not defined.</d:message>
+  <d:message xml:lang="ja">マクロ <code><var>{value}</var></code>
+  は定義されていません。</d:message>
+  <d:desc xml:lang="en">
+    <p>The referenced macro is not defined.  Macro must be
+    defined before used.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>参照されているマクロは定義されていません。
+    マクロは使う前に定義しなければなりません。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="temma:macro too deep" modules="Temma::Processor">
+  <d:message xml:lang="en">Macro/inclusion call stack overflow.</d:message>
+  <d:message xml:lang="ja">マクロ・取り込みの呼び出しスタック溢れです。</d:message>
+  <d:desc xml:lang="en">
+    <p>Nesting level of macro invocations and/or inclusions is too
+    deep.  There might be recursive references of macro or external
+    file.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>マクロ呼び出しや外部ファイルの取り込みの入れ子が深すぎます。
+    マクロや外部ファイルの循環参照があるのかもしれません。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="temma:name not serializable" modules="Temma::Processor">
+  <d:message xml:lang="en">Name <code><var>{value}</var></code> 
+  is not allowed.</d:message>
+  <d:message xml:lang="ja">名前 <code><var>{value}</var></code>
+  は認められていません。</d:message>
+  <d:desc xml:lang="en">
+    <p>The specified element or attribute name is not serialized
+    in the format of the result document.</p>
+
+    <p>Element or attribute name generated by Temma document must
+    match the regular expression
+    <code>[A-Za-z_-][A-Za-z0-9_:-]*</code>.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>指定された要素名・属性名は結果文書の書式では直列化できません。</p>
+
+    <p>Temma 文書が生成する要素名・属性名は正規表現
+    <code>[A-Za-z_-][A-Za-z0-9_:-]*</code> に一致しなければなりません。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="temma:no cb method" modules="Temma::Processor">
+  <d:message xml:lang="en">The condvar object does not have the
+  <code>cb</code> method.</d:message>
+  <d:message xml:lang="ja">指定された condvar オブジェクトは
+  <code>cb</code> メソッドを持っていません。</d:message>
+  <d:desc xml:lang="en">
+    <p>The condvar object specified by the <code>t:wait</code>
+    element does not have the <code>cb</code> method defined.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p><code>t:wait</code> 要素で指定された condvar 
+    オブジェクトには <code>cb</code> メソッドが定義されていません。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="temma:no locale" modules="Temma::Processor">
+  <d:message xml:lang="en">Processing of this document requires
+  the locale object.</d:message>
+  <d:message xml:lang="ja">この文書の処理にはロケール・オブジェクトが必要です。</d:message>
+  <d:desc xml:lang="en">
+    <p>The source template document requires the locale object for
+    its processing.  For the processing of <code>msg:<var>*</var></code> 
+    elements and attributes, the locale object is required.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>この原始雛形文書の処理にはロケール・オブジェクトが必要です。
+    <code>msg:<var>*</var></code>
+    要素・属性の処理にはロケール・オブジェクトが必要です。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="temma:no param" modules="Temma::Processor">
+  <d:message xml:lang="en">Parameter <code><var>{value}</var></code>
+  is not defined.</d:message>
+  <d:message xml:lang="ja">引数 <code><var>{value}</var></code>
+  は定義されていません。</d:message>
+  <d:desc xml:lang="en">
+    <p>The specified parameter is not defined by the <code>t:params</code>
+    attribute of the <code>html</code> element.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>指定された引数は <code>html</code> 要素の <code>t:params</code>
+    属性で定義されていません。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="temma:not arrayref" modules="Temma::Processor">
+  <d:message xml:lang="en">The <code>x</code> attribute must 
+  return an array reference (or equivalent).</d:message>
+  <d:message xml:lang="ja"><code>x</code> 属性は配列参照
+  (かそれと等価なもの) を返さなければなりません。</d:message>
+  <d:desc xml:lang="en">
+    <p>The <code>x</code> attribute of the <code>t:for</code> element
+    must return an array reference (or something that can be interpreted
+    as if it were an array reference).</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p><code>t:for</code> 要素の <code>x</code> 属性は配列参照
+    (か配列参照と同じように扱えるもの) を返さなければなりません。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="temma:not representable in raw text" modules="Temma::Processor">
+  <d:message xml:lang="en">Element content cannot contain text
+  that can be interpreted as the end tag.</d:message>
+  <d:message xml:lang="ja">要素内に終了タグと解釈できるテキストが含まれています。</d:message>
+  <d:desc xml:lang="en">
+    <p>The element contains text that can be interpreted as 
+    the end tag of the element.  Since rawtext elements such 
+    as <code>script</code> or <code>style</code> element cannot
+    contain such a text, allowing it makes the result document
+    non-serializable, and therefore it is disallowed.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>要素にその要素の終了タグと解せるテキストが含まれています。
+    <code>script</code> や <code>style</code> 
+    のような生テキスト要素がそうしたテキストを内容に含めることができず、
+    結果文書が直列化不能となってしまいますから、禁止されています。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="temma:perl exception" modules="Temma::Processor">
+  <d:message xml:lang="en">A Perl exception is thrown:
+  <code><var>{value}</var></code>.</d:message>
+  <d:message xml:lang="ja">Perl の例外が投げられました:
+  <code><var>{value}</var></code>。</d:message>
+  <d:desc xml:lang="en">
+    <p>An exception is thrown in the Perl code but it is not 
+    catched in the source document.</p>
+
+    <p>The exception is either thrown in the Perl code explicitly by
+    the <code>die</code> statement or thrown by Perl by syntax error.
+    Anyway, it must be catched within the Perl code or by the
+    <code>t:try</code> element in scope.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>Perl コード内で例外が投げられましたが、
+    原始文書中で捕獲されていません。</p>
+
+    <p>例外は Perl コード中の <code>die</code> 文で投げられたものか、
+    構文エラーのため Perl が投げたものです。いずれであれ、 Perl
+    コード内で、あるいは有効範囲内である <code>t:try</code>
+    要素によって捕獲される必要があります。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="temma:perl exception:cb" modules="Temma::Processor">
+  <d:message xml:lang="en">A Perl exception is thrown:
+  <code><var>{value}</var></code>.</d:message>
+  <d:message xml:lang="ja">Perl の例外が投げられました:
+  <code><var>{value}</var></code>。</d:message>
+  <d:desc xml:lang="en">
+    <p>An exception is thrown in the <code>cb</code> method of
+    the condvar object.  The method is not expected to throw
+    any exception.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>condvar オブジェクトの <code>cb</code> 
+    メソッド内で例外が投げられました。 <code>cb</code>
+    メソッドは例外を投げないことになっています。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="temma:start tag already closed" modules="Temma::Processor">
+  <d:message xml:lang="en">The start tag is already closed such that
+  no attribute can be generated for the element anymore.</d:message>
+  <d:message xml:lang="ja">開始タグは既に閉じられているため、
+  これ以上この要素の属性を生成することはできません。</d:message>
+  <d:desc xml:lang="en">
+    <p>An attribute cannot be generated once content of the element
+    is generated.  In other word, attributes must be generated
+    before any non white space character or element.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>要素の内容が生成された後に属性を生成することはできません。
+    すなわち、属性は空白以外の文字や要素の前に生成しなければなりません。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="temma:undef" modules="Temma::Processor">
+  <d:message xml:lang="en">The attribute cannot return the 
+  <code>undef</code> value.</d:message>
+  <d:message xml:lang="ja">この属性が <code>undef</code>
+  値を返してはいけません。</d:message>
+  <d:desc xml:lang="ja">
+    <p>This Perl expression attribute is expected to return some
+    useful value, but the attribute is evaluated to the <code>undef</code>
+    value.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>この Perl 式属性 は何らかの値を返すことが期待されていますが、
+    評価結果は <code>undef</code> 値でした。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="temma:unknown element" modules="Temma::Processor">
+  <d:message xml:lang="en">The <code><var>{value}</var></code>
+  element is not defined or allowed here.</d:message>
+  <d:message xml:lang="ja"><code><var>{value}</var></code>
+  要素は定義されていないかここでは使えません。</d:message>
+  <d:desc xml:lang="en">
+    <p>The element is not defined or allowed only in specific context.
+    Undefined elements in the Temma namespace must not be used.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>この要素は定義されていない要素であるか、特定の場所でのみ使える要素です。
+    Temma 名前空間の要素で定義されていないものは使ってはいけません。</p>
+  </d:desc>
+</d:item>
+
+<d:item name="temma:variable name" modules="Temma::Processor">
+  <d:message xml:lang="en">Variable name is syntaxtically 
+  inappropriate.</d:message>
+  <d:message xml:lang="ja">変数名が構文的に不適切です。</d:message>
+  <d:desc xml:lang="en">
+    <p>The specified variable name is syntactically non-conforming.</p>
+    <p>The variable name must match the regular expression
+    <code>\$?[A-Za-z_][0-9A-Za-z_]*</code> but not <code>\$?_</code>.</p>
+  </d:desc>
+  <d:desc xml:lang="ja">
+    <p>指定された変数名は構文的に不適合です。</p>
+    <p>変数名は正規表現 <code>\$?[A-Za-z_][0-9A-Za-z_]*</code>
+    と一致し、 <code>\$?_</code> に一致しないものでなければなりません。</p>
+  </d:desc>
 </d:item>
 
 </section>
