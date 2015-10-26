@@ -9,6 +9,16 @@ test:
     - sleep 10
     - curl http://localhost:5114
 deployment:
+  staging:
+    branch: staging
+    commands:
+      - git rev-parse HEAD > head.txt
+      - curl -f -s -S --request POST --header "Authorization:token $GITHUB_ACCESS_TOKEN" --header "Content-Type:application/json" --data-binary "{\"base\":\"master\",\"head\":\"`cat head.txt`\",\"commit_message\":\"auto-merge staging into master\"}" "https://api.github.com/repos/wakaba/webhacc/merges"
+  nightly:
+    branch: nightly
+    commands:
+      - git rev-parse HEAD > head.txt
+      - curl -f -s -S --request POST --header "Authorization:token $GITHUB_ACCESS_TOKEN" --header "Content-Type:application/json" --data-binary "{\"base\":\"master\",\"head\":\"`cat head.txt`\",\"commit_message\":\"auto-merge nightly into master\"}" "https://api.github.com/repos/wakaba/webhacc/merges"
   heroku:
     branch: master
     commands:
