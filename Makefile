@@ -42,6 +42,16 @@ pmbp-install: pmbp-upgrade
             --create-perl-command-shortcut @plackup=perl\ modules/twiggy-packed/script/plackup
 	-perl local/bin/pmbp.pl $(PMBP_OPTIONS) \
 	    --install-module Inline::Python
+	perl local/bin/pmbp.pl $(PMBP_OPTIONS) \
+	    --install-module Encode::GLJIS1978=http://suika.fam.cx/www/manakai-charlib/Encode-GLJIS1978-0.02.tar.gz \
+	    --install-module Encode::GLJIS1983=http://suika.fam.cx/www/manakai-charlib/Encode-GLJIS1983-0.02.tar.gz \
+	    --install-module Encode::GLJIS1997=http://suika.fam.cx/www/manakai-charlib/Encode-GLJIS1997-0.02.tar.gz \
+	    --install-module Encode::GLJIS1997Swapped=http://suika.fam.cx/www/manakai-charlib/Encode-GLJIS1997Swapped-0.02.tar.gz \
+	    --install-module Encode::EUCJP1997=http://suika.fam.cx/www/manakai-charlib/Encode-EUCJP1997-0.03.tar.gz \
+	    --install-module Encode::EUCJP1997OPENNEC=http://suika.fam.cx/www/manakai-charlib/Encode-EUCJP1997OPENNEC-0.02.tar.gz \
+	    --install-module Encode::EUCJPSW=http://suika.fam.cx/www/manakai-charlib/Encode-EUCJPSW-0.02.tar.gz \
+	    --install-module Encode::ShiftJIS1997=http://suika.fam.cx/www/manakai-charlib/Encode-ShiftJIS1997-0.02.tar.gz
+
 
 ## ------ Build ------
 
