@@ -114,21 +114,33 @@ return sub {
       $cmd->envs->{HTTP_ACCEPT_LANGUAGE} = $app->http->get_request_header ('Accept-Language');
       $cmd->envs->{PATH_INFO} = join '/', map { percent_encode_c $_ } '', @$path[1..$#$path];
       $cmd->stdin ($app->http->request_body_as_ref);
-      $cmd->stdout (\my $stdout);
-# XXX output streaming
+      my $stdout = '';
+      my $out_mode = '';
+      $cmd->stdout (sub {
+        if ($out_mode eq 'body') {
+          $app->http->send_response_body_as_ref (\($_[0]));
+          return;
+        }
+        $stdout .= $_[0];
+        while ($stdout =~ s/^([^\x0A]+)\x0A//) {
+          my ($name, $value) = split /:/, $1, 2;
+          $name =~ tr/A-Z/a-z/;
+          if ($name eq 'status') {
+            my ($code, $reason) = split /\s+/, $value, 2;
+            $app->http->set_status ($code, reason_phrase => $reason);
+          } else {
+            $app->http->set_response_header ($name => $value);
+          }
+        }
+        if ($stdout =~ s/^\x0A//) {
+          $out_mode = 'body';
+          $app->http->send_response_body_as_ref (\$stdout);
+        }
+      });
       return $cmd->run->then (sub {
         return $cmd->wait;
       })->then (sub {
         die $_[0] unless $_[0]->exit_code == 0;
-        my ($headers, $body) = split /\x0D?\x0A\x0D?\x0A/, $stdout, 2;
-        for (split /[\x0D\x0A]/, $headers) {
-          if (/^([^\s:]+):(.*)$/) {
-            $app->http->add_response_header ($1 => $2);
-          } else {
-            die "Bad header |$_|";
-          }
-        }
-        $app->http->send_response_body_as_ref (\$body);
         $app->http->close_response_body;
       });
     } elsif ($path->[0] eq 'table' or $path->[0] eq 'parser') {

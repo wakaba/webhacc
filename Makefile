@@ -40,6 +40,8 @@ pmbp-install: pmbp-upgrade
             --create-perl-command-shortcut @perl \
             --create-perl-command-shortcut @prove \
             --create-perl-command-shortcut @plackup=perl\ modules/twiggy-packed/script/plackup
+	-perl local/bin/pmbp.pl $(PMBP_OPTIONS) \
+	    --install-module Inline::Python
 
 ## ------ Build ------
 
