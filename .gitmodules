@@ -10,7 +10,7 @@
 	track = master
 [submodule "modules/regexp"]
 	path = modules/regexp
-	url = http://suika.fam.cx/gate/git/bare/perl/regexp.git
+#	url = http://suika.fam.cx/gate/git/bare/perl/regexp.git
 	url = git://github.com/wakaba/perl-regexp-utils.git
 	track = master
 [submodule "modules/twiggy-packed"]

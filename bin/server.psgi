@@ -24,6 +24,8 @@ sub send_file ($$$) {
 } # send_file
 
 return sub {
+  delete $SIG{CHLD} if defined $SIG{CHLD} and not ref $SIG{CHLD}; # XXX
+
   my $http = Wanage::HTTP->new_from_psgi_env ($_[0]);
   my $app = Warabe::App->new_from_http ($http);
 
