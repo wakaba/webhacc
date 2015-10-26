@@ -1,0 +1,20 @@
+- "../../modules/json-functions-xs" tests
+- "../../modules/json-ps" tests
+- "../../modules/web-encodings" tests build
+- "../../modules/web-url" tests build
+- "../../modules/web-dom" tests build
+- "../../modules/web-css" tests build
+- "../../modules/web-markup" tests build
+- "../../modules/web-useragent-functions" tests lwp anyeventsocks oauth wsse cli testws curl
+- "../../modules/wanage" tests build datetime mp
+- "../../modules/temma" tests
+- "../../modules/ooutils" tests classdiamondgenerator classregistry objectcachesmethod operationresponse test
+- "../../modules/charclass" tests build
+- "../../modules/web-utils" tests
+- "../../modules/mediawiki-parser" tests web
+- "../../modules/promise" tests
+- "../../modules/promised-file" tests
+- "../../modules/promised-command" tests
+- "../../modules/twiggy-packed" tests
+- "../../t_deps/modules/test-x1" tests
+- "../../modules/promised-plackup" tests

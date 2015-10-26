@@ -13,3 +13,36 @@
 	url = http://suika.fam.cx/gate/git/bare/perl/regexp.git
 	url = git://github.com/wakaba/perl-regexp-utils.git
 	track = master
+[submodule "modules/twiggy-packed"]
+	path = modules/twiggy-packed
+	url = git://github.com/wakaba/perl-twiggy-packed
+[submodule "modules/promised-command"]
+	path = modules/promised-command
+	url = git://github.com/wakaba/perl-promised-command
+[submodule "modules/promise"]
+	path = modules/promise
+	url = git://github.com/wakaba/perl-promise
+[submodule "modules/wanage"]
+	path = modules/wanage
+	url = git://github.com/wakaba/wanage
+[submodule "modules/charclass.2"]
+	path = modules/charclass.2
+	url = git://github.com/wakaba/perl-charclass
+[submodule "modules/ooutils"]
+	path = modules/ooutils
+	url = git://github.com/wakaba/perl-ooutils
+[submodule "modules/test-test"]
+	path = modules/test-test
+	url = git://github.com/wakaba/perl-test-test
+[submodule "modules/json-functions-xs"]
+	path = modules/json-functions-xs
+	url = git://github.com/wakaba/perl-json-functions-xs
+[submodule "modules/web-encodings"]
+	path = modules/web-encodings
+	url = git://github.com/manakai/perl-web-encodings
+[submodule "modules/web-url"]
+	path = modules/web-url
+	url = git://github.com/manakai/perl-web-url
+[submodule "modules/web-encodings.2"]
+	path = modules/web-encodings.2
+	url = git://github.com/manakai/perl-web-encodings.git
