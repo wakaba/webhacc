@@ -1,0 +1,7 @@
+{
+  "name": "webhacc",
+  "website": "https://manakai.github.io/",
+  "buildpacks": [
+    {"url": "https://github.com/wakaba/heroku-buildpack-perl-pmbp"}
+  ]
+}
