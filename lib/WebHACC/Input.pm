@@ -54,6 +54,7 @@ sub get_document ($$$$) {
     my $url_scheme = lc $url_o->uri_scheme; ## TODO: html5_url_scheme
     my $class = {
       http => 'WebHACC::Input::HTTP',
+      https => 'WebHACC::Input::HTTP',
     }->{$url_scheme} || 'WebHACC::Input::UnsupportedURLSchemeError';
     bless $self, $class;
   } else {
@@ -229,7 +230,7 @@ sub _get_document ($$$$$) {
   $ua->{wdcc_host_permit} = $self->host_permit;
   $ua->agent ('Mozilla'); ## TODO: for now.
   $ua->parse_head (0);
-  $ua->protocols_allowed ([qw/http/]);
+  $ua->protocols_allowed ([qw/http https/]);
   $ua->max_size (1000_000);
   my $req = HTTP::Request->new (GET => $url_o->uri_reference);
   $req->header ('Accept-Encoding' => 'identity, *; q=0');

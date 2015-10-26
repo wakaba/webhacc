@@ -1,4 +1,35 @@
-@import '/www/style/html/xoxo.css';
+@import 'xoxo.css';
+
+html::before {
+  position: fixed;
+  bottom: 1em;
+  right: 0;
+  width: 18em;
+  max-width: 100%;
+  z-index: 100;
+  content: "THIS CHECKER IS OBSOLETE! (See <https://manakai.github.io/>)";
+  display: block;
+  margin: 1em;
+  border: red .5em solid;
+  padding: 1em;
+  color: red;
+  font-size: 150%;
+  font-weight: bolder;
+  text-align: center;
+  background: #ffcccc;
+}
+
+.important {
+  display: block;
+  margin: 1em;
+  border: red .5em solid;
+  padding: 1em;
+  color: red;
+  font-size: 150%;
+  font-weight: bolder;
+  text-align: center;
+  background: #ffcccc;
+}
 
 body {
   line-height: 1.5;
