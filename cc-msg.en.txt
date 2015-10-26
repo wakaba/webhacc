@@ -546,7 +546,7 @@ temma:duplicate attr;;No two attributes can share the same name <code><var>{text
 temma:duplicate field;;Duplicate field name <code><var>{value}</var></code>.
 temma:duplicate param;;Duplicate parameter specification for <code><var>{value}</var></code>.
 temma:duplicate sep;;Duplicate <code>t:sep</code> element is not allowed.
-temma:html non temma attr;;Temma 属性ではない <code><var>{text}</var></code> は <code>html</code> 要素には指定できません。
+temma:html non temma attr;;Non-Temma attribute <code><var>{text}</var></code> is not allowed on the <code>html</code> element.
 temma:include error;;Can't include an external file: <code><var>{value}</var></code>.
 temma:macro already defined;;Macro <code><var>{value}</var></code> is already defined.
 temma:macro not defined;;Macro <code><var>{value}</var></code> is not defined.
