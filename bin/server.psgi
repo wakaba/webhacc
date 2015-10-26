@@ -129,6 +129,8 @@ return sub {
         $app->http->send_response_body_as_ref (\$body);
         $app->http->close_response_body;
       });
+    } elsif ($path->[0] eq 'table' or $path->[0] eq 'parser') {
+      return $app->send_redirect ('/cc/');
     }
 
     return $app->send_error (404);
