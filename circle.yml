@@ -7,7 +7,7 @@ test:
   override:
     - make test
     - ./plackup -p 5114 -t Twiggy::Prefork bin/server.psgi :
-        background: true
+        XXXbackground: true
     - sleep 10
     - curl http://localhost:5114
 deployment:
