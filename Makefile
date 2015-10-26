@@ -61,6 +61,16 @@ error-description.en.html.u8: error-description-source.xml mkdescription.pl
 error-description.ja.html.u8: error-description-source.xml mkdescription.pl
 	$(PERL) mkdescription.pl $< ja > $@
 
+create-commit-for-heroku:
+	git remote rm origin
+	rm -fr deps/pmtar/.git deps/pmpp/.git modules/*/.git
+	git add -f local/keys/* deps/pmtar/* #deps/pmpp/*
+	rm -fr ./t_deps/modules
+	git rm -r t_deps/modules .gitmodules
+	git rm modules/* --cached
+	git add -f modules/*/*
+	git commit -m "for heroku"
+
 ## ------ Tests ------
 
 PROVE = ./prove
