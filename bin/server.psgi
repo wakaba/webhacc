@@ -44,6 +44,8 @@ return sub {
       return $app->http->close_response_body;
     } elsif (@$path == 1 and $path->[0] =~ /\A[0-9A-Za-z_-]+\.png\z/) {
       return send_file ($app, $RootPath->child ($path->[0]), 'image/png');
+    } elsif (@$path == 1 and $path->[0] eq 'LICENSE') {
+      return send_file ($app, $RootPath->child ($path->[0]), 'text/plain; charset=utf-8');
     } elsif (@$path == 1 and $path->[0] =~ /\A[0-9A-Za-z_-]+\z/) {
       my $css_file = $RootPath->child ("$path->[0].css");
       if ($css_file->is_file) {
