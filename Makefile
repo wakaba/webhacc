@@ -12,7 +12,13 @@ updatenightly: local/bin/pmbp.pl
 
 ## ------ Setup ------
 
-deps: git-submodules pmbp-install
+deps: always
+	true
+ifdef PMBP_HEROKU_BUILDPACK
+else
+	$(MAKE) git-submodules
+endif
+	$(MAKE) pmbp-install
 
 git-submodules:
 	$(GIT) submodule update --init
@@ -65,5 +71,7 @@ test-deps: deps
 
 test-main:
 	$(PROVE) t/*.pm
+
+always:
 
 ## License: Public Domain.
