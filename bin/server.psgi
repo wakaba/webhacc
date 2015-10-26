@@ -105,34 +105,48 @@ return sub {
     } elsif (@$path == 2 and $path->[0] eq 'icons' and $path->[1] =~ /\A[0-9A-Za-z_-]+\.png\z/) {
       return send_file ($app, $RootPath->child ($path->[0], $path->[1]), 'image/png');
     } elsif (@$path >= 2 and
-             ($path->[0] eq 'cc' or $path->[0] eq 'langtag')) {
+             ($path->[0] eq 'cc' or
+              $path->[0] eq 'langtag' or
+              $path->[0] eq 'parser' or
+              $path->[0] eq 'parser-manakai' or
+              $path->[0] eq 'table')) {
       my $cmd = Promised::Command->new ([$RootPath->child ('perl'), $RootPath->child ("$path->[0].cgi")]);
       $cmd->envs->{REQUEST_METHOD} = $app->http->request_method;
       $cmd->envs->{QUERY_STRING} = $app->http->original_url->{query};
       $cmd->envs->{CONTENT_LENGTH} = $app->http->request_body_length;
       $cmd->envs->{CONTENT_TYPE} = $app->http->get_request_header ('Content-Type');
       $cmd->envs->{HTTP_ACCEPT_LANGUAGE} = $app->http->get_request_header ('Accept-Language');
-      $cmd->envs->{PATH_INFO} = join '/', map { percent_encode_c $_ } '', @$path[1..$#$path];
+      $cmd->envs->{PATH_INFO} = join '/', '', @$path[1..$#$path];
       $cmd->stdin ($app->http->request_body_as_ref);
-      $cmd->stdout (\my $stdout);
-# XXX output streaming
+      my $stdout = '';
+      my $out_mode = '';
+      $cmd->stdout (sub {
+        if ($out_mode eq 'body') {
+          $app->http->send_response_body_as_ref (\($_[0]));
+          return;
+        }
+        $stdout .= $_[0];
+        while ($stdout =~ s/^([^\x0A]+)\x0A//) {
+          my ($name, $value) = split /:/, $1, 2;
+          $name =~ tr/A-Z/a-z/;
+          if ($name eq 'status') {
+            my ($code, $reason) = split /\s+/, $value, 2;
+            $app->http->set_status ($code, reason_phrase => $reason);
+          } else {
+            $app->http->set_response_header ($name => $value);
+          }
+        }
+        if ($stdout =~ s/^\x0A//) {
+          $out_mode = 'body';
+          $app->http->send_response_body_as_ref (\$stdout);
+        }
+      });
       return $cmd->run->then (sub {
         return $cmd->wait;
       })->then (sub {
         die $_[0] unless $_[0]->exit_code == 0;
-        my ($headers, $body) = split /\x0D?\x0A\x0D?\x0A/, $stdout, 2;
-        for (split /[\x0D\x0A]/, $headers) {
-          if (/^([^\s:]+):(.*)$/) {
-            $app->http->add_response_header ($1 => $2);
-          } else {
-            die "Bad header |$_|";
-          }
-        }
-        $app->http->send_response_body_as_ref (\$body);
         $app->http->close_response_body;
       });
-    } elsif ($path->[0] eq 'table' or $path->[0] eq 'parser') {
-      return $app->send_redirect ('/cc/');
     }
 
     return $app->send_error (404);

@@ -40,6 +40,8 @@ pmbp-install: pmbp-upgrade
             --create-perl-command-shortcut @perl \
             --create-perl-command-shortcut @prove \
             --create-perl-command-shortcut @plackup=perl\ modules/twiggy-packed/script/plackup
+	-perl local/bin/pmbp.pl $(PMBP_OPTIONS) \
+	    --install-module Inline::Python
 
 ## ------ Build ------
 
@@ -47,7 +49,8 @@ PERL = ./perl
 
 build: cc-msg.en.txt cc-msg.ja.txt \
   error-description.en.html.u8 \
-  error-description.ja.html.u8
+  error-description.ja.html.u8 \
+  whatpm-demo-files
 
 cc-msg.en.txt: error-description-source.xml mkcatalog.pl
 	$(PERL) mkcatalog.pl $< en > $@
@@ -60,6 +63,11 @@ error-description.en.html.u8: error-description-source.xml mkdescription.pl
 
 error-description.ja.html.u8: error-description-source.xml mkdescription.pl
 	$(PERL) mkdescription.pl $< ja > $@
+
+whatpm-demo-files:
+	cp modules/manakai/doc/demo/*.cgi ./
+	cp modules/manakai/doc/demo/*.js ./
+	cp modules/manakai/doc/demo/*.html ./
 
 create-commit-for-heroku:
 	git remote rm origin
