@@ -9,7 +9,7 @@ Module::Build~0.4214
 Time::Local~1.2300
 CGI::Carp~4.22
 Try::Tiny~0.22
-Getopt::Long~2.47
+Getopt::Long~2.48
 parent~0.234
 Exporter::Lite~0.06
 Test::Class~0.50
@@ -47,8 +47,8 @@ Test::Tester~0.114
 CPAN::Meta::YAML~0.016
 Time::HiRes~1.9726
 Exporter~5.72
-Carp~1.36
-Proc::Wait3~0.04
+Carp~1.38
+Proc::Wait3~0.05
 JSON::PP~2.27300
 MIME::Base64~3.15
 HTML::Tagset~3.20
