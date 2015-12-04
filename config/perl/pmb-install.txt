@@ -1,6 +1,6 @@
 Capture::Tiny~0.30
 Pod::Usage~1.67
-Pod::Text~4.01
+Pod::Text~4.02
 Test::NoWarnings~1.04
 Encode~2.78
 AnyEvent::Util
