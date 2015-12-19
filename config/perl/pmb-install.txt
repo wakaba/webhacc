@@ -7,7 +7,7 @@ AnyEvent::Util
 CPAN::Meta~2.150005
 Module::Build~0.4214
 Time::Local~1.2300
-CGI::Carp~4.22
+CGI::Carp~4.23
 Try::Tiny~0.24
 Getopt::Long~2.48
 parent~0.234
@@ -32,7 +32,7 @@ File::Spec~3.60
 Test::Simple~1.001014
 Regexp::Parser~0.21
 Module::Runtime~0.014
-Unicode::Normalize~1.24
+Unicode::Normalize~1.25
 HTML::Entities~3.69
 Test~1.26
 Graph::Easy~0.75
