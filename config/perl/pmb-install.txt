@@ -5,7 +5,7 @@ Test::NoWarnings~1.04
 Encode~2.78
 AnyEvent::Util
 CPAN::Meta~2.150005
-Module::Build~0.4214
+Module::Build~0.4216
 Time::Local~1.2300
 CGI::Carp~4.25
 Try::Tiny~0.24
@@ -47,6 +47,7 @@ Test::Tester~0.114
 CPAN::Meta::YAML~0.018
 Time::HiRes~1.9728
 Exporter~5.72
+TAP::Harness~3.36
 Carp~1.38
 Proc::Wait3~0.05
 JSON::PP~2.27300
