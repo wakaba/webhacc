@@ -2,7 +2,7 @@ Capture::Tiny~0.30
 Pod::Usage~1.68
 Pod::Text~4.06
 Test::NoWarnings~1.04
-Encode~2.80
+Encode~2.82
 AnyEvent::Util
 CPAN::Meta~2.150005
 Module::Build~0.4216
@@ -25,7 +25,7 @@ Path::Class~0.35
 Unicode::Stringprep~1.105
 Image::Info~1.38
 Module::Metadata~1.000027
-Scalar::Util~1.42
+Scalar::Util~1.43
 IO::Scalar~2.111
 IO::Handle~1.28
 File::Spec~3.62
