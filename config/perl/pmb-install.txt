@@ -38,7 +38,7 @@ Test~1.26
 Algorithm::Diff~1.1903
 MRO::Compat~0.12
 Perl::OSType~1.009
-Path::Tiny~0.084
+Path::Tiny~0.086
 ExtUtils::CBuilder~0.280224
 Parse::CPAN::Meta~1.4417
 version~0.9916
