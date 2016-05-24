@@ -1,5 +1,5 @@
-Capture::Tiny~0.36
-Pod::Usage~1.68
+Capture::Tiny~0.40
+Pod::Usage~1.69
 Pod::Text~4.07
 Test::NoWarnings~1.04
 Encode~2.84
@@ -15,7 +15,7 @@ Test::Class~0.50
 Exporter::Lite~0.08
 Data::Dumper~2.154
 ExtUtils::ParseXS~3.30
-ExtUtils::MakeMaker~7.16
+ExtUtils::MakeMaker~7.18
 Text::Diff~1.44
 Test::More~1.302019
 Test::Differences~0.64
@@ -38,7 +38,7 @@ Graph::Easy~0.75
 Algorithm::Diff~1.1903
 MRO::Compat~0.12
 Perl::OSType~1.009
-Path::Tiny~0.090
+Path::Tiny~0.094
 ExtUtils::CBuilder~0.280224
 Parse::CPAN::Meta~1.4417
 version~0.9916
