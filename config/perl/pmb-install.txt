@@ -1,4 +1,4 @@
-Capture::Tiny~0.40
+Capture::Tiny~0.42
 Pod::Usage~1.69
 Pod::Text~4.07
 Test::NoWarnings~1.04
