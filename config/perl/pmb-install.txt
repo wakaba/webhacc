@@ -34,7 +34,7 @@ Module::Runtime~0.014
 Unicode::Normalize~1.25
 HTML::Entities~3.69
 Test~1.26
-Graph::Easy~0.75
+Graph::Easy~0.76
 Algorithm::Diff~1.1903
 MRO::Compat~0.12
 Perl::OSType~1.009
