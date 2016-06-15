@@ -7,7 +7,7 @@ AnyEvent::Util
 CPAN::Meta~2.150005
 Module::Build~0.4218
 Time::Local~1.2300
-CGI::Carp~4.30
+CGI::Carp~4.31
 Test::Deep~1.120
 Try::Tiny~0.24
 Getopt::Long~2.49
