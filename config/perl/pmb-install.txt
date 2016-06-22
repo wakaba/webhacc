@@ -18,7 +18,7 @@ Data::Dumper~2.154
 ExtUtils::ParseXS~3.30
 ExtUtils::MakeMaker~7.18
 Text::Diff~1.44
-Test::More~1.302030
+Test::More~1.302031
 Test::Differences~0.64
 CPAN::Meta::Requirements~2.140
 File::Temp~0.2304
@@ -29,7 +29,7 @@ Module::Metadata~1.000027
 Scalar::Util~1.45
 IO::Scalar~2.111
 IO::Handle~1.28
-Test::Simple~1.302030
+Test::Simple~1.302031
 Module::Runtime~0.014
 Regexp::Parser~0.21
 Unicode::Normalize~1.25
@@ -38,15 +38,15 @@ Test~1.26
 Sub::Uplevel~0.25
 Graph::Easy~0.76
 Algorithm::Diff~1.1903
-Perl::OSType~1.009
+Perl::OSType~1.010
 MRO::Compat~0.12
 Path::Tiny~0.094
 ExtUtils::CBuilder~0.280224
 Parse::CPAN::Meta~1.4417
 version~0.9917
-Test::Tester~1.302030
+Test::Tester~1.302031
 CPAN::Meta::YAML~0.018
-Time::HiRes~1.9735
+Time::HiRes~1.9736
 Exporter~5.72
 TAP::Harness~3.36
 Carp~1.38
