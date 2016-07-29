@@ -23,11 +23,11 @@ File::Temp~0.2304
 Path::Class~0.36
 Unicode::Stringprep~1.105
 Image::Info~1.38
-Module::Metadata~1.000027
+Module::Metadata~1.000033
 Scalar::Util~1.45
 IO::Scalar~2.111
 IO::Handle~1.28
-Test::Simple~1.302045
+Test::Simple~1.302049
 Regexp::Parser~0.21
 Module::Runtime~0.014
 Unicode::Normalize~1.25
@@ -41,7 +41,7 @@ Path::Tiny~0.096
 ExtUtils::CBuilder~0.280224
 Parse::CPAN::Meta~1.4422
 version~0.9917
-Test::Tester~1.302045
+Test::Tester~1.302049
 CPAN::Meta::YAML~0.018
 Time::HiRes~1.9739
 Exporter~5.72
