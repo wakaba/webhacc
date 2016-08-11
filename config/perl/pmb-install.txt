@@ -8,7 +8,7 @@ CPAN::Meta::YAML~0.018
 Capture::Tiny~0.44
 Carp~1.38
 Data::Dumper~2.161
-Encode~2.85
+Encode~2.86
 Exporter~5.72
 Exporter::Lite~0.08
 ExtUtils::CBuilder~0.280224
