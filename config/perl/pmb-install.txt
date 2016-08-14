@@ -31,7 +31,7 @@ Module::Build~0.4218
 Module::Metadata~1.000033
 Module::Runtime~0.014
 Parse::CPAN::Meta~1.4422
-Path::Class~0.36
+Path::Class~0.37
 Path::Tiny~0.096
 Perl::OSType~1.010
 Pod::Text~4.07
@@ -44,11 +44,11 @@ Test~1.26
 Test::Class~0.50
 Test::Differences~0.64
 Test::NoWarnings~1.04
-Test::Simple~1.302049
-Test::Tester~1.302049
+Test::Simple~1.302052
+Test::Tester~1.302052
 Text::Diff~1.44
 Time::HiRes~1.9739
-Time::Local~1.2300
+Time::Local~1.24
 Try::Tiny~0.24
 Unicode::Normalize~1.25
 Unicode::Stringprep~1.105
