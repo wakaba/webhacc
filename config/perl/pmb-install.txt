@@ -50,7 +50,6 @@ Text::Diff~1.44
 Time::HiRes~1.9739
 Time::Local~1.24
 Try::Tiny~0.24
-Unicode::Normalize~1.25
 Unicode::Stringprep~1.105
 parent~0.234
 version~0.9917
