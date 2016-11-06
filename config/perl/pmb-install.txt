@@ -22,7 +22,7 @@ MRO::Compat~0.12
 Module::Runtime~0.014
 Path::Class~0.37
 Path::Tiny~0.098
-Pod::Text~4.08
+Pod::Text~4.09
 Pod::Usage~1.69
 Proc::Wait3~0.05
 Regexp::Parser~0.21
