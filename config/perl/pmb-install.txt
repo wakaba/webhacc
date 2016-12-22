@@ -26,7 +26,7 @@ Pod::Text~4.09
 Pod::Usage~1.69
 Proc::Wait3~0.05
 Regexp::Parser~0.21
-Scalar::Util~1.46
+Scalar::Util~1.47
 Test~1.26
 Test::Class~0.50
 Test::Differences~0.64
