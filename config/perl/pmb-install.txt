@@ -34,5 +34,5 @@ Test::Simple~1.302073
 Text::Diff~1.44
 Time::HiRes~1.9741
 Time::Local~1.25
-Try::Tiny~0.27
+Try::Tiny~0.28
 parent~0.236
