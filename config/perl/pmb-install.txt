@@ -1,6 +1,6 @@
 
 Algorithm::Diff~1.1903
-AnyEvent::Util
+AnyEvent~7.13
 CGI::Carp~4.35
 Capture::Tiny~0.44
 Carp~1.38
@@ -21,7 +21,7 @@ MIME::Base64~3.15
 MRO::Compat~0.12
 Module::Runtime~0.014
 Path::Class~0.37
-Path::Tiny~0.100
+Path::Tiny~0.104
 Pod::Text~4.09
 Pod::Usage~1.69
 Proc::Wait3~0.05
@@ -30,7 +30,7 @@ Scalar::Util~1.47
 Test~1.26
 Test::Class~0.50
 Test::Differences~0.64
-Test::Simple~1.302075
+Test::More~1.302075
 Text::Diff~1.44
 Time::HiRes~1.9741
 Time::Local~1.25
