@@ -16,7 +16,7 @@ HTML::Tagset~3.20
 IO::Handle~1.28
 IO::Scalar~2.111
 Image::Info~1.40
-JSON~2.93
+JSON~2.94
 MIME::Base64~3.15
 MRO::Compat~0.13
 Module::Runtime~0.014
@@ -30,7 +30,7 @@ Scalar::Util~1.47
 Test~1.26
 Test::Class~0.50
 Test::Differences~0.64
-Test::Simple~1.302085
+Test::More~1.302085
 Text::Diff~1.44
 Time::HiRes~1.9742
 Time::Local~1.25
