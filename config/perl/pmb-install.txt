@@ -15,7 +15,7 @@ HTML::Entities~3.69
 HTML::Tagset~3.20
 IO::Handle~1.28
 IO::Scalar~2.111
-Image::Info~1.40
+Image::Info~1.41
 JSON~2.94
 MIME::Base64~3.15
 MRO::Compat~0.13
