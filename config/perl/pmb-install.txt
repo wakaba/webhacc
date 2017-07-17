@@ -1,6 +1,6 @@
 
 Algorithm::Diff~1.1903
-AnyEvent::Util
+AnyEvent~7.14
 CGI::Carp~4.36
 Capture::Tiny~0.46
 Carp~1.38
@@ -19,7 +19,7 @@ Image::Info~1.41
 JSON~2.94
 MIME::Base64~3.15
 MRO::Compat~0.13
-Module::Runtime~0.014
+Module::Runtime~0.015
 Path::Class~0.37
 Path::Tiny~0.104
 Pod::Text~4.09
