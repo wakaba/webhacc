@@ -32,7 +32,7 @@ Test::Class~0.50
 Test::Differences~0.64
 Test::More~1.302086
 Text::Diff~1.45
-Time::HiRes~1.9745
+Time::HiRes~1.9746
 Time::Local~1.25
 Try::Tiny~0.28
 parent~0.236
