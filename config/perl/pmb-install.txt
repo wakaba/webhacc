@@ -1,6 +1,6 @@
 
 Algorithm::Diff~1.1903
-AnyEvent::Util
+AnyEvent~7.14
 CGI::Carp~4.36
 Capture::Tiny~0.46
 Carp~1.38
@@ -9,8 +9,8 @@ Exporter~5.72
 Exporter::Lite~0.08
 File::Temp~0.2304
 Getopt::Long~2.5
+Graph::Easy~0.76
 Graph::Easy::As_svg~0.27
-Graph::Easy::Edge::Cell~0.76
 HTML::Entities~3.69
 HTML::Tagset~3.20
 IO::Handle~1.28
@@ -30,7 +30,7 @@ Scalar::Util~1.49
 Test~1.26
 Test::Class~0.50
 Test::Differences~0.64
-Test::Simple~1.302100
+Test::More~1.302101
 Text::Diff~1.45
 Time::HiRes~1.9746
 Time::Local~1.25
