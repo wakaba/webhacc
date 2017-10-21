@@ -9,8 +9,8 @@ Exporter~5.72
 Exporter::Lite~0.08
 File::Temp~0.2304
 Getopt::Long~2.5
-Graph::Easy~0.76
 Graph::Easy::As_svg~0.27
+Graph::Easy::Edge::Cell~0.76
 HTML::Entities~3.69
 HTML::Tagset~3.20
 IO::Handle~1.28
@@ -19,7 +19,7 @@ Image::Info~1.41
 JSON~2.94
 MIME::Base64~3.15
 MRO::Compat~0.13
-Module::Runtime~0.015
+Module::Runtime~0.016
 Path::Class~0.37
 Path::Tiny~0.104
 Pod::Text~4.09
@@ -30,7 +30,7 @@ Scalar::Util~1.49
 Test~1.26
 Test::Class~0.50
 Test::Differences~0.64
-Test::Simple~1.302103
+Test::Simple~1.302106
 Text::Diff~1.45
 Time::HiRes~1.9746
 Time::Local~1.25
