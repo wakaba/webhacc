@@ -1,6 +1,6 @@
 
 Algorithm::Diff~1.1903
-AnyEvent~7.14
+AnyEvent::Util
 CGI::Carp~4.38
 Capture::Tiny~0.46
 Carp~1.38
@@ -32,7 +32,7 @@ Test::Class~0.50
 Test::Differences~0.64
 Test::More~1.302120
 Text::Diff~1.45
-Time::HiRes~1.9750
+Time::HiRes~1.9751
 Time::Local~1.25
 Try::Tiny~0.30
 parent~0.236
