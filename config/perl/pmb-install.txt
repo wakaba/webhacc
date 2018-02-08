@@ -30,7 +30,7 @@ Scalar::Util~1.49
 Test~1.26
 Test::Class~0.50
 Test::Differences~0.64
-Test::Simple~1.302121
+Test::More~1.302122
 Text::Diff~1.45
 Time::HiRes~1.9753
 Time::Local~1.25
