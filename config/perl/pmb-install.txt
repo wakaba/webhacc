@@ -4,7 +4,7 @@ AnyEvent::Util
 CGI::Carp~4.38
 Capture::Tiny~0.46
 Carp~1.38
-Encode~2.94
+Encode~2.95
 Exporter~5.72
 Exporter::Lite~0.08
 File::Temp~0.2304
