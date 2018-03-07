@@ -10,7 +10,7 @@
       "master" : {
          "branch" : "master",
          "commands" : [
-            "[[ ! -s \u005C\u0022$(git rev-parse --git-dir)/shallow\u005C\u0022 ]] || git fetch --unshallow",
+            "git checkout --orphan herokucommit && git commit -m \u0022Heroku base commit\u0022",
             "make create-commit-for-heroku",
             "git push git@heroku.com:$HEROKU_APP_NAME.git \u002B`git rev-parse HEAD`:refs/heads/master"
          ]
