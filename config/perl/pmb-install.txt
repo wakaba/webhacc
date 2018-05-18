@@ -1,6 +1,6 @@
 
 Algorithm::Diff~1.1903
-AnyEvent::Util
+AnyEvent~7.14
 CGI::Carp~4.38
 Capture::Tiny~0.48
 Carp~1.38
@@ -9,8 +9,8 @@ Exporter~5.72
 Exporter::Lite~0.08
 File::Temp~0.2304
 Getopt::Long~2.5
+Graph::Easy~0.76
 Graph::Easy::As_svg~0.27
-Graph::Easy::Edge::Cell~0.76
 HTML::Entities~3.69
 HTML::Tagset~3.20
 IO::Handle~1.39
@@ -22,7 +22,7 @@ MRO::Compat~0.13
 Module::Runtime~0.016
 Path::Class~0.37
 Path::Tiny~0.104
-Pod::Text~4.10
+Pod::Text~4.11
 Pod::Usage~1.69
 Proc::Wait3~0.05
 Regexp::Parser~0.22
