@@ -3,7 +3,7 @@
       "override" : [
          "git config --global user.email \u0022temp@circleci.test\u0022",
          "git config --global user.name \u0022CircleCI\u0022",
-         "make deps"
+         "make test-deps"
       ]
    },
    "deployment" : {
