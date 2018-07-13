@@ -7,10 +7,10 @@ Carp~1.38
 Encode~2.98
 Exporter~5.72
 Exporter::Lite~0.08
-File::Temp~0.2306
+File::Temp~0.2308
 Getopt::Long~2.5
-Graph::Easy~0.76
 Graph::Easy::As_svg~0.27
+Graph::Easy::Edge::Cell~0.76
 HTML::Entities~3.69
 HTML::Tagset~3.20
 IO::Handle~1.39
@@ -30,9 +30,9 @@ Scalar::Util~1.50
 Test~1.26
 Test::Class~0.50
 Test::Differences~0.64
-Test::Simple~1.302136
+Test::More~1.302138
 Text::Diff~1.45
 Time::HiRes~1.9758
 Time::Local~1.28
 Try::Tiny~0.30
-parent~0.236
+parent~0.237
