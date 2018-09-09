@@ -3,7 +3,7 @@ Algorithm::Diff~1.1903
 AnyEvent~7.14
 CGI::Carp~4.40
 Capture::Tiny~0.48
-Carp~1.38
+Carp~1.50
 Encode~2.98
 Exporter~5.72
 Exporter::Lite~0.08
