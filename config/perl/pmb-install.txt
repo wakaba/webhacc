@@ -1,10 +1,10 @@
 
 Algorithm::Diff~1.1903
-AnyEvent~7.15
-CGI::Carp~4.40
+AnyEvent::Util
+CGI::Carp~4.42
 Capture::Tiny~0.48
 Carp~1.50
-Encode~3.00
+Encode~3.01
 Exporter~5.73
 Exporter::Lite~0.08
 File::Temp~0.2309
@@ -29,8 +29,8 @@ Regexp::Parser~0.22
 Scalar::Util~1.50
 Test~1.26
 Test::Class~0.50
-Test::Differences~0.66
-Test::Simple~1.302162
+Test::Differences~0.67
+Test::More~1.302162
 Text::Diff~1.45
 Time::HiRes~1.9760
 Time::Local~1.28
