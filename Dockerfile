@@ -1,6 +1,7 @@
 FROM quay.io/wakaba/docker-perl-app-base
 
 ADD Makefile /app/
+ADD LICENSE /app/
 ADD config/ /app/config/
 ADD bin/ /app/bin/
 ADD lib/ /app/lib/
