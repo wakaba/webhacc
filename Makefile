@@ -21,7 +21,7 @@ else
 endif
 	$(MAKE) pmbp-install
 
-deps-docker: deps
+deps-docker: pmbp-install
 
 git-submodules:
 	$(GIT) submodule update --init
