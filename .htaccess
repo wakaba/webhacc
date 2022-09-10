@@ -9,9 +9,9 @@ AddLanguage en .en
 
 AddCharset utf-8 .xml .u8
 
-Redirect permanent /gate/2007/html/cc-interface.en.html http://suika.fam.cx/gate/2007/html/cc/
-Redirect permanent /gate/2007/html/cc-interface.en http://suika.fam.cx/gate/2007/html/cc/
-Redirect permanent /gate/2007/html/cc-interface http://suika.fam.cx/gate/2007/html/cc/
+Redirect permanent /gate/2007/html/cc-interface.en.html https://suika.suikawiki.org/gate/2007/html/cc/
+Redirect permanent /gate/2007/html/cc-interface.en https://suika.suikawiki.org/gate/2007/html/cc/
+Redirect permanent /gate/2007/html/cc-interface https://suika.suikawiki.org/gate/2007/html/cc/
 
 Redirect gone /gate/2007/html/cc-todo.txt
 Redirect gone /gate/2007/html/cc-todo

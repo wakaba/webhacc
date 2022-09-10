@@ -46,14 +46,14 @@ pmbp-install: pmbp-upgrade
 	-perl local/bin/pmbp.pl $(PMBP_OPTIONS) \
 	    --install-module Inline::Python
 	perl local/bin/pmbp.pl $(PMBP_OPTIONS) \
-	    --install-module Encode::GLJIS1978=http://suika.fam.cx/www/manakai-charlib/Encode-GLJIS1978-0.02.tar.gz \
-	    --install-module Encode::GLJIS1983=http://suika.fam.cx/www/manakai-charlib/Encode-GLJIS1983-0.02.tar.gz \
-	    --install-module Encode::GLJIS1997=http://suika.fam.cx/www/manakai-charlib/Encode-GLJIS1997-0.02.tar.gz \
-	    --install-module Encode::GLJIS1997Swapped=http://suika.fam.cx/www/manakai-charlib/Encode-GLJIS1997Swapped-0.02.tar.gz \
-	    --install-module Encode::EUCJP1997=http://suika.fam.cx/www/manakai-charlib/Encode-EUCJP1997-0.03.tar.gz \
-	    --install-module Encode::EUCJP1997OPENNEC=http://suika.fam.cx/www/manakai-charlib/Encode-EUCJP1997OPENNEC-0.02.tar.gz \
-	    --install-module Encode::EUCJPSW=http://suika.fam.cx/www/manakai-charlib/Encode-EUCJPSW-0.02.tar.gz \
-	    --install-module Encode::ShiftJIS1997=http://suika.fam.cx/www/manakai-charlib/Encode-ShiftJIS1997-0.02.tar.gz
+	    --install-module Encode::GLJIS1978=https://suika.suikawiki.org/www/manakai-charlib/Encode-GLJIS1978-0.02.tar.gz \
+	    --install-module Encode::GLJIS1983=https://suika.suikawiki.org/www/manakai-charlib/Encode-GLJIS1983-0.02.tar.gz \
+	    --install-module Encode::GLJIS1997=https://suika.suikawiki.org/www/manakai-charlib/Encode-GLJIS1997-0.02.tar.gz \
+	    --install-module Encode::GLJIS1997Swapped=https://suika.suikawiki.org/www/manakai-charlib/Encode-GLJIS1997Swapped-0.02.tar.gz \
+	    --install-module Encode::EUCJP1997=https://suika.suikawiki.org/www/manakai-charlib/Encode-EUCJP1997-0.03.tar.gz \
+	    --install-module Encode::EUCJP1997OPENNEC=https://suika.suikawiki.org/www/manakai-charlib/Encode-EUCJP1997OPENNEC-0.02.tar.gz \
+	    --install-module Encode::EUCJPSW=https://suika.suikawiki.org/www/manakai-charlib/Encode-EUCJPSW-0.02.tar.gz \
+	    --install-module Encode::ShiftJIS1997=https://suika.suikawiki.org/www/manakai-charlib/Encode-ShiftJIS1997-0.02.tar.gz
 
 
 ## ------ Build ------
