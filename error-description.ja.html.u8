@@ -19,9 +19,9 @@
   </h3>
     <p><a href="./#input"><abbr title="Web ハイパーテキスト応用適合性検査器">WebHACC</abbr></a>
     は、 Web 文書のための<em>適合性検査器</em> (妥当性検証器) です。
-    <a href="http://whatwg.org/html5"><abbr title="Hypertext Markup Language">HTML</abbr>5</a>、
+    <a href="https://whatwg.org/html5"><abbr title="Hypertext Markup Language">HTML</abbr>5</a>、
     <a href="urn:ietf:rfc:4287">Atom 1.0</a>、
-    <a href="http://www.w3.org/Style/CSS/current-work"><abbr title="Cascading Style Sheets">CSS</abbr>3</a>
+    <a href="https://www.w3.org/Style/CSS/current-work"><abbr title="Cascading Style Sheets">CSS</abbr>3</a>
     などの<a href="../standards">最新の Web 標準</a>に対応しています。</p>
 
     <p><strong><a href="./#input">文書を検査する</a></strong></p>
@@ -3868,7 +3868,7 @@ Regexp::Parser::JavaScript's extension. -->
 <h2>License of This Document</h2>
 
 <p>Copyright <time>2007</time>‐<time>2012</time>
-<a href="http://suika.fam.cx/~wakaba/who?" rel="author" xml:lang="ja">Wakaba</a>
+<a href="https://suika.suikawiki.org/~wakaba/who?" rel="author" xml:lang="ja">Wakaba</a>
 <code class="mail">&lt;<a href="mailto:w@suika.fam.cx">w@suika.fam.cx</a>&gt;</code>.</p>
 
 <p>This document is free software; you can redistribute it
