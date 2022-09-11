@@ -1,14 +1,16 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-use Path::Class;
-use lib file (__FILE__)->dir->subdir ('lib')->stringify;
-use lib glob file (__FILE__)->dir->subdir ('modules', '*', 'lib')->stringify;
+use Path::Tiny;
+use lib path (__FILE__)->parent->child ('lib')->stringify;
+use lib glob path (__FILE__)->parent->child ('modules', '*', 'lib')->stringify;
 use CGI::Carp qw(fatalsToBrowser);
 use Message::CGI::HTTP;
 use Message::CGI::Util qw(htescape);
 use Whatpm::LangTag;
 use Encode;
+
+my $RootPath = path (__FILE__)->parent;
 
 my $cgi = Message::CGI::HTTP->new;
 
@@ -426,3 +428,6 @@ for my $spec (
 print qq{
 </div>
 };
+
+$RootPath->child ('intermediate/misc-a0.txt');
+print $RootPath->slurp;

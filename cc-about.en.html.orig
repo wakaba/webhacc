@@ -1,0 +1,134 @@
+<!DOCTYPE HTML>
+<html lang=en>
+<head>
+<title>About WebHACC</title>
+<link rel=stylesheet href="cc-style">
+<link rel=index href="cc/">
+<link rel=license href="#license">
+<link rel=author href="#author">
+</head>
+<body>
+<h1><a href="cc/"><abbr title="Web Hypertext Application Conformance Checker"><img src="icons/title" alt="WebHACC"></abbr></a></h1>
+
+<div class=section id=about>
+<h2>About 
+<abbr title="Web Hypertext Application Conformance Checker">WebHACC</abbr>...</h2>
+
+<p class=important>This checker is <strong>OBSOLETE</strong>.  See
+<a href=https://manakai.github.io/>manakai project Web site</a> for
+new versions of checkers.
+
+<p><a href="cc/"><abbr title="Web Hypertext Application Conformance Checker">WebHACC</abbr></a>
+is a <em>conformance checker</em> (or validator) for Web documents,
+supporting <a href="standards">latest Web standards</a> including
+<a href="https://whatwg.org/html5"><abbr title="Hypertext Markup Language">HTML</abbr>5</a>,
+<a href="urn:ietf:rfc:4287">Atom 1.0</a>,
+<a href="https://www.w3.org/Style/CSS/current-work"><abbr title="Cascading Style Sheets">CSS</abbr>3</a>.
+
+<div class=section id=tools>
+<h3>WebHACC tools</h3>
+
+<ul>
+<li><a href="cc/">Check your document now!</a>
+<li><a href="langtag/">Inspect language tags</a>
+</ul>
+</div>
+
+<div class=section id=documents>
+<h3>Documentations</h3>
+
+<ul>
+<li><a href="error-description">Description of errors</a>
+(<a href=error-description.en>English</a> / <a href=error-description.ja>Japanese</a>)
+<li><a href="standards">Supported standard</a>
+</ul>
+</div>
+
+<div class=section id=bookmarklet>
+<h3>Bookmarklet</h3>
+
+<p><a href="javascript:%0A%20%20location.href%20%3D%20%27https%3A%2F%2Fwebhacc-old.herokuapp.com%2Fcc%2F%3Furi%3D%27%0A%20%20%20%20%20%20%2B%20encodeURIComponent%20%28location.href%29%3B%0A%20%20void%20%280%29%3B%0A"><i>Check
+by
+<abbr title="Web Hypertext Application Conformance Checker">WebHACC</abbr></i>
+bookmarklet</a>
+</div>
+
+<div class=section id=poweredby>
+<h3>Powered by ...</h3>
+
+<ul>
+
+<li><a href="https://suika.suikawiki.org/www/manakai-core/doc/web/">manakai</a>,
+a Perl library for <abbr title="Document Object Model">DOM</abbr>.
+
+<li><a href="https://suika.suikawiki.org/www/markup/html/whatpm/readme">Whatpm</a>,
+a subproject of manakai that supports 
+<abbr title="Hypertext Markup Language">HTML</abbr>, 
+<abbr title="Extensible Markup Language">XML</abbr>,
+<abbr title="Cascading Style Sheets">CSS</abbr>,
+and other Web languages.
+
+<li><a
+href="http://search.cpan.org/dist/Regexp-Parser/"><code>Regexp::Parser</code></a>
+and <a href="https://suika.suikawiki.org/regexp/doc/readme">its extensions for
+JavaScript regular expressions</a>.
+
+</ul>
+</div>
+
+<div class=section id=sourcecode>
+<h3>Source code</h3>
+
+<p><abbr title="Web Hypertext Application Conformance
+Checker">WebHACC</abbr> is written in pure Perl, using <a
+href="#poweredby">aforementioned modules</a>.
+
+<p>You can clone the Git repository (<a
+href="https://github.com/wakaba/webhacc/">GitHub</a> / <a
+href="https://suika.suikawiki.org/gate/git/wi/webhacc.git/">Suika</a>) of the
+project by the following command:
+
+<pre>
+<!--$ <kbd>git clone http://suika.fam.cx/gate/git/bare/perl/regexp.git/</kbd>
+-->$ <kbd>git clone https://github.com/wakaba/webhacc.git</kbd>
+$ <kbd>git submodule update --init</kbd>
+</pre>
+
+<!-- Its source code is <a
+href="http://suika.fam.cx/gate/cvs/webroot/gate/2007/html/">available
+from the <abbr title="Concurrent Versions System">CVS</abbr>
+repository</a>. -->
+
+</div>
+
+<div class=section id=author>
+<h3>Author</h3>
+
+<p><a href="https://suika.suikawiki.org/~wakaba/who?" rel=author>Wakaba</a>.</p>
+</div>
+
+<div class=section id=license>
+<h3>License</h3>
+
+<p>&copy; Copyright 2007-2011 <a
+href="https://suika.suikawiki.org/~wakaba/who?"  rel=author
+lang=ja>Wakaba</a>.
+
+<p>This program and accompanying documents are free software;
+you can redistribute them and/or modify them under the same terms as
+Perl itself.
+
+<p class=note>Note that some icons are distributed under
+<a href="LICENSE">different free software licenses</a>.
+</div>
+
+</div>
+
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-39820773-4', 'manakai.github.io');
+ga('send', 'pageview');
+</script>

@@ -7,6 +7,7 @@ ADD bin/ /app/bin/
 ADD lib/ /app/lib/
 ADD modules/ /app/modules/
 ADD icons/ /app/icons/
+ADD intermediate/ /app/intermediate/
 ADD *.html /app/
 ADD *.css /app/
 ADD *.cgi /app/

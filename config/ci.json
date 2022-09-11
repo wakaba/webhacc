@@ -3,7 +3,10 @@
     "pmbp": 1,
     "docker-build": "quay.io/manakai/webhacc-old",
     "merger": 1,
+    "build_generated_pmbp": true,
     "tests": [
+      "make deps",
+      
       {"./plackup -p 5114 -t Twiggy::Prefork bin/server.psgi":
          {"background": true}},
       "sleep 10",
