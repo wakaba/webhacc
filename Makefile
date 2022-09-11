@@ -65,7 +65,8 @@ build: cc-msg.en.txt cc-msg.ja.txt \
   error-description.ja.html.u8 \
   whatpm-demo-files \
   intermediate/misc-a0.txt intermediate/misc-a1.txt \
-  cc-about.en.html standard.en.html
+  intermediate/misc-min.js \
+  cc-about.en.html standards.en.html cc-script.js
 
 cc-msg.en.txt: error-description-source.xml mkcatalog.pl
 	$(PERL) mkcatalog.pl $< en > $@
@@ -86,9 +87,12 @@ error-description.ja.html.u8: error-description-source.xml mkdescription.pl \
 cc-about.en.html: cc-about.en.html.orig intermediate/misc-a1.txt
 	cat $< > $@
 	cat intermediate/misc-a1.txt >> $@
-standard.en.html: standard.html.orig intermediate/misc-a1.txt
+standards.en.html: standards.en.html.orig intermediate/misc-a1.txt
 	cat $< > $@
 	cat intermediate/misc-a1.txt >> $@
+cc-script.js: cc-script.js.orig intermediate/misc-min.js
+	cat $< > $@
+	cat intermediate/misc-min.js >> $@
 
 whatpm-demo-files:
 	cp modules/manakai/doc/demo/*.cgi ./
@@ -99,6 +103,8 @@ intermediate/misc-a0.txt:
 	$(CURL) -sSf https://gist.githubusercontent.com/wakaba/e6ba0fb1c4a75c0d4824e1d27107342e/raw/misc-a0.txt > $@
 intermediate/misc-a1.txt:
 	$(CURL) -sSf https://gist.githubusercontent.com/wakaba/e6ba0fb1c4a75c0d4824e1d27107342e/raw/misc-a1.txt > $@
+intermediate/misc-min.js:
+	$(CURL) -sSf https://gist.githubusercontent.com/wakaba/e6ba0fb1c4a75c0d4824e1d27107342e/raw/misc-min.js > $@
 
 create-commit-for-heroku:
 	git remote rm origin

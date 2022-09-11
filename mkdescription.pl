@@ -1,9 +1,10 @@
 #!/usr/bin/perl
 use strict;
-use encoding 'us-ascii', STDOUT => 'utf-8';
 use Path::Class;
 use lib glob file (__FILE__)->dir->subdir ('modules')->subdir ('*')->subdir ('lib');
 use Encode;
+
+binmode STDOUT, qw(:encoding(utf-8));
 
 my $HTML_NS = q<http://www.w3.org/1999/xhtml>;
 my $SRC_NS = q<http://suika.fam.cx/~wakaba/archive/2007/wdcc-desc/>;

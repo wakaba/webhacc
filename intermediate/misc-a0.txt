@@ -1,0 +1,15 @@
+    <aside>
+      <div class="admax-switch" data-admax-id="219b1f2b7b01e4f815f957e032074f75" style="display:inline-block;"></div>
+      <script>
+        (admaxads = window.admaxads || []).push({admax_id: "219b1f2b7b01e4f815f957e032074f75",type: "switch"});
+      </script>
+    </aside>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XZKJBG5SSR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-XZKJBG5SSR');
+</script>
