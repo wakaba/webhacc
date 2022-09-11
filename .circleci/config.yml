@@ -260,7 +260,8 @@
             {
                "deploy_master" : {
                   "context" : [
-                     "deploy-context"
+                     "deploy-context",
+                     "deploy-context-manakai"
                   ],
                   "filters" : {
                      "branches" : {
@@ -279,7 +280,8 @@
             {
                "deploy_nightly" : {
                   "context" : [
-                     "deploy-context"
+                     "deploy-context",
+                     "deploy-context-manakai"
                   ],
                   "filters" : {
                      "branches" : {
@@ -298,7 +300,8 @@
             {
                "deploy_staging" : {
                   "context" : [
-                     "deploy-context"
+                     "deploy-context",
+                     "deploy-context-manakai"
                   ],
                   "filters" : {
                      "branches" : {
