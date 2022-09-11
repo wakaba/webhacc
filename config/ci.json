@@ -1,6 +1,7 @@
 {
   "circleci": {
     "pmbp": 1,
+    "build": ["make deps-circleci"],
     "docker-build": "quay.io/manakai/webhacc-old",
     "context": "deploy-context-manakai",
     "merger": 1,

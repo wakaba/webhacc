@@ -21,6 +21,8 @@ else
 endif
 	$(MAKE) pmbp-install
 
+deps-circleci: deps
+
 deps-docker: pmbp-install
 
 git-submodules:
