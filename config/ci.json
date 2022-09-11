@@ -1,7 +1,7 @@
 {
   "circleci": {
     "pmbp": 1,
-    "heroku": 1,
+    "docker-build": "quay.io/manakai/webhacc-old",
     "merger": 1,
     "tests": [
       {"./plackup -p 5114 -t Twiggy::Prefork bin/server.psgi":
