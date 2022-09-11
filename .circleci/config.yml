@@ -84,6 +84,11 @@
                "deploy" : {
                   "command" : "curl -sSf $BWALLER_URL | BWALL_GROUP=docker BWALL_NAME=quay.io/manakai/webhacc-old bash"
                }
+            },
+            {
+               "deploy" : {
+                  "command" : "make deploy-master"
+               }
             }
          ]
       },
