@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>HTML5 Table Structure Viewer</title>
+<style type="text/css">
+  textarea, iframe {
+    width: 90%;
+    height: 20em;
+  }
+</style>
+<link rel="license" href="https://suika.suikawiki.org/c/pd" title="Public Domain.">
+<link rel="author" href="https://suika.suikawiki.org/~wakaba/who?" title="Wakaba">
+</head>
+<body>
+<h1>HTML5 Table Structure Viewer</h1>
+
+<form action="table/table" method="post" accepet-charset="utf-8"
+    target="result">
+  <p><label>HTML source:<br><textarea name="s">&lt;!DOCTYPE html>&lt;html lang="en">&lt;head>
+&lt;title>Table&lt;/title>
+&lt;/head>
+&lt;body>
+&lt;table>
+&lt;tr>&lt;th>&lt;td>
+&lt;/table>
+&lt;/body>&lt;/html></textarea></label></p>
+
+<p><input type="submit"></p>
+</form>
+
+<p><iframe src="about:blank" name="result"></iframe></p>
+
+<sw-ads normal></sw-ads>
+<script src="https://manakai.github.io/js/global.js" async></script>
+
+<address>
+  Powered by
+  <a href="https://suika.suikawiki.org/www/markup/html/whatpm/readme">Whatpm</a>.
+  <sw-ad-notes></sw-ad-notes>
+</address>
+</body>
+</html>

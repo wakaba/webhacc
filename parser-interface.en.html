@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>HTML5 Parser Web Interface</title>
+<style type="text/css">
+  form {
+    display: block;
+    position: relative;
+    height: 20em;
+    margin-left: 1em;
+    margin-right: 1em;
+  }
+  form > fieldset {
+    display: block;
+    position: absolute;
+    top: 0; left: 0;
+    width: 40%; bottom: 0;
+    margin: 0;
+    border-style: none;
+    padding: 0;
+  }
+  iframe {
+    display: block;
+    position: absolute;
+    top: 0; right: 0;
+    width: 40%; bottom: 0;
+    margin: 0;
+  }
+  textarea {
+    width: 100%;
+    height: 19em;
+  }
+  button {
+    display: block;
+    position: absolute;
+    top: 9em;
+    left: 110%;
+  }
+  button:after {
+    content: " ->";
+  }
+  form > fieldset > fieldset {
+    display: block;
+    position: absolute;
+    top: 11em;
+    left: 103%;
+    border-style: none;
+    padding: 0;
+    min-width: 7em;
+  }
+  form > fieldset > fieldset fieldset {
+    font-size: 60%;
+  }
+  fieldset p {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+</style>
+</head>
+<body>
+<h1>HTML5 Parser (<em>beta</em>) Web Interface</h1>
+
+<form action="parser/html"
+    method="post" accept-charset="utf-8" target="result"
+    onsubmit="
+      if (document.getElementById ('format-test').checked) {
+        this.action = 'parser/test';
+      } else {
+        this.action = 'parser/html';
+      }
+    ">
+<fieldset>
+<p><textarea name="s">&lt;!DOCTYPE html>
+&lt;html>
+&lt;head>
+&lt;title>&lt;/title>
+&lt;/head>
+&lt;body>&lt;/body>
+&lt;/html>
+</textarea></p>
+<p><button type="submit">Parse</button></p>
+<fieldset>
+<fieldset>
+<p><label title="Show any HTML5 parse errors if checked"><input type="checkbox" disabled name="html5" checked> HTML5</label></p>
+<p><label title="Show any conformance error of the parsed DOM tree if checked"><input type="checkbox" name="dom5"> DOM5 HTML</label></p>
+</fieldset>
+<fieldset>
+<legend>Output format</legend>
+<p><label title="Show the value of |document.innerHTML| if checked"><input type="radio" name="format" value="html" checked id="format-html"> 
+  <code>innerHTML</code></label></p>
+<p><label title="Show the parsed DOM in the format used in html5lib tests"><input type="radio" name="format" value="test" id="format-test">
+  parser test</label></p>
+</fieldset>
+</fieldset>
+
+</fieldset>
+
+<p><iframe name="result" src="about:blank"></iframe></p>
+</form>
+
+<script src="https://manakai.github.io/js/global.js" async></script>
+
+<address>
+  Powered by 
+  <a href="https://suika.suikawiki.org/www/markup/html/whatpm/readme">Whatpm</a>.
+  <sw-ad-notes></sw-ad-notes>
+</address>
+
+</body>
+</html>

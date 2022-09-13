@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>HTML5 Parser Web Interface</title>
+<style type="text/css">
+  form {
+    display: block;
+    position: relative;
+    height: 30em;
+    margin-left: 1em;
+    margin-right: 1em;
+  }
+  form > fieldset {
+    display: block;
+    position: absolute;
+    top: 0; left: 0;
+    width: 40%; bottom: 0;
+    margin: 0;
+    border-style: none;
+    padding: 0;
+  }
+  #result-para {
+    display: block;
+    position: absolute;
+    top: 0; right: 0;
+    width: 40%; bottom: 0;
+    margin: 0;
+  }
+  iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  textarea {
+    width: 100%;
+    height: 19em;
+  }
+  button {
+    display: block;
+    position: absolute;
+    top: 9em;
+    left: 110%;
+  }
+  button:after {
+    content: " ->";
+  }
+  form > fieldset > fieldset {
+    display: block;
+    position: absolute;
+    top: 11em;
+    left: 103%;
+    border-style: none;
+    padding: 0;
+    min-width: 7em;
+  }
+  form > fieldset > fieldset fieldset {
+    font-size: 60%;
+  }
+  fieldset p {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  #element {
+    width: 5em;
+  }
+</style>
+</head>
+<body onload="document.getElementById('element').disabled=!document.getElementById('html5').checked">
+<h1>HTML5 Parser (<em>beta</em>) Web Interface
+(manakai Version)</h1>
+
+<form action="parser-manakai/html"
+    method="post" accept-charset="utf-8" target="result"
+    onsubmit="
+      var uri = 'parser-manakai/';
+      if (document.getElementById ('html5').checked) {
+        uri += 'html+';
+        uri += encodeURIComponent (document.getElementById ('element').value) + '+';
+      } else if (document.getElementById ('xml1').checked) {
+        uri += 'xml1+';
+        uri += encodeURIComponent (document.getElementById ('element').value) + '+';
+      } else if (document.getElementById ('swml').checked) {
+        uri += 'swml+';
+        uri += encodeURIComponent (document.getElementById ('element').value) + '+';
+      } else if (document.getElementById ('h2h').checked) {
+        uri += 'h2h+';
+        uri += encodeURIComponent (document.getElementById ('element').value) + '+';
+      } else {
+        uri += 'xhtml+';
+        uri += '+';
+      }
+      if (document.getElementById ('format-test').checked) {
+        this.action = uri + 'test';
+      } else if (document.getElementById ('format-xml').checked) {
+        this.action = uri + 'xml';
+      } else {
+        this.action = uri + 'html';
+      }
+    ">
+<fieldset>
+<p><textarea name="s">&lt;!DOCTYPE html>
+&lt;html>
+&lt;head>
+&lt;title>&lt;/title>
+&lt;/head>
+&lt;body>&lt;/body>
+&lt;/html>
+</textarea></p>
+<p><button type="submit">Parse</button></p>
+<fieldset>
+<fieldset>
+<p><label title="Show any HTML5 parse errors if checked"><input type="radio" name="input-format" id="html5" onchange="element.disabled = false" checked> HTML5</label></p>
+<p><label title="Show any XML 1.0/1.1 parse errors if checked (using a non-validating parser)"><input type="radio" name="input-format" onchange="element.disabled = true" id="xhtml5"> XHTML5</label></p>
+<p><label title="Show any XML 1.0/1.1 parse errors if checked (using a non-validating parser)"><input type="radio" name="input-format" onchange="element.disabled = true" id="xml1"> XML1 (work in progress)</label></p>
+
+<p><label title="Parse as SWML text serialization document if checked"><input 
+type="radio" name="input-format" id="swml"
+onchange="element.disabled = true"> SWML</label></p>
+
+<p><label title="Parse as H2H document if checked"><input type="radio" name="input-format" id="h2h" onchange="element.disabled = true"> H2H</label></p>
+
+<p><input type="text" name="element" id="element" value="" title="If specified, the input is parsed by the fragment parsing (innerHTML) algorithm."></p>
+<p><label title="Show any conformance error of the parsed DOM tree if checked"><input type="checkbox" name="dom5"> DOM5 HTML</label></p>
+</fieldset>
+<fieldset>
+<legend>Output format</legend>
+<p><label title="Show the value of |document.innerHTML| (in HTML) if checked"><input type="radio" name="format" value="html" checked id="format-html"> 
+  <code>innerHTML</code> (HTML)</label></p>
+<p><label title="Show the value of |document.innerHTML| (in XML) if checked"><input type="radio" name="format" value="xml" id="format-xml"> 
+  <code>innerHTML</code> (XML)</label></p>
+<p><label title="Show the parsed DOM in the format used in html5lib tests"><input type="radio" name="format" value="test" id="format-test">
+  parser test</label></p>
+</fieldset>
+</fieldset>
+
+</fieldset>
+
+<p id=result-para><iframe name="result" src="about:blank"></iframe></p>
+</form>
+
+<script src="https://manakai.github.io/js/global.js" async></script>
+
+<address>
+  Powered by 
+  <a href="https://suika.suikawiki.org/www/markup/html/whatpm/readme">Whatpm</a>
+  and
+  <a href="https://suika.suikawiki.org/www/2006/manakai/">manakai</a>.
+  <sw-ad-notes></sw-ad-notes>
+</address>
+
+</body>
+</html>
