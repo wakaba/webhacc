@@ -520,6 +520,7 @@ sub html_header ($) {
   $self->{handle}->print (q[</title>
 <link rel="stylesheet" href="../cc-style.css" type="text/css">
 <script src="../cc-script.js"></script>
+<script src="https://manakai.github.io/js/global.js" async></script>
 </head>
 <body onclick=" return onbodyclick (event) " onload=" onbodyload () ">
 <h1>]);

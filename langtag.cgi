@@ -10,8 +10,6 @@ use Message::CGI::Util qw(htescape);
 use Whatpm::LangTag;
 use Encode;
 
-my $RootPath = path (__FILE__)->parent;
-
 my $cgi = Message::CGI::HTTP->new;
 
 my $tag = decode 'utf-8', ($cgi->get_parameter ('tag') // '');
@@ -427,7 +425,7 @@ for my $spec (
 
 print qq{
 </div>
-};
 
-$RootPath->child ('intermediate/misc-a0.txt');
-print $RootPath->slurp;
+  <sw-ads normal></sw-ads>
+  <script src="https://manakai.github.io/js/global.js" async></script>
+};

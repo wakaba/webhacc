@@ -7367,11 +7367,14 @@ Regexp::Parser::JavaScript's extension. -->
 
 <p>Copyright <time>2007</time>‐<time>2012</time>
 <a href="https://suika.suikawiki.org/~wakaba/who?" rel="author" xml:lang="ja">Wakaba</a>
-<code class="mail">&lt;<a href="mailto:w@suika.fam.cx">w@suika.fam.cx</a>></code>.</p>
+<code class="mail">&lt;<a href="mailto:wakaba@suikawiki.org">wakaba@suikawiki.org</a>></code>.</p>
 
 <p>This document is free software; you can redistribute it
 and/or modify it under the same terms as Perl itself.</p>
 </section>
+
+<sw-ads normal=""></sw-ads>
+<script src="https://manakai.github.io/js/global.js" async=""></script>
 
 </body>
 </html>
