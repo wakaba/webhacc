@@ -520,9 +520,10 @@ sub html_header ($) {
   $self->{handle}->print (q[</title>
 <link rel="stylesheet" href="../cc-style.css" type="text/css">
 <script src="../cc-script.js"></script>
-<script src="https://manakai.github.io/js/global.js" async></script>
 </head>
 <body onclick=" return onbodyclick (event) " onload=" onbodyload () ">
+<sw-ads-footer hidden></sw-ads-footer>
+<script src="https://manakai.github.io/js/global.js" async></script>
 <h1>]);
   $self->nl_text (q[WebHACC:Heading]);
   $self->{handle}->print (q[</h1><script> insertNavSections () </script>]);
