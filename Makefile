@@ -88,6 +88,7 @@ deploy-heroku:
 	git push git@heroku.com:$$HEROKU_APP_NAME.git +`git rev-parse HEAD`:refs/heads/master
 
 create-commit-for-heroku:
+	git config --global url."https://_:$$HEROKU_KEY@git.heroku.com/".insteadOf git@heroku.com:
 	git remote rm origin
 	rm -fr deps/pmtar/.git deps/pmpp/.git modules/*/.git
 	git add -f deps/pmtar/* #deps/pmpp/*
