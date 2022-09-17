@@ -1,6 +1,6 @@
 {
   "circleci": {
-    "pmbp": 1,
-    "heroku": 1
+    "pmbp": true,
+    "make_deploy_branches": ["heroku"]
   }
 }
