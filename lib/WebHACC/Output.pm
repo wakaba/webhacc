@@ -522,7 +522,7 @@ sub html_header ($) {
 <script src="../cc-script.js"></script>
 </head>
 <body onclick=" return onbodyclick (event) " onload=" onbodyload () ">
-<sw-ads-footer hidden></sw-ads-footer>
+<sw-ads-notes hidden></sw-ads-notes>
 <script src="https://manakai.github.io/js/global.js" async></script>
 <h1>]);
   $self->nl_text (q[WebHACC:Heading]);
